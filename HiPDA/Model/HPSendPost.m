@@ -378,7 +378,7 @@
         {
             //http://www.hi-pda.com/forum/post.php?action=newthread&fid=57
             
-            path = [NSString stringWithFormat:@"forum/post.php?action=newthread&fid=57"];
+            path = [NSString stringWithFormat:@"forum/post.php?action=newthread&fid=2"];
             
             break;
         }
