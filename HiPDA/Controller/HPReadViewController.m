@@ -397,6 +397,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     BOOL printable = !_forceFullPage && (_current_page == 1 && _current_author_uid == 0);
     
+    __typeof__(self) __weak weakSelf = self;
     [HPNewPost loadThreadWithTid:_thread.tid
                             page:_current_page
                     forceRefresh:refresh
@@ -409,14 +410,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         if (!error) {
             
             // save posts
-            _posts = posts;
+            weakSelf.posts = posts;
             
             // save parameters
-            [self refreshThreadInfo:parameters
-                           find_pid:_find_pid];
+            [weakSelf refreshThreadInfo:parameters
+                           find_pid:weakSelf.find_pid];
             
             // update title
-            [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
+            [string replaceOccurrencesOfString:@"##title##" withString:weakSelf.thread.title options:0 range:NSMakeRange(0, string.length)];
             
             //
             __block NSMutableString *lists = [NSMutableString stringWithCapacity:42];
@@ -445,13 +446,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             NSString *final = [HPNewPost preProcessHTML:string];
             
             //NSLog(@"%@", string);
-            [self.webView loadHTMLString:final baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
+            [weakSelf.webView loadHTMLString:final baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
             
-            [self endLoad:YES];
+            [weakSelf endLoad:YES];
             
         } else {
             
-            [self endLoad:NO];
+            [weakSelf endLoad:NO];
             
             if (error.code == NSURLErrorUserAuthenticationRequired) {
                 
@@ -981,6 +982,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (void)favorite:(id)sender {
+    
+    UIImage *i = [self captureScreen:self.webView];
+    
+    return;
+    
     
     BOOL flag = [HPFavorite isFavoriteWithTid:_thread.tid];
     
@@ -1717,6 +1723,116 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     self.view.backgroundColor = [HPTheme backgroundColor];
     [self reload:nil];
     
+}
+
+- (UIImage*)webviewToImage:(UIWebView*)theWebView
+{
+    int webViewHeight = [[theWebView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"] integerValue];
+    int scrollByY = theWebView.frame.size.height;
+    int imageName = 0;
+    
+    [theWebView stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0,0);"];
+    
+    NSMutableArray* images = [[NSMutableArray alloc] init];
+    
+    CGRect screenRect = theWebView.frame;
+    double currentWebViewHeight = webViewHeight;
+    while (currentWebViewHeight > 0)
+    {
+        imageName ++;
+        
+        UIGraphicsBeginImageContext(screenRect.size);
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        [[UIColor blackColor] set];
+        CGContextFillRect(ctx, screenRect);
+        
+        [theWebView.layer renderInContext:ctx];
+        
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        if(currentWebViewHeight < scrollByY)
+        {
+            CGRect lastImageRect = CGRectMake(0, scrollByY - currentWebViewHeight, theWebView.frame.size.width, currentWebViewHeight);
+            CGImageRef imageRef = CGImageCreateWithImageInRect([newImage CGImage], lastImageRect);
+            
+            newImage = [UIImage imageWithCGImage:imageRef];
+            CGImageRelease(imageRef);
+        }
+        [images addObject:newImage];
+        
+        [theWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.scrollBy(0,%d);", scrollByY]];
+        currentWebViewHeight -= scrollByY;
+    }
+    
+    [theWebView stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0,0);"];
+    
+    UIImage *resultImage;
+    
+    if(images.count > 1) {
+        //join all images together..
+        CGSize sz;
+        for(int i=0;i<images.count;i++) {
+            
+            sz.width = MAX(sz.width, ((UIImage*)[images objectAtIndex:i]).size.width );
+            sz.height += ((UIImage*)[images objectAtIndex:i]).size.height;
+        }
+        
+        UIGraphicsBeginImageContext(sz);
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        [[UIColor blackColor] set];
+        CGContextFillRect(ctx, screenRect);
+        
+        int y=0;
+        for(int i=0;i<images.count;i++) {
+            
+            UIImage* img = [images objectAtIndex:i];
+            [img drawAtPoint:CGPointMake(0,y)];
+            y += img.size.height;
+        }
+        
+        resultImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    } else {
+        
+        resultImage = [images objectAtIndex:0];
+    }
+    
+    return resultImage;
+    
+}
+
+-(UIImage*)captureScreen:(UIWebView*) viewToCapture
+{
+   
+    
+    UIImage * viewImage = [self webviewToImage:viewToCapture];
+    
+    // Create paths to output images
+    NSString  *pngPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Test.png"];
+    NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Test.jpg"];
+    
+    // Write a UIImage to JPEG with minimum compression (best quality)
+    // The value 'image' must be a UIImage object
+    // The value '1.0' represents image compression quality as value from 0.0 to 1.0
+    [UIImageJPEGRepresentation(viewImage, 1.0) writeToFile:jpgPath atomically:YES];
+    
+    // Write image to PNG
+    [UIImagePNGRepresentation(viewImage) writeToFile:pngPath atomically:YES];
+    
+    // Let's check to see if files were successfully written...
+    
+    // Create file manager
+    NSError *error;
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    
+    // Point to Document directory
+    NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    
+    // Write out the contents of home directory to console
+    NSLog(@"Documents directory: %@", [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error]);
+    
+    return viewImage;
 }
 
 
