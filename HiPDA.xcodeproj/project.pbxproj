@@ -319,6 +319,9 @@
 		EAD7F616183CC84600A750D9 /* hp_smile_grapeman_22.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5D9183CC84600A750D9 /* hp_smile_grapeman_22.gif */; };
 		EAD7F617183CC84600A750D9 /* hp_smile_grapeman_23.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DA183CC84600A750D9 /* hp_smile_grapeman_23.gif */; };
 		EAD7F618183CC84600A750D9 /* hp_smile_grapeman_24.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */; };
+		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
+		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
+		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
 		EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8451829EFA900C1718B /* Foundation.framework */; };
 		EAFDB8481829EFA900C1718B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8471829EFA900C1718B /* CoreGraphics.framework */; };
@@ -803,6 +806,12 @@
 		EAD7F5D9183CC84600A750D9 /* hp_smile_grapeman_22.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_22.gif; path = Image/DZSmile/hp_smile_grapeman_22.gif; sourceTree = "<group>"; };
 		EAD7F5DA183CC84600A750D9 /* hp_smile_grapeman_23.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_23.gif; path = Image/DZSmile/hp_smile_grapeman_23.gif; sourceTree = "<group>"; };
 		EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_24.gif; path = Image/DZSmile/hp_smile_grapeman_24.gif; sourceTree = "<group>"; };
+		EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+Capture.h"; path = "Helper/UIWebView+Capture.h"; sourceTree = "<group>"; };
+		EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+Capture.m"; path = "Helper/UIWebView+Capture.m"; sourceTree = "<group>"; };
+		EAEC58CA1948465000F5931A /* UIImage+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Save.h"; path = "Helper/UIImage+Save.h"; sourceTree = "<group>"; };
+		EAEC58CB1948465000F5931A /* UIImage+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Save.m"; path = "Helper/UIImage+Save.m"; sourceTree = "<group>"; };
+		EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+ScreenShot.h"; path = "Helper/UIView+ScreenShot.h"; sourceTree = "<group>"; };
+		EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+ScreenShot.m"; path = "Helper/UIView+ScreenShot.m"; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
 		EAFD40AF18BDDEB90077C1B5 /* RegExCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegExCategories.h; path = Helper/RegExCategories.h; sourceTree = "<group>"; };
 		EAFDB8421829EFA900C1718B /* HiPDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1217,6 +1226,12 @@
 				EAA1E68118D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m */,
 				EA5F164618D7062900F6AAB3 /* NSHTTPCookieStorage+info.h */,
 				EA5F164718D7062900F6AAB3 /* NSHTTPCookieStorage+info.m */,
+				EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */,
+				EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */,
+				EAEC58CA1948465000F5931A /* UIImage+Save.h */,
+				EAEC58CB1948465000F5931A /* UIImage+Save.m */,
+				EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */,
+				EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2054,6 +2069,7 @@
 				EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */,
 				EA743BC2183D00DE0067F62B /* REURLValidator.m in Sources */,
 				EA743BEF183D00F10067F62B /* RETableViewTextCell.m in Sources */,
+				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
 				EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */,
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,
 				EA743BEC183D00F10067F62B /* RETableViewOptionCell.m in Sources */,
@@ -2094,6 +2110,7 @@
 				EA743BE4183D00F10067F62B /* RETableViewBoolCell.m in Sources */,
 				EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */,
 				EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */,
+				EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */,
 				EA743C35183FA9690067F62B /* HPSearchViewController.m in Sources */,
 				EA743BED183D00F10067F62B /* RETableViewPickerCell.m in Sources */,
 				EA743BAC183D00AA0067F62B /* RETableViewCellStyle.m in Sources */,
@@ -2102,6 +2119,7 @@
 				EA743BA9183D00AA0067F62B /* RECommonFunctions.m in Sources */,
 				EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */,
 				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,
+				EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */,
 				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
 				EA743BE7183D00F10067F62B /* RETableViewFloatCell.m in Sources */,
 				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,

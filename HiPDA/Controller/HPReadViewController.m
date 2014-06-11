@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 wujichao. All rights reserved.
 //
 
+
 #import "HPReadViewController.h"
 #import "HPReplyTopicViewController.h"
 #import "HPReplyViewController.h"
@@ -42,6 +43,9 @@
 #import "UIView+AnchorPoint.h"
 
 #import "EGORefreshTableFooterView.h"
+
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "UIWebView+Capture.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -761,7 +765,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   otherButtonTitles:
                                   _current_author_uid != 0 ? @"查看全部" : @"只看楼主",
                                   @"浏览器打开",
-                                  @"复制链接", @"细节调整",nil];
+                                  @"复制链接", @"细节调整", @"保存此页截图",nil];
    
     [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
     [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
@@ -845,6 +849,18 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 case 4://text adjust
                 {
                     [self showAdjustView:nil];
+                    break;
+                }
+                case 5://capture & save
+                {
+                    [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
+                                                         message:@"请确认此页已完全载入"
+                                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+                     {
+                         if (buttonIndex != [alertView cancelButtonIndex]) {
+                             [self prepareCapture];
+                         }
+                     }];
                     break;
                 }
                 default:
@@ -982,12 +998,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (void)favorite:(id)sender {
-    
-    UIImage *i = [self captureScreen:self.webView];
-    
-    return;
-    
-    
+ 
     BOOL flag = [HPFavorite isFavoriteWithTid:_thread.tid];
     
     if (!flag) {
@@ -1725,114 +1736,39 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
 }
 
-- (UIImage*)webviewToImage:(UIWebView*)theWebView
+
+
+
+- (void)prepareCapture
 {
-    int webViewHeight = [[theWebView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"] integerValue];
-    int scrollByY = theWebView.frame.size.height;
-    int imageName = 0;
+    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
+    NSString *info = [NSString stringWithFormat:@"本文链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
+    NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
+    [self.webView stringByEvaluatingJavaScriptFromString:js];
     
-    [theWebView stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0,0);"];
+    [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
     
-    NSMutableArray* images = [[NSMutableArray alloc] init];
-    
-    CGRect screenRect = theWebView.frame;
-    double currentWebViewHeight = webViewHeight;
-    while (currentWebViewHeight > 0)
-    {
-        imageName ++;
-        
-        UIGraphicsBeginImageContext(screenRect.size);
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        [[UIColor blackColor] set];
-        CGContextFillRect(ctx, screenRect);
-        
-        [theWebView.layer renderInContext:ctx];
-        
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        if(currentWebViewHeight < scrollByY)
-        {
-            CGRect lastImageRect = CGRectMake(0, scrollByY - currentWebViewHeight, theWebView.frame.size.width, currentWebViewHeight);
-            CGImageRef imageRef = CGImageCreateWithImageInRect([newImage CGImage], lastImageRect);
-            
-            newImage = [UIImage imageWithCGImage:imageRef];
-            CGImageRelease(imageRef);
-        }
-        [images addObject:newImage];
-        
-        [theWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.scrollBy(0,%d);", scrollByY]];
-        currentWebViewHeight -= scrollByY;
-    }
-    
-    [theWebView stringByEvaluatingJavaScriptFromString:@"window.scrollTo(0,0);"];
-    
-    UIImage *resultImage;
-    
-    if(images.count > 1) {
-        //join all images together..
-        CGSize sz;
-        for(int i=0;i<images.count;i++) {
-            
-            sz.width = MAX(sz.width, ((UIImage*)[images objectAtIndex:i]).size.width );
-            sz.height += ((UIImage*)[images objectAtIndex:i]).size.height;
-        }
-        
-        UIGraphicsBeginImageContext(sz);
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        [[UIColor blackColor] set];
-        CGContextFillRect(ctx, screenRect);
-        
-        int y=0;
-        for(int i=0;i<images.count;i++) {
-            
-            UIImage* img = [images objectAtIndex:i];
-            [img drawAtPoint:CGPointMake(0,y)];
-            y += img.size.height;
-        }
-        
-        resultImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    } else {
-        
-        resultImage = [images objectAtIndex:0];
-    }
-    
-    return resultImage;
-    
+    [self performSelector:@selector(captureAndSave) withObject:nil afterDelay:0];
 }
 
--(UIImage*)captureScreen:(UIWebView*) viewToCapture
-{
-   
+- (void)captureAndSave {
     
-    UIImage * viewImage = [self webviewToImage:viewToCapture];
+    UIImage *viewImage = [self.webView capture];
+
+    [self.webView stringByEvaluatingJavaScriptFromString:@"var list = document.getElementById('list');var li = document.getElementById('_info_');list.removeChild(li);"];
     
-    // Create paths to output images
-    NSString  *pngPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Test.png"];
-    NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Test.jpg"];
-    
-    // Write a UIImage to JPEG with minimum compression (best quality)
-    // The value 'image' must be a UIImage object
-    // The value '1.0' represents image compression quality as value from 0.0 to 1.0
-    [UIImageJPEGRepresentation(viewImage, 1.0) writeToFile:jpgPath atomically:YES];
-    
-    // Write image to PNG
-    [UIImagePNGRepresentation(viewImage) writeToFile:pngPath atomically:YES];
-    
-    // Let's check to see if files were successfully written...
-    
-    // Create file manager
-    NSError *error;
-    NSFileManager *fileMgr = [NSFileManager defaultManager];
-    
-    // Point to Document directory
-    NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    
-    // Write out the contents of home directory to console
-    NSLog(@"Documents directory: %@", [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error]);
-    
-    return viewImage;
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:[viewImage CGImage]
+                              orientation:(ALAssetOrientation)[viewImage imageOrientation]
+                          completionBlock:^(NSURL *assetURL, NSError *error){
+                              if (error) {
+                                  NSLog(@"captureScreen %@", [error localizedDescription]);
+                                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+                              } else {
+                                  NSLog(@"captureScreen %@", assetURL);
+                                  [SVProgressHUD showSuccessWithStatus:@"已保存至相机胶卷"];
+                              }
+                          }];
 }
 
 
