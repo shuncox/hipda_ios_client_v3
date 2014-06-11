@@ -761,15 +761,28 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)action:(id)sender {
     //NSLog(@"%@", sender);
     
+    NSString *theTitle = nil;
+    if ([Setting boolForKey:HPSettingPreferNotice]) {
+        
+        theTitle = [HPFavorite isFavoriteWithTid:_thread.tid] ?
+        @"取消收藏" : @"收藏";
+    
+    } else {
+        theTitle = [HPAttention isAttention:_thread.tid] ?
+        @"取消关注" : @"加关注";
+    }
+    
     IBActionSheet *actionSheet = [[IBActionSheet alloc]
                                   initWithTitle:nil
                                   delegate:self cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:
                                   _current_page == 1 ? @"举报" : @"刷新"
                                   otherButtonTitles:
+                                  theTitle,
                                   _current_author_uid != 0 ? @"查看全部" : @"只看楼主",
                                   @"浏览器打开",
-                                  @"复制链接", @"细节调整", @"保存此页截图",nil];
+                                  @"更多",
+                                  nil];
    
     [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
     [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
@@ -831,42 +844,44 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     }
                     break;
                 }
-                case 1://只看该作者
+                case 1://关注 or 收藏
+                {
+                    if ([Setting boolForKey:HPSettingPreferNotice]) {
+                        [self favorite:nil];
+                    } else {
+                        [self attention:nil];
+                    }
+                    
+                    break;
+                }
+                case 2://只看该作者
                 {
                     [self toggleOnlySomeone:_thread.user];
                     break;
                 }
-                case 2://浏览器打开
+                case 3://浏览器打开
                 {
                     NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
                     [self openUrl:[NSURL URLWithString:url]];
                     break;
                 }
-                case 3://copy link
+                case 4://更多
                 {
-                    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
-                    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-                    [pasteBoard setString:url];
-                    [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
+                    IBActionSheet *actionSheet = [[IBActionSheet alloc]
+                                                  initWithTitle:nil
+                                                  delegate:self cancelButtonTitle:@"取消"
+                                                  destructiveButtonTitle:nil
+                                                  otherButtonTitles:
+                                                  @"复制链接", @"细节调整", @"保存此页截图",nil];
+                    
+                    [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
+                    [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
+                    [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
+                    actionSheet.tag = 3;
+                    [actionSheet showInView:self.navigationController.view];
                     break;
                 }
-                case 4://text adjust
-                {
-                    [self showAdjustView:nil];
-                    break;
-                }
-                case 5://capture & save
-                {
-                    [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
-                                                         message:@"请确认此页已完全载入"
-                                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-                     {
-                         if (buttonIndex != [alertView cancelButtonIndex]) {
-                             [self prepareCapture];
-                         }
-                     }];
-                    break;
-                }
+                
                 default:
                     NSLog(@"error buttonIndex index, %ld", buttonIndex);
                     break;
@@ -901,6 +916,39 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     break;
             }
             
+            break;
+        }
+        case 3:
+        {
+            switch (buttonIndex) {
+                case 0://copy link
+                {
+                    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
+                    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+                    [pasteBoard setString:url];
+                    [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
+                    break;
+                }
+                case 1://text adjust
+                {
+                    [self showAdjustView:nil];
+                    break;
+                }
+                case 2://capture & save
+                {
+                    [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
+                                                         message:@"请确认此页已完全载入"
+                                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+                     {
+                         if (buttonIndex != [alertView cancelButtonIndex]) {
+                             [self prepareCapture];
+                         }
+                     }];
+                    break;
+                }
+                default:
+                    break;
+            }
             break;
         }
         default:
@@ -1739,6 +1787,42 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self reload:nil];
     
 }
+
+
+
+#pragma mark - capture
+- (void)prepareCapture
+{
+    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
+    NSString *info = [NSString stringWithFormat:@"本页链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
+    NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
+    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    
+    [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
+    
+    [self performSelector:@selector(captureAndSave) withObject:nil afterDelay:0];
+}
+
+- (void)captureAndSave {
+    
+    UIImage *viewImage = [self.webView capture];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:@"var list = document.getElementById('list');var li = document.getElementById('_info_');list.removeChild(li);"];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:[viewImage CGImage]
+                              orientation:(ALAssetOrientation)[viewImage imageOrientation]
+                          completionBlock:^(NSURL *assetURL, NSError *error){
+                              if (error) {
+                                  NSLog(@"captureScreen %@", [error localizedDescription]);
+                                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+                              } else {
+                                  NSLog(@"captureScreen %@", assetURL);
+                                  [SVProgressHUD showSuccessWithStatus:@"已保存至相机胶卷"];
+                              }
+                          }];
+}
+
 
 
 @end

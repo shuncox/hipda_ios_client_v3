@@ -227,7 +227,7 @@
     // preferFav
     //
     BOOL isPreferNotice = [Setting boolForKey:HPSettingPreferNotice];
-    REBoolItem *isPreferFavItem = [REBoolItem itemWithTitle:@"常用加关注" value:isPreferNotice switchValueChangeHandler:^(REBoolItem *item) {
+    REBoolItem *isPreferNoticeItem = [REBoolItem itemWithTitle:@"常用加关注" value:isPreferNotice switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"HPSettingPreferNotice Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingPreferNotice];
@@ -240,6 +240,7 @@
     [section addItem:isOrderByDatelineItem];
     [section addItem:postTailText];
     [section addItem:setForumItem];
+    [section addItem:isPreferNoticeItem];
     
     [_manager addSection:section];
     return section;
