@@ -224,6 +224,16 @@
         [item deselectRowAnimated:YES];
     }];
     
+    // preferFav
+    //
+    BOOL isPreferNotice = [Setting boolForKey:HPSettingPreferNotice];
+    REBoolItem *isPreferFavItem = [REBoolItem itemWithTitle:@"常用加关注" value:isPreferNotice switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"HPSettingPreferNotice Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingPreferNotice];
+        
+    }];
+    
     
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];

@@ -129,6 +129,8 @@
 
 #define HPSettingBGLastMinite @"HPSettingBGLastMinite"
 
+#define HPSettingPreferNotice @"HPSettingPreferNotice"
+
 #define HPPMCount @"HPPMCount"
 #define HPNoticeCount @"HPNoticeCount"
 #define HPCheckDisable @"HPCheckDisable"

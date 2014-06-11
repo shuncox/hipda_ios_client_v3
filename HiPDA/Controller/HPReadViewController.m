@@ -268,6 +268,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [self updateFavButton];
     [self updateAttentionButton];
+    
     UIBarButtonItem *favBI = [[UIBarButtonItem alloc] initWithCustomView:_favButton];
     
     UIBarButtonItem *attentionBI = [[UIBarButtonItem alloc] initWithCustomView:_attentionButton];
@@ -290,7 +291,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (IOS7_OR_LATER) negativeSeperator.width = -12;
     
-    self.navigationItem.rightBarButtonItems = @[negativeSeperator, moreBI, pageBI, commentBI, attentionBI, favBI];
+    
+    UIBarButtonItem *item = [Setting boolForKey:HPSettingPreferNotice] ?
+                            attentionBI : favBI ;
+    self.navigationItem.rightBarButtonItems = @[negativeSeperator, moreBI, pageBI, commentBI, item];
 }
 
 - (void)updateFavButton {
@@ -1734,41 +1738,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     self.view.backgroundColor = [HPTheme backgroundColor];
     [self reload:nil];
     
-}
-
-
-
-
-- (void)prepareCapture
-{
-    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
-    NSString *info = [NSString stringWithFormat:@"本文链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
-    NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
-    
-    [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
-    
-    [self performSelector:@selector(captureAndSave) withObject:nil afterDelay:0];
-}
-
-- (void)captureAndSave {
-    
-    UIImage *viewImage = [self.webView capture];
-
-    [self.webView stringByEvaluatingJavaScriptFromString:@"var list = document.getElementById('list');var li = document.getElementById('_info_');list.removeChild(li);"];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library writeImageToSavedPhotosAlbum:[viewImage CGImage]
-                              orientation:(ALAssetOrientation)[viewImage imageOrientation]
-                          completionBlock:^(NSURL *assetURL, NSError *error){
-                              if (error) {
-                                  NSLog(@"captureScreen %@", [error localizedDescription]);
-                                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-                              } else {
-                                  NSLog(@"captureScreen %@", assetURL);
-                                  [SVProgressHUD showSuccessWithStatus:@"已保存至相机胶卷"];
-                              }
-                          }];
 }
 
 
