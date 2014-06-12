@@ -150,6 +150,8 @@
     
     NSString *path = [NSString stringWithFormat:@"forum/pm.php?uid=%ld&filter=privatepm&daterange=%ld#new", uid, range];
     
+    NSLog(@"load message path %@", path);
+    
     [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html)
     {
          
@@ -198,6 +200,13 @@
                     summary = [summary replaceWithPattern:@"<img[^>]+src=\"http://www\\.hi-pda\\.com/forum/images/smilies/([a-z0-9/]+)\\.gif.*?>" template:@"{表情($1)}" isdot:NO];
                 }
                 //summary = [summary stringByReplacingOccurrencesOfString:@"<br />" withString:@"\n"];
+                //<a href="http://www.hi-pda.com/forum/pm.php?uid=682029&amp;filter=privatepm&amp;daterange=5#new" target="_blank">http://www.hi-pda.com/forum/pm.p ... amp;daterange=5#new</a>
+                summary = [RX(@"<a href=\"(.*?)\" target=\"_blank\">.*?</a>") replace:summary withDetailsBlock:^NSString *(RxMatch *match) {
+                    
+                    RxMatchGroup *m1 = [match.groups objectAtIndex:1];
+                    return [NSString stringWithFormat:@"<a href=\"%@\" target=\"_blank\">%@</a>", m1.value, m1.value];
+                    
+                }];
                 summary = [summary stringByConvertingHTMLToPlainText];
                 
                 // date
