@@ -1772,9 +1772,18 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 # pragma mark - reply done
 - (void)compositionDoneWithType:(ActionType)type error:(NSError *)error {
     
-    _reloadingForReply = YES;
-    _current_page = _thread.pageCount;
-    [self reload:nil];
+    [UIAlertView showConfirmationDialogWithTitle:@"发送成功"
+                                         message:@"是否查看？"
+                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+     {
+         if (buttonIndex != [alertView cancelButtonIndex]) {
+             
+             _reloadingForReply = YES;
+             _current_page = _thread.pageCount;
+             [self reload:nil];
+         }
+     }];
+
 }
 
 #pragma mark - theme
