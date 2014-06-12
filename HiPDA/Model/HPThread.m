@@ -130,6 +130,21 @@
          NSLog(@"response Set-Cookie cookie %@", cookie);
         */
         
+        
+        if ([html indexOf:@"normalthread_"] == -1 && block) {
+            
+            NSString *alert_info = [html stringBetweenString:@"<div class=\"alert_info\">" andString:@"</div>"];
+            NSString *alert_error = [html stringBetweenString:@"<div class=\"alert_error\">" andString:@"</div>"];
+            NSString *msg = nil;
+            if (alert_info) msg = alert_info;
+            else if (alert_error) msg = alert_error;
+            else msg = html;
+            
+            block([NSArray array], [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:msg}]);
+            return;
+        }
+        
+        
         //NSArray *threadsInfo = [HPThread parserHTML:html];
         NSArray *threadsInfo = [HPThread extractThreads:html];
         
