@@ -1707,9 +1707,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 	
-	if (scrollView.isDragging && !_lastPage) {
-        
-        
+	if (scrollView.isDragging &&
+        ([Setting boolForKey:HPSettingIsPullReply] || !_lastPage))
+    {
 		if (_refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloadingHeader) {
 			[_refreshHeaderView setState:EGOOPullRefreshNormal];
 		} else if (_refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloadingHeader) {
@@ -1719,6 +1719,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         float endOfTable = [self endOfTableView:scrollView];
         if (_refreshFooterView.state == EGOOPullRefreshPulling && endOfTable < 0.0f && endOfTable > -65.0f && !_reloadingFooter) {
 			[_refreshFooterView setState:EGOOPullRefreshNormal];
+            
+            if (_lastPage && [Setting boolForKey:HPSettingIsPullReply]) {
+                [_refreshFooterView setState:EGOOPullRefreshNoMore];
+            }
+            
 		} else if (_refreshFooterView.state == EGOOPullRefreshNormal && endOfTable < -65.0f && !_reloadingFooter) {
 			[_refreshFooterView setState:EGOOPullRefreshPulling];
 		}
@@ -1740,6 +1745,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             _reloadingFooter = YES;
             _refreshFooterView.hidden = YES;
             [self dragToNextPage];
+        } else {
+            if ([Setting boolForKey:HPSettingIsPullReply]) [self reply:nil];
         }
 	}
 }

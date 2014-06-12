@@ -131,6 +131,8 @@
 
 #define HPSettingPreferNotice @"HPSettingPreferNotice"
 
+#define HPSettingIsPullReply @"HPSettingIsPullReply"
+
 #define HPPMCount @"HPPMCount"
 #define HPNoticeCount @"HPNoticeCount"
 #define HPCheckDisable @"HPCheckDisable"

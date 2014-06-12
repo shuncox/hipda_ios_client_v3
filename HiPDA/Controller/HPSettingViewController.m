@@ -234,6 +234,16 @@
         
     }];
     
+    // 下拉回复
+    //
+    BOOL isPullReply = [Setting boolForKey:HPSettingIsPullReply];
+    REBoolItem *isPullReplyItem = [REBoolItem itemWithTitle:@"上拉回复" value:isPullReply switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"isPullReply Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingIsPullReply];
+        
+    }];
+    
     
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];
@@ -241,6 +251,7 @@
     [section addItem:postTailText];
     [section addItem:setForumItem];
     [section addItem:isPreferNoticeItem];
+    [section addItem:isPullReplyItem];
     
     [_manager addSection:section];
     return section;

@@ -93,7 +93,8 @@
                                HPNoticeCount:@0,
                                HPSettingBGLastMinite:@20.f,
                                HPSettingBgFetchNotice:@YES,
-                               HPSettingBgFetchThread:@NO
+                               HPSettingBgFetchThread:@NO,
+                               HPSettingIsPullReply:@YES
                                };
     return defaults;
 }
