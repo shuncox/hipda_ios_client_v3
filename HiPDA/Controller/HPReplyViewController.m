@@ -178,6 +178,7 @@
                       if (buttonIndex == [alertView cancelButtonIndex]) {
                           ;
                       } else {
+                          [self.contentTextFiled resignFirstResponder];
                           _secondsCountDown = 31;
                           _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
                       }
@@ -186,7 +187,8 @@
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
              }
          } else {
-             [SVProgressHUD showSuccessWithStatus:@"发送成功"];
+             //[SVProgressHUD showSuccessWithStatus:@"发送成功"];
+             [SVProgressHUD dismiss];
              [self doneWithError:nil];
          }
      }];
@@ -194,7 +196,7 @@
 
 -(void)timeFireMethod{
     _secondsCountDown--;
-    [SVProgressHUD showProgress:_secondsCountDown/31.f];
+    [SVProgressHUD showProgress:_secondsCountDown/31.f status:nil maskType:SVProgressHUDMaskTypeBlack];
     if(_secondsCountDown == 0){
         [_countDownTimer invalidate];
         [self send:nil];
