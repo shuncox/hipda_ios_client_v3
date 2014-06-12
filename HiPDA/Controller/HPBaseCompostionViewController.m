@@ -210,7 +210,7 @@
 - (void)completeWithAttachString:(NSString *)string error:(NSError *)error {
     
     NSString *text = _contentTextFiled.text;
-    _contentTextFiled.text = [NSString stringWithFormat:@"%@[attachimg]%@[/attachimg]", text, string];
+    _contentTextFiled.text = [NSString stringWithFormat:@"%@\n[attachimg]%@[/attachimg]\n", text, string];
     
     // add to images array
     if (!_imagesString) {
