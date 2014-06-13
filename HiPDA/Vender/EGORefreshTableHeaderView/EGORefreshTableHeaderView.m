@@ -26,6 +26,7 @@
 
 #import "EGORefreshTableHeaderView.h"
 #import "HPTheme.h"
+#import "HPSetting.h"
 
 #define TEXT_COLOR	 [UIColor blackColor];
 #define BORDER_COLOR [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
@@ -121,10 +122,35 @@
 	switch (aState) {
         
         case EGOOPullRefreshNoMore:
-			
-			_statusLabel.text = _noMoreLabelText;
-            _statusLabel.hidden = NO;
-            _arrowImage.hidden = YES;
+            
+            if ([Setting boolForKey:HPSettingIsPullReply]) {
+                
+                /*
+                 和下面的 EGOOPullRefreshNormal 一样！！！
+                 */
+                if (_state == EGOOPullRefreshPulling) {
+                    [CATransaction begin];
+                    [CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
+                    _arrowImage.transform = CATransform3DIdentity;
+                    [CATransaction commit];
+                }
+                
+                _statusLabel.text = @"上拉回复";
+                _statusLabel.hidden = NO;
+                [_activityView stopAnimating];
+                [CATransaction begin];
+                [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+                _arrowImage.hidden = YES;
+                _arrowImage.transform = _arrowNormalTransform;
+                [CATransaction commit];
+                
+            } else {
+                
+                _statusLabel.text = _noMoreLabelText;
+                _statusLabel.hidden = NO;
+                _arrowImage.hidden = YES;
+                
+            }
             
 			break;
 		case EGOOPullRefreshPulling:

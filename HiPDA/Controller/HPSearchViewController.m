@@ -10,6 +10,7 @@
 #import "HPReadViewController.h"
 
 #import "HPSearch.h"
+#import "HPUser.h"
 
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
@@ -23,6 +24,11 @@
 
 @interface HPSearchViewController ()
 
+@property (nonatomic, strong) NSArray *results;
+@property (nonatomic, strong) UISearchBar *searchBar;
+
+@property (nonatomic, strong) HPUser *user;
+
 @end
 
 @implementation HPSearchViewController {
@@ -32,6 +38,17 @@
     
     UIBarButtonItem *_searchButtonItem;
     UIBarButtonItem *_nextPageButtonItem;
+}
+
+- (instancetype)initWithUser:(HPUser *)user {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    _user = user;
+    
+    return self;
 }
 
 - (void)viewDidLoad
@@ -52,16 +69,8 @@
     
     self.navigationItem.rightBarButtonItem = _searchButtonItem;
     
-    [self addCloseBI];
-    
-//    // revealButton
-//    UIBarButtonItem *revealButtonItem = [
-//                                         [UIBarButtonItem alloc] initWithTitle:@"Menu"
-//                                         style:UIBarButtonItemStylePlain
-//                                         target:self action:@selector(revealToggle:)];
-//    self.navigationItem.leftBarButtonItem = revealButtonItem;
-    
-    
+    if (!_user) [self addCloseBI];
+  
     // search bar
     //
     _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
@@ -75,7 +84,11 @@
     
     _searchBar.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 44 + 40);
 
-    self.tableView.tableHeaderView = _searchBar;
+    if (!_user) self.tableView.tableHeaderView = _searchBar;
+    
+    if (_user) {
+        [self search:nil];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,6 +118,12 @@
 
 
 - (void)search:(id)sender {
+    
+    if (_user) {
+        [self searchForUser:sender];
+        return;
+    }
+    
     
     [_searchBar resignFirstResponder];
     
@@ -183,6 +202,45 @@
                                      // update ui
                                      self.title = @"搜索";
                                      self.navigationItem.rightBarButtonItem = _searchButtonItem;
+                                 }
+                             }];
+}
+
+- (void)searchForUser:(id)sender {
+    
+    [SVProgressHUD showWithStatus:@"搜索中..."];
+    
+    NSDictionary *parameters = @{@"key": S(@"%d",_user.uid)};
+    
+    [HPSearch searchWithParameters:parameters
+                              type:HPSearchTypeUser
+                              page:_current_page
+                             block:^(NSArray *results, NSInteger pageCount, NSError *error) {
+                                 
+                                 if (error) {
+                                     
+                                     [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+                                     
+                                 } else if ([results count]){
+                                     [SVProgressHUD dismiss];
+                                     
+                                     _results = results;
+                                     _page_count = pageCount;
+                                     
+                                     [self.tableView reloadData];
+                                     
+                                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                                     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                                     [self.tableView flashScrollIndicators];
+                                     
+                                     // update ui
+                                     self.title = [NSString stringWithFormat:@"主题 (%d/%d)", _current_page, _page_count];
+                                     self.navigationItem.rightBarButtonItem = _nextPageButtonItem;
+                                     
+                                 } else {
+                                     
+                                     [SVProgressHUD showErrorWithStatus:@"对不起，没有找到匹配结果。"];
+                                     
                                  }
                              }];
 }

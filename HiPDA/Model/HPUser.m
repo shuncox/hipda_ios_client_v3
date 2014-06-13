@@ -7,6 +7,8 @@
 //
 
 #import "HPUser.h"
+#import "HPHttpClient.h"
+#import "NSString+HTML.h"
 
 @implementation HPUser {
 @private
@@ -91,6 +93,106 @@
     
     NSString *avatarImageURLString = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/uc_server/data/avatar/000/%02ld/%02ld/%02ld_avatar_small.jpg", a, b, c];
     return [NSURL URLWithString:avatarImageURLString];
+}
+
+
++ (void)getUserSpaceDetailsWithUid:(NSInteger)uid
+                        orUsername:(NSString *)username
+                             block:(void (^)(NSDictionary* dict, NSError *error))block {
+    if (uid == 0 && !username) {
+        block(nil, [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:@"uid == 0 && !username"}]);
+        return;
+    }
+    
+    NSString *path = nil;
+    if (uid != 0) {
+        path = S(@"forum/space.php?uid=%d", uid);
+    } else {
+        path = S(@"forum/space.php?username=%@", username);
+    }
+    NSLog(@"getUserSpaceDetails %@", path);
+    
+    
+    [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
+        
+    
+        NSMutableArray *list = [NSMutableArray arrayWithCapacity:10];
+        NSString *_username = @"";
+        NSInteger _uid = 0;
+        RxMatch *m1 = [RX(@"; (.*?)的个人资料") firstMatchWithDetails:html];
+        if (m1) {
+            RxMatchGroup *g = [m1.groups objectAtIndex:1];
+            _username = (g.value ? g.value : @"");
+        }
+        RxMatch *m2 = [RX(@"\\(UID: (\\d+)\\)") firstMatchWithDetails:html];
+        if (m2) {
+            RxMatchGroup *g = [m2.groups objectAtIndex:1];
+            _uid = [g.value integerValue];
+        }
+        
+        
+        
+        //http://www.hi-pda.com/forum/space.php?uid=91718
+        NSArray *ms1 = [RX(@"<th[^>]*>(.*?)</th>\r\n<td[^>]*>(?:\r\n)?(.*?)</td>") matchesWithDetails:html];
+        
+        for (RxMatch *m in ms1) {
+            
+            RxMatchGroup *g1 = [m.groups objectAtIndex:1];
+            RxMatchGroup *g2 = [m.groups objectAtIndex:2];
+            
+            g1.value = [g1.value stringByReplacingOccurrencesOfString:@":" withString:@""];
+            g2.value = [g2.value stringByConvertingHTMLToPlainText];
+            
+            //NSLog(@"%@_%@", g1.value, g2.value);
+            
+            NSDictionary *info = @{
+                @"key": g1.value ? g1.value:[NSNull null],
+                @"value": g2.value ? g2.value:[NSNull null]
+            };
+            
+            [list addObject:info];
+        }
+        
+        NSArray *ms2 = [RX(@"<li>(.*?)</li>") matchesWithDetails:html];
+        
+        for (RxMatch *m in ms2) {
+            
+            RxMatchGroup *g1 = [m.groups objectAtIndex:1];
+            g1.value = [g1.value stringByConvertingHTMLToPlainText];
+            //NSLog(@"%@", g1.value);
+            
+            if ([g1.value hasPrefix:@"(UID"]) {
+                continue;
+            }
+            
+            NSArray *array = [g1.value componentsSeparatedByString:@": "];
+            if ([array count] == 2) {
+                NSDictionary *info = @{@"key": array[0], @"value": array[1]};
+                [list addObject:info];
+            } else if ([array count] == 1){
+                NSDictionary *info = @{@"key": array[0], @"value": [NSNull null]};
+                [list addObject:info];
+            }
+        }
+        
+        NSLog(@"%@", @{@"uid": @(_uid), @"username":_username, @"list": list});
+       
+        block(@{@"uid": @(_uid), @"username":_username, @"list": list}, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+        
+    }];
+    
+}
+
+
+- (NSString *)usernameForUrl {
+    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString* escapedURLString = [self.username
+                                  stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
+    return escapedURLString;
 }
 
 @end

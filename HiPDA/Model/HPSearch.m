@@ -38,11 +38,18 @@
             path = [NSString stringWithFormat:@"forum/search.php?srchtype=fulltext&srchtxt=%@&searchsubmit=true&st=on&srchuname=&srchfilter=all&srchfrom=0&before=&orderby=lastpost&ascdesc=desc&page=%ld", key, page];
             break;
         }
+        case HPSearchTypeUser:
+        {
+            NSString *key = [parameters objectForKey:@"key"];
+            path = [NSString stringWithFormat:@"forum/search.php?srchuid=%@&srchfid=all&srchfrom=0&searchsubmit=yes&page=%ld", key, page];
+            break;
+        }
         default:
             NSLog(@"error HPSearchType %ld", type);
             break;
     }
     
+    NSLog(@"%@",path);
 
     NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     path = [path stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
@@ -71,6 +78,7 @@
          
          switch (type) {
              case HPSearchTypeTitle:
+             case HPSearchTypeUser:
              {
                  pattern = @"th class=\"subject.*?<a href=\"viewthread\\.php\\?tid=(\\d+)[^>]+>(.*?)</a>.*?fid=(\\d+)\">(.*?)</a>.*?uid=(\\d+)\">(.*?)</a>.*?<em>(.*?)</em>";
                  

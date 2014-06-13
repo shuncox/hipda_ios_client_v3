@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "HPBaseTableViewController.h"
 
+@class HPUser;
+
 @interface HPSearchViewController : HPBaseTableViewController<UISearchBarDelegate>
 
-@property(nonatomic, strong) NSArray *results;
+- (instancetype)initWithUser:(HPUser *)user;
 
-@property(nonatomic, strong) UISearchBar *searchBar;
 @end

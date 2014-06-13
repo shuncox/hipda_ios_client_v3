@@ -20,4 +20,8 @@
 
 + (NSURL *)avatarStringWithUid:(NSInteger)_uid;
 
+
++ (void)getUserSpaceDetailsWithUid:(NSInteger)uid orUsername:(NSString *)username block:(void (^)(NSDictionary* dict, NSError *error))block;
+- (NSString *)usernameForUrl;
+
 @end

@@ -11,6 +11,7 @@
 #import "HPReplyTopicViewController.h"
 #import "HPReplyViewController.h"
 #import "HPRearViewController.h"
+#import "HPUserViewController.h"
 
 #import "HPNewPost.h"
 #import "HPDatabase.h"
@@ -115,6 +116,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     UIButton *_attentionButton;
     UIButton *_pageInfoButton;
     
+    UIButton *_buttomInVisibleBtn;
+    
     //
     EGORefreshTableHeaderView *_refreshHeaderView;
     EGORefreshTableFooterView *_refreshFooterView;
@@ -201,6 +204,15 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // load
     //[self performSelector:@selector(load:) withObject:nil afterDelay:0.01f];
     [self load];
+    
+    
+    // 临时 加一个翻滚到底部的button 试试效果
+    _buttomInVisibleBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-(IOS7_OR_LATER ? 0.f : 64.f)+20-20, self.view.frame.size.width, 20.f)];
+    _buttomInVisibleBtn.backgroundColor = [UIColor redColor];
+    _buttomInVisibleBtn.alpha = 0.1;
+    [_buttomInVisibleBtn addTarget:self action:@selector(webViewScrollToBottom:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_buttomInVisibleBtn];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -434,10 +446,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 HPNewPost *post = (HPNewPost *)obj;
                 
                 NSString *liClass = (post.floor == _gotoFloor) ? @"gotoFloor" : @"";
-                     
+                
                 NSString *list = nil;
                 if ([Setting boolForKey:HPSettingShowAvatar]) {
-                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' src=\"%@\" onerror=\"this.onerror=null;this.src=''\" ></span><span class=\"author\">%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content\">%@</div></li>", liClass, post.floor, post.floor,  post.user.username, [post.user.avatarImageURL absoluteString], post.user.username, post.floor, [HPNewPost dateString:post.date], post.body_html];
+                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' src=\"%@\" onerror=\"this.onerror=null;this.src=''\" ></span><span class=\"author\">%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content\">%@</div></li>", liClass, post.floor, post.floor,  [post.user usernameForUrl], [post.user.avatarImageURL absoluteString], post.user.username, post.floor, [HPNewPost dateString:post.date], post.body_html];
                     
                 } else {
                     
@@ -637,8 +649,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
     } else if ([request.URL.scheme isEqualToString:@"user"]) {
         
-        // todo
-        //[SVProgressHUD showErrorWithStatus:urlString];
+        HPUserViewController *uvc = [HPUserViewController new];
+        uvc.username = [urlString stringByReplacingOccurrencesOfString:@"user://" withString:@""];
+        
+        [self.navigationController pushViewController:uvc animated:YES];
         
         return NO;
         

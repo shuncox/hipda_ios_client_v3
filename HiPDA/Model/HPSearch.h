@@ -10,7 +10,8 @@
 
 enum {
     HPSearchTypeTitle     = 0,
-    HPSearchTypeFullText  = 1
+    HPSearchTypeFullText  = 1,
+    HPSearchTypeUser  = 2
 } ;
 typedef NSUInteger HPSearchType;
 
