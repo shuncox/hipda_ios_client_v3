@@ -18,12 +18,6 @@
 #import "UIAlertView+Blocks.h"
 #import "UIBarButtonItem+ImageItem.h"
 
-typedef enum {
-    HPMessageRangeLatest = 3,
-    HPMessageRangeCurrentWeek,
-    HPMessageRangeAll
-} HPMessageRange;
-
 @interface HPMessageDetailViewController () <JSMessagesViewDataSource, JSMessagesViewDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messages;

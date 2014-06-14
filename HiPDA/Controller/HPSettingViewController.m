@@ -11,6 +11,7 @@
 #import "HPSetForumsViewController.h"
 #import "HPRearViewController.h"
 #import "HPBgFetchViewController.h"
+#import "HPSetStupidBarController.h"
 
 #import "MultilineTextItem.h"
 #import "HPSetting.h"
@@ -245,6 +246,16 @@
     }];
     
     
+    //
+    //
+    RETableViewItem *setStupidBarItem = [RETableViewItem itemWithTitle:@"StupidBar" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        
+        HPSetStupidBarController *svc = [HPSetStupidBarController new];
+        [self.navigationController pushViewController:svc animated:YES];
+        [item deselectRowAnimated:YES];
+    }];
+    
+    
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];
     [section addItem:isOrderByDatelineItem];
@@ -252,6 +263,7 @@
     [section addItem:setForumItem];
     [section addItem:isPreferNoticeItem];
     [section addItem:isPullReplyItem];
+    [section addItem:setStupidBarItem];
     
     [_manager addSection:section];
     return section;

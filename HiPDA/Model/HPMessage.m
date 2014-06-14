@@ -144,7 +144,7 @@
 
 
 + (void)loadMessageDetailWithUid:(NSInteger)uid
-                       daterange:(NSInteger)range
+                       daterange:(HPMessageRange)range
                            block:(void (^)(NSArray *lists, NSError *error))block
 {
     

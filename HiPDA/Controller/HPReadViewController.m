@@ -13,6 +13,7 @@
 #import "HPRearViewController.h"
 #import "HPUserViewController.h"
 
+
 #import "HPNewPost.h"
 #import "HPDatabase.h"
 #import "HPUser.h"
@@ -25,6 +26,8 @@
 #import "HPHttpClient.h"
 #import "HPTheme.h"
 #import "HPSetting.h"
+
+#import "HPStupidBar.h"
 
 #import "SDURLCache.h"
 
@@ -80,7 +83,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 */
 
 
-@interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate>
+@interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 @property (nonatomic, strong) NSArray *posts;
 
 @property (nonatomic, assign) NSInteger current_page;
@@ -205,14 +208,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     //[self performSelector:@selector(load:) withObject:nil afterDelay:0.01f];
     [self load];
     
-    
-    // 临时 加一个翻滚到底部的button 试试效果
-    _buttomInVisibleBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-(IOS7_OR_LATER ? 0.f : 64.f)+20-20, self.view.frame.size.width, 20.f)];
-    _buttomInVisibleBtn.backgroundColor = [UIColor redColor];
-    _buttomInVisibleBtn.alpha = 0.1;
-    [_buttomInVisibleBtn addTarget:self action:@selector(webViewScrollToBottom:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_buttomInVisibleBtn];
-    
+    // add stupid bar
+    if (![Setting boolForKey:HPSettingStupidBarDisable]) {
+        HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-(IOS7_OR_LATER ? 0.f : 64.f)+20-20, self.view.frame.size.width, 20.f)];
+        stupidBar.delegate = self;
+        [self.view addSubview:stupidBar];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -777,10 +778,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     NSString *theTitle = nil;
     if ([Setting boolForKey:HPSettingPreferNotice]) {
-        
         theTitle = [HPFavorite isFavoriteWithTid:_thread.tid] ?
         @"取消收藏" : @"收藏";
-    
     } else {
         theTitle = [HPAttention isAttention:_thread.tid] ?
         @"取消关注" : @"加关注";
@@ -1851,6 +1850,72 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   [SVProgressHUD showSuccessWithStatus:@"已保存至相机胶卷"];
                               }
                           }];
+}
+
+#pragma mark - HPStupidBarDelegate
+
+- (void)leftBtnTap {
+    [self actionForType:[Setting integerForKey:HPSettingStupidBarLeftAction]];
+}
+- (void)centerBtnTap {
+    [self actionForType:[Setting integerForKey:HPSettingStupidBarCenterAction]];
+}
+- (void)rightBtnTap {
+    [self actionForType:[Setting integerForKey:HPSettingStupidBarRightAction]];
+}
+
+- (void)actionForType:(HPStupidBarAction)type {
+    switch (type) {
+        case HPStupidBarActionFavorite:
+        {
+            [self favorite:nil];
+            [self updateFavButton];
+            break;
+        }
+        case HPStupidBarActionAttention:
+        {
+            [self attention:nil];
+            [self updateAttentionButton];
+            break;
+        }
+        case HPStupidBarActionShowPageView:
+        {
+            [self showPageView:nil];
+            break;
+        }
+        case HPStupidBarActionPrevPage:
+        {
+            [self prevPage:nil];
+            break;
+        }
+        case HPStupidBarActionNextPage:
+        {
+            [self nextPage:nil];
+            break;
+        }
+        case HPStupidBarActionReply:
+        {
+            [self reply:nil];
+            break;
+        }
+        case HPStupidBarActionOnlyLz:
+        {
+            [self toggleOnlySomeone:_thread.user];
+            break;
+        }
+        case HPStupidBarActionReload:
+        {
+            [self reload:nil];
+            break;
+        }
+        case HPStupidBarActionScrollBottom:
+        {
+            [self webViewScrollToBottom:nil];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 

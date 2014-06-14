@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    HPMessageRangeLatest = 3,
+    HPMessageRangeCurrentWeek,
+    HPMessageRangeAll
+} HPMessageRange;
+
 @interface HPMessage : NSObject
 
 @property (nonatomic, strong) NSArray *message_list;
@@ -22,7 +28,7 @@
 + (void)ignoreMessage;
 
 + (void)loadMessageDetailWithUid:(NSInteger)uid
-                       daterange:(NSInteger)range
+                       daterange:(HPMessageRange)range
                            block:(void (^)(NSArray *lists, NSError *error))block;
 
 + (void)loadMessageListWithBlock:(void (^)(NSArray *info, NSError *error))block

@@ -22,6 +22,10 @@
 @property (nonatomic, strong) NSArray *data;
 @property (nonatomic, strong) HPUser *user;
 
+@property (nonatomic, strong) UITableViewCell *cell0;
+@property (nonatomic, strong) UITableViewCell *cell1;
+@property (nonatomic, strong) UITableViewCell *cell2;
+
 @end
 
 @implementation HPUserViewController
@@ -29,7 +33,7 @@
 - (void)loadView {
     [super loadView];
     
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:_tableView];
     
 }
@@ -40,7 +44,6 @@
     
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    
     [_tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"TableViewSectionHeaderViewIdentifier"];
     
     self.title = @"个人资料";
@@ -79,80 +82,67 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _data ? 6:0;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section % 2 == 0) {
-        return 0;
-    } else {
-        switch (section) {
-            case 1:
-                return _data ? 1 : 0;
-                break;
-            case 3:
-                return _data ? 2 : 0;
-                break;
-            case 5:
-                return _data.count;
-                break;
-            default:
-                return 0;
-                break;
-        }
-    }
-}
-
-//http://stackoverflow.com/questions/664781/change-default-scrolling-behavior-of-uitableview-section-header
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section % 2 == 0) {
-        return @" ";
-    }else {
-        return nil;
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 2;
+            break;
+        case 2:
+            return _data ? _data.count : 10;
+            break;
+        default:
+            return 0;
+            break;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1 && indexPath.row == 0) {
+    
+    if (indexPath.section == 0 && indexPath.row == 0) {
         
-        static UITableViewCell *cell0 = nil;
-        if (!cell0) {
-            cell0 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell0"];
+        if (!_cell0) {
+            _cell0 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell0"];
         }
         
-        [cell0.imageView setImageWithURL:_user.avatarImageURL placeholderImage:nil options:SDWebImageLowPriority];
-        cell0.textLabel.text = _user.username;
-        cell0.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_cell0.imageView setImageWithURL:_user.avatarImageURL placeholderImage:nil options:SDWebImageLowPriority];
+        _cell0.textLabel.text = _user.username;
+        _cell0.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        return cell0;
+        return _cell0;
         
-    } else if (indexPath.section == 3 && indexPath.row == 0) {
+    } else if (indexPath.section == 1 && indexPath.row == 0) {
         
-        static UITableViewCell *cell1 = nil;
-        if (!cell1) {
-            cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell1"];
+        if (!_cell1) {
+            _cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell1"];
         }
         
-        
-        cell1.textLabel.text = @"搜索帖子";
-        cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        
-        return cell1;
-        
-    } else if (indexPath.section == 3 && indexPath.row == 1) {
-        
-        static UITableViewCell *cell2 = nil;
-        if (!cell2) {
-            cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell2"];
+        if (_data) {
+            _cell1.textLabel.text = @"搜索帖子";
+            _cell1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
-        cell2.textLabel.text = @"发短消息";
-        cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return _cell1;
         
-        return cell2;
+    } else if (indexPath.section == 1 && indexPath.row == 1) {
+        
+        if (!_cell2) {
+            _cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell2"];
+        }
+        
+        if (_data) {
+            _cell2.textLabel.text = _data? @"发短消息":nil;
+            _cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        return _cell2;
     }
     
     
@@ -176,12 +166,15 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (indexPath.section == 3 && indexPath.row == 0) {
+    if (!_data) return;
+    
+    if (indexPath.section == 1
+        && indexPath.row == 0) {
         
         HPSearchViewController *searchVC = [[HPSearchViewController alloc] initWithUser:_user];
         [self.navigationController pushViewController:searchVC animated:YES];
         
-    } else if (indexPath.section == 3 && indexPath.row == 1) {
+    } else if (indexPath.section == 1 && indexPath.row == 1) {
         
         [self promptForSendMessage:_user.username];
         

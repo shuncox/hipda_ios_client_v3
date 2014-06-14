@@ -133,6 +133,12 @@
 
 #define HPSettingIsPullReply @"HPSettingIsPullReply"
 
+#define HPSettingStupidBarDisable @"HPSettingStupidBarDisable"
+#define HPSettingStupidBarHide @"HPSettingStupidBarHide"
+#define HPSettingStupidBarLeftAction @"HPSettingStupidBarLeftAction"
+#define HPSettingStupidBarCenterAction @"HPSettingStupidBarCenterAction"
+#define HPSettingStupidBarRightAction @"HPSettingStupidBarRightAction"
+
 #define HPPMCount @"HPPMCount"
 #define HPNoticeCount @"HPNoticeCount"
 #define HPCheckDisable @"HPCheckDisable"

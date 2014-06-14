@@ -94,7 +94,13 @@
                                HPSettingBGLastMinite:@20.f,
                                HPSettingBgFetchNotice:@YES,
                                HPSettingBgFetchThread:@NO,
-                               HPSettingIsPullReply:@YES
+                               HPSettingIsPullReply:@YES,
+                               
+                               HPSettingStupidBarDisable:@NO,
+                               HPSettingStupidBarHide:@NO,
+                               HPSettingStupidBarLeftAction:@(HPStupidBarActionFavorite),
+                               HPSettingStupidBarCenterAction:@(HPStupidBarActionScrollBottom),
+                               HPSettingStupidBarRightAction:@(HPStupidBarActionReply),
                                };
     return defaults;
 }

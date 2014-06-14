@@ -10,6 +10,19 @@
 
 #define Setting ([HPSetting sharedSetting])
 
+typedef enum {
+    HPStupidBarActionFavorite = 0,
+    HPStupidBarActionAttention,
+    HPStupidBarActionShowPageView,
+    HPStupidBarActionPrevPage,
+    HPStupidBarActionNextPage,
+    HPStupidBarActionReply,
+    HPStupidBarActionOnlyLz,
+    HPStupidBarActionReload,
+    HPStupidBarActionScrollBottom
+} HPStupidBarAction;
+
+
 @interface HPSetting : NSObject
 
 + (HPSetting*)sharedSetting;
@@ -32,5 +45,6 @@
 - (NSString *)postTail;
 - (void)setPostTail:(NSString *)postTail;
 - (NSString *)isPostTailAllow:(NSString *)postTail;
+
 
 @end
