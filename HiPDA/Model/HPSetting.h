@@ -19,7 +19,9 @@ typedef enum {
     HPStupidBarActionReply,
     HPStupidBarActionOnlyLz,
     HPStupidBarActionReload,
-    HPStupidBarActionScrollBottom
+    HPStupidBarActionScrollBottom,
+    HPStupidBarActionJ,
+    HPStupidBarActionK
 } HPStupidBarAction;
 
 

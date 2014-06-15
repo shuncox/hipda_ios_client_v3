@@ -103,6 +103,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @property (nonatomic, strong) UILabel *lineHeightLabel;
 @property (nonatomic, assign) NSInteger currentLineHeight;
 
+@property (nonatomic, assign) NSInteger current_floor;
+
 @end
 
 @implementation HPReadViewController {
@@ -466,7 +468,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             
             NSString *final = [HPNewPost preProcessHTML:string];
             
-            //NSLog(@"%@", string);
+            //NSLog(@"%@", final);
             [weakSelf.webView loadHTMLString:final baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
             
             [weakSelf endLoad:YES];
@@ -1856,12 +1858,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)leftBtnTap {
     [self actionForType:[Setting integerForKey:HPSettingStupidBarLeftAction]];
+    //[self j];
 }
 - (void)centerBtnTap {
     [self actionForType:[Setting integerForKey:HPSettingStupidBarCenterAction]];
 }
 - (void)rightBtnTap {
     [self actionForType:[Setting integerForKey:HPSettingStupidBarRightAction]];
+    //[self k];
 }
 
 - (void)actionForType:(HPStupidBarAction)type {
@@ -1913,9 +1917,70 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [self webViewScrollToBottom:nil];
             break;
         }
+        case HPStupidBarActionJ:
+        {
+            [self j];
+            break;
+        }
+        case HPStupidBarActionK:
+        {
+            [self k];
+            break;
+        }
         default:
             break;
     }
+}
+
+#pragma mark - in memory of GR
+
+- (void)reset {
+    
+    CGPoint p = self.webView.scrollView.contentOffset;
+    
+    NSString *floorString = [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:
+          @"var y = %f;"
+          @"var list = document.getElementsByClassName('info');"
+          @"var r;"
+          @"for (var i=0, len=list.length; i < len; i++) { if (list[i].offsetTop >= y) { r = list[i]; break;}}"
+          @"var p = r.parentNode.getAttribute('data-id'); p;", p.y]];
+    
+    NSInteger f = [[floorString stringByReplacingOccurrencesOfString:@"floor://" withString:@""] integerValue];
+    _current_floor = f;
+    
+}
+
+- (void)j {
+    [self reset];
+    _current_floor--;
+    [self jump];
+}
+
+- (void)k {
+    [self reset];
+    _current_floor++;
+    [self jump];
+}
+
+- (void)jump {
+    
+    if (_posts.count < 1) {
+        return;
+        NSLog(@"not ready");
+    }
+
+    int start = [_posts[0] floor];
+    int end = [_posts[0] floor] + _posts.count - 1;
+    
+    if (_current_floor > end) {
+        _current_floor =  end;
+    }
+    if (_current_floor < start) {
+        _current_floor = start;
+    }
+        
+    NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",_current_floor];
+    [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
 
 
