@@ -126,7 +126,7 @@
     
     [HPSendPost loadOriginalPostWithFid:_thread.fid tid:_thread.tid pid:_correct_post.pid page:_page block:^(NSDictionary *result, NSError *error) {
         if (!error) {
-            //[SVProgressHUD showSuccessWithStatus:@"xxx"];
+            [SVProgressHUD dismiss];
             
             _parameters = [NSMutableDictionary dictionaryWithDictionary:result];
             self.contentTextFiled.text = [_parameters objectForKey:@"message"];
