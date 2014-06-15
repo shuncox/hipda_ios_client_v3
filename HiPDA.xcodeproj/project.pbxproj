@@ -325,6 +325,7 @@
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
+		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
 		EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8451829EFA900C1718B /* Foundation.framework */; };
 		EAFDB8481829EFA900C1718B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8471829EFA900C1718B /* CoreGraphics.framework */; };
@@ -821,6 +822,8 @@
 		EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+ScreenShot.m"; path = "Helper/UIView+ScreenShot.m"; sourceTree = "<group>"; };
 		EAF3C567194C11E700168263 /* HPSetStupidBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetStupidBarController.h; path = Controller/HPSetStupidBarController.h; sourceTree = "<group>"; };
 		EAF3C568194C11E700168263 /* HPSetStupidBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetStupidBarController.m; path = Controller/HPSetStupidBarController.m; sourceTree = "<group>"; };
+		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
+		EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPEditPostViewController.m; path = Controller/HPEditPostViewController.m; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
 		EAFD40AF18BDDEB90077C1B5 /* RegExCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegExCategories.h; path = Helper/RegExCategories.h; sourceTree = "<group>"; };
 		EAFDB8421829EFA900C1718B /* HiPDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1114,6 +1117,8 @@
 				EA075F5D18E447FD00A07C08 /* HPNewThreadViewController.m */,
 				EA4C5A0F18E56F3500B12442 /* HPImageUploadViewController.h */,
 				EA4C5A1018E56F3500B12442 /* HPImageUploadViewController.m */,
+				EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */,
+				EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */,
 			);
 			name = Compostion;
 			sourceTree = "<group>";
@@ -2140,6 +2145,7 @@
 				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
 				EA743BE7183D00F10067F62B /* RETableViewFloatCell.m in Sources */,
 				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,
+				EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */,
 				EAA1E69118D03ADF00E1CFE1 /* SDURLCache.m in Sources */,
 				EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */,
 				EA368A8818C77A1D00C5C5BD /* HPReplyTopicViewController.m in Sources */,

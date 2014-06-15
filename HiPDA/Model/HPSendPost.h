@@ -15,7 +15,9 @@ enum {
     ActionTypeReply     = 0,
     ActionTypeQuote     = 1,
     ActionTypeNewPost   = 2,
-    ActionTypeNewThread = 3
+    ActionTypeNewThread = 3,
+    ActionTypeEditThread = 4,
+    ActionTypeEditPost = 5
 } ;
 typedef NSUInteger ActionType;
 
@@ -68,5 +70,18 @@ typedef NSUInteger ActionType;
           imageName:(NSString *)imageName
       progressBlock:(void (^)(CGFloat progress))progressBlock
               block:(void (^)(NSString *attach, NSError *error))block;
+
+
+/*
+ edit
+ */
++ (void)loadOriginalPostWithFid:(NSInteger)fid
+                            tid:(NSInteger)tid
+                            pid:(NSInteger)pid
+                           page:(NSInteger)page
+                          block:(void (^)(NSDictionary *result, NSError *error))block;
+
++ (void)editPost:(NSDictionary *)info
+           block:(void (^)(NSError *error))block;
 
 @end

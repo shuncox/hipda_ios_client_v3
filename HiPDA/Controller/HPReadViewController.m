@@ -12,7 +12,7 @@
 #import "HPReplyViewController.h"
 #import "HPRearViewController.h"
 #import "HPUserViewController.h"
-
+#import "HPEditPostViewController.h"
 
 #import "HPNewPost.h"
 #import "HPDatabase.h"
@@ -787,11 +787,19 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"取消关注" : @"加关注";
     }
     
+    NSString *firstTitle = nil;
+    if (_posts.count>=1 && [self canEdit:_posts[0]]) {
+        firstTitle = @"编辑";
+    } else if (_current_page > 1) {
+        firstTitle = @"刷新";
+    } else {
+        firstTitle = @"举报";
+    }
+    
     IBActionSheet *actionSheet = [[IBActionSheet alloc]
                                   initWithTitle:nil
                                   delegate:self cancelButtonTitle:@"取消"
-                                  destructiveButtonTitle:
-                                  _current_page == 1 ? @"举报" : @"刷新"
+                                  destructiveButtonTitle:firstTitle
                                   otherButtonTitles:
                                   theTitle,
                                   _current_author_uid != 0 ? @"查看全部" : @"只看楼主",
@@ -827,7 +835,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     IBActionSheet *actionSheet = [[IBActionSheet alloc]
                                   initWithTitle:nil
                                   delegate:self cancelButtonTitle:@"取消"
-                                  destructiveButtonTitle:@"举报"
+                                  destructiveButtonTitle:
+                                  [self canEdit:_current_action_post] ?
+                                    @"编辑" : @"举报"
                                   otherButtonTitles:
                                   @"回复",
                                   @"引用",
@@ -852,10 +862,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             switch (buttonIndex) {
                 case 0://举报
                 {
-                    if (_current_page == 1) {
-                       [self report];
-                    } else {
+                    if (_posts.count>=1 && [self canEdit:_posts[0]]) {
+                        [self editThread];
+                    } else if (_current_page > 1) {
                         [self reload:nil];
+                    } else {
+                        [self report];
                     }
                     break;
                 }
@@ -907,7 +919,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         {
             switch (buttonIndex) {
                 case 0://举报
-                    [self report];
+                    if ([self canEdit:_current_action_post]) {
+                        [self editPost:_current_action_post];
+                    } else {
+                        [self report];
+                    }
                     break;
                 case 1://回复
                 {
@@ -1050,6 +1066,16 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                        delegate:self];
     
     [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+}
+
+- (void)editThread {
+    HPEditPostViewController *evc = [[HPEditPostViewController alloc] initWithPost:[_posts objectAtIndex:0] actionType:ActionTypeEditThread thread:_thread page:_current_page delegate:self];
+    [self presentViewController:[HPCommon NVCWithRootVC:evc] animated:YES completion:nil];
+}
+
+- (void)editPost:(HPNewPost *)post {
+    HPEditPostViewController *evc = [[HPEditPostViewController alloc] initWithPost:post actionType:ActionTypeEditPost thread:_thread page:_current_page delegate:self];
+    [self presentViewController:[HPCommon NVCWithRootVC:evc] animated:YES completion:nil];
 }
 
 - (void)quoteSomeone:(id)sender {
@@ -1794,6 +1820,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 # pragma mark - reply done
 - (void)compositionDoneWithType:(ActionType)type error:(NSError *)error {
     
+    if (type == ActionTypeEditThread || type == ActionTypeEditPost) {
+        [self reload:nil];
+        return;
+    }
+    
     [UIAlertView showConfirmationDialogWithTitle:@"发送成功"
                                          message:@"是否查看？"
                                          handler:^(UIAlertView *alertView, NSInteger buttonIndex)
@@ -1983,6 +2014,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
 
-
+- (BOOL)canEdit:(HPNewPost *)post {
+    return [[NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""]
+     isEqualToString:post.user.username];
+}
 
 @end

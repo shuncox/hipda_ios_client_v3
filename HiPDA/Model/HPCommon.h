@@ -139,6 +139,8 @@
 #define HPSettingStupidBarCenterAction @"HPSettingStupidBarCenterAction"
 #define HPSettingStupidBarRightAction @"HPSettingStupidBarRightAction"
 
+#define HPDraft @"HPDraft"
+
 #define HPPMCount @"HPPMCount"
 #define HPNoticeCount @"HPNoticeCount"
 #define HPCheckDisable @"HPCheckDisable"

@@ -17,6 +17,8 @@
 #import "HPTheme.h"
 #import "HPSetting.h"
 
+#import "UIAlertView+Blocks.h"
+
 
 #define TOOLBAR_HEIGHT 40.f
 
@@ -32,6 +34,7 @@
     UIButton *photoBnt;
     UIButton *emotionBnt;
     UIButton *mentionBnt;
+    UIButton *recoverBnt; NSString *lastContent;
     UIActivityIndicatorView *tokenIndicator;
     UILabel *tokenLabel;
     
@@ -111,6 +114,20 @@
     mentionBnt.center = CGPointMake(125, 20);
     mentionBnt.hitTestEdgeInsets = UIEdgeInsetsMake(0, -5, 0, -5);
     
+    
+    recoverBnt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+
+    [toolbar addSubview:recoverBnt];
+    [recoverBnt setTapTarget:self action:@selector(recoverButtonTouched)];
+    [recoverBnt setTitle:@"R" forState:UIControlStateNormal];
+    [recoverBnt setTitleColor:rgb(111.f,111.f,111.f) forState:UIControlStateNormal];
+    recoverBnt.titleLabel.font = [UIFont systemFontOfSize:18.f];
+    [recoverBnt sizeToFit];
+    recoverBnt.center = CGPointMake(300, 20);
+    lastContent = [NSStandardUserDefaults objectForKey:HPDraft];
+    if (!lastContent || [lastContent isEqualToString:@""]) {
+        [recoverBnt removeFromSuperview];
+    }
     
     /*
     tokenLabel = [UILabel new];
@@ -235,6 +252,10 @@
     }
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    //NSLog(@"%@", _contentTextFiled.text);
+    [NSStandardUserDefaults saveObject:_contentTextFiled.text forKey:HPDraft];
+}
 
 #pragma mark - keyborad
 
@@ -290,6 +311,20 @@
 
 - (void)mentionButtonTouched {
     ;
+}
+
+- (void)recoverButtonTouched {
+    //NSString *last = [NSStandardUserDefaults objectForKey:HPDraft];
+    [UIAlertView showConfirmationDialogWithTitle:@"确认恢复为"
+                                         message:S(@"%@", lastContent)
+                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+    {
+        if (buttonIndex == [alertView cancelButtonIndex]) {
+            ;
+        } else {
+            _contentTextFiled.text = lastContent;
+        }
+    }];
 }
 
 @end

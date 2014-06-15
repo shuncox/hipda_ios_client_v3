@@ -198,8 +198,8 @@
         //<div class="alert_error">
         //<p>您无权进行当前操作，原因如下：</p>
         //<p>对不起，您还未登录，无权访问该版块。</p>
-        NSString *alert_info = [html stringBetweenString:@"<div class=\"alert_info\">\n<p>" andString:@"</p>"];
-        NSString *alert_error = [html stringBetweenString:@"<div class=\"alert_error\">\n<p>" andString:@"</p></div>"];
+        NSString *alert_info = [html stringBetweenString:@"<div class=\"alert_info\">" andString:@"</p>"];
+        NSString *alert_error = [html stringBetweenString:@"<div class=\"alert_error\">" andString:@"</p>"];
         
         
         if (block) {
@@ -477,6 +477,95 @@
                                                           errorDescription:NULL];
     NSLog(@"%@",returnStr);
     return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n"withString:@"\n"];
+}
+
++ (void)loadOriginalPostWithFid:(NSInteger)fid
+                            tid:(NSInteger)tid
+                            pid:(NSInteger)pid
+                           page:(NSInteger)page
+                          block:(void (^)(NSDictionary *result, NSError *error))block {
+    //NSString *path = @"forum/post.php?action=edit&fid=57&tid=1391482&pid=25441192&page=1";
+    NSString *path = S(@"forum/post.php?action=edit&fid=%ld&tid=%ld&pid=%ld&page=%ld", fid, tid, pid, page);
+    [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
+        
+        //对不起，您无权编辑他人发表的帖子，请返回
+        NSLog(@"%@", html);
+        //<input type="hidden" name="formhash" id="formhash" value="c8e6fe39" />
+        NSArray *ms = [RX(@"<input.*?name=\"(.*?)\".*?value=\"(.*?)\".*?/>") matchesWithDetails:html];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+     
+        for (RxMatch *m in ms) {
+            
+            RxMatchGroup *g1 = [m.groups objectAtIndex:1];
+            RxMatchGroup *g2 = [m.groups objectAtIndex:2];
+            
+            //NSLog(@"%@, %@", g1.value, g2.value);
+            NSString *key = g1.value;
+            NSString *value = g2.value ? g2.value : @"";
+            
+            NSDictionary *needs = @{@"formhash":@YES, @"posttime":@YES,
+                                    @"wysiwyg":@YES, @"fid":@YES,
+                                    @"tid":@YES, @"pid":@YES,
+                                    @"page":@YES, @"iconid":@YES,
+                                    @"subject":@YES, @"tags":@YES,
+                                    @"usesig":@YES, @"editsubmit":@YES};
+            
+            if (key && [needs objectForKey:key]) {
+                [dict setObject:value forKey:key];
+            }
+        }
+        
+        NSRegularExpression *rx = [[NSRegularExpression alloc] initWithPattern:@"<textarea.*?name=\"message\"[^>]*>(.*?)</textarea>" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
+        RxMatch *m = [rx firstMatchWithDetails:html];
+        RxMatchGroup *g = [m.groups objectAtIndex:1];
+        //NSLog(@"message, %@", g.value);
+        
+        [dict setObject:g.value?g.value:@"" forKey:@"message"];
+        
+        //message
+        NSLog(@"%@", dict);
+        block([NSDictionary dictionaryWithDictionary:dict], nil);
+     
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        block(nil, error);
+    }];
+}
+
++ (void)editPost:(NSDictionary *)parameters
+           block:(void (^)(NSError *error))block {
+    
+    NSString *path = @"http://www.hi-pda.com/forum/post.php?action=edit&extra=&editsubmit=yes&mod=";
+    NSLog(@"%@", parameters);
+    [[HPHttpClient sharedClient] postPath:path
+                               parameters:parameters
+                                  success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        
+        NSString *html = [HPHttpClient GBKresponse2String:responseObject];
+        NSLog(@"%@", html);
+        NSString *alert_info = [html stringBetweenString:@"<div class=\"alert_info\">" andString:@"</p>"];
+        NSString *alert_error = [html stringBetweenString:@"<div class=\"alert_error\">" andString:@"</p>"];
+        if (block) {
+            if (alert_info || alert_error || !html) {
+                
+                NSString *err;
+                if (alert_info) err = alert_info;
+                else err = alert_error;
+                
+                NSDictionary *details = [NSDictionary dictionaryWithObject:err forKey:NSLocalizedDescriptionKey];
+                block([NSError errorWithDomain:@"world" code:200 userInfo:details]);
+                
+            } else {
+                block(nil);
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
+            block(error);
+        }
+    }];
+    
 }
 
 @end
