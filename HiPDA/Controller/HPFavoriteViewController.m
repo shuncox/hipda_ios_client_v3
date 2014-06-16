@@ -66,6 +66,10 @@
 
 #pragma mark -
 
+- (void)refresh:(id)sender {
+    [self.tableView reloadData];
+}
+
 - (void)setup {
     _favoritedThreads = [[HPFavorite sharedFavorite] favorites];
     NSLog(@"_favoritedThreads %@",_favoritedThreads);

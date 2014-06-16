@@ -85,7 +85,7 @@
     BOOL isStop = NO;
     NSTimeInterval interval = 86400 * 30;
 
-    NSDate *ago = [NSDate dateWithTimeIntervalSince1970:[HPCommon timeIntervalSince1970WithString:@"2014/04/13"]];
+    NSDate *ago = [NSDate dateWithTimeIntervalSince1970:[HPCommon timeIntervalSince1970WithString:@"2014/06/13"]];
     NSDate *stop = [NSDate dateWithTimeInterval:interval sinceDate:ago];
     NSDate *today = [NSDate date];
     if ([stop compare:today] == NSOrderedAscending) {

@@ -213,6 +213,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // add stupid bar
     if (![Setting boolForKey:HPSettingStupidBarDisable]) {
         HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-(IOS7_OR_LATER ? 0.f : 64.f)+20-20, self.view.frame.size.width, 20.f)];
+        stupidBar.tag = 2020202;
         stupidBar.delegate = self;
         [self.view addSubview:stupidBar];
     }
@@ -1859,6 +1860,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSString *info = [NSString stringWithFormat:@"本页链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
     NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
     [self.webView stringByEvaluatingJavaScriptFromString:js];
+    UIView *stupidbar = [self.view viewWithTag:2020202];
+    [stupidbar removeFromSuperview];
     
     [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
     
@@ -1983,13 +1986,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)j {
     [self reset];
-    _current_floor--;
+    _current_floor++;
     [self jump];
 }
 
 - (void)k {
     [self reset];
-    _current_floor++;
+    _current_floor--;
     [self jump];
 }
 
@@ -2014,6 +2017,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
 
+#pragma mark -
 - (BOOL)canEdit:(HPNewPost *)post {
     return [[NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""]
      isEqualToString:post.user.username];
