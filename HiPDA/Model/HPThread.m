@@ -140,7 +140,7 @@
             else if (alert_error) msg = alert_error;
             else msg = html;
             
-            block([NSArray array], [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:msg}]);
+            block([NSArray array], [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:msg, @"html":html}]);
             return;
         }
         
