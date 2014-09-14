@@ -152,7 +152,12 @@
         for (NSDictionary *attributes in threadsInfo) {
             HPThread *thread = [[HPThread alloc] initWithAttributes:attributes];
             thread.fid = fid;
-            [threads addObject:thread];
+            
+            if ([Setting isBlocked:thread.user.username]) {
+                NSLog(@"block %@, remove it from thread list", thread.user.username);
+            } else {
+                [threads addObject:thread];
+            }
         }
         
         // cache

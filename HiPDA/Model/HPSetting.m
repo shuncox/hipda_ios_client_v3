@@ -101,6 +101,7 @@
                                HPSettingStupidBarLeftAction:@(HPStupidBarActionFavorite),
                                HPSettingStupidBarCenterAction:@(HPStupidBarActionScrollBottom),
                                HPSettingStupidBarRightAction:@(HPStupidBarActionReply),
+                               HPSettingBlockList:@[]
                                };
     return defaults;
 }
@@ -190,6 +191,36 @@
     }
     return nil;
 }
+
+#pragma mark - block list 
+- (BOOL)isBlocked:(NSString *)username {
+    
+    NSArray *list = [self objectForKey:HPSettingBlockList];
+    // maybe list should be a dic for speed, i have no idea.
+    // like list_table = @{@"xiaoming":@YES, @"xiaowang":@YES};
+    __block BOOL isBlocked = NO;
+    [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([username isEqualToString:obj]) {
+            isBlocked = YES;
+            *stop = YES;
+        }
+    }];
+    return isBlocked;
+}
+
+- (void)addBlockWithUsername:(NSString *)username {
+    NSMutableArray *list = [NSMutableArray arrayWithArray:[self objectForKey:HPSettingBlockList]];
+    [list addObject:username];
+    [Setting saveObject:[NSArray arrayWithArray:list] forKey:HPSettingBlockList];
+    NSLog(@"add %@\nthen %@", username, [self objectForKey:HPSettingBlockList]);
+}
+- (void)removeBlockWithUsername:(NSString *)username {
+    NSMutableArray *list = [NSMutableArray arrayWithArray:[self objectForKey:HPSettingBlockList]];
+    [list removeObject:username];
+    [Setting saveObject:[NSArray arrayWithArray:list] forKey:HPSettingBlockList];
+    NSLog(@"remove %@\nthen %@", username, [self objectForKey:HPSettingBlockList]);
+}
+
 
 
 #pragma mark - 

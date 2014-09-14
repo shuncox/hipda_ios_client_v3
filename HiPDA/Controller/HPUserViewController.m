@@ -14,6 +14,7 @@
 #import "HPSearchViewController.h"
 #import "UIAlertView+Blocks.h"
 #import "HPMessage.h"
+#import "HPSetting.h"
 
 @interface HPUserViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) UITableViewCell *cell0;
 @property (nonatomic, strong) UITableViewCell *cell1;
 @property (nonatomic, strong) UITableViewCell *cell2;
+@property (nonatomic, strong) UITableViewCell *cell3;
 
 @end
 
@@ -89,7 +91,7 @@
 {
     switch (section) {
         case 0:
-            return 1;
+            return 2;
             break;
         case 1:
             return 2;
@@ -117,6 +119,17 @@
         _cell0.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return _cell0;
+        
+    } if (indexPath.section == 0 && indexPath.row == 1) {
+        
+        if (!_cell3) {
+            _cell3 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell3"];
+        }
+        
+        _cell3.textLabel.text =
+            ([Setting isBlocked:_user.username]?@"取消屏蔽":@"屏蔽此人");
+        
+        return _cell3;
         
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         
@@ -177,6 +190,15 @@
     } else if (indexPath.section == 1 && indexPath.row == 1) {
         
         [self promptForSendMessage:_user.username];
+        
+    } else if (indexPath.section == 0 && indexPath.row == 1) {
+        
+        if ([Setting isBlocked:_user.username]) {
+            [Setting removeBlockWithUsername:_user.username];
+        } else {
+            [Setting addBlockWithUsername:_user.username];
+        }
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         
     } else {
         ;

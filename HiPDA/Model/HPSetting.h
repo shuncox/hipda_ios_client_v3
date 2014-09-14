@@ -48,5 +48,8 @@ typedef enum {
 - (void)setPostTail:(NSString *)postTail;
 - (NSString *)isPostTailAllow:(NSString *)postTail;
 
+- (BOOL)isBlocked:(NSString *)username;
+- (void)addBlockWithUsername:(NSString *)username;
+- (void)removeBlockWithUsername:(NSString *)username;
 
 @end

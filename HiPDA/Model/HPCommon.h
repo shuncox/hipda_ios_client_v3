@@ -138,6 +138,7 @@
 #define HPSettingStupidBarLeftAction @"HPSettingStupidBarLeftAction"
 #define HPSettingStupidBarCenterAction @"HPSettingStupidBarCenterAction"
 #define HPSettingStupidBarRightAction @"HPSettingStupidBarRightAction"
+#define HPSettingBlockList @"HPSettingBlockList"
 
 #define HPDraft @"HPDraft"
 

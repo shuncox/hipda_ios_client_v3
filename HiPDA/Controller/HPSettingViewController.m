@@ -12,6 +12,7 @@
 #import "HPRearViewController.h"
 #import "HPBgFetchViewController.h"
 #import "HPSetStupidBarController.h"
+#import "HPBlockListViewController.h"
 
 #import "MultilineTextItem.h"
 #import "HPSetting.h"
@@ -225,6 +226,14 @@
         [item deselectRowAnimated:YES];
     }];
     
+    //
+    //
+    RETableViewItem *blockListItem = [RETableViewItem itemWithTitle:@"屏蔽列表" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        
+        [self.navigationController pushViewController:[[HPBlockListViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+        [item deselectRowAnimated:YES];
+    }];
+    
     // preferFav
     //
     BOOL isPreferNotice = [Setting boolForKey:HPSettingPreferNotice];
@@ -261,6 +270,7 @@
     [section addItem:isOrderByDatelineItem];
     [section addItem:postTailText];
     [section addItem:setForumItem];
+    [section addItem:blockListItem];
     [section addItem:isPreferNoticeItem];
     [section addItem:isPullReplyItem];
     [section addItem:setStupidBarItem];

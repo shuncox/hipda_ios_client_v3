@@ -229,6 +229,7 @@
 		EA831B901840EAEB00616E94 /* acknowledgement.html in Resources */ = {isa = PBXBuildFile; fileRef = EA831B8F1840EAEB00616E94 /* acknowledgement.html */; };
 		EA831B931841092600616E94 /* HPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA831B921841092600616E94 /* HPMessage.m */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
+		EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA168BB19C58B1D00C0F5EE /* HPBlockListViewController.m */; };
 		EAA1E66E18D039DE00E1CFE1 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA1E66C18D039DE00E1CFE1 /* down.png */; };
 		EAA1E66F18D039DE00E1CFE1 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA1E66D18D039DE00E1CFE1 /* up.png */; };
 		EAA1E67218D039FE00E1CFE1 /* navigation-classify_right_close-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA1E67018D039FE00E1CFE1 /* navigation-classify_right_close-arrow@2x.png */; };
@@ -695,6 +696,8 @@
 		EA831B921841092600616E94 /* HPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessage.m; path = Model/HPMessage.m; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
+		EAA168BA19C58B1D00C0F5EE /* HPBlockListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBlockListViewController.h; path = Controller/HPBlockListViewController.h; sourceTree = "<group>"; };
+		EAA168BB19C58B1D00C0F5EE /* HPBlockListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBlockListViewController.m; path = Controller/HPBlockListViewController.m; sourceTree = "<group>"; };
 		EAA1E66C18D039DE00E1CFE1 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = down.png; path = Image/toolbar/down.png; sourceTree = "<group>"; };
 		EAA1E66D18D039DE00E1CFE1 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = up.png; path = Image/toolbar/up.png; sourceTree = "<group>"; };
 		EAA1E67018D039FE00E1CFE1 /* navigation-classify_right_close-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navigation-classify_right_close-arrow@2x.png"; path = "Image/toolbar/navigation-classify_right_close-arrow@2x.png"; sourceTree = "<group>"; };
@@ -1069,6 +1072,8 @@
 				EA073F5B1844CD77000577C7 /* HPRegisterViewController.m */,
 				EAF3C567194C11E700168263 /* HPSetStupidBarController.h */,
 				EAF3C568194C11E700168263 /* HPSetStupidBarController.m */,
+				EAA168BA19C58B1D00C0F5EE /* HPBlockListViewController.h */,
+				EAA168BB19C58B1D00C0F5EE /* HPBlockListViewController.m */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -2080,6 +2085,7 @@
 				EA743C38183FADF70067F62B /* HPSearch.m in Sources */,
 				EAFDB8561829EFA900C1718B /* HPAppDelegate.m in Sources */,
 				EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */,
+				EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */,
 				EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */,
 				EA743BA8183D00AA0067F62B /* REActionBar.m in Sources */,
 				EA743BE5183D00F10067F62B /* RETableViewCreditCardCell.m in Sources */,
