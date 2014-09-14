@@ -1,8 +1,7 @@
-platform :ios, '6.0'
+platform :ios, '7.0'
 pod "AFNetworking", "1.3.3"
 pod 'SDWebImage'
 pod 'MTLog'
-pod 'UI7Kit'
 pod 'HMSegmentedControl'
 pod 'RegexKitLite'
 pod 'SVProgressHUD', '~> 1.0'

@@ -15,7 +15,7 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 
-#import <UI7TableViewCell.h>
+//#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 
 #define FONT_SIZE 16.0f
@@ -308,11 +308,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"HPSearchCell";
-    UI7TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
     if (!cell) {
-        cell = [[UI7TableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
