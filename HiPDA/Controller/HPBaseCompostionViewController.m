@@ -212,13 +212,24 @@
 }
 
 - (void)close:(id)sender {
-    [self cancelCompose:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)cancelCompose:(id)sender {
     
-    // todo draft
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"放弃编辑?"
+                                                    message:@"放弃后，下次您可以点击键盘顶部工具栏右边的 R按钮来恢复上次输入的内容"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"放弃"
+                                          otherButtonTitles:@"继续编辑", nil];
+    
+    [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (alertView.cancelButtonIndex == buttonIndex) {
+            // todo draft
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    
 }
 
 
