@@ -598,7 +598,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         _reloadingHeader = NO;
         
         if (!_refreshHeaderView) {
-            _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.webView.scrollView.bounds.size.height, 320.0f, self.webView.scrollView.bounds.size.height)];
+            _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.webView.scrollView.bounds.size.height, CGRectGetWidth([[UIScreen mainScreen] bounds]), self.webView.scrollView.bounds.size.height)];
             _refreshHeaderView.backgroundColor = [UIColor clearColor];
         }
         
@@ -610,7 +610,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)updateFooterView {
     
     if (!_refreshFooterView) {
-        _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self contentSize], 320.0f, 600.0f)];
+        _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self contentSize], CGRectGetWidth([[UIScreen mainScreen] bounds]), 600.0f)];
         _refreshFooterView.backgroundColor = [UIColor clearColor];
         [self.webView.scrollView addSubview:_refreshFooterView];
     }
