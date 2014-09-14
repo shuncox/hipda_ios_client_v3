@@ -2021,8 +2021,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 #pragma mark -
 - (BOOL)canEdit:(HPNewPost *)post {
-    return [[NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""]
-     isEqualToString:post.user.username];
+    return [[[NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""] lowercaseString]
+     isEqualToString:[post.user.username lowercaseString]];
 }
 
 @end
