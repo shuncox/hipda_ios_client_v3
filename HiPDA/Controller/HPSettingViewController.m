@@ -244,7 +244,50 @@
         
     }];
     
-    // 下拉回复
+    // 发送后提示
+    //
+    __typeof (&*self) __weak weakSelf = self;
+    BOOL isShowConfirm = [Setting boolForKey:HPSettingAfterSendShowConfirm];
+    BOOL isAutoJump = [Setting boolForKey:HPSettingAfterSendJump];
+    NSArray *options = @[@"跳转到刚发的回帖", @"留在原处", @"每次都询问"];
+    NSInteger i = isShowConfirm?2:(isAutoJump?0:1);
+    RERadioItem *afterSendConfirmItem = [RERadioItem itemWithTitle:@"回帖成功后" value:options[i] selectionHandler:^(RERadioItem *item) {
+        
+        [item deselectRowAnimated:YES];
+        
+        // Present options controller
+        //
+        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:options multipleChoice:NO completionHandler:^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            
+            [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+            
+            NSInteger i = [options indexOfObject:item.value];
+            switch (i) {
+                case 0:
+                case 1:
+                    [Setting saveBool:!((BOOL)i) forKey:HPSettingAfterSendJump];
+                    [Setting saveBool:NO forKey:HPSettingAfterSendShowConfirm];
+                    break;
+                case 2:
+                    [Setting saveBool:YES forKey:HPSettingAfterSendShowConfirm];
+                    break;
+                default:
+                    break;
+            }
+        }];
+        
+        optionsController.delegate = weakSelf;
+        optionsController.style = section.style;
+        if (weakSelf.tableView.backgroundView == nil) {
+            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
+            optionsController.tableView.backgroundView = nil;
+        }
+        
+        [weakSelf.navigationController pushViewController:optionsController animated:YES];
+    }];
+    
+    // 上拉回复
     //
     BOOL isPullReply = [Setting boolForKey:HPSettingIsPullReply];
     REBoolItem *isPullReplyItem = [REBoolItem itemWithTitle:@"上拉回复" value:isPullReply switchValueChangeHandler:^(REBoolItem *item) {
@@ -272,6 +315,7 @@
     [section addItem:setForumItem];
     [section addItem:blockListItem];
     [section addItem:isPreferNoticeItem];
+    [section addItem:afterSendConfirmItem];
     [section addItem:isPullReplyItem];
     [section addItem:setStupidBarItem];
     

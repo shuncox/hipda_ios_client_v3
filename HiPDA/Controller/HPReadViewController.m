@@ -1828,18 +1828,30 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         return;
     }
     
-    [UIAlertView showConfirmationDialogWithTitle:@"发送成功"
-                                         message:@"是否查看？"
-                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-     {
-         if (buttonIndex != [alertView cancelButtonIndex]) {
-             
-             _reloadingForReply = YES;
-             _current_page = _thread.pageCount;
-             [self reload:nil];
-         }
-     }];
-
+    void (^jumpBlock)(void) = ^void(void) {
+        _reloadingForReply = YES;
+        _current_page = _thread.pageCount;
+        [self reload:nil];
+    };
+    
+    BOOL isShowConfirm = [Setting boolForKey:HPSettingAfterSendShowConfirm];
+    BOOL isAutoJump = [Setting boolForKey:HPSettingAfterSendJump];
+    if (isShowConfirm) {
+        [UIAlertView showConfirmationDialogWithTitle:@"发送成功"
+                                             message:@"是否查看？"
+                                             handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+         {
+             if (buttonIndex != [alertView cancelButtonIndex]) {
+                jumpBlock();
+             }
+         }];
+    } else {
+        if (isAutoJump) {
+            jumpBlock();
+        } else {
+            ;
+        }
+    }
 }
 
 #pragma mark - theme

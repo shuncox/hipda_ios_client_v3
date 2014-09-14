@@ -94,14 +94,15 @@
                                HPSettingBGLastMinite:@20.f,
                                HPSettingBgFetchNotice:@YES,
                                HPSettingBgFetchThread:@NO,
-                               HPSettingIsPullReply:@YES,
-                               
+                               HPSettingIsPullReply:@NO,
                                HPSettingStupidBarDisable:@NO,
                                HPSettingStupidBarHide:@NO,
                                HPSettingStupidBarLeftAction:@(HPStupidBarActionFavorite),
                                HPSettingStupidBarCenterAction:@(HPStupidBarActionScrollBottom),
                                HPSettingStupidBarRightAction:@(HPStupidBarActionReply),
-                               HPSettingBlockList:@[]
+                               HPSettingBlockList:@[],
+                               HPSettingAfterSendShowConfirm:@NO,
+                               HPSettingAfterSendJump:@YES
                                };
     return defaults;
 }
