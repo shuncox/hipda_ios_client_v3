@@ -27,6 +27,7 @@
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
 
+#import "Bugsnag.h"
 
 @interface HPAppDelegate()
 
@@ -131,6 +132,10 @@
     if (enableBgFetch) {
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     }
+    
+    [Bugsnag startBugsnagWithApiKey:@"31d285a4f85844b06f006749d1988f4e"];
+    //[Bugsnag notify:[NSException exceptionWithName:@"ExceptionName" reason:@"Test Error" userInfo:nil]];
+    
     return YES;
 }
 
