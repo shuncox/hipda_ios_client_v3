@@ -15,6 +15,7 @@
 #import "HPAccount.h"
 #import "HPDatabase.h"
 #import "HPTheme.h"
+#import "HPSetting.h"
 
 #import "HPThreadViewController.h"
 #import "HPThreadCell.h"
@@ -56,6 +57,8 @@ typedef enum{
 @property (nonatomic, strong) EGORefreshTableFooterView *loadingMoreView;
 
 @property (nonatomic, strong) NSDate *lastBgFetchDate;
+
+@property (nonatomic, assign) NSInteger currentFontSize;
 
 @end
 
@@ -130,6 +133,15 @@ typedef enum{
      selector:@selector(applicationDidBecomeActiveNotification:)
      name:UIApplicationDidBecomeActiveNotification
      object:[UIApplication sharedApplication]];
+    
+    if (_currentFontSize &&
+        _currentFontSize != [Setting integerForKey:HPSettingFontSizeAdjust]) {
+        [self.tableView reloadData];
+        //NSLog(@"_currentFontSize && _currentFontSize != SETTING");
+    } else {
+        _currentFontSize = [Setting integerForKey:HPSettingFontSizeAdjust];
+        //NSLog(@"_currentFontSize = SETTING");
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

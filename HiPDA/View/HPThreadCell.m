@@ -14,23 +14,23 @@
 #import "HPSetting.h"
 #import <UIImageView+WebCache.h>
 
+#define PERCENT ([Setting integerForKey:HPSettingFontSizeAdjust]/100.f)
 
-#define CELL_CONTENT_WIDTH 320.f
-#define CELL_CONTENT_MARGIN 8.0f
-#define CELL_IMAGE_WIDTH 44.0f
-#define CELL_IMAGE_MARGIN 8.0f
+#define CELL_CONTENT_WIDTH (CGRectGetWidth([[UIScreen mainScreen] bounds]))
+#define CELL_CONTENT_MARGIN (ceilf(PERCENT*8.0f))
+#define CELL_IMAGE_WIDTH (ceilf(PERCENT*44.0f))
+#define CELL_IMAGE_MARGIN (ceilf(PERCENT*8.0f))
 
-#define FONT_SIZE 16.0f //title font size
+#define FONT_SIZE (ceilf(PERCENT*16.f)) //title font size
 
 #define CELL_MIN_HEIGHT (CELL_IMAGE_WIDTH+CELL_IMAGE_MARGIN*2)
 
-#define CELL_SUB_HEIGHT 15.0f
-#define SUB_FONT_SIZE 13.0f //sub font size, cannot change
+#define CELL_SUB_HEIGHT (ceilf(PERCENT*15.0f))
+#define SUB_FONT_SIZE (ceilf(PERCENT*13.f)) //sub font size, cannot change
 
 @implementation HPThreadCell {
 
 @private
-    
     UIImageView *_avatarView;
     UILabel *_titleLabel;
     UILabel *_usernameLabel;
@@ -42,7 +42,6 @@
     if (!self) {
         return nil;
     }
-    
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     
     _avatarView = [UIImageView new];
