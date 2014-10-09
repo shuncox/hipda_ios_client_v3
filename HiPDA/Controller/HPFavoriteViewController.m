@@ -15,7 +15,7 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 
-//#import <UI7TableViewCell.h>
+#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 
 @interface HPFavoriteViewController ()
@@ -135,10 +135,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"HPFavoriteCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UI7TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UI7TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [_favoritedThreads objectAtIndex:indexPath.row];

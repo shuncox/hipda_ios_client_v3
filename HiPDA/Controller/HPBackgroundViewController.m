@@ -14,7 +14,7 @@
 #import "HPBackgroundViewController.h"
 #import "HPReadViewController.h"
 
-//#import <UI7Kit/UI7TableViewCell.h>
+#import <UI7Kit/UI7TableViewCell.h>
 #import <SVProgressHUD.h>
 #import "UIAlertView+Blocks.h"
 
@@ -147,11 +147,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"HPBgCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UI7TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UI7TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [_cachedThreads objectAtIndex:indexPath.row];

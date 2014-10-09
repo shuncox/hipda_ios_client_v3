@@ -20,7 +20,7 @@
 #import "NSString+Additions.h"
 #import <SVProgressHUD.h>
 
-//#import <UI7TableViewCell.h>
+#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 #import "HPRearViewController.h"
 
@@ -190,10 +190,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"HPMyNoticeCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UI7TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UI7TableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
         [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [cell.detailTextLabel setMinimumScaleFactor:FONT_SIZE];
@@ -254,7 +254,7 @@
     HPThread *thread = [_myNotices objectAtIndex:indexPath.row];
     
     // mark read
-    UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    UI7TableViewCell *cell = (UI7TableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell.textLabel setTextColor:[HPTheme readColor]];
     [[HPCache sharedCache] readThread:thread.tid pid:thread.pid];
     

@@ -133,7 +133,7 @@
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     }
     
-    //[Bugsnag startBugsnagWithApiKey:@"31d285a4f85844b06f006749d1988f4e"];
+    [Bugsnag startBugsnagWithApiKey:@"31d285a4f85844b06f006749d1988f4e"];
     //[Bugsnag notify:[NSException exceptionWithName:@"ExceptionName" reason:@"Test Error" userInfo:nil]];
     
     return YES;

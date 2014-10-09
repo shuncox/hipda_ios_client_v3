@@ -7,17 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <UI7Kit/UI7Kit.h>
+#import <UI7Kit/UI7Kit.h>
 #import "HPAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        /*
         [UI7Kit excludeClassNamesFromAutopatch:@[@"UI7TableViewCell"]];
         [UI7Kit excludeClassNamesFromAutopatch:@[@"UI7PickerView"]];
         [UI7Kit patchIfNeeded];
-         */
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([HPAppDelegate class]));
     }
 }
