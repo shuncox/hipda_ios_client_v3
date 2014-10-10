@@ -131,7 +131,7 @@
 - (void)send:(id)sender {
     
     if (!_formhash || !_correct_post) {
-        [SVProgressHUD showWithStatus:@"正在获取回复token, 马上好"];
+        [SVProgressHUD showWithStatus:@"正在获取回复token, 马上好" maskType:SVProgressHUDMaskTypeBlack];
         _waitingForToken = YES;
         return;
     }
@@ -153,7 +153,7 @@
     }
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [SVProgressHUD showWithStatus:@"发送中..."];
+    [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPSendPost sendPostWithContent:self.contentTextFiled.text
                              action:self.actionType
                                 fid:_thread.fid

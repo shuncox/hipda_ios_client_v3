@@ -170,7 +170,7 @@
     
     
     if (!_formhash) {
-        [SVProgressHUD showWithStatus:@"正在获取回复token, 马上好"];
+        [SVProgressHUD showWithStatus:@"正在获取回复token, 马上好" maskType:SVProgressHUDMaskTypeBlack];
         _waitingForToken = YES;
         return;
     }
@@ -188,7 +188,7 @@
     }
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [SVProgressHUD showWithStatus:@"发送中..."];
+    [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
     
     

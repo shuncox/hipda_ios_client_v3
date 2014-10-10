@@ -1312,7 +1312,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         return;
     }
     
-    [SVProgressHUD showWithStatus:@"发送中..."];
+    [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPMessage sendMessageWithUsername:username message:message block:^(NSError *error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];

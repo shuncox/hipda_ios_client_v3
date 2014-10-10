@@ -153,7 +153,7 @@
         [SSKeychain setPassword:credential forService:kHPKeychainService account:username];
         
         if ([NSStandardUserDefaults hasValueForKey:kHPAccountUserName]) {
-            [SVProgressHUD showWithStatus:@"登录..."];
+            [SVProgressHUD showWithStatus:@"登录..." maskType:SVProgressHUDMaskTypeBlack];
             
             [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *error)
              {

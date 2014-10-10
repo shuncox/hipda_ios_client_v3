@@ -186,7 +186,7 @@
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
-    [SVProgressHUD showWithStatus:@"发送中..."];
+    [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPMessage sendMessageWithUsername:_user.username message:text block:^(NSError *error) {
         if (error) {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];

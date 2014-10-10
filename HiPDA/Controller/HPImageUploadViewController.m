@@ -202,7 +202,7 @@
     NSInteger size = _imageSize/1024;
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"上传中...(0/%ldkb)", size]];
+    [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"上传中...(0/%ldkb)", size] maskType:SVProgressHUDMaskTypeBlack];
     
     [HPSendPost uploadImage:_imageData
                   imageName:nil
@@ -210,7 +210,7 @@
      {
          NSInteger size = _imageSize/1024;
          NSString *progessString = [NSString stringWithFormat:@"上传中...(%d/%ldkb)", (int)(progress*size), size];
-         [SVProgressHUD showProgress:progress status:progessString];
+         [SVProgressHUD showProgress:progress status:progessString maskType:SVProgressHUDMaskTypeBlack];
      }
                       block:^(NSString *attach, NSError *error)
      {
@@ -239,7 +239,7 @@
     // 文件尺寸: 小于 976KB
     // 可用扩展名: jpg, jpeg, gif, png, bmp
     
-    [SVProgressHUD showWithStatus:@"压缩中..."];
+    [SVProgressHUD showWithStatus:@"压缩中..." maskType:SVProgressHUDMaskTypeBlack];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];

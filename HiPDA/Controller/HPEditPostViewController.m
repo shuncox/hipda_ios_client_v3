@@ -152,7 +152,7 @@
 - (void)send:(id)sender {
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [SVProgressHUD showWithStatus:@"发送中..."];
+    [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
     [_parameters setObject:self.contentTextFiled.text forKey:@"message"];
     
