@@ -12,6 +12,7 @@
 //helper
 //
 #define IOS7_OR_LATER ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending)
+#define IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 
 #define NSStandardUserDefaults [NSUserDefaults standardUserDefaults]
 
