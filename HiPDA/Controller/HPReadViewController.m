@@ -1372,7 +1372,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             _pageView.backgroundColor = [HPTheme backgroundColor];
         }
        
-        _pageSlider = [[UISlider alloc] initWithFrame:CGRectMake(10.0f,5.0f,260.0f,30.0f)];
+        _pageSlider = [[UISlider alloc] initWithFrame:CGRectMake(10.0f,5.0f,HP_SCREEN_WIDTH-60,30.0f)];
         _pageSlider.continuous = YES ;
         [_pageSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         _pageSlider.userInteractionEnabled = YES;
@@ -1381,7 +1381,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         _pageSlider.value = 1.0f;
         
         UIButton *goButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        goButton.frame = CGRectMake(270, 0, 50, 40.f);
+        goButton.frame = CGRectMake(_pageSlider.frame.size.width+_pageSlider.frame.origin.x, 0, 50, 40.f);
         [goButton setTitle:@"Go" forState:UIControlStateNormal];
         [goButton addTarget:self action:@selector(goToPage:) forControlEvents:UIControlEventTouchUpInside];
         

@@ -195,8 +195,6 @@
 		EA743C32183F9EE70067F62B /* HPMyReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C31183F9EE70067F62B /* HPMyReplyViewController.m */; };
 		EA743C35183FA9690067F62B /* HPSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C34183FA9690067F62B /* HPSearchViewController.m */; };
 		EA743C38183FADF70067F62B /* HPSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C37183FADF70067F62B /* HPSearch.m */; };
-		EA74457418CA1D90002467EE /* compose_section_sp.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74456418CA1D90002467EE /* compose_section_sp.png */; };
-		EA74457518CA1D90002467EE /* compose_section_sp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74456518CA1D90002467EE /* compose_section_sp@2x.png */; };
 		EA74459018CA1E62002467EE /* compose_at.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458418CA1E62002467EE /* compose_at.png */; };
 		EA74459118CA1E62002467EE /* compose_at@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458518CA1E62002467EE /* compose_at@2x.png */; };
 		EA74459218CA1E62002467EE /* compose_camera_on.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458618CA1E62002467EE /* compose_camera_on.png */; };
@@ -207,8 +205,6 @@
 		EA74459718CA1E62002467EE /* compose_emotion_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */; };
 		EA74459818CA1E62002467EE /* compose_emotion.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458C18CA1E62002467EE /* compose_emotion.png */; };
 		EA74459918CA1E62002467EE /* compose_emotion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458D18CA1E62002467EE /* compose_emotion@2x.png */; };
-		EA74459A18CA1E62002467EE /* compose_section_sp.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458E18CA1E62002467EE /* compose_section_sp.png */; };
-		EA74459B18CA1E62002467EE /* compose_section_sp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458F18CA1E62002467EE /* compose_section_sp@2x.png */; };
 		EA80F3D618E069FA00B3633C /* post_view_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = EA80F3D518E069FA00B3633C /* post_view_dark.html */; };
 		EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869D18E1D9E30092BDD7 /* home_refresh.png */; };
 		EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */; };
@@ -661,8 +657,6 @@
 		EA743C34183FA9690067F62B /* HPSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchViewController.m; path = Controller/HPSearchViewController.m; sourceTree = "<group>"; };
 		EA743C36183FADF70067F62B /* HPSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSearch.h; path = Model/HPSearch.h; sourceTree = "<group>"; };
 		EA743C37183FADF70067F62B /* HPSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearch.m; path = Model/HPSearch.m; sourceTree = "<group>"; };
-		EA74456418CA1D90002467EE /* compose_section_sp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_section_sp.png; path = Image/compose/compose_section_sp.png; sourceTree = "<group>"; };
-		EA74456518CA1D90002467EE /* compose_section_sp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_section_sp@2x.png"; path = "Image/compose/compose_section_sp@2x.png"; sourceTree = "<group>"; };
 		EA74458418CA1E62002467EE /* compose_at.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_at.png; path = Image/compose/compose_at.png; sourceTree = "<group>"; };
 		EA74458518CA1E62002467EE /* compose_at@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_at@2x.png"; path = "Image/compose/compose_at@2x.png"; sourceTree = "<group>"; };
 		EA74458618CA1E62002467EE /* compose_camera_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_camera_on.png; path = Image/compose/compose_camera_on.png; sourceTree = "<group>"; };
@@ -673,8 +667,6 @@
 		EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion_on@2x.png"; path = "Image/compose/compose_emotion_on@2x.png"; sourceTree = "<group>"; };
 		EA74458C18CA1E62002467EE /* compose_emotion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_emotion.png; path = Image/compose/compose_emotion.png; sourceTree = "<group>"; };
 		EA74458D18CA1E62002467EE /* compose_emotion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion@2x.png"; path = "Image/compose/compose_emotion@2x.png"; sourceTree = "<group>"; };
-		EA74458E18CA1E62002467EE /* compose_section_sp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_section_sp.png; path = Image/compose/compose_section_sp.png; sourceTree = "<group>"; };
-		EA74458F18CA1E62002467EE /* compose_section_sp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_section_sp@2x.png"; path = "Image/compose/compose_section_sp@2x.png"; sourceTree = "<group>"; };
 		EA80F3D518E069FA00B3633C /* post_view_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view_dark.html; path = View/post_view_dark.html; sourceTree = "<group>"; };
 		EA81869D18E1D9E30092BDD7 /* home_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_refresh.png; path = Image/Home/home_refresh.png; sourceTree = "<group>"; };
 		EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home_refresh@2x.png"; path = "Image/Home/home_refresh@2x.png"; sourceTree = "<group>"; };
@@ -1513,8 +1505,6 @@
 		EA74456318CA1D88002467EE /* compose */ = {
 			isa = PBXGroup;
 			children = (
-				EA74456418CA1D90002467EE /* compose_section_sp.png */,
-				EA74456518CA1D90002467EE /* compose_section_sp@2x.png */,
 				EA74458418CA1E62002467EE /* compose_at.png */,
 				EA74458518CA1E62002467EE /* compose_at@2x.png */,
 				EA74458618CA1E62002467EE /* compose_camera_on.png */,
@@ -1525,8 +1515,6 @@
 				EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */,
 				EA74458C18CA1E62002467EE /* compose_emotion.png */,
 				EA74458D18CA1E62002467EE /* compose_emotion@2x.png */,
-				EA74458E18CA1E62002467EE /* compose_section_sp.png */,
-				EA74458F18CA1E62002467EE /* compose_section_sp@2x.png */,
 			);
 			name = compose;
 			sourceTree = "<group>";
@@ -1919,7 +1907,6 @@
 				EAD7F5DD183CC84600A750D9 /* hp_smile_coolmonkey_01.gif in Resources */,
 				EAD7F5E3183CC84600A750D9 /* hp_smile_coolmonkey_07.gif in Resources */,
 				EA74459418CA1E62002467EE /* compose_camera.png in Resources */,
-				EA74457518CA1D90002467EE /* compose_section_sp@2x.png in Resources */,
 				EA8186B618E1DA0D0092BDD7 /* settings@2x.png in Resources */,
 				EAD7F615183CC84600A750D9 /* hp_smile_grapeman_21.gif in Resources */,
 				EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */,
@@ -1954,7 +1941,6 @@
 				EAD7F5E2183CC84600A750D9 /* hp_smile_coolmonkey_06.gif in Resources */,
 				EAD7F5DC183CC84600A750D9 /* hp_smile_default_cool.gif in Resources */,
 				EA083D9E18C8D14F00BD8F07 /* keyboard_emotion@2x.png in Resources */,
-				EA74457418CA1D90002467EE /* compose_section_sp.png in Resources */,
 				EA74459618CA1E62002467EE /* compose_emotion_on.png in Resources */,
 				EAD7F60A183CC84600A750D9 /* hp_smile_grapeman_10.gif in Resources */,
 				EAD7F606183CC84600A750D9 /* hp_smile_grapeman_06.gif in Resources */,
@@ -2010,9 +1996,7 @@
 				EA80F3D618E069FA00B3633C /* post_view_dark.html in Resources */,
 				EAD7F5FA183CC84600A750D9 /* hp_smile_default_shy.gif in Resources */,
 				EA5DF0E718311F05008E4248 /* check@2x.png in Resources */,
-				EA74459B18CA1E62002467EE /* compose_section_sp@2x.png in Resources */,
 				EAD7F609183CC84600A750D9 /* hp_smile_grapeman_09.gif in Resources */,
-				EA74459A18CA1E62002467EE /* compose_section_sp.png in Resources */,
 				EA083D9D18C8D14F00BD8F07 /* keyboard_emotion.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

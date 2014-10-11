@@ -22,6 +22,8 @@
 // fuch this code, will remove when drop ios6
 #define HP_GUITlY_CELL_CLASS ((IOS7_OR_LATER && IS_IPAD)?(NSClassFromString(@"UITableViewCell")):(NSClassFromString(@"UI7TableViewCell")))
 
+#define HP_SCREEN_WIDTH (CGRectGetWidth([[UIScreen mainScreen] bounds]))
+
 
 // Copy from Tweet4China
 // Created by Jason Hsu

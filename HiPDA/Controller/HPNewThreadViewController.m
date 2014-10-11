@@ -102,7 +102,7 @@
 
     UIView *line1 = [UIView new];
     line1.backgroundColor = rgb(205.f, 205.f, 205.f);
-    line1.frame = CGRectMake(7, 32, 306, .5);
+    line1.frame = CGRectMake(7, 32, HP_SCREEN_WIDTH-14, .5);
     
     UIView *line2 = [UIView new];
     line2.backgroundColor = rgb(205.f, 205.f, 205.f);

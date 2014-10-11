@@ -79,10 +79,10 @@
     toolbar.userInteractionEnabled = YES;
     [self.view addSubview:toolbar];
     
-    
-    UIImage *separator_img = [UIImage imageNamed:@"compose_section_sp"];
-    UIImageView *separator = [[UIImageView alloc] initWithImage:separator_img];
-    separator.frame = CGRectMake(0, 0, separator_img.size.width - 10, separator_img.size.height);
+
+    UIView *separator = [UIView new];
+    separator.frame = CGRectMake(10, 0, HP_SCREEN_WIDTH-20, 1);
+    separator.backgroundColor = [UIColor colorWithRed:206.f/255.f green:206.f/255.f blue:206.f/255.f alpha:1.f];
     [toolbar addSubview:separator];
     
     
@@ -123,7 +123,7 @@
     [recoverBnt setTitleColor:rgb(111.f,111.f,111.f) forState:UIControlStateNormal];
     recoverBnt.titleLabel.font = [UIFont systemFontOfSize:18.f];
     [recoverBnt sizeToFit];
-    recoverBnt.center = CGPointMake(300, 20);
+    recoverBnt.center = CGPointMake(HP_SCREEN_WIDTH-20, 20);
     lastContent = [NSStandardUserDefaults objectForKey:HPDraft];
     if (!lastContent || [lastContent isEqualToString:@""]) {
         [recoverBnt removeFromSuperview];
