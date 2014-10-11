@@ -190,10 +190,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"HPMyNoticeCell";
-    UI7TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        cell = [[UI7TableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
         [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [cell.detailTextLabel setMinimumScaleFactor:FONT_SIZE];
@@ -254,7 +254,7 @@
     HPThread *thread = [_myNotices objectAtIndex:indexPath.row];
     
     // mark read
-    UI7TableViewCell *cell = (UI7TableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell.textLabel setTextColor:[HPTheme readColor]];
     [[HPCache sharedCache] readThread:thread.tid pid:thread.pid];
     
