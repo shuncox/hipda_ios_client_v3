@@ -191,20 +191,26 @@
 }
 
 - (void)zhuce:(id)sender {
+
+    NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/register.php"];
+    [[UIApplication sharedApplication] openURL:url];
     
     /*
-    NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/register.php"];
-    DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
-    webBrowser.showProgress = YES;
-    webBrowser.allowSharing = YES;
-    //    webBrowser.resourceBundleName = @"custom-controls";
+     NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/register.php"];
+     DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
+     webBrowser.showProgress = YES;
+     webBrowser.allowSharing = YES;
+     //    webBrowser.resourceBundleName = @"custom-controls";
+     
+     UINavigationController *webBrowserNC = [[UINavigationController alloc] initWithRootViewController:webBrowser];
+     
+     [self presentViewController:webBrowserNC animated:YES completion:NULL];
+     */
     
-    UINavigationController *webBrowserNC = [[UINavigationController alloc] initWithRootViewController:webBrowser];
-    
-    [self presentViewController:webBrowserNC animated:YES completion:NULL];
-    */
+    /*
     HPRegisterViewController *rvc = [[HPRegisterViewController alloc]init];
     [self.navigationController pushViewController:rvc animated:YES];
+     */
 }
 
 /*
