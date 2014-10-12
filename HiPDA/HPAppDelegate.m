@@ -298,7 +298,7 @@
         [tvc setBgFetchBlock:^(UIBackgroundFetchResult result) {
             count++;
             NSLog(@"count %d bgFetchBlock result %d",count, result);
-            if (count >= 2) {
+            if (count == 2) {
                 NSLog(@"complated!");
                 completionHandler(result);
             }
@@ -307,7 +307,7 @@
         
     } else {
         count++;
-        if (count >= 2) {
+        if (count == 2) {
             NSLog(@"pass !");
             completionHandler(UIBackgroundFetchResultNoData);
         }
@@ -317,7 +317,7 @@
         [[HPAccount sharedHPAccount] setNoticeRetrieveBlock:^(UIBackgroundFetchResult result) {
             count++;
             NSLog(@"count %d noticeRetrieveBlock result %d",count, result);
-            if (count >= 2) {
+            if (count == 2) {
                 NSLog(@"complated!");
                 completionHandler(result);
             }
@@ -326,7 +326,7 @@
         
     } else {
         count++;
-        if (count >= 2) {
+        if (count == 2) {
             NSLog(@"pass !");
             completionHandler(UIBackgroundFetchResultNoData);
         }

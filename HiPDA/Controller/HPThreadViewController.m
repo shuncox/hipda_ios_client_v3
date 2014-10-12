@@ -245,6 +245,7 @@ typedef enum{
                  
                  if (weakSelf.bgFetchBlock) {
                      weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
+                     weakSelf.bgFetchBlock = nil;
                  }
                  
              } else if (type != LoadMore) {
@@ -290,6 +291,7 @@ typedef enum{
              [weakSelf.tableView flashScrollIndicators];
              if (weakSelf.bgFetchBlock) {
                  weakSelf.bgFetchBlock(UIBackgroundFetchResultNewData);
+                 weakSelf.bgFetchBlock = nil;
                  weakSelf.lastBgFetchDate = [NSDate new];
              }
              
@@ -308,6 +310,7 @@ typedef enum{
                  } else {
                      if (weakSelf.bgFetchBlock) {
                          weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
+                         weakSelf.bgFetchBlock = nil;
                      }
                  }
                  
@@ -317,6 +320,7 @@ typedef enum{
                  
                  if (weakSelf.bgFetchBlock) {
                      weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
+                     weakSelf.bgFetchBlock = nil;
                  }
              }
          }

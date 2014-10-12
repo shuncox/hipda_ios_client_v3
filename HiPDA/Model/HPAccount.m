@@ -341,6 +341,7 @@
                      
                      if (_noticeRetrieveBlock) {
                          _noticeRetrieveBlock(UIBackgroundFetchResultFailed);
+                         _noticeRetrieveBlock = nil;
                      }
                  }
              }];
@@ -352,6 +353,7 @@
         NSLog(@"_checkMsgAndNoticeSetp1 error %@", error);
         if (_noticeRetrieveBlock) {
             _noticeRetrieveBlock(UIBackgroundFetchResultFailed);
+            _noticeRetrieveBlock = nil;
         }
     }];
 }
@@ -387,10 +389,12 @@
             
             if (_noticeRetrieveBlock) {
                 _noticeRetrieveBlock(UIBackgroundFetchResultNewData);
+                _noticeRetrieveBlock = nil;
             }
         } else {
             if (_noticeRetrieveBlock) {
                 _noticeRetrieveBlock(UIBackgroundFetchResultNoData);
+                _noticeRetrieveBlock = nil;
             }
         }
         
@@ -400,6 +404,7 @@
         NSLog(@"_checkMsgAndNoticeSetp2 error %@", error);
         if (_noticeRetrieveBlock) {
             _noticeRetrieveBlock(UIBackgroundFetchResultFailed);
+            _noticeRetrieveBlock = nil;
         }
     }];
 }
