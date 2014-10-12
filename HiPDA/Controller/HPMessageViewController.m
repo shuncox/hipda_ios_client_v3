@@ -106,6 +106,7 @@
     
     //_message_list = nil;
     //[self.tableView reloadData];
+    __weak typeof(self) weakSelf = self;
     [HPMessage loadMessageListWithBlock:^(NSArray *list, NSError *error) {
         
         if (error) {
@@ -120,13 +121,13 @@
                 [[HPMessage sharedMessage] cacheMyMessages:list];
             }
             _message_list = list;
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             
-            if (![self.refreshControl isRefreshing]) {
-                [self.tableView setContentOffset:CGPointZero animated:NO];
+            if (![weakSelf.refreshControl isRefreshing]) {
+                [weakSelf.tableView setContentOffset:CGPointZero animated:NO];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-                [self.tableView flashScrollIndicators];
+                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                [weakSelf.tableView flashScrollIndicators];
             }
             
             [Setting saveInteger:0 forKey:HPPMCount];
@@ -136,7 +137,7 @@
             [SVProgressHUD showErrorWithStatus:@"您没有私人消息"];
         }
         
-        [self.refreshControl endRefreshing];
+        [weakSelf.refreshControl endRefreshing];
         [HPIndecator dismiss];
         
     } page:_current_page];

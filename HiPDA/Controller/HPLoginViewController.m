@@ -122,11 +122,11 @@
         item.title = @"登陆中...";
         [item reloadRowWithAnimation:UITableViewRowAnimationAutomatic];
         
-        NSString *username = self.usernameItem.value;
-        NSString *password = self.passwordItem.value;
+        NSString *username = weakSelf.usernameItem.value;
+        NSString *password = weakSelf.passwordItem.value;
         
-        NSString *questionidString = self.secureQuestionItem.value;
-        NSString *answer = self.secureAnswerItem.value;
+        NSString *questionidString = weakSelf.secureQuestionItem.value;
+        NSString *answer = weakSelf.secureAnswerItem.value;
         
         if (!(username && password)) {
             item.title = @"确定";
@@ -157,13 +157,13 @@
             
             [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *error)
              {
-                 [self.view endEditing:YES];
+                 [weakSelf.view endEditing:YES];
                  item.title = @"确定";
                  [item reloadRowWithAnimation:UITableViewRowAnimationAutomatic];
                  
                  if (isLogin) {
                      [SVProgressHUD dismiss];
-                     [self dismissViewControllerAnimated:YES
+                     [weakSelf dismissViewControllerAnimated:YES
                                               completion:
                       ^{
                           [HPRearViewController threadVCRefresh];

@@ -86,13 +86,14 @@
     
     //http://www.hi-pda.com/forum/viewthread.php?tid=1273829&extra=&page=2
     //http://www.hi-pda.com/forum/post.php?action=reply&fid=57&tid=1273829&reppost=23560522&extra=&page=2
-    [HPSendPost loadFormhashAndPid:self.actionType
+    __weak typeof(self) weakSelf = self;
+    [HPSendPost loadFormhashAndPid:weakSelf.actionType
                               post:_post
                                tid:_thread.tid
                               page:_page
                              block:^(NSString *formhash, HPNewPost *correct_post, NSError *error)
     {
-        [self.indicator stopAnimating];
+        [weakSelf.indicator stopAnimating];
         
         NSLog(@"get correct formhash %@, pid %ld", formhash, correct_post.pid);
         
@@ -103,7 +104,7 @@
             
             if (_waitingForToken) {
                 _waitingForToken = NO;
-                [self send:nil];
+                [weakSelf send:nil];
             }
             
         } else {
@@ -115,7 +116,7 @@
                   if (buttonIndex == [alertView cancelButtonIndex]) {
                       ;
                   } else {
-                      [self loadFormhashAndPid];
+                      [weakSelf loadFormhashAndPid];
                   }
               }];
          }
@@ -152,10 +153,11 @@
         NSLog(@" _postcontent %@", postcontent);
     }
     
+    __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
-    [HPSendPost sendPostWithContent:self.contentTextFiled.text
-                             action:self.actionType
+    [HPSendPost sendPostWithContent:weakSelf.contentTextFiled.text
+                             action:weakSelf.actionType
                                 fid:_thread.fid
                                 tid:_thread.tid
                                post:_correct_post
@@ -163,10 +165,10 @@
                             subject:nil
                         thread_type:0
                            formhash:_formhash
-                             images:self.imagesString
+                             images:weakSelf.imagesString
                               block:^(NSString *msg, NSError *error)
      {
-         self.navigationItem.rightBarButtonItem.enabled = YES;
+         weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
          if (error) {
              
              if ([[error localizedDescription] indexOf:@"您两次发表间隔少于 30 秒"] != -1) {
@@ -178,9 +180,9 @@
                       if (buttonIndex == [alertView cancelButtonIndex]) {
                           ;
                       } else {
-                          [self.contentTextFiled resignFirstResponder];
+                          [weakSelf.contentTextFiled resignFirstResponder];
                           _secondsCountDown = 31;
-                          _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+                          _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:weakSelf selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
                       }
                   }];
              } else {
@@ -189,7 +191,7 @@
          } else {
              //[SVProgressHUD showSuccessWithStatus:@"发送成功"];
              [SVProgressHUD dismiss];
-             [self doneWithError:nil];
+             [weakSelf doneWithError:nil];
          }
      }];
 }

@@ -220,7 +220,7 @@ typedef enum{
 
     
     
-    __weak HPThreadViewController *weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     [HPThread loadThreadsWithFid:_current_fid
                             page:_current_page
                     forceRefresh:refresh
@@ -229,7 +229,7 @@ typedef enum{
          // 防止无限登陆
          static int error_count = 0;
          
-         [self.refreshControl endRefreshing];
+         [weakSelf.refreshControl endRefreshing];
          if (!error) {
              
              error_count = 0;
@@ -243,8 +243,8 @@ typedef enum{
                      }
                  }];
                  
-                 if (_bgFetchBlock) {
-                     _bgFetchBlock(UIBackgroundFetchResultFailed);
+                 if (weakSelf.bgFetchBlock) {
+                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
                  }
                  
              } else if (type != LoadMore) {
@@ -287,10 +287,10 @@ typedef enum{
                  [weakSelf.tableView endUpdates];
              }
              
-             [self.tableView flashScrollIndicators];
-             if (_bgFetchBlock) {
-                 _bgFetchBlock(UIBackgroundFetchResultNewData);
-                 _lastBgFetchDate = [NSDate new];
+             [weakSelf.tableView flashScrollIndicators];
+             if (weakSelf.bgFetchBlock) {
+                 weakSelf.bgFetchBlock(UIBackgroundFetchResultNewData);
+                 weakSelf.lastBgFetchDate = [NSDate new];
              }
              
          } else {
@@ -306,8 +306,8 @@ typedef enum{
                  if (error_count == 1) {
                      ;
                  } else {
-                     if (_bgFetchBlock) {
-                         _bgFetchBlock(UIBackgroundFetchResultFailed);
+                     if (weakSelf.bgFetchBlock) {
+                         weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
                      }
                  }
                  
@@ -315,8 +315,8 @@ typedef enum{
                  
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
                  
-                 if (_bgFetchBlock) {
-                     _bgFetchBlock(UIBackgroundFetchResultFailed);
+                 if (weakSelf.bgFetchBlock) {
+                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
                  }
              }
          }
@@ -327,19 +327,19 @@ typedef enum{
          
          switch (type) {
              case PullToRefresh:
-                 [self.refreshControl endRefreshing];
+                 [weakSelf.refreshControl endRefreshing];
                  break;
              case ClickToRefresh:
-                 self.navigationItem.rightBarButtonItems = @[_composeBI,_refreshButtonBI];
+                 weakSelf.navigationItem.rightBarButtonItems = @[_composeBI,_refreshButtonBI];
                  break;
              case LoadMore:
-                 [self loadMoreDone];
+                 [weakSelf loadMoreDone];
                  break;
              default:
                  break;
          }
          
-         [self performSelector:@selector(addLoadMoreView) withObject:nil afterDelay:1.f];
+         [weakSelf performSelector:@selector(addLoadMoreView) withObject:nil afterDelay:1.f];
                    
      }];
 }

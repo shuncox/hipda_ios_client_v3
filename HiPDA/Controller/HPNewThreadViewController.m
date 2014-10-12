@@ -129,10 +129,10 @@
     
     [self.indicator startAnimating];
     
-    
+    __weak typeof(self) weakSelf = self;
     [HPSendPost loadParametersWithBlock:^(NSDictionary *parameters, NSError *error) {
         
-        [self.indicator stopAnimating];
+        [weakSelf.indicator stopAnimating];
         
         _formhash = [parameters objectForKey:@"formhash"];
         
@@ -141,7 +141,7 @@
             
             if (_waitingForToken) {
                 _waitingForToken = NO;
-                [self send:nil];
+                [weakSelf send:nil];
             }
             
         } else {
@@ -153,7 +153,7 @@
                  if (buttonIndex == [alertView cancelButtonIndex]) {
                      ;
                  } else {
-                     [self loadFormhash];
+                     [weakSelf loadFormhash];
                  }
              }];
         }
@@ -191,12 +191,12 @@
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
     
-    
+    __weak typeof(self) weakSelf = self;
     [HPSendPost sendThreadWithFid:_fid
                              type:_current_type
                           subject:_titleField.text
-                          message:self.contentTextFiled.text
-                           images:self.imagesString
+                          message:weakSelf.contentTextFiled.text
+                           images:weakSelf.imagesString
                          formhash:_formhash
                             block:^(NSString *msg, NSError *error)
      {
@@ -207,7 +207,7 @@
          } else {
              
              [SVProgressHUD showSuccessWithStatus:@"发送成功"];
-             [self doneWithError:nil];
+             [weakSelf doneWithError:nil];
          }
      }];
 }

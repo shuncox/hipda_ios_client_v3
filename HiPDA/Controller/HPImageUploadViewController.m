@@ -204,6 +204,7 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"上传中...(0/%ldkb)", size] maskType:SVProgressHUDMaskTypeBlack];
     
+    __weak typeof(self) weakSelf = self;
     [HPSendPost uploadImage:_imageData
                   imageName:nil
               progressBlock:^(CGFloat progress)
@@ -217,13 +218,13 @@
          
          if (error) {
              [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-             self.navigationItem.rightBarButtonItem.enabled = YES;
+             weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
              
          } else {
              
              [SVProgressHUD dismiss];
-             [self.delegate completeWithAttachString:attach error:nil];
-             [self dismissViewControllerAnimated:YES completion:^{
+             [weakSelf.delegate completeWithAttachString:attach error:nil];
+             [weakSelf dismissViewControllerAnimated:YES completion:^{
                  ;
              }];
              

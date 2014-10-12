@@ -161,7 +161,7 @@
     //[self.tableView reloadData];
     
     NSDictionary *parameters = @{@"key": key};
-    
+    __weak typeof(self) weakSelf = self;
     [HPSearch searchWithParameters:parameters
                               type:type
                               page:_current_page
@@ -173,8 +173,8 @@
                                      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
                                      
                                      // update ui
-                                     self.title = @"搜索";
-                                     self.navigationItem.rightBarButtonItem = _searchButtonItem;
+                                     weakSelf.title = @"搜索";
+                                     weakSelf.navigationItem.rightBarButtonItem = _searchButtonItem;
                                      
                                  } else if ([results count]){
                                      [SVProgressHUD dismiss];
@@ -182,15 +182,15 @@
                                      _results = results;
                                      _page_count = pageCount;
                                      
-                                     [self.tableView reloadData];
+                                     [weakSelf.tableView reloadData];
                                      
                                      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                                     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-                                     [self.tableView flashScrollIndicators];
+                                     [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                                     [weakSelf.tableView flashScrollIndicators];
                                      
                                      // update ui
-                                     self.title = [NSString stringWithFormat:@"搜索: %@ (%d/%d)", key, _current_page, _page_count];
-                                     self.navigationItem.rightBarButtonItem = _nextPageButtonItem;
+                                     weakSelf.title = [NSString stringWithFormat:@"搜索: %@ (%d/%d)", key, _current_page, _page_count];
+                                     weakSelf.navigationItem.rightBarButtonItem = _nextPageButtonItem;
                                      
                                  } else {
                                      //NSLog(@"in");
@@ -200,8 +200,8 @@
                                      [_searchBar becomeFirstResponder];
                                      
                                      // update ui
-                                     self.title = @"搜索";
-                                     self.navigationItem.rightBarButtonItem = _searchButtonItem;
+                                     weakSelf.title = @"搜索";
+                                     weakSelf.navigationItem.rightBarButtonItem = _searchButtonItem;
                                  }
                              }];
 }
@@ -212,6 +212,7 @@
     
     NSDictionary *parameters = @{@"key": S(@"%d",_user.uid)};
     
+    __weak typeof(self) weakSelf = self;
     [HPSearch searchWithParameters:parameters
                               type:HPSearchTypeUser
                               page:_current_page
@@ -227,15 +228,15 @@
                                      _results = results;
                                      _page_count = pageCount;
                                      
-                                     [self.tableView reloadData];
+                                     [weakSelf.tableView reloadData];
                                      
                                      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                                     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-                                     [self.tableView flashScrollIndicators];
+                                     [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                                     [weakSelf.tableView flashScrollIndicators];
                                      
                                      // update ui
-                                     self.title = [NSString stringWithFormat:@"主题 (%d/%d)", _current_page, _page_count];
-                                     self.navigationItem.rightBarButtonItem = _nextPageButtonItem;
+                                     weakSelf.title = [NSString stringWithFormat:@"主题 (%d/%d)", _current_page, _page_count];
+                                     weakSelf.navigationItem.rightBarButtonItem = _nextPageButtonItem;
                                      
                                  } else {
                                      

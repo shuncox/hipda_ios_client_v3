@@ -102,7 +102,7 @@
     }
     //_myReplies = nil;
     //[self.tableView reloadData];
-    
+    __weak typeof(self) weakSelf = self;
     [HPMyReply ayscnMyRepliesWithBlock:^(NSArray *threads, NSError *error) {
         
         if (error) {
@@ -116,20 +116,20 @@
                 [[HPMyReply sharedReply] cacheMyReplies:threads];
             }
             _myReplies = threads;
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             
-            if (![self.refreshControl isRefreshing]) {
-                [self.tableView setContentOffset:CGPointZero animated:NO];
+            if (![weakSelf.refreshControl isRefreshing]) {
+                [weakSelf.tableView setContentOffset:CGPointZero animated:NO];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-                [self.tableView flashScrollIndicators];
+                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                [weakSelf.tableView flashScrollIndicators];
             }
             
         } else {
             [SVProgressHUD showErrorWithStatus:@"您没有回复帖子"];
         }
         
-        [self.refreshControl endRefreshing];
+        [weakSelf.refreshControl endRefreshing];
         [HPIndecator dismiss];
         
     } page:_current_page];

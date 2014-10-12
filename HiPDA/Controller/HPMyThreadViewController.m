@@ -109,6 +109,7 @@
         ;//[SVProgressHUD showWithStatus:@"同步中..."];
     }
     
+    __weak typeof(self) weakSelf = self;
     [HPMyThread ayscnMyThreadWithBlock:^(NSArray *threads, NSError *error) {
         
         if (error) {
@@ -121,20 +122,20 @@
                 [[HPMyThread sharedMyThread] cacheMyThreads:threads];
             }
             _myThreads = threads;
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             
-            if (![self.refreshControl isRefreshing]) {
-                [self.tableView setContentOffset:CGPointZero animated:NO];
+            if (![weakSelf.refreshControl isRefreshing]) {
+                [weakSelf.tableView setContentOffset:CGPointZero animated:NO];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-                [self.tableView flashScrollIndicators];
+                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                [weakSelf.tableView flashScrollIndicators];
             }
             
         } else {
             [SVProgressHUD showErrorWithStatus:@"您没有主题帖子"];
         }
         
-        [self.refreshControl endRefreshing];
+        [weakSelf.refreshControl endRefreshing];
         [HPIndecator dismiss];
         
     } page:_current_page];

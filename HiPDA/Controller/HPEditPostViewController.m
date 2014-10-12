@@ -123,18 +123,18 @@
 }
 
 - (void)loadOriginalPost {
-    
+    __weak typeof(self) weakSelf = self;
     [HPSendPost loadOriginalPostWithFid:_thread.fid tid:_thread.tid pid:_correct_post.pid page:_page block:^(NSDictionary *result, NSError *error) {
         if (!error) {
             [SVProgressHUD dismiss];
             
             _parameters = [NSMutableDictionary dictionaryWithDictionary:result];
-            self.contentTextFiled.text = [_parameters objectForKey:@"message"];
+            weakSelf.contentTextFiled.text = [_parameters objectForKey:@"message"];
             
             NSString *title = [result objectForKey:@"subject"];
             NSLog(@"%@", title);
             if (title && ![title isEqualToString:@""]) {
-                self.title = title;
+                weakSelf.title = title;
             }
             
         } else {
@@ -164,8 +164,9 @@
         }
     }
     
+    __weak typeof(self) weakSelf = self;
     [HPSendPost editPost:_parameters block:^(NSError *error) {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+        weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
         if (error) {
             
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
@@ -174,7 +175,7 @@
             
             //[SVProgressHUD showSuccessWithStatus:@"发送成功"];
             [SVProgressHUD dismiss];
-            [self doneWithError:nil];
+            [weakSelf doneWithError:nil];
             
         }
     }];

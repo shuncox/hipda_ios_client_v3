@@ -186,6 +186,7 @@
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
+    __weak typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPMessage sendMessageWithUsername:_user.username message:text block:^(NSError *error) {
         if (error) {
@@ -203,8 +204,8 @@
             [_messages addObject:newMessage];
             [JSMessageSoundEffect playMessageSentSound];
             
-            [self finishSend];
-            [self scrollToBottomAnimated:YES];
+            [weakSelf finishSend];
+            [weakSelf scrollToBottomAnimated:YES];
         }
     }];
 }

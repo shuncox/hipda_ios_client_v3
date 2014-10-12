@@ -1097,6 +1097,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)favorite:(id)sender {
  
     BOOL flag = [HPFavorite isFavoriteWithTid:_thread.tid];
+    __weak typeof(self) weakSelf = self;
     
     if (!flag) {
         [SVProgressHUD showWithStatus:@"收藏中..."];
@@ -1105,7 +1106,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             if (isSuccess) {
                 NSLog(@"favorate success");
                 [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
-                [self updateFavButton];
+                [weakSelf updateFavButton];
             } else {
                 NSLog(@"favorate error %@", [error localizedDescription]);
                 [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
@@ -1117,7 +1118,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             if (!error) {
                 NSLog(@"un favorate success");
                 [SVProgressHUD showSuccessWithStatus:@"删除成功"];
-                [self updateFavButton];
+                [weakSelf updateFavButton];
             } else {
                 NSLog(@"un favorate error %@", [error localizedDescription]);
                 [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
@@ -1129,6 +1130,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)attention:(id)sender {
     
     BOOL flag = [HPAttention isAttention:_thread.tid];
+    __weak typeof(self) weakSelf = self;
     
     if (!flag) {
         [SVProgressHUD showWithStatus:@"关注中..."];
@@ -1137,7 +1139,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             if (isSuccess) {
                 NSLog(@"favorate success");
                 [SVProgressHUD showSuccessWithStatus:@"关注成功"];
-                [self updateAttentionButton];
+                [weakSelf updateAttentionButton];
             } else {
                 NSLog(@"favorate error %@", [error localizedDescription]);
                 [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
@@ -1149,7 +1151,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             if (!error) {
                 NSLog(@"un favorate success");
                 [SVProgressHUD showSuccessWithStatus:@"取消关注成功"];
-                [self updateAttentionButton];
+                [weakSelf updateAttentionButton];
             } else {
                 NSLog(@"un favorate error %@", [error localizedDescription]);
                 [SVProgressHUD showErrorWithStatus:[error localizedDescription]];

@@ -59,10 +59,10 @@
     
     [self.indicator startAnimating];
 
-    
+    __weak typeof(self) weakSelf = self;
     [HPSendPost loadParametersWithBlock:^(NSDictionary *parameters, NSError *error) {
          
-         [self.indicator stopAnimating];
+         [weakSelf.indicator stopAnimating];
          
          _formhash = [parameters objectForKey:@"formhash"];
          
@@ -71,7 +71,7 @@
              
              if (_waitingForToken) {
                  _waitingForToken = NO;
-                 [self send:nil];
+                 [weakSelf send:nil];
              }
              
          } else {
@@ -83,7 +83,7 @@
                   if (buttonIndex == [alertView cancelButtonIndex]) {
                       ;
                   } else {
-                      [self loadFormhash];
+                      [weakSelf loadFormhash];
                   }
               }];
          }
@@ -115,13 +115,14 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
+    __weak typeof(self) weakSelf = self;
     [HPSendPost sendReplyWithThread:_thread
-                            content:self.contentTextFiled.text
-                       imagesString:self.imagesString
+                            content:weakSelf.contentTextFiled.text
+                       imagesString:weakSelf.imagesString
                            formhash:_formhash
                               block:
      ^(NSString *msg, NSError *error) {
-         self.navigationItem.rightBarButtonItem.enabled = YES;
+         weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
          if (error) {
              
              if ([[error localizedDescription] indexOf:@"您两次发表间隔少于 30 秒"] != -1) {
@@ -133,9 +134,9 @@
                       if (buttonIndex == [alertView cancelButtonIndex]) {
                           ;
                       } else {
-                          [self.contentTextFiled resignFirstResponder];
+                          [weakSelf.contentTextFiled resignFirstResponder];
                           _secondsCountDown = 31;
-                          _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+                          _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:weakSelf selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
                       }
                   }];
              } else {
@@ -144,7 +145,7 @@
          } else {
              //[SVProgressHUD showSuccessWithStatus:@"发送成功"];
              [SVProgressHUD dismiss];
-             [self doneWithError:nil];
+             [weakSelf doneWithError:nil];
          }
      }];
 }

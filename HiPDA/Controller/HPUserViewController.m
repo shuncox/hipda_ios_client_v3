@@ -62,6 +62,7 @@
 - (void)loadData {
     
     [HPIndecator show];
+    __weak typeof(self) weakSelf = self;
     [HPUser getUserSpaceDetailsWithUid:_uid orUsername:_username block:^(NSDictionary *dict, NSError *error) {
         
         [HPIndecator dismiss];
@@ -70,7 +71,7 @@
             _data = [dict objectForKey:@"list"];
             _user = [[HPUser alloc] initWithAttributes:dict];
             
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             
         } else {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];

@@ -113,6 +113,7 @@
         ;//[SVProgressHUD showWithStatus:@"同步中..."];
     }
     
+    __weak typeof(self) weakSelf = self;
     [HPNotice ayscnMyNoticesWithBlock:^(NSArray *threads, NSError *error) {
         
         if (error) {
@@ -126,13 +127,13 @@
                 [[HPNotice sharedNotice] cacheMyNotices:threads];
             }
             _myNotices = threads;
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             
-            if (![self.refreshControl isRefreshing]) {
-                [self.tableView setContentOffset:CGPointZero animated:NO];
+            if (![weakSelf.refreshControl isRefreshing]) {
+                [weakSelf.tableView setContentOffset:CGPointZero animated:NO];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-                [self.tableView flashScrollIndicators];
+                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                [weakSelf.tableView flashScrollIndicators];
             }
             
             [Setting saveInteger:0 forKey:HPNoticeCount];
@@ -142,7 +143,7 @@
             [SVProgressHUD showErrorWithStatus:@"您没有提醒消息"];
         }
         
-        [self.refreshControl endRefreshing];
+        [weakSelf.refreshControl endRefreshing];
         [HPIndecator dismiss];
         
     } page:_current_page];

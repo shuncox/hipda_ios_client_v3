@@ -150,6 +150,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    NSLog(@" -- dealloc");
+}
+
 - (RETableViewSection *)addPreferenceControls {
     
     RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil footerTitle:@"  "];
