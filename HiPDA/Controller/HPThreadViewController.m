@@ -83,6 +83,7 @@ typedef enum{
 {
     self = [super init];
     if (self) {
+        [Flurry logEvent:@"ThreadVC LoadForum" withParameters:@{@"fid":@(fid),@"title":title}];
         _current_page = 1;
         _current_fid = fid;
         self.title = title;
@@ -210,6 +211,7 @@ typedef enum{
 #pragma mark - load
 
 - (void)loadForum:(NSInteger)fid title:(NSString *)title {
+    [Flurry logEvent:@"ThreadVC LoadForum" withParameters:@{@"fid":@(fid),@"title":title}];
     self.title = title;
     _current_fid = fid;
     [self refresh:[UIButton new]];
@@ -218,7 +220,7 @@ typedef enum{
 - (void)load:(LoadType)type
      refresh:(BOOL)refresh {
 
-    
+    [Flurry logEvent:@"ThreadVC Refresh" withParameters:@{@"type":@(type),@"forceRefresh":@(refresh)}];
     
     __weak typeof(self) weakSelf = self;
     [HPThread loadThreadsWithFid:_current_fid
@@ -580,6 +582,7 @@ typedef enum{
          
          [self.navigationController pushViewController:rvc animated:YES];
          
+         [Flurry logEvent:@"ThreadVC SwipeToJump"];
      }];
     
     [cell setSwipeGestureWithView:[cell viewWithImageName:@"clock.png"]
@@ -601,6 +604,7 @@ typedef enum{
              [HPIndecator dismiss];
          }];
          
+         [Flurry logEvent:@"ThreadVC SwipeToPreload"];
          
          if ([NSStandardUserDefaults boolForKey:kHPHomeTip4Bg or:YES]) {
              [UIAlertView showConfirmationDialogWithTitle:@"提示"
@@ -625,10 +629,11 @@ typedef enum{
 }
 
 - (void)newThread:(id)sender {
-
     HPNewThreadViewController *tvc = [[HPNewThreadViewController alloc] initWithFourm:_current_fid delegate:self];
     
     [self presentViewController:[HPCommon NVCWithRootVC:tvc] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"ThreadVC NewThread"];
 }
 
 - (void)compositionDoneWithType:(ActionType)type error:(NSError *)error {
@@ -641,12 +646,14 @@ typedef enum{
 {
     NSError *error = [[notification userInfo] objectForKey:@"error"];
     [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+    [Flurry logEvent:@"ThreadVC AutoLogin" withParameters:@{@"error":[error localizedDescription]}];
 }
 
 - (void)loginSuccess:(NSNotification *)notification
 {
     [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
     [self refresh:[UIButton new]];
+    [Flurry logEvent:@"ThreadVC AutoLogin" withParameters:@{@"error":@""}];
 }
 
 #pragma mark - 

@@ -42,6 +42,7 @@
 @property (strong, nonatomic) RETableViewManager *manager;
 @property (strong, nonatomic) RETableViewSection *preferenceSection;
 @property (strong, nonatomic) RETableViewSection *imageSection;
+@property (strong, nonatomic) RETableViewSection *dataTrackingSection;
 @property (strong, nonatomic) RETableViewSection *aboutSection;
 
 @end
@@ -102,11 +103,14 @@
             [self.navigationController pushViewController:vc animated:YES];
             
             [item deselectRowAnimated:YES];
+            
+            [Flurry logEvent:@"Account EnterBgFetch"];
         }];
         [bgFetchSection addItem:bgFetchItem];
         [self.manager addSection:bgFetchSection];
     }
     
+    self.dataTrackingSection = [self addDataTrackingControls];
     self.aboutSection = [self addAboutControls];
     
     RETableViewSection *logoutSection = [RETableViewSection sectionWithHeaderTitle:@"  " footerTitle:@" "];
@@ -121,6 +125,7 @@
                  ;
              } else {
                  
+                 [Flurry logEvent:@"Account Logout"];
                  [[HPAccount sharedHPAccount] logout];
                  [self close:nil];
              }
@@ -173,6 +178,8 @@
         }
         
         [[HPRearViewController sharedRearVC] themeDidChanged];
+        
+        [Flurry logEvent:@"Setting ToggleDarkMode" withParameters:@{@"flag":@(item.value)}];
     }];
     
     // isShowAvatar
@@ -191,6 +198,8 @@
         
         
         [[HPRearViewController sharedRearVC] themeDidChanged];
+        
+        [Flurry logEvent:@"Setting ToggleShowAvatar" withParameters:@{@"flag":@(item.value)}];
     }];
     
     
@@ -200,6 +209,8 @@
     REBoolItem *isOrderByDatelineItem = [REBoolItem itemWithTitle:@"按发帖时间排序" value:isOrderByDateline switchValueChangeHandler:^(REBoolItem *item) {
         NSLog(@"isOrderByDateline Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingOrderByDate];
+        
+        [Flurry logEvent:@"Setting ToggleOrderByDateline" withParameters:@{@"flag":@(item.value)}];
     }];
     
     //
@@ -219,6 +230,8 @@
         } else {
             [SVProgressHUD showErrorWithStatus:msg];
         }
+        
+        [Flurry logEvent:@"Setting SetTail" withParameters:@{@"text":item.value}];
     };
     
     //
@@ -228,6 +241,8 @@
         HPSetForumsViewController *setForumsViewController = [[HPSetForumsViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:setForumsViewController animated:YES];
         [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting EnterSetForum"];
     }];
     
     //
@@ -236,6 +251,8 @@
         
         [self.navigationController pushViewController:[[HPBlockListViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
         [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting EnterBlockList"];
     }];
     
     // preferFav
@@ -246,6 +263,7 @@
         NSLog(@"HPSettingPreferNotice Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingPreferNotice];
         
+        [Flurry logEvent:@"Setting TogglePreferNotice" withParameters:@{@"flag":@(item.value)}];
     }];
     
     // 发送后提示
@@ -279,6 +297,8 @@
                 default:
                     break;
             }
+            
+            [Flurry logEvent:@"Setting SetAfterSendConfirm" withParameters:@{@"option":@(i)}];
         }];
         
         optionsController.delegate = weakSelf;
@@ -299,6 +319,7 @@
         NSLog(@"isPullReply Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingIsPullReply];
         
+        [Flurry logEvent:@"Setting TogglePullReply" withParameters:@{@"flag":@(item.value)}];
     }];
     
     
@@ -309,6 +330,8 @@
         HPSetStupidBarController *svc = [HPSetStupidBarController new];
         [self.navigationController pushViewController:svc animated:YES];
         [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting EnterStupidBar"];
     }];
     
     
@@ -354,6 +377,8 @@
             HPImageDisplayStyle styleViaWWAN
                 = [options indexOfObjectIdenticalTo:item.value];
             [Setting saveInteger:styleViaWWAN forKey:HPSettingImageWWAN];
+            
+            [Flurry logEvent:@"Setting SetImageStyleWWAN" withParameters:@{@"option":@(styleViaWWAN)}];
         }];
         
         optionsController.delegate = weakSelf;
@@ -380,6 +405,8 @@
                 = [options indexOfObjectIdenticalTo:item.value];
             //NSLog(@"styleViaWifi %d", styleViaWifi);
             [Setting saveInteger:styleViaWifi forKey:HPSettingImageWifi];
+            
+            [Flurry logEvent:@"Setting SetImageStyleWifi" withParameters:@{@"option":@(styleViaWifi)}];
         }];
         
         optionsController.delegate = weakSelf;
@@ -413,6 +440,8 @@
         
         item.title = @"清理缓存";
         [item reloadRowWithAnimation:UITableViewRowAnimationAutomatic];
+        
+        [Flurry logEvent:@"Setting ClearCache"];
     }];
     
     
@@ -461,6 +490,8 @@
             [Setting saveFloat:lastMinite forKey:HPSettingBGLastMinite];
             
             [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+            
+            [Flurry logEvent:@"Setting SetLastMinite" withParameters:@{@"minite":@(lastMinite)}];
         }];
         
         // Adjust styles
@@ -483,6 +514,38 @@
     return section;
 }
 
+- (RETableViewSection *)addDataTrackingControls {
+    
+    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@" " footerTitle:nil];
+    
+    //
+    BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
+    REBoolItem *dataTrackingEnableItem = [REBoolItem itemWithTitle:@"使用行为统计" value:dataTrackingEnable switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"dataTrackingEnable %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingDataTrackEnable];
+        
+        [Flurry logEvent:@"Setting ToggleDataTracking" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
+    //
+    BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
+    REBoolItem *bugTrackingEnableItem = [REBoolItem itemWithTitle:@"错误信息收集" value:bugTrackingEnable switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"bugTrackingEnable %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingBugTrackEnable];
+        
+        [Flurry logEvent:@"Setting ToggleBugTracking" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
+    [section addItem:dataTrackingEnableItem];
+    [section addItem:bugTrackingEnableItem];
+    
+    [_manager addSection:section];
+    return section;
+}
+
+
 - (RETableViewSection *)addAboutControls
 {
     //RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@"About"];
@@ -504,6 +567,8 @@
         
         webViewController.title = @"致谢";
         [self.navigationController pushViewController:webViewController animated:YES];
+        
+        [Flurry logEvent:@"Setting EnterAcknowledgement"];
     }];
 
     
@@ -556,6 +621,8 @@
         [self.navigationController pushViewController:rvc animated:YES];
         
         [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting EnterAdvice"];
     }];
     
     //
@@ -565,6 +632,8 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/wujichao/hipda_ios_client_v3"]];
         
         [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting EnterGithub"];
     }];
    
     
@@ -593,15 +662,15 @@
                                          message:@"您确定要重置所有设置吗?"
                                          handler:^(UIAlertView *alertView, NSInteger buttonIndex)
      {
-         if (buttonIndex == [alertView cancelButtonIndex]) {
-             ;
-         } else {
-             
+         BOOL confirm = (buttonIndex != [alertView cancelButtonIndex]);
+         if (confirm) {
              [Setting loadDefaults];
              [SVProgressHUD showSuccessWithStatus:@"设置已重置"];
              
              [self close:nil];
          }
+         
+         [Flurry logEvent:@"Setting Reset" withParameters:@{@"confirm":@(confirm)}];
      }];
 }
 
@@ -614,6 +683,8 @@
         NSLog(@"sent");
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
+    
+    [Flurry logEvent:@"Setting ContactAuthor" withParameters:@{@"result":@(result)}];
 }
 
 #pragma mark webView delegate

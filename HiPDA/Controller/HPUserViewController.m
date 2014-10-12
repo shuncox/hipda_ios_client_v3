@@ -188,9 +188,13 @@
         HPSearchViewController *searchVC = [[HPSearchViewController alloc] initWithUser:_user];
         [self.navigationController pushViewController:searchVC animated:YES];
         
+        [Flurry logEvent:@"Read ViewUser Action" withParameters:@{@"action":@"search"}];
+        
     } else if (indexPath.section == 1 && indexPath.row == 1) {
         
         [self promptForSendMessage:_user.username];
+        
+        [Flurry logEvent:@"Read ViewUser Action" withParameters:@{@"action":@"sendMessage"}];
         
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         
@@ -200,6 +204,8 @@
             [Setting addBlockWithUsername:_user.username];
         }
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        [Flurry logEvent:@"Read ViewUser Action" withParameters:@{@"action":@"block"}];
         
     } else {
         ;

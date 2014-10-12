@@ -304,6 +304,9 @@
             [revealController revealToggle:self];
             [frontNavigationController.topViewController performSelector:@selector(refresh:) withObject:nil afterDelay:0.1f];
         }
+        
+        [Flurry logEvent:@"UserCenter to" withParameters:@{@"name":_vc_names[row]}];
+        
     } else if (row == _vc_classes.count) {
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -438,12 +441,16 @@
     
     HPSettingViewController *settingVC = [HPSettingViewController new];
     [self presentViewController:[HPCommon NVCWithRootVC:settingVC] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"UserCenter to" withParameters:@{@"name":@"设置"}];
 }
 
 - (void)showSearchVC:(id)sender {
     
     HPSearchViewController *searchVC = [HPSearchViewController new];
     [self presentViewController:[HPCommon NVCWithRootVC:searchVC] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"UserCenter to" withParameters:@{@"name":@"搜索"}];
 }
 
 #pragma mark - 

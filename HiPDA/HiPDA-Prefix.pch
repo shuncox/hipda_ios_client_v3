@@ -17,7 +17,7 @@
     //#define NSLog(...) do { } while (0)
     #import "HPCommon.h"
     #import "RegExCategories.h"
-
+    #import <FlurrySDK/Flurry.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
 

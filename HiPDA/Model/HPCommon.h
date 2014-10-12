@@ -150,6 +150,8 @@
 #define HPSettingBlockList @"HPSettingBlockList"
 #define HPSettingAfterSendShowConfirm @"HPSettingAfterSendShowConfirm"
 #define HPSettingAfterSendJump @"HPSettingAfterSendJump"
+#define HPSettingDataTrackEnable @"HPSettingDataTrackEnable"
+#define HPSettingBugTrackEnable @"HPSettingBugTrackEnable"
 
 #define HPDraft @"HPDraft"
 

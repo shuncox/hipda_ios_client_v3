@@ -151,6 +151,8 @@
     
     [Setting saveObject:new_fids forKey:HPSettingFavForums];
     [Setting saveObject:_titles forKey:HPSettingFavForumsTitle];
+    
+    [Flurry logEvent:@"Setting SetForums" withParameters:@{@"fids":new_fids,@"titles":_titles}];
 }
 
 

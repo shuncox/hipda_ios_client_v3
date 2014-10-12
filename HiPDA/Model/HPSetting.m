@@ -102,7 +102,9 @@
                                HPSettingStupidBarRightAction:@(HPStupidBarActionReply),
                                HPSettingBlockList:@[],
                                HPSettingAfterSendShowConfirm:@NO,
-                               HPSettingAfterSendJump:@YES
+                               HPSettingAfterSendJump:@YES,
+                               HPSettingDataTrackEnable:@YES,
+                               HPSettingBugTrackEnable:@YES
                                };
     return defaults;
 }
@@ -214,6 +216,8 @@
     [list addObject:username];
     [Setting saveObject:[NSArray arrayWithArray:list] forKey:HPSettingBlockList];
     NSLog(@"add %@\nthen %@", username, [self objectForKey:HPSettingBlockList]);
+    
+    [Flurry logEvent:@"Account UpdateBlocks" withParameters:@{@"list":list}];
 }
 - (void)removeBlockWithUsername:(NSString *)username {
     NSMutableArray *list = [NSMutableArray arrayWithArray:[self objectForKey:HPSettingBlockList]];

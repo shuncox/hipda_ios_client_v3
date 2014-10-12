@@ -133,8 +133,21 @@
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     }
     
-    [Bugsnag startBugsnagWithApiKey:@"31d285a4f85844b06f006749d1988f4e"];
-    //[Bugsnag notify:[NSException exceptionWithName:@"ExceptionName" reason:@"Test Error" userInfo:nil]];
+    BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
+    BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
+    if (bugTrackingEnable) {
+        [Bugsnag startBugsnagWithApiKey:@"44e52e496c45140fc132ec91ef4ab172"];
+    }
+    if (dataTrackingEnable) {
+        [Flurry setCrashReportingEnabled:NO];
+        [Flurry startSession:@"PM72Q4WCN9DCMMSFDJC6"];
+        //[Flurry setDebugLogEnabled:YES];
+    }
+    
+    if ([HPAccount isSetAccount]) {
+        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+        [Flurry setUserID:username];
+    }
     
     return YES;
 }

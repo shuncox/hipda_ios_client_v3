@@ -49,6 +49,7 @@
         NSLog(@"enableBgFetchNotice Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingBgFetchNotice];
         
+        [Flurry logEvent:@"Setting ToggleBgFetchNotice" withParameters:@{@"flag":@(item.value)}];
     }];
     
     BOOL enableBgFetchThread = [Setting boolForKey:HPSettingBgFetchThread];
@@ -57,6 +58,7 @@
         NSLog(@"enableBgFetchThread Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingBgFetchThread];
         
+        [Flurry logEvent:@"Setting ToggleBgFetchThread" withParameters:@{@"flag":@(item.value)}];
     }];
     
     self.manager[@"MultilineTextItem"] = @"MultilineTextCell";

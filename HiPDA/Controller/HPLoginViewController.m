@@ -51,8 +51,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
-    
+    [Flurry logEvent:@"Page LoginVC"];
     self.title = NSLocalizedString(@"HiPDA论坛登陆", nil);
     
     
@@ -166,6 +165,8 @@
                      [weakSelf dismissViewControllerAnimated:YES
                                               completion:
                       ^{
+                          [Flurry logEvent:@"Account Login" withParameters:@{@"userid":username}];
+                          [Flurry setUserID:username];
                           [HPRearViewController threadVCRefresh];
                       }];
                      
@@ -191,6 +192,8 @@
 }
 
 - (void)zhuce:(id)sender {
+    
+    [Flurry logEvent:@"Account SignUp"];
 
     NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/register.php"];
     [[UIApplication sharedApplication] openURL:url];

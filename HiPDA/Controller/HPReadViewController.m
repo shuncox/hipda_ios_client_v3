@@ -182,6 +182,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         _thread = thread;
         
+        if (_thread && _thread.tid!=0 && _thread.title.length > 0) {
+            [Flurry logEvent:@"Read Open" withParameters:@{@"tid":@(_thread.tid), @"title":_thread.title}];
+        }
         
         _current_page = page;
         _forceFullPage = forceFullPage;
@@ -661,6 +664,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         [self.navigationController pushViewController:uvc animated:YES];
         
+        [Flurry logEvent:@"Read ViewUser" withParameters:@{@"username":uvc.username}];
+        
         return NO;
         
     } else if ([request.URL.scheme isEqualToString:@"gotofloor"]) {
@@ -962,6 +967,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
                     [pasteBoard setString:url];
                     [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
+                    
+                    [Flurry logEvent:@"Read CopyLink"];
                     break;
                 }
                 case 1://text adjust
@@ -979,6 +986,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                              [self prepareCapture];
                          }
                      }];
+                    
+                    [Flurry logEvent:@"Read CapturePost"];
+                    
                     break;
                 }
                 default:
@@ -1008,6 +1018,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSLog(@"open browser");
     UINavigationController *webBrowserNC = [[UINavigationController alloc] initWithRootViewController:webBrowser];
     [self presentViewController:webBrowserNC animated:YES completion:NULL];
+    
+    [Flurry logEvent:@"Read OpenUrl" withParameters:@{@"url":url.absoluteString}];
 }
 
 - (void)openImage:(NSString *)src {
@@ -1058,6 +1070,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     HPReplyTopicViewController *sendvc = [[HPReplyTopicViewController alloc] initWithThread:_thread delegate:self];
     
     [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"Read Reply"];
 }
 
 - (void)replySomeone:(id)sender {
@@ -1070,16 +1084,22 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                        delegate:self];
     
     [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"Read ReplySomeone"];
 }
 
 - (void)editThread {
     HPEditPostViewController *evc = [[HPEditPostViewController alloc] initWithPost:[_posts objectAtIndex:0] actionType:ActionTypeEditThread thread:_thread page:_current_page delegate:self];
     [self presentViewController:[HPCommon NVCWithRootVC:evc] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"Read EditThread"];
 }
 
 - (void)editPost:(HPNewPost *)post {
     HPEditPostViewController *evc = [[HPEditPostViewController alloc] initWithPost:post actionType:ActionTypeEditPost thread:_thread page:_current_page delegate:self];
     [self presentViewController:[HPCommon NVCWithRootVC:evc] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"Read EditPost"];
 }
 
 - (void)quoteSomeone:(id)sender {
@@ -1092,6 +1112,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                        delegate:self];
     
     [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+    
+    [Flurry logEvent:@"Read QuoteSomeone"];
 }
 
 - (void)favorite:(id)sender {
@@ -1125,6 +1147,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             }
         }];
     }
+    
+    [Flurry logEvent:@"Read Favorite" withParameters:@{@"flag":@(flag)}];
 }
 
 - (void)attention:(id)sender {
@@ -1158,6 +1182,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             }
         }];
     }
+    
+    [Flurry logEvent:@"Read AddAttention" withParameters:@{@"flag":@(flag)}];
 }
 
 - (void)toggleOnlySomeone:(HPUser *)user {
@@ -1182,6 +1208,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [SVProgressHUD showWithStatus:@"显示全部帖子..."];
         [self load:YES];
     }
+    
+    [Flurry logEvent:@"Read OnlySomeone" withParameters:@{@"flag":@(!_current_author_uid)}];
 }
 
 
@@ -1254,6 +1282,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     }
     
     [self jumpToPage:page];
+    
+    int pageCount = _thread.pageCount?:0;
+    [Flurry logEvent:@"Read GotoPage" withParameters:@{@"page":[NSString stringWithFormat:@"%d/%d", page, pageCount]}];
 }
 
 - (void)prevPage:(id)sender {
@@ -1268,6 +1299,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [self dimissPageView:nil];
         }
     }
+    
+    [Flurry logEvent:@"Read JumpPage" withParameters:@{@"action":@"PrevPage"}];
 }
 
 - (BOOL)canNext {
@@ -1294,14 +1327,20 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [self dimissPageView:nil];
         }
     }
+    
+    [Flurry logEvent:@"Read JumpPage" withParameters:@{@"action":@"NextPage"}];
 }
 
 - (void)topPage {
     [self jumpToPage:1];
+    
+    [Flurry logEvent:@"Read JumpPage" withParameters:@{@"action":@"TopPage"}];
 }
 
 - (void)tailPage {
     [self jumpToPage:_thread.pageCount];
+    
+    [Flurry logEvent:@"Read JumpPage" withParameters:@{@"action":@"TailPage"}];
 }
 
 
@@ -1338,6 +1377,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [self sendMessageTo:post.user.username message:message];
         }
     }];
+    
+    [Flurry logEvent:@"Read SendMessage"];
 }
 
 - (void)report {
@@ -1358,6 +1399,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                          }];
          }
      }];
+    
+    [Flurry logEvent:@"Read Report"];
 }
 
 # pragma mark - pageView
@@ -1444,6 +1487,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     _pageSlider.minimumValue = 0;
     _pageSlider.value = _current_page - 1;
     [self sliderValueChanged:nil];
+    
+    [Flurry logEvent:@"Read ShowPagePanel"];
 }
 
 - (void)dimissPageView:(id)sender {
@@ -1604,7 +1649,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [_fontSizeLabel sizeToFit];
         
         [self changeFontSize];
-
+        [Flurry logEvent:@"Read ChangeFontSize" withParameters:@{@"size":@(_currentFontSize)}];
         
     } else if (actualStepper.tag == lineHeightStepperTag) {
         
@@ -1615,6 +1660,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [_lineHeightLabel sizeToFit];
         
         [self changeLineHeight];
+        [Flurry logEvent:@"Read ChangeLineHeight" withParameters:@{@"height":@(_currentLineHeight)}];
         
     } else {
         ;
@@ -1627,6 +1673,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [Setting saveBool:[sender isOn] forKey:HPSettingNightMode];
     [self themeDidChanged];
+    
+    [Flurry logEvent:@"Read ToggleDarkTheme" withParameters:@{@"is_dark":@([sender isOn])}];
 }
 
 /*
@@ -1673,7 +1721,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                          self.semiTransparentView.alpha = 0.2f;
                          self.adjustView.alpha = 1.0f;
                      }];
-
+    
+    [Flurry logEvent:@"Read ShowAjustPanel"];
 }
 
 - (void)dimissAdjustView:(id)sender {
@@ -1713,11 +1762,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [self prevPage:nil];
     [self transition:StoryTransitionTypePrevious];
+    
+    [Flurry logEvent:@"Read DragToPage" withParameters:@{@"action":@"dragToPreviousPage"}];
 }
 - (void)dragToNextPage {
     
     [self nextPage:nil];
     [self transition:StoryTransitionTypeNext];
+    [Flurry logEvent:@"Read DragToPage" withParameters:@{@"action":@"dragToNextPage"}];
 }
 
 - (void)transition:(StoryTransitionType)transitionType {
@@ -1908,15 +1960,19 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 #pragma mark - HPStupidBarDelegate
 
 - (void)leftBtnTap {
-    [self actionForType:[Setting integerForKey:HPSettingStupidBarLeftAction]];
-    //[self j];
+    HPStupidBarAction type = [Setting integerForKey:HPSettingStupidBarLeftAction];
+    [self actionForType:type];
+    [Flurry logEvent:@"Read StupidBar" withParameters:@{@"pos":@"left", @"action":@(type)}];
 }
 - (void)centerBtnTap {
-    [self actionForType:[Setting integerForKey:HPSettingStupidBarCenterAction]];
+    HPStupidBarAction type = [Setting integerForKey:HPSettingStupidBarCenterAction];
+    [self actionForType:type];
+    [Flurry logEvent:@"Read StupidBar" withParameters:@{@"pos":@"center", @"action":@(type)}];
 }
 - (void)rightBtnTap {
-    [self actionForType:[Setting integerForKey:HPSettingStupidBarRightAction]];
-    //[self k];
+    HPStupidBarAction type = [Setting integerForKey:HPSettingStupidBarRightAction];
+    [self actionForType:type];
+    [Flurry logEvent:@"Read StupidBar" withParameters:@{@"pos":@"right", @"action":@(type)}];
 }
 
 - (void)actionForType:(HPStupidBarAction)type {

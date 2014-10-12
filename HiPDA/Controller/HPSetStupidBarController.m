@@ -180,10 +180,13 @@
         [Setting saveBool:![sender isOn] forKey:HPSettingStupidBarDisable];
         [self.tableView reloadData];
         
+        [Flurry logEvent:@"Setting ToggleStupidBarDisable" withParameters:@{@"flag":@(![sender isOn])}];
+        
     } else if (sender.tag == 1414) {
         
         [Setting saveBool:[sender isOn] forKey:HPSettingStupidBarHide];
-
+        
+        [Flurry logEvent:@"Setting ToggleStupidBarHide" withParameters:@{@"flag":@([sender isOn])}];
     }
 }
 
