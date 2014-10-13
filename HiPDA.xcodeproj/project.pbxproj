@@ -255,6 +255,9 @@
 		EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B97188CEFCC0084EC2D /* IDMPhotoBrowser.m */; };
 		EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */; };
 		EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAE256C18E135870059EEB7 /* HPRearCell.m */; };
+		EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */; };
+		EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0619EC1F18006F5C92 /* libz.dylib */; };
+		EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB04C0919EC1F82006F5C92 /* Flurry.m */; };
 		EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB36A88183B248B00EB0B88 /* UIViewController+KNSemiModal.m */; };
 		EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB5382618CB6DDF00FD183E /* HPBaseTableViewController.m */; };
 		EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC0E42918BCE89700F064B6 /* HPNewPost.m */; };
@@ -745,6 +748,11 @@
 		EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DACircularProgressView.m; path = Vender/DACircularProgress/DACircularProgressView.m; sourceTree = "<group>"; };
 		EAAE256B18E135870059EEB7 /* HPRearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearCell.h; path = View/HPRearCell.h; sourceTree = "<group>"; };
 		EAAE256C18E135870059EEB7 /* HPRearCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearCell.m; path = View/HPRearCell.m; sourceTree = "<group>"; };
+		EAB04C0219EC1EB7006F5C92 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Vender/UMeng/MobClick.h; sourceTree = "<group>"; };
+		EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = Vender/UMeng/libMobClickLibrary.a; sourceTree = "<group>"; };
+		EAB04C0619EC1F18006F5C92 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		EAB04C0819EC1F82006F5C92 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		EAB04C0919EC1F82006F5C92 /* Flurry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flurry.m; sourceTree = "<group>"; };
 		EAB36A87183B248B00EB0B88 /* UIViewController+KNSemiModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+KNSemiModal.h"; path = "Vender/KNSemiModalViewController/UIViewController+KNSemiModal.h"; sourceTree = "<group>"; };
 		EAB36A88183B248B00EB0B88 /* UIViewController+KNSemiModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+KNSemiModal.m"; path = "Vender/KNSemiModalViewController/UIViewController+KNSemiModal.m"; sourceTree = "<group>"; };
 		EAB5382518CB6DDF00FD183E /* HPBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBaseTableViewController.h; path = Controller/HPBaseTableViewController.h; sourceTree = "<group>"; };
@@ -855,6 +863,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */,
 				EA499F631830C3EA00172989 /* CoreLocation.framework in Frameworks */,
 				EA499F611830C3E100172989 /* Security.framework in Frameworks */,
 				EA499F5F1830C3D800172989 /* SystemConfiguration.framework in Frameworks */,
@@ -864,6 +873,7 @@
 				EA499F571830C3AE00172989 /* MessageUI.framework in Frameworks */,
 				EA499F551830C39A00172989 /* CoreText.framework in Frameworks */,
 				EA499F531830C37E00172989 /* libxml2.2.dylib in Frameworks */,
+				EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */,
 				EA499F0C1830B79400172989 /* MapKit.framework in Frameworks */,
 				EAFDB8481829EFA900C1718B /* CoreGraphics.framework in Frameworks */,
 				EAFDB84A1829EFA900C1718B /* UIKit.framework in Frameworks */,
@@ -1195,6 +1205,7 @@
 		EA499F351830C13A00172989 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				EAB04C0119EC1EAA006F5C92 /* UMeng */,
 				EA944D7219E6D52B0035A5BE /* SloppySwiper */,
 				EA075F5818E4078D00A07C08 /* BBBadgeBarButtonItem */,
 				EA8186BA18E1E1E40092BDD7 /* IBActionSheet */,
@@ -1573,6 +1584,17 @@
 			name = DACircularProgress;
 			sourceTree = "<group>";
 		};
+		EAB04C0119EC1EAA006F5C92 /* UMeng */ = {
+			isa = PBXGroup;
+			children = (
+				EAB04C0219EC1EB7006F5C92 /* MobClick.h */,
+				EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */,
+				EAB04C0819EC1F82006F5C92 /* Flurry.h */,
+				EAB04C0919EC1F82006F5C92 /* Flurry.m */,
+			);
+			name = UMeng;
+			sourceTree = "<group>";
+		};
 		EAB36A80183AFC2800EB0B88 /* KNSemiModalViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1682,6 +1704,7 @@
 		EAFDB8441829EFA900C1718B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAB04C0619EC1F18006F5C92 /* libz.dylib */,
 				EA499F621830C3EA00172989 /* CoreLocation.framework */,
 				EA499F601830C3E100172989 /* Security.framework */,
 				EA499F5E1830C3D800172989 /* SystemConfiguration.framework */,
@@ -2057,6 +2080,7 @@
 				EA743C0E183D00F90067F62B /* REInlineDatePickerItem.m in Sources */,
 				EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */,
 				EA743BB1183D00AA0067F62B /* RETableViewSection.m in Sources */,
+				EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */,
 				EA743C32183F9EE70067F62B /* HPMyReplyViewController.m in Sources */,
 				EA43E70418328B1800968B94 /* GTMNSString+HTML.m in Sources */,
 				EA499F471830C2D800172989 /* TFHppleElement.m in Sources */,
@@ -2362,6 +2386,10 @@
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2406,6 +2434,10 @@
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

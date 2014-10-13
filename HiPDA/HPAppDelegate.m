@@ -139,9 +139,15 @@
         [Bugsnag startBugsnagWithApiKey:@"44e52e496c45140fc132ec91ef4ab172"];
     }
     if (dataTrackingEnable) {
-        [Flurry setCrashReportingEnabled:NO];
-        [Flurry startSession:@"PM72Q4WCN9DCMMSFDJC6"];
+        
+        //[Flurry setCrashReportingEnabled:NO];
+        //[Flurry startSession:@"PM72Q4WCN9DCMMSFDJC6"];
         //[Flurry setDebugLogEnabled:YES];
+        [MobClick setCrashReportEnabled:NO];
+        [MobClick setLogEnabled:YES];
+        //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:BATCH channelId:nil];
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:REALTIME channelId:@"ADHOC_1013"];
+        
     }
     
     if ([HPAccount isSetAccount]) {
