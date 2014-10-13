@@ -11,15 +11,17 @@
 @implementation Flurry
 
 + (void)logEvent:(NSString *)eventName {
+    eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"-"];
     [MobClick event:eventName];
 }
 
 + (void)logEvent:(NSString *)eventName withParameters:(NSDictionary *)parameters {
+    eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"-"];
     [MobClick event:eventName attributes:parameters];
 }
 
 + (void)setUserID:(NSString *)userID {
-    [MobClick event:@"Account Login" attributes:@{@"userid":userID}];
+    [MobClick event:@"Account-Login" attributes:@{@"userid":userID}];
 }
 
 
