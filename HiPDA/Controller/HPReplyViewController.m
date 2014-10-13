@@ -132,6 +132,7 @@
 - (void)send:(id)sender {
     
     if (!_formhash || !_correct_post) {
+        [self.view endEditing:YES];
         [SVProgressHUD showWithStatus:@"正在获取回复token, 马上好" maskType:SVProgressHUDMaskTypeBlack];
         _waitingForToken = YES;
         return;
@@ -155,6 +156,7 @@
     
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPSendPost sendPostWithContent:weakSelf.contentTextFiled.text
                              action:weakSelf.actionType

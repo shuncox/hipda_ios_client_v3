@@ -187,6 +187,7 @@
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
     __weak typeof(self) weakSelf = self;
+    [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPMessage sendMessageWithUsername:_user.username message:text block:^(NSError *error) {
         if (error) {

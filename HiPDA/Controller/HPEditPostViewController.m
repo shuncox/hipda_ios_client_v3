@@ -65,6 +65,7 @@
 
     self.title = @"编辑";
     
+    [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"马上好" maskType:SVProgressHUDMaskTypeBlack];
     
     if (_formhash && _correct_post) {
@@ -152,6 +153,7 @@
 - (void)send:(id)sender {
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
     [_parameters setObject:self.contentTextFiled.text forKey:@"message"];

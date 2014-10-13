@@ -1353,6 +1353,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         return;
     }
     
+    [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPMessage sendMessageWithUsername:username message:message block:^(NSError *error) {
         if (error) {
