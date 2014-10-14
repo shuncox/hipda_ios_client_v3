@@ -83,7 +83,7 @@
                                HPSettingOrderByDate:@NO,
                                HPSettingNightMode:@NO,
                                HPSettingFontSize:@16.f,
-                               HPSettingFontSizeAdjust:IS_IPAD?@150:@100,
+                               HPSettingFontSizeAdjust:IS_IPAD?@130:@100,
                                HPSettingLineHeight:@1.5,
                                HPSettingLineHeightAdjust:@150,
                                HPSettingTextFont:@"STHeitiSC-Light",

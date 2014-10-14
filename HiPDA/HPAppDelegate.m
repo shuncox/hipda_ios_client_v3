@@ -144,10 +144,11 @@
         //[Flurry setCrashReportingEnabled:NO];
         //[Flurry startSession:@"PM72Q4WCN9DCMMSFDJC6"];
         //[Flurry setDebugLogEnabled:YES];
+        //note
         [MobClick setCrashReportEnabled:NO];
         [MobClick setLogEnabled:YES];
         //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:REALTIME channelId:@"ADHOC_1013"];
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:REALTIME channelId:@"debug"];
         
     }
     
