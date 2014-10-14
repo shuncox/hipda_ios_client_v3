@@ -17,7 +17,21 @@
 
 + (void)logEvent:(NSString *)eventName withParameters:(NSDictionary *)parameters {
     eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-    [MobClick event:eventName attributes:parameters];
+    
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    
+    [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if ([obj isKindOfClass:[NSNumber class]]) {
+            obj = [obj stringValue];
+        }
+        if ([obj isKindOfClass:[NSArray class]]) {
+            obj = [[obj valueForKey:@"description"] componentsJoinedByString:@","];
+        }
+        [attributes setObject:obj forKey:key];
+    }];
+    
+    //NSLog(@"eventName %@ attributes %@", eventName, attributes);
+    [MobClick event:eventName attributes:attributes];
 }
 
 + (void)setUserID:(NSString *)userID {
