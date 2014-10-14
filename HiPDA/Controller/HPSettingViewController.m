@@ -523,9 +523,29 @@
     REBoolItem *dataTrackingEnableItem = [REBoolItem itemWithTitle:@"使用行为统计" value:dataTrackingEnable switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"dataTrackingEnable %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingDataTrackEnable];
         
-        [Flurry logEvent:@"Setting ToggleDataTracking" withParameters:@{@"flag":@(item.value)}];
+        if (item.value == NO) {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"o(>﹏<)o不要关啊"
+                                  message:@"这个会统计一些使用行为, 以帮助俺改进App, 比如读帖子时哪些按钮使用频繁俺就会根据统计放到更显眼的位置"
+                                  delegate:nil
+                                  cancelButtonTitle:@"关关关"
+                                  otherButtonTitles:@"算了", nil];
+            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex != alertView.cancelButtonIndex) {
+                    item.value = YES;
+                    [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+                    [Flurry logEvent:@"Setting DataTracking" withParameters:@{@"action":@"StopClose"}];
+                } else {
+                    [Setting saveBool:item.value forKey:HPSettingDataTrackEnable];
+                    [Flurry logEvent:@"Setting DataTracking" withParameters:@{@"action":@"StillClose"}];
+                }
+            }];
+        } else {
+            [Setting saveBool:item.value forKey:HPSettingDataTrackEnable];
+            [Flurry logEvent:@"Setting DataTracking" withParameters:@{@"action":@"Open"}];
+        }
+        
     }];
     
     //
@@ -533,9 +553,28 @@
     REBoolItem *bugTrackingEnableItem = [REBoolItem itemWithTitle:@"错误信息收集" value:bugTrackingEnable switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"bugTrackingEnable %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingBugTrackEnable];
         
-        [Flurry logEvent:@"Setting ToggleBugTracking" withParameters:@{@"flag":@(item.value)}];
+        if (item.value == NO) {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"o(>﹏<)o不要关啊"
+                                  message:@"这个会发送App错误报告给俺\n帮助俺定位各种bug"
+                                   delegate:nil
+                                   cancelButtonTitle:@"关关关"
+                                   otherButtonTitles:@"算了", nil];
+            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex != alertView.cancelButtonIndex) {
+                    item.value = YES;
+                    [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+                    [Flurry logEvent:@"Setting BugTracking" withParameters:@{@"action":@"StopClose"}];
+                } else {
+                    [Setting saveBool:item.value forKey:HPSettingBugTrackEnable];
+                    [Flurry logEvent:@"Setting BugTracking" withParameters:@{@"action":@"StillClose"}];
+                }
+            }];
+        } else {
+            [Setting saveBool:item.value forKey:HPSettingBugTrackEnable];
+            [Flurry logEvent:@"Setting BugTracking" withParameters:@{@"action":@"Open"}];
+        }
     }];
     
     [section addItem:dataTrackingEnableItem];

@@ -146,7 +146,7 @@
         //[Flurry setDebugLogEnabled:YES];
         [MobClick setCrashReportEnabled:NO];
         [MobClick setLogEnabled:YES];
-        //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:BATCH channelId:nil];
+        //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
         [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:REALTIME channelId:@"ADHOC_1013"];
         
     }
