@@ -20,7 +20,8 @@
 #import "HPDatabase.h"
 #import "NSUserDefaults+Convenience.h"
 #import "EGOCache.h"
-
+#import "UIAlertView+Blocks.h"
+#import "NSString+Additions.h"
 #import "HPMessage.h"
 #import "HPNotice.h"
 
@@ -360,7 +361,6 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
      */
 }
-
 
 - (void)clean {
     // NSUserDefaults
