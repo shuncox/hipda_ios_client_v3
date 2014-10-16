@@ -34,4 +34,7 @@ typedef void (^NoticeRetrieveBlock)(UIBackgroundFetchResult result);
 - (void)startCheckWithDelay:(NSTimeInterval)delay;
 - (NSInteger)badgeNumber;
 
+- (BOOL)checkLocalNotificationPermission;
+- (void)askLocalNotificationPermission;
+
 @end

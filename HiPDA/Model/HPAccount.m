@@ -446,4 +446,23 @@
     return pm_count+notice_count;
 }
 
+
+- (BOOL)checkLocalNotificationPermission {
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        
+        UIUserNotificationSettings *s = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        NSLog(@"UIUserNotificationSettings %@", s);
+        if (s.types == UIUserNotificationTypeNone) {
+            return NO;
+        } else {
+            return YES;
+        }
+    }
+    return YES;
+}
+
+- (void)askLocalNotificationPermission {
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+}
+
 @end
