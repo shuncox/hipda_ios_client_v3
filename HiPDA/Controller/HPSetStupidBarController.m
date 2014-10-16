@@ -90,8 +90,9 @@
             _cell0 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"stupidbar_cell0"];
             
             UISwitch *switchCtl = [[UISwitch alloc] initWithFrame:CGRectZero];
-            CGFloat x = CGRectGetWidth(_cell0.contentView.frame) - CGRectGetWidth(switchCtl.frame)/2 - 10.0;
-            CGFloat y = CGRectGetHeight(_cell0.contentView.frame)/2;        switchCtl.center = CGPointMake(x, y);
+            CGFloat x = HP_SCREEN_WIDTH - CGRectGetWidth(switchCtl.frame)/2 - 10.0;
+            CGFloat y = CGRectGetHeight(_cell0.contentView.frame)/2;
+            switchCtl.center = CGPointMake(x, y);
             [switchCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
             switchCtl.backgroundColor = [UIColor clearColor];
             switchCtl.tag = 1313;
@@ -116,8 +117,9 @@
             _cell1 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"stupidbar_cell1"];
             
             UISwitch *switchCtl = [[UISwitch alloc] initWithFrame:CGRectZero];
-            CGFloat x = CGRectGetWidth(_cell1.contentView.frame) - CGRectGetWidth(switchCtl.frame)/2 - 10.0;
-            CGFloat y = CGRectGetHeight(_cell1.contentView.frame)/2;        switchCtl.center = CGPointMake(x, y);
+            CGFloat x = HP_SCREEN_WIDTH - CGRectGetWidth(switchCtl.frame)/2 - 10.0;
+            CGFloat y = CGRectGetHeight(_cell1.contentView.frame)/2;
+            switchCtl.center = CGPointMake(x, y);
             [switchCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
             switchCtl.backgroundColor = [UIColor clearColor];
             switchCtl.tag = 1414;
