@@ -60,8 +60,8 @@
 }
 
 - (UIBarButtonItem *)addPageControlBtn {
-    UIImage *up = [[UIImage imageNamed:@"up.png"] changeColor:[UIColor iOS7darkBlueColor]];
-    UIImage *down = [[UIImage imageNamed:@"down.png"] changeColor:[UIColor iOS7darkBlueColor]];
+    UIImage *up = [UIImage imageNamed:@"up"];
+    UIImage *down = [UIImage imageNamed:@"down"];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[up, down]];
 	[segmentedControl addTarget:self action:@selector(segmentChanged:) forControlEvents:UIControlEventValueChanged];
 	segmentedControl.frame = CGRectMake(0, 0, 90, 30.f);
