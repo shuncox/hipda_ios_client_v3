@@ -664,7 +664,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         [self.navigationController pushViewController:uvc animated:YES];
         
-        [Flurry logEvent:@"Read ViewUser" withParameters:@{@"username":uvc.username}];
+        // for chinese name
+        NSString *username = (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+                                                                            (CFStringRef)uvc.username,
+                                                                            (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",kCFStringEncodingGB_18030_2000));
+        [Flurry logEvent:@"Read ViewUser" withParameters:@{@"username":username}];
         
         return NO;
         

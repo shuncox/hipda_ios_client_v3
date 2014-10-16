@@ -33,6 +33,7 @@
 @interface HPAppDelegate()
 
 @property (nonatomic, strong)HPRearViewController *rearViewController;
+@property (nonatomic, strong)UIAlertView *notificationAlertView;
 
 @end
 @implementation HPAppDelegate
@@ -224,13 +225,16 @@
         return;
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提醒"
-                                                    message:msg
-                                                   delegate:self
-                                          cancelButtonTitle:@"忽略"
-                                          otherButtonTitles:@"查看", nil];
-    alert.tag = tag;
-    [alert show];
+    NSLog(@"__ %@", _notificationAlertView);
+    if (!_notificationAlertView) {
+        _notificationAlertView = [[UIAlertView alloc] initWithTitle:@"提醒"
+                                                            message:msg
+                                                           delegate:self
+                                                  cancelButtonTitle:@"忽略"
+                                                  otherButtonTitles:@"查看", nil];
+        _notificationAlertView.tag = tag;
+        [_notificationAlertView show];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -270,6 +274,8 @@
     } else {
         ;
     }
+    
+    _notificationAlertView = nil;
 }
 
 - (void)FinishLaunchingWithReciveLocalNotification:(UILocalNotification *)localNotification {
