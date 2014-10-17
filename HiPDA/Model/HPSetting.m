@@ -39,11 +39,14 @@
 
 - (void)loadSetting {
     
-    _globalSettings = [NSStandardUserDefaults objectForKey:HPSettingDic];
+    //_globalSettings = [NSStandardUserDefaults objectForKey:HPSettingDic];
+    NSDictionary *savedSettings = [NSStandardUserDefaults objectForKey:HPSettingDic];
+    NSLog(@"savedSettings %@", savedSettings);
     
     ///////////
     // app update setting
-    if (_globalSettings) {
+    if (savedSettings) {
+        _globalSettings = [NSMutableDictionary dictionaryWithDictionary:savedSettings];
         
         NSMutableSet *keysInA = [NSMutableSet setWithArray:[[HPSetting defualts] allKeys]];
         NSSet *keysInB = [NSSet setWithArray:[_globalSettings allKeys]];
@@ -58,7 +61,7 @@
     }
     //////////
     
-    if (!_globalSettings) {
+    if (!savedSettings) {
         [self loadDefaults];
     }
     if (DEBUG_SETTING) NSLog(@"load  _globalSettings %@", _globalSettings);
