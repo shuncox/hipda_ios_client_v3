@@ -160,7 +160,7 @@
         [MobClick setCrashReportEnabled:NO];
         [MobClick setLogEnabled:NO];
         //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:@"appstore"];
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:@"debug"];
         
     }
     
