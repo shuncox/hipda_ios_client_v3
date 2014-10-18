@@ -166,7 +166,7 @@
                                               completion:
                       ^{
                           [Flurry logEvent:@"Account Login" withParameters:@{@"userid":username}];
-                          [Flurry setUserID:username];
+                          [Flurry trackUserIfNeeded];
                           [HPRearViewController threadVCRefresh];
                           
                           if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]

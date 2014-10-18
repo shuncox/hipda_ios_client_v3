@@ -145,16 +145,13 @@
         //[Flurry setDebugLogEnabled:YES];
         //note
         [MobClick setCrashReportEnabled:NO];
-        [MobClick setLogEnabled:YES];
+        [MobClick setLogEnabled:NO];
         //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:REALTIME channelId:@"debug"];
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:@"appstore"];
         
     }
     
-    if ([HPAccount isSetAccount]) {
-        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-        [Flurry setUserID:username];
-    }
+    [Flurry trackUserIfNeeded];
     
     return YES;
 }
