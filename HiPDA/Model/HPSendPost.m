@@ -516,6 +516,18 @@
             }
         }
         
+        // for main post typeid
+        // <option value="56" selected="selected">
+        RxMatch *m_type = [RX(@"<option value=\"(\\d+)\" selected=\"selected\">") firstMatchWithDetails:html];
+        if (m_type) {
+            RxMatchGroup *g = [m_type.groups objectAtIndex:1];
+            NSString *typeid = g.value;
+            NSLog(@"find typeid %@", g.value);
+            if (typeid && typeid.length) {
+                [dict setObject:typeid forKey:@"typeid"];
+            }
+        }
+        
         NSRegularExpression *rx = [[NSRegularExpression alloc] initWithPattern:@"<textarea.*?name=\"message\"[^>]*>(.*?)</textarea>" options:NSRegularExpressionDotMatchesLineSeparators error:nil];
         RxMatch *m = [rx firstMatchWithDetails:html];
         RxMatchGroup *g = [m.groups objectAtIndex:1];

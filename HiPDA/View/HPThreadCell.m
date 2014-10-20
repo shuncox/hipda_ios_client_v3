@@ -261,8 +261,11 @@
     _usernameLabel.backgroundColor = self.contentView.backgroundColor;
     
     // for debug 看边缘
+    //_usernameLabel.backgroundColor = [UIColor yellowColor];
     //_titleLabel.backgroundColor = [UIColor yellowColor];
     //_dateLabel.backgroundColor = [UIColor cyanColor];
+    //NSLog(@"_usernameLabel frame %@", NSStringFromCGRect(_usernameLabel.frame));
+    //NSLog(@"_dateLabel frame %@", NSStringFromCGRect(_dateLabel.frame));
 }
 
 - (void)markRead {
