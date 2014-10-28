@@ -526,7 +526,7 @@
     if (d && d.groups.count == 2) {
         
         RxMatchGroup *d1 = [d.groups objectAtIndex:1];
-        self.body_html = d1.value;
+        self.body_html = d1.value?:@"";
         
     } else {
         
