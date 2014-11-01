@@ -202,6 +202,7 @@
                          formhash:_formhash
                             block:^(NSString *msg, NSError *error)
      {
+         weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
          if (error) {
              
               [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
