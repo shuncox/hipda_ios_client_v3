@@ -81,7 +81,20 @@ static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
             success(operation, content);
         }
     }
-           failure:failure
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               ;
+               //fuch this shit
+               //bug of hi-pda
+               //no login to load forum return 500
+               //will remove it after zhuyi fix it
+               if (error.code == -1011) {
+                   error = [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:@""}];
+                   [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *err) {
+                       NSLog(@"relogin %@", isLogin?@"success":@"fail");
+                   }];
+               }
+               if (failure) failure(operation, error);
+           }
     ];
 }
 
