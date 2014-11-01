@@ -1210,6 +1210,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         _current_author_uid = 0;
         [SVProgressHUD showWithStatus:@"显示全部帖子..."];
+        _thread.pageCount = 0;
         [self load:YES];
     }
     
