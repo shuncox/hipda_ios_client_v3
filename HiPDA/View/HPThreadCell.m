@@ -254,15 +254,18 @@
     
     [_dateLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin , CELL_CONTENT_MARGIN, width, CELL_SUB_HEIGHT)];
     
-    [_usernameLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin , CELL_CONTENT_MARGIN, width/2, CELL_SUB_HEIGHT)];
+    [_usernameLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin , CELL_CONTENT_MARGIN, ceilf(width/2), CELL_SUB_HEIGHT)];
     
     _dateLabel.backgroundColor = self.contentView.backgroundColor;
     _titleLabel.backgroundColor = self.contentView.backgroundColor;
     _usernameLabel.backgroundColor = self.contentView.backgroundColor;
     
     // for debug 看边缘
+    //_usernameLabel.backgroundColor = [UIColor yellowColor];
     //_titleLabel.backgroundColor = [UIColor yellowColor];
     //_dateLabel.backgroundColor = [UIColor cyanColor];
+    //NSLog(@"_usernameLabel frame %@", NSStringFromCGRect(_usernameLabel.frame));
+    //NSLog(@"_dateLabel frame %@", NSStringFromCGRect(_dateLabel.frame));
 }
 
 - (void)markRead {

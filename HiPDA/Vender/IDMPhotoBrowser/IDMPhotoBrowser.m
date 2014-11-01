@@ -1312,6 +1312,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
             if (photo.caption) [activityItems addObject:photo.caption];
             
             self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+            if (IS_IPAD) self.activityViewController.popoverPresentationController.barButtonItem = sender;
             
             __typeof__(self) __weak selfBlock = self;
             [self.activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {

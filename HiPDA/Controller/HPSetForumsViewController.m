@@ -81,7 +81,7 @@
         
         // Present options controller
         //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:_allForums multipleChoice:NO completionHandler:^{
+        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:_allForums multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
             //[weakSelf.navigationController popViewControllerAnimated:YES];
             
             if ([title isEqualToString:item.value]) {

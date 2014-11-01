@@ -16,5 +16,6 @@
 
 + (void)setUserID:(NSString *)userID;
 
++ (void)trackUserIfNeeded;
 
 @end

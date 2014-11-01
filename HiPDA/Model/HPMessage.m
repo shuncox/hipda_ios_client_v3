@@ -224,10 +224,10 @@
                 NSDate *date = [dateFormatter dateFromString:dateString];
                 
                 NSDictionary *message_info = @{
-                                               @"username":username,
-                                               @"date":date,
+                                               @"username":username?:@"",
+                                               @"date":date?:[NSDate date],
                                                /*@"dateString":dateString,*/
-                                               @"message":summary,
+                                               @"message":summary?:@"",
                                                @"isUnread":(isUnread) ? @YES:@NO
                                                };
                 

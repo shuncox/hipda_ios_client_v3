@@ -12,6 +12,7 @@
 #import "HPRearViewController.h"
 
 #import "HPAccount.h"
+#import "HPSetting.h"
 
 #import "SSKeychain.h"
 #import "NSUserDefaults+Convenience.h"
@@ -91,7 +92,7 @@
         
         // Present options controller
         //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:options multipleChoice:NO completionHandler:^{
+        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:options multipleChoice:NO completionHandler:^(RETableViewItem *item) {
             [weakSelf.navigationController popViewControllerAnimated:YES];
             
             [item reloadRowWithAnimation:UITableViewRowAnimationNone]; // same as [weakSelf.tableView reloadRowsAtIndexPaths:@[item.indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -166,8 +167,22 @@
                                               completion:
                       ^{
                           [Flurry logEvent:@"Account Login" withParameters:@{@"userid":username}];
-                          [Flurry setUserID:username];
+                          [Flurry trackUserIfNeeded];
                           [HPRearViewController threadVCRefresh];
+                          
+                          if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
+                              && ![username isEqualToString:@"wujichao"]) {
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
+                              [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                  if (buttonIndex != alertView.cancelButtonIndex) {
+                                      [[HPAccount sharedHPAccount] askLocalNotificationPermission];
+                                  } else {
+                                      [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
+                                      [Setting saveBool:NO forKey:HPSettingBgFetchThread];
+                                  }
+                              }];
+                          }
+                          
                       }];
                      
                  } else {
@@ -195,7 +210,7 @@
     
     [Flurry logEvent:@"Account SignUp"];
 
-    NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/register.php"];
+    NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/tobenew.php"];
     [[UIApplication sharedApplication] openURL:url];
     
     /*
