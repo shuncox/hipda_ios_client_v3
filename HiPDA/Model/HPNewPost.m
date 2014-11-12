@@ -481,6 +481,7 @@
     
     self.user = [HPUser new];
     self.user.username = username;
+    self.user.uid = uid;
     self.user.avatarImageURL = [HPUser avatarStringWithUid:uid];
     
     
