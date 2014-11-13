@@ -254,7 +254,11 @@
     
     [_dateLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin , CELL_CONTENT_MARGIN, width, CELL_SUB_HEIGHT)];
     
-    [_usernameLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin , CELL_CONTENT_MARGIN, ceilf(width/2), CELL_SUB_HEIGHT)];
+    [_usernameLabel sizeToFit];
+    [_usernameLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin,
+                                        CELL_CONTENT_MARGIN,
+                                        ceilf(fmin(_usernameLabel.frame.size.width, width/2)),
+                                        CELL_SUB_HEIGHT)];
     
     _dateLabel.backgroundColor = self.contentView.backgroundColor;
     _titleLabel.backgroundColor = self.contentView.backgroundColor;
