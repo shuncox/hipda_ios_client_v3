@@ -101,6 +101,10 @@
     }
     */
     BOOL isOrderByDateline = [Setting boolForKey:HPSettingOrderByDate];
+    if (fid == 6 && [Setting boolForKey:HPSettingBSForumOrderByDate]) {
+        isOrderByDateline = YES;
+        NSLog(@"HPSettingBSForumOrderByDate YES");
+    }
     
     NSString *path;
     if (!isOrderByDateline) {

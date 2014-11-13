@@ -122,6 +122,7 @@
 
 #define HPSettingShowAvatar @"HPSettingShowAvatar"
 #define HPSettingOrderByDate @"HPSettingOrderByDate"
+#define HPSettingBSForumOrderByDate @"HPSettingBSForumOrderByDate"
 
 #define HPSettingNightMode @"HPSettingNightMode"
 

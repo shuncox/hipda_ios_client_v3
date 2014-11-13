@@ -107,7 +107,8 @@
                                HPSettingAfterSendShowConfirm:@NO,
                                HPSettingAfterSendJump:@YES,
                                HPSettingDataTrackEnable:@YES,
-                               HPSettingBugTrackEnable:@YES
+                               HPSettingBugTrackEnable:@YES,
+                               HPSettingBSForumOrderByDate:@NO
                                };
     return defaults;
 }

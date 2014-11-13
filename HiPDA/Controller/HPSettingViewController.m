@@ -245,6 +245,16 @@
         [Flurry logEvent:@"Setting EnterSetForum"];
     }];
     
+    // B&S版新帖在前
+    //
+    BOOL isBSForumOrderByDateline = [Setting boolForKey:HPSettingBSForumOrderByDate];
+    REBoolItem *isBSForumOrderByDatelineItem = [REBoolItem itemWithTitle:@"B&S版新帖在前" value:isBSForumOrderByDateline switchValueChangeHandler:^(REBoolItem *item) {
+        NSLog(@"isBSForumOrderByDateline Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingBSForumOrderByDate];
+        
+        [Flurry logEvent:@"Setting ToggleBSOrderByDateline" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
     //
     //
     RETableViewItem *blockListItem = [RETableViewItem itemWithTitle:@"屏蔽列表" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
@@ -340,6 +350,7 @@
     [section addItem:isOrderByDatelineItem];
     [section addItem:postTailText];
     [section addItem:setForumItem];
+    [section addItem:isBSForumOrderByDatelineItem];
     [section addItem:blockListItem];
     [section addItem:isPreferNoticeItem];
     [section addItem:afterSendConfirmItem];
