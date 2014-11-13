@@ -217,19 +217,22 @@
 
 - (void)cancelCompose:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"放弃编辑?"
-                                                    message:@"放弃后，下次您可以点击键盘顶部工具栏右边的 R按钮来恢复上次输入的内容"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"放弃"
-                                          otherButtonTitles:@"继续编辑", nil];
-    
-    [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-        if (alertView.cancelButtonIndex == buttonIndex) {
-            // todo draft
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }];
-    
+    if (_contentTextFiled.text.length > 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"放弃编辑?"
+                                                        message:@"放弃后，下次您可以点击键盘顶部工具栏右边的 R按钮来恢复上次输入的内容"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"放弃"
+                                              otherButtonTitles:@"继续编辑", nil];
+        
+        [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (alertView.cancelButtonIndex == buttonIndex) {
+                // todo draft
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 
