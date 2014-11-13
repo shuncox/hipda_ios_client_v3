@@ -154,6 +154,7 @@
 #define HPSettingAfterSendJump @"HPSettingAfterSendJump"
 #define HPSettingDataTrackEnable @"HPSettingDataTrackEnable"
 #define HPSettingBugTrackEnable @"HPSettingBugTrackEnable"
+#define HPSettingForceLogin @"HPSettingForceLogin"
 
 #define HPDraft @"HPDraft"
 

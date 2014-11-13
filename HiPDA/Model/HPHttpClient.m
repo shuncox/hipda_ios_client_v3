@@ -9,6 +9,7 @@
 #import "HPHttpClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "HPAccount.h"
+#import "HPSetting.h"
 
 #import "NSString+Additions.h"
 
@@ -83,11 +84,9 @@ static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
     }
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                ;
-               //fuch this shit
                //bug of hi-pda
                //no login to load forum return 500
-               //will remove it after zhuyi fix it
-               if (error.code == -1011) {
+               if (error.code == -1011 && [Setting boolForKey:HPSettingForceLogin]) {
                    error = [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:@""}];
                    [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *err) {
                        NSLog(@"relogin %@", isLogin?@"success":@"fail");

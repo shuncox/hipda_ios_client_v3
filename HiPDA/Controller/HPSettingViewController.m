@@ -588,8 +588,19 @@
         }
     }];
     
+    // isForceLogin
+    //
+    BOOL isForceLogin = [Setting boolForKey:HPSettingForceLogin];
+    REBoolItem *isForceLoginItem = [REBoolItem itemWithTitle:@"强制登录 (无法登录时可打开)" value:isForceLogin switchValueChangeHandler:^(REBoolItem *item) {
+        NSLog(@"isForceLoginItem Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingForceLogin];
+        
+        [Flurry logEvent:@"Setting ToggleForceLogin" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
     [section addItem:dataTrackingEnableItem];
     [section addItem:bugTrackingEnableItem];
+    [section addItem:isForceLoginItem];
     
     [_manager addSection:section];
     return section;
