@@ -9,7 +9,7 @@
 #import "Flurry.h"
 #import "HPAccount.h"
 #import "HPSetting.h"
-#import <Bugsnag.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation Flurry
 
@@ -51,7 +51,8 @@
         NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
         
         if (dataTrackingEnable) [Flurry setUserID:username];
-        if (bugTrackingEnable) [[Bugsnag configuration] setUser:username withName:username andEmail:username];
+        //if (bugTrackingEnable) [[Bugsnag configuration] setUser:username withName:username andEmail:username];
+        if (bugTrackingEnable) [[Crashlytics sharedInstance] setUserIdentifier:username];
     }
 }
 

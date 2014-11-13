@@ -28,7 +28,7 @@
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
 
-#import "Bugsnag.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface HPAppDelegate()
 
@@ -150,7 +150,7 @@
     BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
     BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
     if (bugTrackingEnable) {
-        [Bugsnag startBugsnagWithApiKey:@"44e52e496c45140fc132ec91ef4ab172"];
+        [Crashlytics startWithAPIKey:@"336a8682811030a9c9e624b36e32131ea1d5a8fd"];
     }
     if (dataTrackingEnable) {
         
