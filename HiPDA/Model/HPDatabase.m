@@ -82,7 +82,22 @@
         NSString *defaultDbPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"uid.sqlite"];
         isExist = [fileManager copyItemAtPath:defaultDbPath toPath:dbPath error:&error];
         
-        if (!isExist) {
+        if (isExist) {
+            NSURL *URL = [NSURL fileURLWithPath:dbPath isDirectory:NO];
+            NSLog(@"URL %@", URL);
+            
+            // excluding uid.sqlite from iCloud backup
+            // https://developer.apple.com/library/ios/qa/qa1719/_index.html
+            NSError *error = nil;
+            BOOL success = [URL setResourceValue:[NSNumber numberWithBool:YES]
+                                          forKey:NSURLIsExcludedFromBackupKey error:&error];
+            if(!success){
+                NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+            } else {
+                NSLog(@"success excluding %@", [URL lastPathComponent]);
+            }
+            
+        } else {
             //NSAssert1(0, @"file to copy db %@", [error localizedDescription]);
             NSLog(@"%@",[error localizedDescription]);
         }
