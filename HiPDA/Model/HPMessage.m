@@ -391,14 +391,11 @@
        message:(NSString *)message
          block:(void (^)(NSError *error))block
 {
-    NSString *path = [NSString stringWithFormat:@"forum/?username=%@&message=%@", username, message];
-    [[HPHttpClient sharedClient]getPath:path
-                             parameters:nil
-                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                    block(nil);
-                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    block(error);
-                                }];
+    NSTimeInterval delay = 0.7f;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^{
+         block(nil);
+    });
 }
 
 

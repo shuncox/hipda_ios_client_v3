@@ -817,6 +817,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   theTitle,
                                   _current_author_uid != 0 ? @"查看全部" : @"只看楼主",
                                   @"浏览器打开",
+                                  @"细节调整",
                                   @"更多",
                                   nil];
    
@@ -905,14 +906,19 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     [self openUrl:[NSURL URLWithString:url]];
                     break;
                 }
-                case 4://更多
+                case 4:// adjust
+                {
+                    [self showAdjustView:nil];
+                    break;
+                }
+                case 5://更多
                 {
                     IBActionSheet *actionSheet = [[IBActionSheet alloc]
                                                   initWithTitle:nil
                                                   delegate:self cancelButtonTitle:@"取消"
                                                   destructiveButtonTitle:nil
                                                   otherButtonTitles:
-                                                  @"复制链接", @"细节调整", @"保存此页截图",nil];
+                                                  @"复制链接", @"保存此页截图",nil];
                     
                     [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
                     [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
@@ -975,12 +981,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     [Flurry logEvent:@"Read CopyLink"];
                     break;
                 }
-                case 1://text adjust
-                {
-                    [self showAdjustView:nil];
-                    break;
-                }
-                case 2://capture & save
+                case 1://capture & save
                 {
                     [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
                                                          message:@"请确认此页已完全载入"
