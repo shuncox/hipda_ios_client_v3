@@ -109,7 +109,8 @@
                                HPSettingDataTrackEnable:@YES,
                                HPSettingBugTrackEnable:@YES,
                                HPSettingBSForumOrderByDate:@NO,
-                               HPSettingForceLogin:@NO
+                               HPSettingForceLogin:@NO,
+                               HPSettingSwipeBack:@NO
                                };
     return defaults;
 }

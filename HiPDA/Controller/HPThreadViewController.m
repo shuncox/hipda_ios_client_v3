@@ -117,7 +117,7 @@ typedef enum{
     [self refresh:[UIButton new]];
     
     //
-    if (IOS7_OR_LATER) {
+    if (IOS7_OR_LATER && [Setting boolForKey:HPSettingSwipeBack]) {
         self.swiper = [[SloppySwiper alloc] initWithNavigationController:self.navigationController];
         self.navigationController.delegate = self.swiper;
     }

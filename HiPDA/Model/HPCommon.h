@@ -155,6 +155,7 @@
 #define HPSettingDataTrackEnable @"HPSettingDataTrackEnable"
 #define HPSettingBugTrackEnable @"HPSettingBugTrackEnable"
 #define HPSettingForceLogin @"HPSettingForceLogin"
+#define HPSettingSwipeBack @"HPSettingSwipeBack"
 
 #define HPDraft @"HPDraft"
 

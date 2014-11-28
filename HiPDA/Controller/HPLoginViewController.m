@@ -60,7 +60,7 @@
                                          [UIBarButtonItem alloc] initWithTitle:@"注册"
                                          style:UIBarButtonItemStylePlain
                                         target:self action:@selector(zhuce:)];
-    self.navigationItem.rightBarButtonItem = loginButtonItem;
+    //self.navigationItem.rightBarButtonItem = loginButtonItem;
     
     [self.navigationItem setHidesBackButton:YES animated:NO];
     

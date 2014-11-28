@@ -332,6 +332,17 @@
         [Flurry logEvent:@"Setting TogglePullReply" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    // 拖动返回
+    //
+    BOOL isSwipeBack = [Setting boolForKey:HPSettingSwipeBack];
+    REBoolItem *isSwipeBackItem = [REBoolItem itemWithTitle:@"看帖全屏拖动返回(谨慎开启)" value:isSwipeBack switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"isSwipeBack Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingSwipeBack];
+        
+        [Flurry logEvent:@"Setting ToggleSwipeBack" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
     
     //
     //
@@ -355,6 +366,7 @@
     [section addItem:isPreferNoticeItem];
     [section addItem:afterSendConfirmItem];
     [section addItem:isPullReplyItem];
+    [section addItem:isSwipeBackItem];
     [section addItem:setStupidBarItem];
     
     [_manager addSection:section];
