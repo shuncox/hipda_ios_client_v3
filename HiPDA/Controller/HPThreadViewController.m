@@ -362,7 +362,9 @@ typedef enum{
         
         type = ClickToRefresh;
         //NSLog(@"%@, %@", _composeBI,_refreshIndicatorBI);
-        self.navigationItem.rightBarButtonItems = @[_composeBI,_refreshIndicatorBI];
+        if (_composeBI && _refreshButtonBI) {
+            self.navigationItem.rightBarButtonItems = @[_composeBI,_refreshIndicatorBI];
+        }
         [_refreshIndicator startAnimating];
         
     } else {
