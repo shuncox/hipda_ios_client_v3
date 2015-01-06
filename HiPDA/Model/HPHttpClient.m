@@ -10,7 +10,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "HPAccount.h"
 #import "HPSetting.h"
-
+#import <SVProgressHUD.h>
 #import "NSString+Additions.h"
 
 static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
@@ -60,7 +60,24 @@ static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
     
     [self setDefaultHeader:@"Referer" value:@"http://www.hi-pda.com/forum/forumdisplay.php?fid=2"];
     
+    self.operationQueue.maxConcurrentOperationCount = 4;
+    
     return self;
+}
+
+- (void)getPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [super getPath:path parameters:parameters success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (error.code == -1003) {
+            [SVProgressHUD showErrorWithStatus:@"DNS解析错误, 正在重试中...\n您也许需要更换DNS, 可能是论坛上的联通高层又发力了..."];
+            [self getPath:path parameters:parameters success:success failure:failure];
+        } else {
+            failure(operation, error);
+        }
+    }];
 }
 
 - (void)getPathContent:(NSString *)path
@@ -68,7 +85,7 @@ static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
                success:(void (^)(AFHTTPRequestOperation *operation, NSString *html))success
                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-	[super getPath:path
+	[self getPath:path
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
