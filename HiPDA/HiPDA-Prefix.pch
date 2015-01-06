@@ -13,8 +13,13 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import "MTLog.h"
-    //#define NSLog(...) do { } while (0)
+
+#if DEBUG
+#import <MTLog.h>
+#else
+#define NSLog(...) do { } while (0)
+#endif
+
     #import "HPCommon.h"
     #import "RegExCategories.h"
     #import "MobClick.h"
