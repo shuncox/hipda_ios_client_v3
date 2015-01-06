@@ -397,7 +397,7 @@
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
-    NSAttributedString *attributedText = [[NSAttributedString alloc]initWithString:text attributes:@{
+    NSAttributedString *attributedText = [[NSAttributedString alloc]initWithString:text?:@"" attributes:@{
                                                                                             NSFontAttributeName:[UIFont systemFontOfSize:FONT_SIZE]
                                         }];
     CGRect rect = [attributedText boundingRectWithSize:constraint
