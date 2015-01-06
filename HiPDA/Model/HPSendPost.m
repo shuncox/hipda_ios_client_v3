@@ -209,7 +209,7 @@
                 if (alert_info) err = alert_info;
                 else err = alert_error;
                 
-                NSDictionary *details = [NSDictionary dictionaryWithObject:err forKey:NSLocalizedDescriptionKey];
+                NSDictionary *details = [NSDictionary dictionaryWithObject:err?:@"服务端返回空, 未知错误" forKey:NSLocalizedDescriptionKey];
                 block(@"", [NSError errorWithDomain:@"world" code:200 userInfo:details]);
                 
             } else {
