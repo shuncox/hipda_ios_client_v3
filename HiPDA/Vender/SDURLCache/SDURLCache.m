@@ -283,13 +283,13 @@ static NSDate *_parseHTTPDate(const char *buf, size_t bufLen) {
 - (void)encodeWithCoder:(NSCoder *)coder {
     @try {
         [coder encodeObject:self.data forKey:@"data"];
-        [coder encodeObject:self.response forKey:@"response"];
-        [coder encodeObject:self.userInfo forKey:@"userInfo"];
-        [coder encodeInt:self.storagePolicy forKey:@"storagePolicy"];
     }
     @catch (NSException *exception) {
-        ;
+        [coder encodeObject:[NSData data] forKey:@"data"];
     }
+    [coder encodeObject:self.response forKey:@"response"];
+    [coder encodeObject:self.userInfo forKey:@"userInfo"];
+    [coder encodeInt:self.storagePolicy forKey:@"storagePolicy"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
