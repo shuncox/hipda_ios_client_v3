@@ -17,3 +17,4 @@ pod 'JDStatusBarNotification'
 pod 'MCSwipeTableViewCell'
 pod 'SSKeychain'
 pod 'RETableViewManager'
+pod 'CTAssetsPickerController', :local => "CTAssetsPickerController/"

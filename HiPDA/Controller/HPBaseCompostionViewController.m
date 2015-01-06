@@ -8,6 +8,7 @@
 
 #import "HPBaseCompostionViewController.h"
 #import "HPImageUploadViewController.h"
+#import "HPImageMultipleUploadViewController.h"
 #import "SWRevealViewController.h"
 
 #import "WUDemoKeyboardBuilder.h"
@@ -205,10 +206,15 @@
 }
 
 - (void)addImage:(id)sender {
-    
-    HPImageUploadViewController *ivc = [[HPImageUploadViewController alloc] init];
-    ivc.delegate = self;
-    [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
+    if (IOS7_OR_LATER) {
+        HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
+        ivc.delegate = self;
+        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
+    } else {
+        HPImageUploadViewController *ivc = [[HPImageUploadViewController alloc] init];
+        ivc.delegate = self;
+        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
+    }
 }
 
 - (void)close:(id)sender {
