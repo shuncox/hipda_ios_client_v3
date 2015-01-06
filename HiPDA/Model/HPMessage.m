@@ -342,7 +342,7 @@
                     block(nil);
                 } else {
                     NSString *alert = [html stringBetweenString:@"<div class=\"alert_" andString:@"</div>"];
-                    NSDictionary *details = [NSDictionary dictionaryWithObject:alert forKey:NSLocalizedDescriptionKey];
+                    NSDictionary *details = [NSDictionary dictionaryWithObject:alert?:(html?:@"未知错误") forKey:NSLocalizedDescriptionKey];
                     block([NSError errorWithDomain:@"world" code:200 userInfo:details]);
                 }
             }
