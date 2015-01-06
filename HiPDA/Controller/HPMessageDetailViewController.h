@@ -6,8 +6,8 @@
 //  Copyright (c) 2013年 wujichao. All rights reserved.
 //
 
-#import <JSMessagesViewController/JSMessagesViewController.h>
-#import <JSMessagesViewController/JSMessage.h>
+#import "JSMessagesViewController.h"
+#import "JSMessage.h"
 
 @class HPUser;
 @interface HPMessageDetailViewController : JSMessagesViewController<JSMessagesViewDataSource, JSMessagesViewDelegate>
