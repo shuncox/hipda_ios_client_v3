@@ -422,7 +422,16 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [string replaceOccurrencesOfString:@"**[lineHeight]**" withString:S(@"%i%%", _currentLineHeight) options:0 range:NSMakeRange(0, string.length)];
     
-    [self.webView loadHTMLString:string baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
+    // allowLossyConversion : YES OR NO
+    // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/5487f43e65f8dfea154bb6ff
+    // [__NSCFString dataUsingEncoding:allowLossyConversion:]: didn't convert all characters
+    // webview使用loadHTMLString:baseURL:也是用了dataUsingEncoding:allowLossyConversion方法
+    // 但是有时会crash(didn't convert all characters)
+    // 不知它的allowLossyConversion是YES还是NO
+    // 暂时设成YES, 看看效果
+    NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
+    //[self.webView loadHTMLString:string baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
     
     BOOL printable = !_forceFullPage && (_current_page == 1 && _current_author_uid == 0);
     
