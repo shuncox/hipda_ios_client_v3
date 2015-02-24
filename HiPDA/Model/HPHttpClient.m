@@ -88,18 +88,25 @@ static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
            }
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                if (error.code == -1003) {
-                   [SVProgressHUD showErrorWithStatus:@"DNS解析错误, 正在重试中...\n您也许需要更换DNS, 可能是论坛上的联通高层又发力了..."];
-                   NSString *user = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-                   if (self.dnsErrorCount) {
-                       [Flurry logEvent:@"Error DNS retry" withParameters:@{@"user":user,
-                                                                            @"path":path,
-                                                                            @"retry_count": @(self.dnsErrorCount)}];
-                   } else {
-                       [Flurry logEvent:@"Error DNS first" withParameters:@{@"user":user,
-                                                                            @"path":path}];
-                   }
-                   self.dnsErrorCount += 1;
-                   [self getPath:path parameters:parameters success:success failure:failure];
+                   
+                   [SVProgressHUD showErrorWithStatus:@"DNS解析错误, 正在重试中...\n您也许需要更换DNS, 可能是论坛上的联通高层又发力了..." ];
+                   
+                   NSTimeInterval delay = 0.1;
+                   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
+                   dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                       NSString *user = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+                       if (self.dnsErrorCount) {
+                           [Flurry logEvent:@"Error DNS retry" withParameters:@{@"user":user,
+                                                                                @"path":path,
+                                                                                @"retry_count": @(self.dnsErrorCount)}];
+                       } else {
+                           [Flurry logEvent:@"Error DNS first" withParameters:@{@"user":user,
+                                                                                @"path":path}];
+                       }
+                       self.dnsErrorCount += 1;
+                       [self getPath:path parameters:parameters success:success failure:failure];
+                   });
+                   
                } else {
                    failure(operation, error);
                }
