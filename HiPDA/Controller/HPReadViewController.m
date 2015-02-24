@@ -182,9 +182,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         _thread = thread;
         
-        if (_thread && _thread.tid!=0 && _thread.title.length > 0) {
-            [Flurry logEvent:@"Read Open" withParameters:@{@"tid":@(_thread.tid), @"title":_thread.title}];
-        }
+//        if (_thread && _thread.tid!=0 && _thread.title.length > 0) {
+//            [Flurry logEvent:@"Read Open" withParameters:@{@"tid":@(_thread.tid), @"title":_thread.title}];
+//        }
         
         _current_page = page;
         _forceFullPage = forceFullPage;
