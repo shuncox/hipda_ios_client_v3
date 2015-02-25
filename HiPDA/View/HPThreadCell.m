@@ -268,7 +268,7 @@
                                         ceilf(fmin(_usernameLabel.frame.size.width, width/2)),
                                         CELL_SUB_HEIGHT)];
     
-    _usernameLabelButton.frame = CGRectInset(_usernameLabel.frame, -10.f, -10.f);
+    _usernameLabelButton.frame = CGRectInset(_usernameLabel.frame, -6.f, -6.f);
     
     _dateLabel.backgroundColor = self.contentView.backgroundColor;
     _titleLabel.backgroundColor = self.contentView.backgroundColor;
