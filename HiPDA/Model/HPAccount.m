@@ -50,6 +50,7 @@
 @interface HPAccount ()
 
 @property (nonatomic, strong) NSTimer *checkTimer;
+@property (nonatomic, strong) HPHttpClient *checkPmClient;
 
 @end
 
@@ -61,6 +62,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedHPAccount = [[HPAccount alloc] init];
+        _sharedHPAccount.checkPmClient = [[HPHttpClient alloc] initWithBaseURL:[NSURL URLWithString:kHPClientBaseURLString]];
     });
     
     return _sharedHPAccount;
@@ -317,7 +319,7 @@
     NSString *randomPath = [NSString stringWithFormat:@"forum/pm.php?checknewpm=%d&inajax=1&ajaxtarget=myprompt_check", (int)t];
     //NSLog(@"%@", randomPath);
     
-    [[HPHttpClient sharedClient] getPath:randomPath
+    [self.checkPmClient getPath:randomPath
                               parameters:nil
                                  success:
      ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -362,7 +364,7 @@
     
      NSLog(@"_checkMsgAndNoticeStep2...");
     
-    [[HPHttpClient sharedClient] getPathContent:@"forum/memcp.php?action=credits" parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
+    [self.checkPmClient getPathContent:@"forum/memcp.php?action=credits" parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
         
         //NSLog(@"checkMsgAndNotice %@", html);
         

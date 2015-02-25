@@ -13,8 +13,6 @@
 #import <SVProgressHUD.h>
 #import "NSString+Additions.h"
 
-static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
-
 @interface HPHttpClient()
 @property (nonatomic, assign)NSInteger dnsErrorCount;
 @end
