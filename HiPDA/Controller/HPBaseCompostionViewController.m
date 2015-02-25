@@ -35,6 +35,7 @@
     UIButton *photoBnt;
     UIButton *emotionBnt;
     UIButton *mentionBnt;
+    UIButton *sendBnt;
     UIButton *recoverBnt; NSString *lastContent;
     UIActivityIndicatorView *tokenIndicator;
     UILabel *tokenLabel;
@@ -129,6 +130,16 @@
     if (!lastContent || [lastContent isEqualToString:@""]) {
         [recoverBnt removeFromSuperview];
     }
+    
+    sendBnt = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    [toolbar addSubview:sendBnt];
+    [sendBnt setTapTarget:self action:@selector(send:)];
+    [sendBnt setTitle:@"发送" forState:UIControlStateNormal];
+    [sendBnt setTitleColor:rgb(111.f,111.f,111.f) forState:UIControlStateNormal];
+    sendBnt.titleLabel.font = [UIFont systemFontOfSize:17.f];
+    [sendBnt sizeToFit];
+    sendBnt.center = CGPointMake(HP_SCREEN_WIDTH-HP_CONVERT_WIDTH(70), 20);
     
     /*
     tokenLabel = [UILabel new];
