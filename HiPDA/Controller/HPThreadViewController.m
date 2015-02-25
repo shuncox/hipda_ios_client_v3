@@ -25,6 +25,7 @@
 #import "HPLoginViewController.h"
 #import "HPRearViewController.h"
 #import "HPNewThreadViewController.h"
+#import "HPUserViewController.h"
 
 #import <SVProgressHUD.h>
 #import <ZAActivityBar/ZAActivityBar.h>
@@ -43,7 +44,7 @@ typedef enum{
 } LoadType;
 
 
-@interface HPThreadViewController () <MCSwipeTableViewCellDelegate, UIAlertViewDelegate, HPCompositionDoneDelegate>
+@interface HPThreadViewController () <MCSwipeTableViewCellDelegate, UIAlertViewDelegate, HPCompositionDoneDelegate, HPThreadCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray *threads;
 @property (nonatomic, assign) NSInteger current_fid;
@@ -409,6 +410,7 @@ typedef enum{
     }
     
     // configure
+    cell.hp_delegate = self;
     [cell configure:thread];
     
     // MCSwipeTableViewCell
@@ -692,6 +694,14 @@ typedef enum{
     [self setActionButton];
     [self.tableView reloadData];
     [self.tableView setBackgroundColor:[HPTheme backgroundColor]];
+}
+
+#pragma mark - 
+- (void)didClickAvatar:(HPUser *)user {
+    HPUserViewController *uvc = [HPUserViewController new];
+    uvc.username = user.username;
+    
+    [self.navigationController pushViewController:uvc animated:YES];
 }
 
 @end

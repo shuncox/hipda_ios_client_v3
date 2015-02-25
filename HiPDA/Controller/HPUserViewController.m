@@ -50,6 +50,13 @@
     
     self.title = @"个人资料";
     
+    // log
+    // for chinese name
+    NSString *username = (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+                                                                                                               (CFStringRef)self.username,
+                                                                                                               (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",kCFStringEncodingGB_18030_2000));
+    [Flurry logEvent:@"Read ViewUser" withParameters:@{@"username":username}];
+    
     [self loadData];
 }
 

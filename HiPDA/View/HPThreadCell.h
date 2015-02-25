@@ -10,10 +10,16 @@
 #import "MCSwipeTableViewCell.h"
 
 @class HPThread;
+@class HPUser;
+
+@protocol HPThreadCellDelegate <NSObject>
+- (void)didClickAvatar:(HPUser *)user;
+@end
 
 @interface HPThreadCell : MCSwipeTableViewCell
 
 @property (nonatomic, strong) HPThread *thread;
+@property (nonatomic, weak)id<HPThreadCellDelegate> hp_delegate;
 
 - (void)configure:(HPThread *)thread;
 

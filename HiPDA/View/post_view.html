@@ -276,6 +276,10 @@ list.addEventListener("click", function(event) {
             location.href = 'image://' + el.src; 
         }
 
+    } else if (el.nodeName == 'SPAN' && el.getAttribute('data-id')) {
+            
+        location.href = el.getAttribute('data-id');
+    
     } else {
         while (el && !el.getAttribute('data-id') ) {
             el = el.parentNode;
