@@ -35,11 +35,11 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     NSUInteger _currentPageIndex;
 	
     // Buttons
-    UIButton *_doneButton;
+    //UIButton *_doneButton;
     
 	// Toolbar
 	UIToolbar *_toolbar;
-	UIBarButtonItem *_previousButton, *_nextButton, *_actionButton;
+	UIBarButtonItem *_doneButton, *_previousButton, *_nextButton, *_actionButton;
     UIBarButtonItem *_counterButton;
     UILabel *_counterLabel;
     
@@ -542,26 +542,11 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     [_toolbar setBackgroundImage:[UIImage new]
               forToolbarPosition:UIToolbarPositionAny
                       barMetrics:UIBarMetricsDefault];
-    
+    _toolbar.tintColor = [UIColor colorWithWhite:0.9 alpha:0.9];
     // Close Button
-    _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_doneButton setFrame:[self frameForDoneButtonAtOrientation:currentOrientation]];
-    [_doneButton setAlpha:1.0f];
-    [_doneButton addTarget:self action:@selector(doneButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    if(!_doneButtonImage) {
-        [_doneButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.9] forState:UIControlStateNormal|UIControlStateHighlighted];
-        [_doneButton setTitle:IDMPhotoBrowserLocalizedStrings(@"Done") forState:UIControlStateNormal];
-        [_doneButton.titleLabel setFont:[UIFont boldSystemFontOfSize:11.0f]];
-        [_doneButton setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:0.5]];
-        _doneButton.layer.cornerRadius = 3.0f;
-        _doneButton.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.9].CGColor;
-        _doneButton.layer.borderWidth = 1.0f;
-    }
-    else {
-        [_doneButton setBackgroundImage:_doneButtonImage forState:UIControlStateNormal];
-        _doneButton.contentMode = UIViewContentModeScaleAspectFit;
-    }
+    _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+                                                                target:self
+                                                                action:@selector(doneButtonPressed:)];;
     
     UIImage *leftButtonImage = (_leftArrowImage == nil) ?
     [UIImage imageNamed:@"IDMPhotoBrowser.bundle/images/IDMPhotoBrowser_arrowLeft.png"]          : _leftArrowImage;
@@ -725,7 +710,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _toolbar.frame = [self frameForToolbarAtOrientation:currentOrientation];
     
     // Done button
-    _doneButton.frame = [self frameForDoneButtonAtOrientation:currentOrientation];
+    //_doneButton.frame = [self frameForDoneButtonAtOrientation:currentOrientation];
 
     
     // Remember index
@@ -776,10 +761,6 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         [_toolbar removeFromSuperview];
     }
     
-    // Close button
-    if(_displayDoneButton && !self.navigationController.navigationBar)
-        [self.view addSubview:_doneButton];
-    
     // Toolbar items & navigation
     UIBarButtonItem *fixedLeftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                                                                     target:self action:nil];
@@ -788,8 +769,13 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                                                                                target:self action:nil];
     NSMutableArray *items = [NSMutableArray new];
     
-    if (_displayActionButton)
+    if (_displayActionButton && !_displayDoneButton)
         [items addObject:fixedLeftSpace];
+    
+    if (_displayDoneButton) {
+        [items addObject:_doneButton];
+    }
+    
     [items addObject:flexSpace];
     
     if (numberOfPhotos > 1 && _displayArrowButton)
@@ -1242,7 +1228,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         CGFloat alpha = hidden ? 0 : 1;
         [self.navigationController.navigationBar setAlpha:alpha];
         [_toolbar setAlpha:alpha];
-        [_doneButton setAlpha:alpha];
+        //[_doneButton setAlpha:alpha];
         for (UIView *v in captionViews) v.alpha = alpha;
     } completion:^(BOOL finished) {}];
 	
@@ -1261,7 +1247,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
 // Enable/disable control visiblity timer
 - (void)hideControlsAfterDelay {
-	// return;
+    // return;
     
     if (![self areControlsHidden]) {
         [self cancelControlHiding];
