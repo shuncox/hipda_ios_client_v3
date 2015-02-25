@@ -284,7 +284,8 @@
 
 // Background View
 - (void)view:(UIView *)view singleTapDetected:(UITouch *)touch {
-    [self handleSingleTap:[touch locationInView:view]];
+    //[self handleSingleTap:[touch locationInView:view]];
+    [_photoBrowser doneButtonPressed:view];
 }
 - (void)view:(UIView *)view doubleTapDetected:(UITouch *)touch {
     [self handleDoubleTap:[touch locationInView:view]];
