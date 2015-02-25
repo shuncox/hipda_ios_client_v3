@@ -478,9 +478,9 @@ typedef enum{
 	
 	if (scrollView.isDragging) {
         float endOfTable = [self endOfTableView:scrollView];
-        if (_loadingMoreView.state == EGOOPullRefreshPulling && endOfTable < 0.0f && endOfTable > -65.0f && !_loadingMore) {
+        if (_loadingMoreView.state == EGOOPullRefreshPulling && endOfTable < 0.0f && endOfTable > TRIGGER_OFFSET_Y && !_loadingMore) {
 			[_loadingMoreView setState:EGOOPullRefreshNormal];
-		} else if (_loadingMoreView.state == EGOOPullRefreshNormal && endOfTable < -65.0f && !_loadingMore) {
+		} else if (_loadingMoreView.state == EGOOPullRefreshNormal && endOfTable < TRIGGER_OFFSET_Y && !_loadingMore) {
 			[_loadingMoreView setState:EGOOPullRefreshPulling];
 		}
 	}
@@ -494,7 +494,7 @@ typedef enum{
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	
-    if ([self endOfTableView:scrollView] <= -65.0f && !_loadingMore) {
+    if ([self endOfTableView:scrollView] <= TRIGGER_OFFSET_Y && !_loadingMore) {
         _loadingMore = YES;
         [self loadmore:nil];
         [_loadingMoreView setState:EGOOPullRefreshLoading];

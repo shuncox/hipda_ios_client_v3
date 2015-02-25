@@ -1818,21 +1818,21 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 	if (scrollView.isDragging &&
         ([Setting boolForKey:HPSettingIsPullReply] || !_lastPage))
     {
-		if (_refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > -65.0f && scrollView.contentOffset.y < 0.0f && !_reloadingHeader) {
+		if (_refreshHeaderView.state == EGOOPullRefreshPulling && scrollView.contentOffset.y > TRIGGER_OFFSET_Y && scrollView.contentOffset.y < 0.0f && !_reloadingHeader) {
 			[_refreshHeaderView setState:EGOOPullRefreshNormal];
-		} else if (_refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < -65.0f && !_reloadingHeader) {
+		} else if (_refreshHeaderView.state == EGOOPullRefreshNormal && scrollView.contentOffset.y < TRIGGER_OFFSET_Y && !_reloadingHeader) {
 			[_refreshHeaderView setState:EGOOPullRefreshPulling];
 		}
         
         float endOfTable = [self endOfTableView:scrollView];
-        if (_refreshFooterView.state == EGOOPullRefreshPulling && endOfTable < 0.0f && endOfTable > -65.0f && !_reloadingFooter) {
+        if (_refreshFooterView.state == EGOOPullRefreshPulling && endOfTable < 0.0f && endOfTable > TRIGGER_OFFSET_Y && !_reloadingFooter) {
 			[_refreshFooterView setState:EGOOPullRefreshNormal];
             
             if (_lastPage && [Setting boolForKey:HPSettingIsPullReply]) {
                 [_refreshFooterView setState:EGOOPullRefreshNoMore];
             }
             
-		} else if (_refreshFooterView.state == EGOOPullRefreshNormal && endOfTable < -65.0f && !_reloadingFooter) {
+		} else if (_refreshFooterView.state == EGOOPullRefreshNormal && endOfTable < TRIGGER_OFFSET_Y && !_reloadingFooter) {
 			[_refreshFooterView setState:EGOOPullRefreshPulling];
 		}
 	}
@@ -1840,14 +1840,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
 	
-    
-	if (scrollView.contentOffset.y <= - 65.0f && !_reloadingHeader) {
+	if (scrollView.contentOffset.y <= TRIGGER_OFFSET_Y && !_reloadingHeader) {
         _reloadingHeader = YES;
         [self dragToPreviousPage];
 	}
     
     
-    if ([self endOfTableView:scrollView] <= -65.0f && !_reloadingFooter) {
+    if ([self endOfTableView:scrollView] <= TRIGGER_OFFSET_Y && !_reloadingFooter) {
         
         if (!_lastPage) {
             _reloadingFooter = YES;

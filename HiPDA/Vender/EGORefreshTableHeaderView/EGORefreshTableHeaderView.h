@@ -27,6 +27,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define TRIGGER_OFFSET_Y (HP_CONVERT_HEIGHT(-65.f))
 
 typedef enum{
 	EGOOPullRefreshPulling = 0,
