@@ -427,9 +427,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // [__NSCFString dataUsingEncoding:allowLossyConversion:]: didn't convert all characters
     // webview使用loadHTMLString:baseURL:也是用了dataUsingEncoding:allowLossyConversion方法
     // 但是有时会crash(didn't convert all characters)
-    // 不知它的allowLossyConversion是YES还是NO
-    // 暂时设成YES, 看看效果
-    NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    // 它的allowLossyConversion是NO
+    
+    NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
     //[self.webView loadHTMLString:string baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
     
