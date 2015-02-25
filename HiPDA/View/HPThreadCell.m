@@ -46,10 +46,11 @@
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     
     _avatarView = [UIImageView new];
+    /*
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didClickAvatar:)];
     [_avatarView setUserInteractionEnabled:YES];
     [_avatarView addGestureRecognizer:tap];
-    
+    */
     CALayer *layer  = _avatarView.layer;
     [layer setMasksToBounds:YES];
     [layer setCornerRadius:3.0];
@@ -67,16 +68,17 @@
     [_titleLabel setNumberOfLines:0];
     
     _usernameLabel = [UILabel new];
+    /*
     _usernameLabelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_usernameLabelButton addTarget:self action:@selector(didClickAvatar:) forControlEvents:UIControlEventTouchUpInside];
-    
+    */
     _dateLabel = [UILabel new];
     
     [self.contentView addSubview:_avatarView];
     [self.contentView addSubview:_titleLabel];
     [self.contentView addSubview:_dateLabel];
     [self.contentView addSubview:_usernameLabel];
-    [self.contentView addSubview:_usernameLabelButton];
+    //[self.contentView addSubview:_usernameLabelButton];
     
     return self;
 }
@@ -268,7 +270,7 @@
                                         ceilf(fmin(_usernameLabel.frame.size.width, width/2)),
                                         CELL_SUB_HEIGHT)];
     
-    _usernameLabelButton.frame = CGRectInset(_usernameLabel.frame, -6.f, -6.f);
+    //_usernameLabelButton.frame = CGRectInset(_usernameLabel.frame, -6.f, -6.f);
     
     _dateLabel.backgroundColor = self.contentView.backgroundColor;
     _titleLabel.backgroundColor = self.contentView.backgroundColor;
