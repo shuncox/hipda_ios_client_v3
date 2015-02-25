@@ -320,7 +320,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (!_favButton) {
         _favButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _favButton.bounds = CGRectMake(0, 0, 40.f, 40.f);
+        _favButton.bounds = CGRectMake(0, 0, 20.f, 20.f);
         [_favButton addTarget:self action:@selector(favorite:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -334,7 +334,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (!_attentionButton) {
         _attentionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _attentionButton.bounds = CGRectMake(0, 0, 40.f, 40.f);
+        _attentionButton.bounds = CGRectMake(0, 0, 20.f, 20.f);
         [_attentionButton addTarget:self action:@selector(attention:) forControlEvents:UIControlEventTouchUpInside];
     }
     
