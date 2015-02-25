@@ -699,7 +699,9 @@ typedef enum{
 #pragma mark - 
 - (void)didClickAvatar:(HPUser *)user {
     HPUserViewController *uvc = [HPUserViewController new];
-    uvc.username = user.username;
+    
+    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    uvc.username = [user.username stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
     
     [self.navigationController pushViewController:uvc animated:YES];
 }
