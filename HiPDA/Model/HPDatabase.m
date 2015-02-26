@@ -47,7 +47,7 @@
         _sharedDb = [[HPDatabase alloc] init];
         
         NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-        NSString *dbPath = [docsPath stringByAppendingPathComponent:@"uid.db"];
+        NSString *dbPath = [docsPath stringByAppendingPathComponent:@"uid_v2.db"];
         _sharedDb.db = [FMDatabase databaseWithPath:dbPath];
     });
     
@@ -74,7 +74,7 @@
     NSError *error;
     
     NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *dbPath = [docsPath stringByAppendingPathComponent:@"uid.db"];
+    NSString *dbPath = [docsPath stringByAppendingPathComponent:@"uid_v2.db"];
     
     isExist = [fileManager fileExistsAtPath:dbPath];
     
