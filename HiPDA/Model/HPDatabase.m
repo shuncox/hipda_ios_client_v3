@@ -25,8 +25,8 @@
 
 
 
-#define START 759083
-#define END 759083
+#define START 602730
+#define END 853000
 
 @interface HPDatabase ()
 
@@ -222,8 +222,29 @@
     }
     */
     
-    [self genDb];
+    // check missing
+    /*
+    FMResultSet *s = [_db executeQuery:@"SELECT * FROM user ORDER BY uid"];
+    [s next];
+    for (int i = 1; ; i++) {
     
+        NSString *username = [s stringForColumnIndex:0];
+        NSUInteger uid = [s intForColumnIndex:1];
+        NSDate *last = [s dateForColumnIndex:2];
+        
+        if (uid == i) {
+            BOOL next = [s next];
+            if (!next) break;
+        } else {
+            NSLog(@"missing %@", @(i));
+            [self getUserWithUid:i];
+        }
+        
+        //NSLog(@"%@ %@ %ld %@", @(i), username, uid, last);
+    }
+    */
+    //[self genDb];
+    //[self start];
     /*
     _countTimer = [NSTimer scheduledTimerWithTimeInterval: 1 target: self selector: @selector(run) userInfo: nil repeats: YES];
     [_countTimer fire];
@@ -245,8 +266,8 @@
     [db_out executeUpdate:@"create table user (username text PRIMARY KEY, uid integer)"];
     
     
-    //FMResultSet *s2 = [_db executeQuery:@"SELECT * FROM user WHERE last>1338480000 ORDER BY last DESC"];
-    FMResultSet *s2 = [_db executeQuery:@"SELECT * FROM user ORDER BY last"];
+    FMResultSet *s2 = [_db executeQuery:@"SELECT * FROM user WHERE last>1338912000 ORDER BY last DESC"];
+    //FMResultSet *s2 = [_db executeQuery:@"SELECT * FROM user ORDER BY last"];
     
     while ([s2 next]) {
         
@@ -258,18 +279,48 @@
         
         //NSLog(@"%@ %ld %@", username, uid, last);
         
-        if (!last) {
-            NSLog(@"%@ %ld %@", username, uid, last);
-            [db_out executeUpdate:@"insert into user (username, uid) values (?, ?)" ,
-             username, [NSNumber numberWithInteger:uid]];
-        }
-        /*
+//        if (!last) {
+//            
+//            NSLog(@"%@ %ld %@", username, uid, last);
+//            [db_out executeUpdate:@"insert into user (username, uid) values (?, ?)" ,
+//             username, [NSNumber numberWithInteger:uid]];
+//        }
+//        
         [db_out executeUpdate:@"insert into user (username, uid) values (?, ?)" ,
          username, [NSNumber numberWithInt:uid]];
-        */
+        
     }
     
     [db_out close];
+    
+}
+
+- (void)updateDb {
+    
+    HPDatabase *db = [HPDatabase sharedDb];
+    FMDatabase *db_old = db.db;
+    [db_old open];
+    
+    NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *dbPath   = [docsPath stringByAppendingPathComponent:@"uidnew.db"];
+    FMDatabase *db_new = [FMDatabase databaseWithPath:dbPath];
+    if (![db_new open]) {
+        NSLog(@"!open");
+    }
+    
+    FMResultSet *s2 = [db_new executeQuery:@"SELECT * FROM user"];
+    
+    while ([s2 next]) {
+        
+        
+        NSString *username = [s2 stringForColumnIndex:0];
+        NSInteger uid = [s2 intForColumnIndex:1];
+        
+        [db_old executeUpdate:@"insert into user (username, uid) values (?, ?)" ,
+         username, [NSNumber numberWithInt:uid]];
+        
+    }
+    [db_old close];
     
 }
 
