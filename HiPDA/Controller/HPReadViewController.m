@@ -839,6 +839,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)actionForFloor:(NSInteger)floor {
     
+    NSString *selectedText = [self.webView stringByEvaluatingJavaScriptFromString:@"getSelectedText()"];
+    if (selectedText.length) {
+        NSLog(@"selectedText %@", selectedText);
+        return;
+    }
+    
     if (_posts.count < 1) {
         NSLog(@"not ready");
         return;
