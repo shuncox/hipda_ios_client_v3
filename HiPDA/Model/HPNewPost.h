@@ -38,6 +38,7 @@
 + (void)cancelRequstOperationWithTid:(NSInteger)tid;
 
 + (NSString *)dateString:(NSDate *)date;
++ (NSString *)fullDateString:(NSDate *)date;
 
 + (NSString *)preProcessHTML:(NSMutableString *)HTML;
 @end

@@ -39,6 +39,7 @@
 #import "DZWebBrowser.h"
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
+#import "UIActivity+Blocks.h"
 
 #import "UIViewController+KNSemiModal.h"
 #import "UIAlertView+Blocks.h"
@@ -85,6 +86,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 @property (nonatomic, strong) NSArray *posts;
+@property (nonatomic, strong) NSString *htmlString;
 
 @property (nonatomic, assign) NSInteger current_page;
 @property (nonatomic, assign) BOOL forceFullPage;
@@ -351,13 +353,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [_pageInfoButton addTarget:self action:@selector(showPageView:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    NSString *attrTitle =
-        _thread.pageCount != 0 ?
-            [NSString stringWithFormat:@"%ld/%ld", _current_page, _thread.pageCount] :
-            [NSString stringWithFormat:@"%ld/?", _current_page];
-    
-    if (_current_page == NSIntegerMax) attrTitle = @"?/?";
-    
+    NSString *attrTitle = [self pageInfoString];
     
     NSMutableAttributedString *subAttrString =
     [[NSMutableAttributedString alloc] initWithString:attrTitle];
@@ -369,6 +365,16 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                            range:NSMakeRange(0, [attrTitle length])];
     [_pageInfoButton setAttributedTitle:subAttrString forState:UIControlStateNormal];
     [_pageInfoButton sizeToFit];
+}
+
+- (NSString *)pageInfoString {
+    NSString *attrTitle =
+    _thread.pageCount != 0 ?
+    [NSString stringWithFormat:@"%ld/%ld", _current_page, _thread.pageCount] :
+    [NSString stringWithFormat:@"%ld/?", _current_page];
+    
+    if (_current_page == NSIntegerMax) attrTitle = @"?/?";
+    return attrTitle;
 }
 
 - (void)addGuesture {
@@ -429,6 +435,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // 但是有时会crash(didn't convert all characters)
     // 它的allowLossyConversion是NO
     
+    self.htmlString = string;
     NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
     //[self.webView loadHTMLString:string baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
@@ -904,8 +911,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 }
                 case 3://浏览器打开
                 {
-                    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
-                    [self openUrl:[NSURL URLWithString:url]];
+                    [self openUrl:[self pageUrl]];
                     break;
                 }
                 case 4:// adjust
@@ -915,18 +921,22 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 }
                 case 5://更多
                 {
-                    IBActionSheet *actionSheet = [[IBActionSheet alloc]
-                                                  initWithTitle:nil
-                                                  delegate:self cancelButtonTitle:@"取消"
-                                                  destructiveButtonTitle:nil
-                                                  otherButtonTitles:
-                                                  @"复制链接", @"保存此页截图",nil];
-                    
-                    [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
-                    [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
-                    [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
-                    actionSheet.tag = 3;
-                    [actionSheet showInView:self.navigationController.view];
+                    if (IOS8_OR_LATER) {
+                        [self share:actionSheet];
+                    } else {
+                        IBActionSheet *actionSheet = [[IBActionSheet alloc]
+                                                      initWithTitle:nil
+                                                      delegate:self cancelButtonTitle:@"取消"
+                                                      destructiveButtonTitle:nil
+                                                      otherButtonTitles:
+                                                      @"复制链接", @"保存此页截图",nil];
+                        
+                        [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
+                        [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
+                        [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
+                        actionSheet.tag = 3;
+                        [actionSheet showInView:self.navigationController.view];
+                    }
                     break;
                 }
                 
@@ -975,27 +985,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             switch (buttonIndex) {
                 case 0://copy link
                 {
-                    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
-                    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-                    [pasteBoard setString:url];
-                    [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
-                    
-                    [Flurry logEvent:@"Read CopyLink"];
+                    [self copyLink];
                     break;
                 }
                 case 1://capture & save
                 {
-                    [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
-                                                         message:@"请确认此页已完全载入"
-                                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-                     {
-                         if (buttonIndex != [alertView cancelButtonIndex]) {
-                             [self prepareCapture];
-                         }
-                     }];
-                    
-                    [Flurry logEvent:@"Read CapturePost"];
-                    
+                    [self capturePost];
                     break;
                 }
                 default:
@@ -1012,6 +1007,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 
 # pragma mark - actions
+
+- (NSURL *)pageUrl {
+    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%@&extra=&page=%@", @(_thread.tid), @(_current_page)];
+    return [NSURL URLWithString:url];
+}
 
 - (void)openUrl:(NSURL *)url {
     
@@ -1062,6 +1062,39 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self presentViewController:browser animated:YES completion:nil];
     
 }
+
+- (void)copyLink {
+    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:url];
+    [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
+    
+    [Flurry logEvent:@"Read CopyLink"];
+}
+
+- (void)copyContent {
+    NSString *content = [self textForSharing];
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:content];
+    [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
+    
+    [Flurry logEvent:@"Read CopyContent"];
+}
+
+- (void)capturePost {
+    [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
+                                         message:@"请确认此页已完全载入"
+                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+     {
+         if (buttonIndex != [alertView cancelButtonIndex]) {
+             [self prepareCapture];
+         }
+     }];
+    
+    [Flurry logEvent:@"Read CapturePost"];
+}
+
+#pragma mark -
 
 - (void)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -2102,6 +2135,79 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (BOOL)canEdit:(HPNewPost *)post {
     return [[[NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""] lowercaseString]
      isEqualToString:[post.user.username lowercaseString]];
+}
+
+#pragma mark -
+
+- (void)share:(id)sender {
+    NSMutableArray *activityItems = [@[] mutableCopy];
+    [activityItems addObject:[self pageUrl]];
+    //[activityItems addObject:self.htmlString];
+    [activityItems addObject:[self textForSharing]];
+    
+    __weak typeof(self) weakSelf = self;
+    UIActivity *copyLink = [UIActivity activityWithType:@"HPCopyLink"
+                                                  title:@"复制链接"
+                                                  image:[UIImage imageNamed:@"activity_copy_link"]
+                                            actionBlock:^{
+                                                [weakSelf copyLink];
+                                            }];
+    
+    UIActivity *copyContent = [UIActivity activityWithType:@"HPCopyContent"
+                                                  title:@"复制全文"
+                                                  image:[UIImage imageNamed:@"activity_copy_content"]
+                                            actionBlock:^{
+                                                [weakSelf copyContent];
+                                            }];
+    
+    UIActivity *capturePost = [UIActivity activityWithType:@"HPCapturePost"
+                                                     title:@"保存截图"
+                                                     image:[UIImage imageNamed:@"activity_capture_post"]
+                                               actionBlock:^{
+                                                   [weakSelf capturePost];
+                                               }];
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, capturePost]];
+    
+    activityViewController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
+    
+    if (IS_IPAD && IOS8_OR_LATER) {
+        activityViewController.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems[1];
+    }
+
+    [activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        NSLog(@"activityType %@, completed %d", activityType, completed);
+    }];
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
+}
+
+- (NSString *)textForSharing {
+    
+    NSMutableString *string = [NSMutableString string];
+    
+    NSString *info =
+    [NSString stringWithFormat:
+     @"标题: %@\n"
+     @"页码: %@\n"
+     @"地址: %@\n"
+     @"\n", self.thread.title, [self pageInfoString], [self pageUrl]];
+   
+    [string appendString:info];
+    
+    for (HPNewPost *post in self.posts) {
+        NSString *item =
+        [NSString stringWithFormat:
+         @"#%@, %@, %@\n"
+         @"%@\n"
+         @"\n",
+         @(post.floor), post.user.username, [HPNewPost fullDateString:post.date],
+         [post.body_html stringByConvertingHTMLToPlainText]];
+        
+        [string appendString:item];
+    }
+    
+    return [NSString stringWithString:string];
 }
 
 @end

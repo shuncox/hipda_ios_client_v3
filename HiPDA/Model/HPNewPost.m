@@ -883,6 +883,17 @@
     return dateString;
 }
 
++ (NSString *)fullDateString:(NSDate *)date {
+    
+    static NSDateFormatter *formatter_l;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter_l = [[NSDateFormatter alloc] init];
+        [formatter_l setDateFormat:@"yyyy-MM-dd HH:mm"];
+    });
+
+    return [formatter_l stringFromDate:date];;
+}
 
 
 /*
