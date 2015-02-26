@@ -30,7 +30,7 @@
 }
 
 - (void)setActivityType:(NSString *)type{
-    objc_setAssociatedObject(self, @"activityType", type, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @"activityType", type, OBJC_ASSOCIATION_COPY);
 }
 
 - (NSString *)activityTitle{
@@ -39,7 +39,7 @@
 }
 
 - (void)setActivityTitle:(NSString *)title{
-    objc_setAssociatedObject(self, @"activityTitle", title, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @"activityTitle", title, OBJC_ASSOCIATION_COPY);
 }
 
 - (UIImage *)activityImage{
@@ -48,7 +48,7 @@
 }
 
 - (void)setActivityImage:(UIImage *)image{
-    objc_setAssociatedObject(self, @"activityImage", image, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @"activityImage", image, OBJC_ASSOCIATION_RETAIN);
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems{
