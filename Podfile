@@ -1,4 +1,4 @@
-platform :ios, '6.0'
+platform :ios, '6.1'
 pod 'AFNetworking', '1.3.3'
 pod 'SDWebImage'
 pod 'MTLog'
@@ -18,3 +18,4 @@ pod 'MCSwipeTableViewCell'
 pod 'SSKeychain'
 pod 'RETableViewManager'
 pod 'CTAssetsPickerController', :local => "CTAssetsPickerController/"
+pod 'Reveal-iOS-SDK', :configurations => ['Debug']
