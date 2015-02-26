@@ -255,18 +255,8 @@
 		EAA1E68818D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68118D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m */; };
 		EAA1E68D18D03A6700E1CFE1 /* MultilineTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68A18D03A6700E1CFE1 /* MultilineTextCell.m */; };
 		EAA1E68E18D03A6700E1CFE1 /* MultilineTextItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68C18D03A6700E1CFE1 /* MultilineTextItem.m */; };
-		EAA1E69118D03ADF00E1CFE1 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E69018D03ADF00E1CFE1 /* SDURLCache.m */; };
 		EAA9ABA118EBDCFE00B2232B /* pull_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA9AB9F18EBDCFE00B2232B /* pull_refresh.png */; };
 		EAA9ABA218EBDCFE00B2232B /* pull_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA9ABA018EBDCFE00B2232B /* pull_refresh@2x.png */; };
-		EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B89188CEFCC0084EC2D /* IDMCaptionView.m */; };
-		EAAD5B99188CEFCC0084EC2D /* IDMPBLocalizations.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAD5B8B188CEFCC0084EC2D /* IDMPBLocalizations.bundle */; };
-		EAAD5B9A188CEFCC0084EC2D /* IDMPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAD5B8C188CEFCC0084EC2D /* IDMPhotoBrowser.bundle */; };
-		EAAD5B9B188CEFCC0084EC2D /* IDMTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B90188CEFCC0084EC2D /* IDMTapDetectingImageView.m */; };
-		EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B92188CEFCC0084EC2D /* IDMTapDetectingView.m */; };
-		EAAD5B9D188CEFCC0084EC2D /* IDMZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B94188CEFCC0084EC2D /* IDMZoomingScrollView.m */; };
-		EAAD5B9E188CEFCC0084EC2D /* IDMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B96188CEFCC0084EC2D /* IDMPhoto.m */; };
-		EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B97188CEFCC0084EC2D /* IDMPhotoBrowser.m */; };
-		EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */; };
 		EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAE256C18E135870059EEB7 /* HPRearCell.m */; };
 		EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */; };
 		EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0619EC1F18006F5C92 /* libz.dylib */; };
@@ -729,28 +719,8 @@
 		EAA1E68A18D03A6700E1CFE1 /* MultilineTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultilineTextCell.m; path = View/MultilineTextCell.m; sourceTree = "<group>"; };
 		EAA1E68B18D03A6700E1CFE1 /* MultilineTextItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultilineTextItem.h; path = View/MultilineTextItem.h; sourceTree = "<group>"; };
 		EAA1E68C18D03A6700E1CFE1 /* MultilineTextItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultilineTextItem.m; path = View/MultilineTextItem.m; sourceTree = "<group>"; };
-		EAA1E68F18D03ADF00E1CFE1 /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDURLCache.h; path = Vender/SDURLCache/SDURLCache.h; sourceTree = "<group>"; };
-		EAA1E69018D03ADF00E1CFE1 /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDURLCache.m; path = Vender/SDURLCache/SDURLCache.m; sourceTree = "<group>"; };
 		EAA9AB9F18EBDCFE00B2232B /* pull_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pull_refresh.png; path = Image/pull_refresh.png; sourceTree = "<group>"; };
 		EAA9ABA018EBDCFE00B2232B /* pull_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pull_refresh@2x.png"; path = "Image/pull_refresh@2x.png"; sourceTree = "<group>"; };
-		EAAD5B88188CEFCC0084EC2D /* IDMCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMCaptionView.h; path = Vender/IDMPhotoBrowser/IDMCaptionView.h; sourceTree = "<group>"; };
-		EAAD5B89188CEFCC0084EC2D /* IDMCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMCaptionView.m; path = Vender/IDMPhotoBrowser/IDMCaptionView.m; sourceTree = "<group>"; };
-		EAAD5B8A188CEFCC0084EC2D /* IDMPBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMPBConstants.h; path = Vender/IDMPhotoBrowser/IDMPBConstants.h; sourceTree = "<group>"; };
-		EAAD5B8B188CEFCC0084EC2D /* IDMPBLocalizations.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IDMPBLocalizations.bundle; path = Vender/IDMPhotoBrowser/IDMPBLocalizations.bundle; sourceTree = "<group>"; };
-		EAAD5B8C188CEFCC0084EC2D /* IDMPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IDMPhotoBrowser.bundle; path = Vender/IDMPhotoBrowser/IDMPhotoBrowser.bundle; sourceTree = "<group>"; };
-		EAAD5B8D188CEFCC0084EC2D /* IDMPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMPhotoBrowser.h; path = Vender/IDMPhotoBrowser/IDMPhotoBrowser.h; sourceTree = "<group>"; };
-		EAAD5B8E188CEFCC0084EC2D /* IDMPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMPhotoProtocol.h; path = Vender/IDMPhotoBrowser/IDMPhotoProtocol.h; sourceTree = "<group>"; };
-		EAAD5B8F188CEFCC0084EC2D /* IDMTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMTapDetectingImageView.h; path = Vender/IDMPhotoBrowser/IDMTapDetectingImageView.h; sourceTree = "<group>"; };
-		EAAD5B90188CEFCC0084EC2D /* IDMTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMTapDetectingImageView.m; path = Vender/IDMPhotoBrowser/IDMTapDetectingImageView.m; sourceTree = "<group>"; };
-		EAAD5B91188CEFCC0084EC2D /* IDMTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMTapDetectingView.h; path = Vender/IDMPhotoBrowser/IDMTapDetectingView.h; sourceTree = "<group>"; };
-		EAAD5B92188CEFCC0084EC2D /* IDMTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMTapDetectingView.m; path = Vender/IDMPhotoBrowser/IDMTapDetectingView.m; sourceTree = "<group>"; };
-		EAAD5B93188CEFCC0084EC2D /* IDMZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMZoomingScrollView.h; path = Vender/IDMPhotoBrowser/IDMZoomingScrollView.h; sourceTree = "<group>"; };
-		EAAD5B94188CEFCC0084EC2D /* IDMZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMZoomingScrollView.m; path = Vender/IDMPhotoBrowser/IDMZoomingScrollView.m; sourceTree = "<group>"; };
-		EAAD5B95188CEFCC0084EC2D /* IDMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMPhoto.h; path = Vender/IDMPhotoBrowser/IDMPhoto.h; sourceTree = "<group>"; };
-		EAAD5B96188CEFCC0084EC2D /* IDMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMPhoto.m; path = Vender/IDMPhotoBrowser/IDMPhoto.m; sourceTree = "<group>"; };
-		EAAD5B97188CEFCC0084EC2D /* IDMPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMPhotoBrowser.m; path = Vender/IDMPhotoBrowser/IDMPhotoBrowser.m; sourceTree = "<group>"; };
-		EAAD5BA1188CF00F0084EC2D /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DACircularProgressView.h; path = Vender/DACircularProgress/DACircularProgressView.h; sourceTree = "<group>"; };
-		EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DACircularProgressView.m; path = Vender/DACircularProgress/DACircularProgressView.m; sourceTree = "<group>"; };
 		EAAE256B18E135870059EEB7 /* HPRearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearCell.h; path = View/HPRearCell.h; sourceTree = "<group>"; };
 		EAAE256C18E135870059EEB7 /* HPRearCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearCell.m; path = View/HPRearCell.m; sourceTree = "<group>"; };
 		EAB04C0219EC1EB7006F5C92 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Vender/UMeng/MobClick.h; sourceTree = "<group>"; };
@@ -1132,15 +1102,6 @@
 			name = EGORefreshTableHeaderView;
 			sourceTree = "<group>";
 		};
-		EA368A7A18C7003B00C5C5BD /* SDURLCache */ = {
-			isa = PBXGroup;
-			children = (
-				EAA1E68F18D03ADF00E1CFE1 /* SDURLCache.h */,
-				EAA1E69018D03ADF00E1CFE1 /* SDURLCache.m */,
-			);
-			name = SDURLCache;
-			sourceTree = "<group>";
-		};
 		EA368A8518C7758300C5C5BD /* Compostion */ = {
 			isa = PBXGroup;
 			children = (
@@ -1235,10 +1196,7 @@
 				EA075F5818E4078D00A07C08 /* BBBadgeBarButtonItem */,
 				EA8186BA18E1E1E40092BDD7 /* IBActionSheet */,
 				EA083D5A18C8D0FD00BD8F07 /* WUEmoticonsKeyboard */,
-				EA368A7A18C7003B00C5C5BD /* SDURLCache */,
 				EA4138C6188D5524001F9542 /* SWRevealViewController */,
-				EAAD5BA0188CEFD00084EC2D /* DACircularProgress */,
-				EAAD5B87188CEFB70084EC2D /* IDMPhotoBrowser */,
 				EAB36A80183AFC2800EB0B88 /* KNSemiModalViewController */,
 				EA0FF7B41837B05300B0EBA6 /* DZWebBrowser */,
 				EAD2AECA18365F4E00E0A6C3 /* EGOCache */,
@@ -1620,38 +1578,6 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
-		EAAD5B87188CEFB70084EC2D /* IDMPhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				EAAD5B88188CEFCC0084EC2D /* IDMCaptionView.h */,
-				EAAD5B89188CEFCC0084EC2D /* IDMCaptionView.m */,
-				EAAD5B8A188CEFCC0084EC2D /* IDMPBConstants.h */,
-				EAAD5B8B188CEFCC0084EC2D /* IDMPBLocalizations.bundle */,
-				EAAD5B8C188CEFCC0084EC2D /* IDMPhotoBrowser.bundle */,
-				EAAD5B8D188CEFCC0084EC2D /* IDMPhotoBrowser.h */,
-				EAAD5B97188CEFCC0084EC2D /* IDMPhotoBrowser.m */,
-				EAAD5B8E188CEFCC0084EC2D /* IDMPhotoProtocol.h */,
-				EAAD5B8F188CEFCC0084EC2D /* IDMTapDetectingImageView.h */,
-				EAAD5B90188CEFCC0084EC2D /* IDMTapDetectingImageView.m */,
-				EAAD5B91188CEFCC0084EC2D /* IDMTapDetectingView.h */,
-				EAAD5B92188CEFCC0084EC2D /* IDMTapDetectingView.m */,
-				EAAD5B93188CEFCC0084EC2D /* IDMZoomingScrollView.h */,
-				EAAD5B94188CEFCC0084EC2D /* IDMZoomingScrollView.m */,
-				EAAD5B95188CEFCC0084EC2D /* IDMPhoto.h */,
-				EAAD5B96188CEFCC0084EC2D /* IDMPhoto.m */,
-			);
-			name = IDMPhotoBrowser;
-			sourceTree = "<group>";
-		};
-		EAAD5BA0188CEFD00084EC2D /* DACircularProgress */ = {
-			isa = PBXGroup;
-			children = (
-				EAAD5BA1188CF00F0084EC2D /* DACircularProgressView.h */,
-				EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */,
-			);
-			name = DACircularProgress;
-			sourceTree = "<group>";
-		};
 		EAB04C0119EC1EAA006F5C92 /* UMeng */ = {
 			isa = PBXGroup;
 			children = (
@@ -1979,7 +1905,6 @@
 				EA9A39D51A5BE92E0028BE7D /* bubble.png in Resources */,
 				EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */,
 				EA083D9918C8D14F00BD8F07 /* keyboard_del.png in Resources */,
-				EAAD5B9A188CEFCC0084EC2D /* IDMPhotoBrowser.bundle in Resources */,
 				EAD7F5EE183CC84600A750D9 /* hp_smile_default_cry.gif in Resources */,
 				EA083DB118C8D14F00BD8F07 /* keyboard_text.png in Resources */,
 				EA06A61D18C2384800EDBDEA /* more.png in Resources */,
@@ -2058,7 +1983,6 @@
 				EA9A39B91A5BE92E0028BE7D /* avatar-placeholder.png in Resources */,
 				EA083DAC18C8D14F00BD8F07 /* keyboard_segment_selected_normal@2x.png in Resources */,
 				EA9A39C01A5BE92E0028BE7D /* bubble-classic-green@2x.png in Resources */,
-				EAAD5B99188CEFCC0084EC2D /* IDMPBLocalizations.bundle in Resources */,
 				EA9A39CD1A5BE92E0028BE7D /* bubble-min.png in Resources */,
 				EAD7F60D183CC84600A750D9 /* hp_smile_grapeman_13.gif in Resources */,
 				EAD7F5F3183CC84600A750D9 /* hp_smile_default_huffy.gif in Resources */,
@@ -2214,14 +2138,12 @@
 				EA499F471830C2D800172989 /* TFHppleElement.m in Sources */,
 				EA499F341830C05700172989 /* HPSendPost.m in Sources */,
 				EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */,
-				EAAD5B9E188CEFCC0084EC2D /* IDMPhoto.m in Sources */,
 				EA3B991F18F9812900F726E1 /* HPBgFetchViewController.m in Sources */,
 				EA9A39B21A5BE92E0028BE7D /* JSDismissiveTextView.m in Sources */,
 				EA743C2F183F9A9E0067F62B /* HPMyReply.m in Sources */,
 				EAA1E68318D03A4100E1CFE1 /* UIColor+iOS7Colors.m in Sources */,
 				EA9A39B11A5BE92E0028BE7D /* JSBubbleView.m in Sources */,
 				EA0FF7D01837CE6300B0EBA6 /* HPFavorite.m in Sources */,
-				EAAD5B9B188CEFCC0084EC2D /* IDMTapDetectingImageView.m in Sources */,
 				EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */,
 				EA8186C018E29FD10092BDD7 /* HPIndecator.m in Sources */,
 				EA9A39B31A5BE92E0028BE7D /* JSMessage.m in Sources */,
@@ -2266,7 +2188,6 @@
 				EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */,
 				EA083D6C18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
 				EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */,
-				EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */,
 				EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */,
 				EA06A60818C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m in Sources */,
 				EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */,
@@ -2288,19 +2209,14 @@
 				EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */,
 				EAFE683718364097003829E5 /* HPCache.m in Sources */,
 				EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */,
-				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,
 				EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */,
-				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
 				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,
 				EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */,
 				EA9A39B61A5BE92E0028BE7D /* JSMessagesViewController.m in Sources */,
-				EAA1E69118D03ADF00E1CFE1 /* SDURLCache.m in Sources */,
-				EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */,
 				EA368A8818C77A1D00C5C5BD /* HPReplyTopicViewController.m in Sources */,
 				EA9A39B01A5BE92E0028BE7D /* JSBubbleMessageCell.m in Sources */,
 				EA944D7B19E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA743C26183EE6DE0067F62B /* HPFavoriteViewController.m in Sources */,
-				EAAD5B9D188CEFCC0084EC2D /* IDMZoomingScrollView.m in Sources */,
 				EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */,
 				EA9A39B41A5BE92E0028BE7D /* JSMessageInputView.m in Sources */,
 				EA13B912194B53D900E01AF5 /* HPStupidBar.m in Sources */,

@@ -1,4 +1,4 @@
-platform :ios, '6.1'
+platform :ios, '7.0'
 pod 'AFNetworking', '1.3.3'
 pod 'SDWebImage'
 pod 'MTLog'
@@ -19,3 +19,5 @@ pod 'SSKeychain'
 pod 'RETableViewManager'
 pod 'CTAssetsPickerController', :local => "CTAssetsPickerController/"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+pod 'IDMPhotoBrowser', :git => 'https://github.com/wujichao/IDMPhotoBrowser.git'
+pod 'SDURLCache', :git => 'https://github.com/wujichao/SDURLCache.git'
