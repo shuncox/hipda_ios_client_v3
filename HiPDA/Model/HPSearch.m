@@ -23,6 +23,7 @@
                         page:(NSInteger)page
                        block:(void (^)(NSArray *results, NSInteger pageCount,NSError *error))block
 {
+    static NSInteger searchid = 0;
     
     NSString *path = nil;
     switch (type) {
@@ -41,7 +42,11 @@
         case HPSearchTypeUser:
         {
             NSString *key = [parameters objectForKey:@"key"];
-            path = [NSString stringWithFormat:@"forum/search.php?srchuid=%@&srchfid=all&srchfrom=0&searchsubmit=yes&page=%ld", key, page];
+            if (page == 1) {
+                 path = [NSString stringWithFormat:@"forum/search.php?srchuid=%@&srchfid=all&srchfrom=0&searchsubmit=yes&page=%ld", key, page];
+            } else {
+                 path = [NSString stringWithFormat:@"forum/search.php?searchid=%@&orderby=lastpost&ascdesc=desc&searchsubmit=yes&page=%@", @(searchid), @(page)];
+            }
             break;
         }
         default:
@@ -58,19 +63,6 @@
     [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html)
      {         
          if(DEBUG_Search) NSLog(@"html %@", html);
-         
-    
-         
-         NSString *pageCountString = [html stringBetweenString:@"相关主题 " andString:@" 个"];
-         NSInteger pageCount = 0;
-         if(DEBUG_Search) NSLog(@"pageCountString _%@_", pageCountString);
-         if (pageCountString && ![pageCountString isEqualToString:@""]) {
-             
-             pageCount = [pageCountString integerValue];
-             pageCount = pageCount / 50 + ((pageCount % 50) == 0 ? 0 : 1);
-             pageCount = pageCount > 20 ? 20 : pageCount;
-             if(DEBUG_Search) NSLog(@"in _%@_ %ld", pageCountString, pageCount);
-         }
          
          NSMutableArray *results = [NSMutableArray arrayWithCapacity:50];
          NSString *pattern = nil;
@@ -151,6 +143,21 @@
                  NSLog(@"error %@ %ld", result, [result numberOfRanges]);
              }
          }
+         
+         NSString *url = [operation.response.URL absoluteString];
+         searchid = [[url stringBetweenString:@"searchid=" andString:@"&"] integerValue];
+         
+         //搜索用户时, 每页不一定是50条, 所以算出来的页数比实际页数多
+         NSInteger pageCount = 0;
+         NSArray *ms = [RX(@"page=(\\d+)\"( class=\"last\")?>") matchesWithDetails:html];
+         for (RxMatch *m in ms) {
+             RxMatchGroup *g1 = [m.groups objectAtIndex:1];
+             NSInteger i = [g1.value integerValue];
+             if (i > pageCount) {
+                 pageCount = i;
+             }
+         }
+         pageCount = MAX(pageCount, page);
          
          if (block) {
              block([NSArray arrayWithArray:results], pageCount, nil);
