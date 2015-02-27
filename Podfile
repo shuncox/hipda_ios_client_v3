@@ -17,5 +17,5 @@ pod 'JDStatusBarNotification'
 pod 'MCSwipeTableViewCell'
 pod 'SSKeychain'
 pod 'RETableViewManager'
-pod 'CTAssetsPickerController', :local => "CTAssetsPickerController/"
+pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
