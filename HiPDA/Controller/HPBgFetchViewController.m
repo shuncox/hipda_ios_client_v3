@@ -72,6 +72,58 @@
         @"2. 你需要在系统 设置 > 通用 > 应用程序后台刷新中允许 HiPDA 才可以使本页的设置生效。\n"
         @"3. iOS8 系统发送本地推送需要您的授权, 所以您还需要确保在设置中开启 HiPDA 推送的权限。"
     ]];
+    
+    
+    RETableViewSection *logSection = [RETableViewSection sectionWithHeaderTitle:@"Log"];
+    
+    /*
+    @{@"counter":@(counter),
+    @"date":[NSDate date],
+    @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
+    */
+    
+    NSMutableArray *log = [NSStandardUserDefaults objectForKey:@"HPBgFetchLog"];
+    for (NSInteger i = 0; i < log.count; i++) {
+        id obj = log[i];
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm:ss"];
+        
+        NSString *r = nil;
+        switch ([obj[@"result"] integerValue]) {
+            case 0:
+                r = @"NewData";
+                break;
+            case 1:
+                r = @"NoData";
+                break;
+            case 2:
+                r = @"Failed";
+                break;
+            default:
+                r = @"WTF";
+                break;
+        }
+        
+        NSInteger min = 0;
+        if (i + 1 < log.count) {
+            id obj_last = log[i+1];
+            NSDate *last = obj_last[@"date"];
+            NSTimeInterval i = [obj[@"date"] timeIntervalSinceDate:last];
+            min = i / 60;
+        }
+        
+        NSString *text = [NSString stringWithFormat:@"%@, %@min, #%@, %@",
+                          [formatter stringFromDate:obj[@"date"]],
+                          @(min),
+                          obj[@"counter"],
+                          r];
+        RETableViewItem *item = [[RETableViewItem alloc] initWithTitle:text];
+        
+        [logSection addItem:item];
+    }
+    
+    [_manager addSection:logSection];
 }
 
 - (void)didReceiveMemoryWarning

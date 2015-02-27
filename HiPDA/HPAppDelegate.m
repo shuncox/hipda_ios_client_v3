@@ -355,6 +355,39 @@
             NSLog(@"count %d noticeRetrieveBlock result %d",count, result);
             if (count == 2) {
                 NSLog(@"complated!");
+                
+                // counter
+                NSInteger counter = [NSStandardUserDefaults integerForKey:@"HPBgFetchCounter" or:0];
+                counter++;
+                // adjust
+                // y = 10 * 2^x, y <= 21600(6h*60m*60s)
+                //
+                /*
+                NSTimeInterval interval = fmin(10 * pow(2, counter), 21600);
+                [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval];
+                
+                if (result == UIBackgroundFetchResultNewData) {
+                    counter = 0;
+                }
+                 */
+                [NSStandardUserDefaults saveInteger:counter forKey:@"HPBgFetchCounter"];
+                
+                // log
+                //
+                NSMutableArray *log = [NSMutableArray arrayWithArray:[NSStandardUserDefaults objectForKey:@"HPBgFetchLog"]];
+                
+                if (log.count > 233) {
+                    [log removeLastObject];
+                }
+                
+                [log insertObject:@{@"counter":@(counter),
+                                 @"date":[NSDate date],
+                                 @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
+                          atIndex:0];
+                [NSStandardUserDefaults saveObject:log forKey:@"HPBgFetchLog"];
+                //NSLog(@"%@", log);
+                //
+                //
                 completionHandler(result);
             }
         }];
