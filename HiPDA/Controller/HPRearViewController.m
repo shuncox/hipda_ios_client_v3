@@ -23,6 +23,7 @@
 #import "HPMyReplyViewController.h"
 #import "HPSearchViewController.h"
 #import "HPSettingViewController.h"
+#import "HPHistoryViewController.h"
 
 #import "NSUserDefaults+Convenience.h"
 #import "UIAlertView+Blocks.h"
@@ -75,6 +76,7 @@
                     [HPMyReplyViewController class],
                     [HPFavoriteViewController class],
                     [HPBackgroundViewController class],
+                    [HPHistoryViewController class]
                     ];
     
     _vc_names = @[@"HOME",
@@ -83,7 +85,8 @@
                   @"我的帖子",
                   @"我的回帖",
                   @"收藏",
-                  @"待读"];
+                  @"待读",
+                  @"历史"];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
     for (int i = 0; i < _vc_classes.count; i++) {

@@ -434,7 +434,7 @@ typedef enum{
     // mark read
     HPThreadCell *cell = (HPThreadCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
-    [[HPCache sharedCache] readThread:thread.tid];
+    [[HPCache sharedCache] readThread:thread];
     
     HPReadViewController *readVC =
     [[HPReadViewController alloc] initWithThread:thread];
@@ -600,7 +600,7 @@ typedef enum{
          NSLog(@"background open thread %@", thread.title);
 
          [(HPThreadCell *)cell markRead];
-         [[HPCache sharedCache] readThread:thread.tid];
+         [[HPCache sharedCache] readThread:thread];
          [HPIndecator show];
          
          

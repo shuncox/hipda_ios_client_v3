@@ -125,6 +125,7 @@
 		EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C5A0A18E5658700B12442 /* UIImage+Resize.m */; };
 		EA4C5A0E18E5674000B12442 /* StandardPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C5A0D18E5674000B12442 /* StandardPaths.m */; };
 		EA4C5A1118E56F3500B12442 /* HPImageUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C5A1018E56F3500B12442 /* HPImageUploadViewController.m */; };
+		EA5708241AA09C5200AD2247 /* HPHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */; };
 		EA5962C3192A24EE00D486C1 /* rear-cell-backgroud.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */; };
 		EA5DF0E118311F05008E4248 /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0D918311F04008E4248 /* list@2x.png */; };
 		EA5DF0E218311F05008E4248 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0DA18311F04008E4248 /* list.png */; };
@@ -555,6 +556,8 @@
 		EA4C5A0D18E5674000B12442 /* StandardPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StandardPaths.m; path = Helper/StandardPaths.m; sourceTree = "<group>"; };
 		EA4C5A0F18E56F3500B12442 /* HPImageUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageUploadViewController.h; path = Controller/HPImageUploadViewController.h; sourceTree = "<group>"; };
 		EA4C5A1018E56F3500B12442 /* HPImageUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageUploadViewController.m; path = Controller/HPImageUploadViewController.m; sourceTree = "<group>"; };
+		EA5708221AA09C5200AD2247 /* HPHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHistoryViewController.h; path = Controller/HPHistoryViewController.h; sourceTree = "<group>"; };
+		EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHistoryViewController.m; path = Controller/HPHistoryViewController.m; sourceTree = "<group>"; };
 		EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rear-cell-backgroud.png"; path = "View/rear-cell-backgroud.png"; sourceTree = "<group>"; };
 		EA5DF0D918311F04008E4248 /* list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "list@2x.png"; path = "Image/SwipeTableViewCell/list@2x.png"; sourceTree = "<group>"; };
 		EA5DF0DA18311F04008E4248 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = list.png; path = Image/SwipeTableViewCell/list.png; sourceTree = "<group>"; };
@@ -1191,11 +1194,12 @@
 				EA1273791830F40700DE9851 /* HPThreadViewController.m */,
 				EA1427DC18BF78E200A7E9B1 /* HPReadViewController.h */,
 				EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */,
-				EAA3A3161A9F1A4700927278 /* activity */,
 				EA39A0EC183CEC740068233F /* HPSettingViewController.h */,
 				EA39A0ED183CEC740068233F /* HPSettingViewController.m */,
 				EAD2AECE1836718100E0A6C3 /* HPBackgroundViewController.h */,
 				EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */,
+				EA5708221AA09C5200AD2247 /* HPHistoryViewController.h */,
+				EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */,
 				EA368A8518C7758300C5C5BD /* Compostion */,
 				EA6DD46C18D0A28E00727556 /* UserCenter */,
 				EA1427DF18BF866C00A7E9B1 /* More */,
@@ -1631,13 +1635,6 @@
 				EA9A39AA1A5BE92E0028BE7D /* message-sent.aiff */,
 			);
 			path = Sounds;
-			sourceTree = "<group>";
-		};
-		EAA3A3161A9F1A4700927278 /* activity */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = activity;
 			sourceTree = "<group>";
 		};
 		EAA3A31E1A9F29EC00927278 /* activity */ = {
@@ -2360,6 +2357,7 @@
 				EA43E6F1183201C700968B94 /* HPCommon.m in Sources */,
 				EA43E6EE1831F4C200968B94 /* NSUserDefaults+Convenience.m in Sources */,
 				EA083D6A18C8D11A00BD8F07 /* WUEmoticonsKeyboard.m in Sources */,
+				EA5708241AA09C5200AD2247 /* HPHistoryViewController.m in Sources */,
 				EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */,
 				EA075F5E18E447FD00A07C08 /* HPNewThreadViewController.m in Sources */,
 			);
