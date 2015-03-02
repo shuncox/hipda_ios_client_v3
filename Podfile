@@ -19,3 +19,4 @@ pod 'SSKeychain'
 pod 'RETableViewManager'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+pod 'SDURLCache', :git => 'https://github.com/wujichao/SDURLCache.git'

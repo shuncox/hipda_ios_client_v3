@@ -256,7 +256,6 @@
 		EAA1E68818D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68118D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m */; };
 		EAA1E68D18D03A6700E1CFE1 /* MultilineTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68A18D03A6700E1CFE1 /* MultilineTextCell.m */; };
 		EAA1E68E18D03A6700E1CFE1 /* MultilineTextItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68C18D03A6700E1CFE1 /* MultilineTextItem.m */; };
-		EAA1E69118D03ADF00E1CFE1 /* SDURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E69018D03ADF00E1CFE1 /* SDURLCache.m */; };
 		EAA3A31C1A9F1FBB00927278 /* UIActivity+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A31B1A9F1FBB00927278 /* UIActivity+Blocks.m */; };
 		EAA3A3221A9F29F700927278 /* activity_capture_post@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A31F1A9F29F700927278 /* activity_capture_post@2x.png */; };
 		EAA3A3231A9F29F700927278 /* activity_copy_content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A3201A9F29F700927278 /* activity_copy_content@2x.png */; };
@@ -736,8 +735,6 @@
 		EAA1E68A18D03A6700E1CFE1 /* MultilineTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultilineTextCell.m; path = View/MultilineTextCell.m; sourceTree = "<group>"; };
 		EAA1E68B18D03A6700E1CFE1 /* MultilineTextItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultilineTextItem.h; path = View/MultilineTextItem.h; sourceTree = "<group>"; };
 		EAA1E68C18D03A6700E1CFE1 /* MultilineTextItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultilineTextItem.m; path = View/MultilineTextItem.m; sourceTree = "<group>"; };
-		EAA1E68F18D03ADF00E1CFE1 /* SDURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDURLCache.h; path = Vender/SDURLCache/SDURLCache.h; sourceTree = "<group>"; };
-		EAA1E69018D03ADF00E1CFE1 /* SDURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDURLCache.m; path = Vender/SDURLCache/SDURLCache.m; sourceTree = "<group>"; };
 		EAA3A31A1A9F1FBB00927278 /* UIActivity+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivity+Blocks.h"; sourceTree = "<group>"; };
 		EAA3A31B1A9F1FBB00927278 /* UIActivity+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivity+Blocks.m"; sourceTree = "<group>"; };
 		EAA3A31F1A9F29F700927278 /* activity_capture_post@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_capture_post@2x.png"; path = "Image/activity/activity_capture_post@2x.png"; sourceTree = "<group>"; };
@@ -1144,15 +1141,6 @@
 			name = EGORefreshTableHeaderView;
 			sourceTree = "<group>";
 		};
-		EA368A7A18C7003B00C5C5BD /* SDURLCache */ = {
-			isa = PBXGroup;
-			children = (
-				EAA1E68F18D03ADF00E1CFE1 /* SDURLCache.h */,
-				EAA1E69018D03ADF00E1CFE1 /* SDURLCache.m */,
-			);
-			name = SDURLCache;
-			sourceTree = "<group>";
-		};
 		EA368A8518C7758300C5C5BD /* Compostion */ = {
 			isa = PBXGroup;
 			children = (
@@ -1249,7 +1237,6 @@
 				EA075F5818E4078D00A07C08 /* BBBadgeBarButtonItem */,
 				EA8186BA18E1E1E40092BDD7 /* IBActionSheet */,
 				EA083D5A18C8D0FD00BD8F07 /* WUEmoticonsKeyboard */,
-				EA368A7A18C7003B00C5C5BD /* SDURLCache */,
 				EA4138C6188D5524001F9542 /* SWRevealViewController */,
 				EAAD5BA0188CEFD00084EC2D /* DACircularProgress */,
 				EAAD5B87188CEFB70084EC2D /* IDMPhotoBrowser */,
@@ -2325,7 +2312,6 @@
 				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,
 				EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */,
 				EA9A39B61A5BE92E0028BE7D /* JSMessagesViewController.m in Sources */,
-				EAA1E69118D03ADF00E1CFE1 /* SDURLCache.m in Sources */,
 				EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */,
 				EA368A8818C77A1D00C5C5BD /* HPReplyTopicViewController.m in Sources */,
 				EA9A39B01A5BE92E0028BE7D /* JSBubbleMessageCell.m in Sources */,
