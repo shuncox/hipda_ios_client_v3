@@ -935,7 +935,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                                       delegate:self cancelButtonTitle:@"取消"
                                                       destructiveButtonTitle:nil
                                                       otherButtonTitles:
-                                                      @"复制链接", @"保存此页截图",nil];
+                                                      @"复制链接", @"复制全文", @"保存此页截图",nil];
                         
                         [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
                         [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
@@ -994,7 +994,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     [self copyLink];
                     break;
                 }
-                case 1://capture & save
+                case 1://copy text
+                {
+                    [self copyContent];
+                    break;
+                }
+                case 2://capture & save
                 {
                     [self capturePost];
                     break;
