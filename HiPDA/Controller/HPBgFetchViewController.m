@@ -61,9 +61,26 @@
         [Flurry logEvent:@"Setting ToggleBgFetchThread" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+    NSInteger min_interval = 10;
+    NSInteger max_interval = 360;
+    CGFloat value = ((float)interval-min_interval)/(max_interval-min_interval);
+    // 10min ~ 6h(360)
+    // (x - 10) / (360 - 10)
+    REFloatItem *intervalItem = [REFloatItem itemWithTitle:[NSString stringWithFormat:@"刷新间隔: 每%ld分", interval]
+                                                     value:value
+                                  sliderValueChangeHandler:^(REFloatItem *item) {
+                                      CGFloat v = item.value * (max_interval-min_interval) + min_interval;
+                                      NSLog(@"Value: %f -> %d", item.value, (int)v);
+                                      item.title = [NSString stringWithFormat:@"刷新间隔: 每%d分", (int)v];
+                                      [Setting saveInteger:(int)v forKey:HPBgFetchInterval];
+                                      [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+                                  }];
+    
     self.manager[@"MultilineTextItem"] = @"MultilineTextCell";
     [section addItem:enableBgFetchNoticeItem];
     [section addItem:enableBgFetchThreadItem];
+    [section addItem:intervalItem];
     [section addItem:[MultilineTextItem itemWithTitle:
         @"你的 iOS 设备可以根据你使用 HiPDA 的频率和时间智能安排来更新未读提醒并提示您。\n\n"
         @"开启帖子列表选项后, 你的 iOS 设备在你打开 HiPDA 之前, 通常会提前为您刷新好帖子列表。\n\n"
@@ -113,7 +130,7 @@
             min = i / 60;
         }
         
-        NSString *text = [NSString stringWithFormat:@"%@, 间隔:%02ld, %@",
+        NSString *text = [NSString stringWithFormat:@"%@, 距离上次:%02ld分, %@",
                           [formatter stringFromDate:obj[@"date"]],
                           min,
                           r];
