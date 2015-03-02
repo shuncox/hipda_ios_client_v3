@@ -161,6 +161,7 @@
 
 #define HPDraft @"HPDraft"
 
+#define HPBgFetchInterval @"HPBgFetchInterval"
 #define HPPMCount @"HPPMCount"
 #define HPNoticeCount @"HPNoticeCount"
 #define HPCheckDisable @"HPCheckDisable"

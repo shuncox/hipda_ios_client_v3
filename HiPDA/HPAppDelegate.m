@@ -130,7 +130,9 @@
     BOOL enableBgFetch = IOS7_OR_LATER &&
     ([Setting boolForKey:HPSettingBgFetchThread] || [Setting boolForKey:HPSettingBgFetchNotice]);
     if (enableBgFetch) {
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+        
+        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval];
         
         NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
         if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
@@ -356,22 +358,6 @@
             if (count == 2) {
                 NSLog(@"complated!");
                 
-                // counter
-                NSInteger counter = [NSStandardUserDefaults integerForKey:@"HPBgFetchCounter" or:0];
-                counter++;
-                // adjust
-                // y = 10 * 2^x, y <= 21600(6h*60m*60s)
-                //
-                /*
-                NSTimeInterval interval = fmin(10 * pow(2, counter), 21600);
-                [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval];
-                
-                if (result == UIBackgroundFetchResultNewData) {
-                    counter = 0;
-                }
-                 */
-                [NSStandardUserDefaults saveInteger:counter forKey:@"HPBgFetchCounter"];
-                
                 // log
                 //
                 NSMutableArray *log = [NSMutableArray arrayWithArray:[NSStandardUserDefaults objectForKey:@"HPBgFetchLog"]];
@@ -380,7 +366,8 @@
                     [log removeLastObject];
                 }
                 
-                [log insertObject:@{@"counter":@(counter),
+                NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+                [log insertObject:@{@"interval":@(interval),
                                  @"date":[NSDate date],
                                  @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
                           atIndex:0];

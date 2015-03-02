@@ -87,18 +87,18 @@
         id obj = log[i];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm:ss"];
+        [formatter setDateFormat:@"MM-dd HH:mm:ss"];
         
         NSString *r = nil;
         switch ([obj[@"result"] integerValue]) {
             case 0:
-                r = @"NewData";
+                r = @"有新消息";
                 break;
             case 1:
-                r = @"NoData";
+                r = @"无新消息";
                 break;
             case 2:
-                r = @"Failed";
+                r = @"获取失败";
                 break;
             default:
                 r = @"WTF";
@@ -113,10 +113,9 @@
             min = i / 60;
         }
         
-        NSString *text = [NSString stringWithFormat:@"%@, %@min, #%@, %@",
+        NSString *text = [NSString stringWithFormat:@"%@, 间隔:%02ld, %@",
                           [formatter stringFromDate:obj[@"date"]],
-                          @(min),
-                          obj[@"counter"],
+                          min,
                           r];
         RETableViewItem *item = [[RETableViewItem alloc] initWithTitle:text];
         
