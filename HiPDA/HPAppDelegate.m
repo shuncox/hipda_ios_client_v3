@@ -162,8 +162,12 @@
         //note
         [MobClick setCrashReportEnabled:NO];
         [MobClick setLogEnabled:NO];
-        //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
+        
+#if DEBUG
         [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:@"debug"];
+#else
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
+#endif
         
     }
     
