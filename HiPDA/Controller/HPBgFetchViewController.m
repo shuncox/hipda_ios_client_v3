@@ -67,12 +67,12 @@
     CGFloat value = ((float)interval-min_interval)/(max_interval-min_interval);
     // 10min ~ 6h(360)
     // (x - 10) / (360 - 10)
-    REFloatItem *intervalItem = [REFloatItem itemWithTitle:[NSString stringWithFormat:@"刷新间隔: 每%ld分", interval]
+    REFloatItem *intervalItem = [REFloatItem itemWithTitle:[NSString stringWithFormat:@"刷新间隔: 约每%ld分", interval]
                                                      value:value
                                   sliderValueChangeHandler:^(REFloatItem *item) {
                                       CGFloat v = item.value * (max_interval-min_interval) + min_interval;
                                       NSLog(@"Value: %f -> %d", item.value, (int)v);
-                                      item.title = [NSString stringWithFormat:@"刷新间隔: 每%d分", (int)v];
+                                      item.title = [NSString stringWithFormat:@"刷新间隔: 约每%d分", (int)v];
                                       [Setting saveInteger:(int)v forKey:HPBgFetchInterval];
                                       [item reloadRowWithAnimation:UITableViewRowAnimationNone];
                                   }];
@@ -130,9 +130,9 @@
             min = i / 60;
         }
         
-        NSString *text = [NSString stringWithFormat:@"%@, 距离上次:%02ld分, %@",
+        NSString *text = [NSString stringWithFormat:@"%@,距上次%02ld分,%@",
                           [formatter stringFromDate:obj[@"date"]],
-                          min,
+                          (long)min,
                           r];
         RETableViewItem *item = [[RETableViewItem alloc] initWithTitle:text];
         
