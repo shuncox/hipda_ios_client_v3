@@ -127,27 +127,7 @@
         [self FinishLaunchingWithReciveLocalNotification:localNotification];
     }
 
-    BOOL enableBgFetch = IOS7_OR_LATER &&
-    ([Setting boolForKey:HPSettingBgFetchThread] || [Setting boolForKey:HPSettingBgFetchNotice]);
-    if (enableBgFetch) {
-        
-        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
-        
-        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-        if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
-            && [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
-            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex != alertView.cancelButtonIndex) {
-                    [[HPAccount sharedHPAccount] askLocalNotificationPermission];
-                } else {
-                    [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
-                    [Setting saveBool:NO forKey:HPSettingBgFetchThread];
-                }
-            }];
-        }
-    }
+    [self setupBgFetch];
     
     BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
     BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
@@ -301,8 +281,31 @@
     [self showAlert];
 }
 
+- (void)setupBgFetch {
+    BOOL enableBgFetch = IOS7_OR_LATER &&
+    ([Setting boolForKey:HPSettingBgFetchThread] || [Setting boolForKey:HPSettingBgFetchNotice]);
+    if (enableBgFetch) {
+        
+        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
+        
+        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+        if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
+            && [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
+            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex != alertView.cancelButtonIndex) {
+                    [[HPAccount sharedHPAccount] askLocalNotificationPermission];
+                } else {
+                    [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
+                    [Setting saveBool:NO forKey:HPSettingBgFetchThread];
+                }
+            }];
+        }
+    }
+}
 
--(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     /*
     UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
