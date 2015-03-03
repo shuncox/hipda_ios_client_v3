@@ -132,7 +132,7 @@
     if (enableBgFetch) {
         
         NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval];
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
         
         NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
         if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
