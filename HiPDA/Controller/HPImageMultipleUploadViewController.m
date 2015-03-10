@@ -194,9 +194,8 @@
         self.popover = [[UIPopoverController alloc] initWithContentViewController:picker];
         self.popover.delegate = self;
         
-        [self.popover presentPopoverFromBarButtonItem:sender
-                             permittedArrowDirections:UIPopoverArrowDirectionAny
-                                             animated:YES];
+        [self.popover presentPopoverFromRect:[sender bounds] inView:sender
+                    permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     }
     else
     {
