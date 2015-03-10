@@ -195,7 +195,7 @@
         self.popover.delegate = self;
         
         [self.popover presentPopoverFromRect:[sender bounds] inView:sender
-                    permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
     else
     {
