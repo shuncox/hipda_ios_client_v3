@@ -1064,7 +1064,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images];
     
     browser.displayActionButton = YES;
-    browser.displayArrowButton = YES;
+    browser.displayArrowButton = NO;
     browser.displayCounterLabel = YES;
     [browser setInitialPageIndex: index];
     
