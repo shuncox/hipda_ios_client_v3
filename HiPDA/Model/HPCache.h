@@ -10,11 +10,14 @@
 @class HPThread;
 @interface HPCache : NSObject
 
+#define kHPHistoryListCacheKey @"kHPHistoryListCacheKey"
 
 @property (nonatomic, strong) NSMutableArray *bgThreads;
 
 @property (nonatomic, strong) NSMutableArray *preloadThreads;
 @property (nonatomic, assign) NSInteger preloadThreadsCount;
+
+@property (nonatomic, strong) NSMutableArray *history;
 
 
 + (HPCache *)sharedCache;
@@ -52,9 +55,11 @@
 - (void)removeBgThreadAtIndex:(NSInteger)index;
 
 - (BOOL)isReadThread:(NSInteger)tid;
-- (void)readThread:(NSInteger)tid;
+- (void)readThread:(HPThread *)thread;
 - (BOOL)isReadThread:(NSInteger)tid pid:(NSInteger)pid;
 - (void)readThread:(NSInteger)tid pid:(NSInteger)pid;
+- (void)clearHistoty;
+- (void)removeHistotyAtIndex:(NSInteger)index;
 
 - (BOOL)existAvatar:(NSInteger)uid;
 - (void)notExistAvatar:(NSInteger)uid;

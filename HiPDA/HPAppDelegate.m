@@ -127,25 +127,7 @@
         [self FinishLaunchingWithReciveLocalNotification:localNotification];
     }
 
-    BOOL enableBgFetch = IOS7_OR_LATER &&
-    ([Setting boolForKey:HPSettingBgFetchThread] || [Setting boolForKey:HPSettingBgFetchNotice]);
-    if (enableBgFetch) {
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-        
-        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-        if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
-            && [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
-            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex != alertView.cancelButtonIndex) {
-                    [[HPAccount sharedHPAccount] askLocalNotificationPermission];
-                } else {
-                    [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
-                    [Setting saveBool:NO forKey:HPSettingBgFetchThread];
-                }
-            }];
-        }
-    }
+    [self setupBgFetch];
     
     BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
     BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
@@ -160,8 +142,12 @@
         //note
         [MobClick setCrashReportEnabled:NO];
         [MobClick setLogEnabled:NO];
-        //[MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
+        
+#if DEBUG
         [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:@"debug"];
+#else
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
+#endif
         
     }
     
@@ -295,8 +281,31 @@
     [self showAlert];
 }
 
+- (void)setupBgFetch {
+    BOOL enableBgFetch = IOS7_OR_LATER &&
+    ([Setting boolForKey:HPSettingBgFetchThread] || [Setting boolForKey:HPSettingBgFetchNotice]);
+    if (enableBgFetch) {
+        
+        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
+        
+        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+        if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
+            && [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
+            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex != alertView.cancelButtonIndex) {
+                    [[HPAccount sharedHPAccount] askLocalNotificationPermission];
+                } else {
+                    [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
+                    [Setting saveBool:NO forKey:HPSettingBgFetchThread];
+                }
+            }];
+        }
+    }
+}
 
--(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     /*
     UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
@@ -355,6 +364,24 @@
             NSLog(@"count %d noticeRetrieveBlock result %d",count, result);
             if (count == 2) {
                 NSLog(@"complated!");
+                
+                // log
+                //
+                NSMutableArray *log = [NSMutableArray arrayWithArray:[NSStandardUserDefaults objectForKey:@"HPBgFetchLog"]];
+                
+                if (log.count > 233) {
+                    [log removeLastObject];
+                }
+                
+                NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+                [log insertObject:@{@"interval":@(interval),
+                                 @"date":[NSDate date],
+                                 @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
+                          atIndex:0];
+                [NSStandardUserDefaults saveObject:log forKey:@"HPBgFetchLog"];
+                //NSLog(@"%@", log);
+                //
+                //
                 completionHandler(result);
             }
         }];

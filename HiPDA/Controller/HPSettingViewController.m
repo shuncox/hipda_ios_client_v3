@@ -449,7 +449,7 @@
     RETableViewItem *cleanItem = [RETableViewItem itemWithTitle:@"清理缓存" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         [item deselectRowAnimated:YES];
         
-        [SVProgressHUD showWithStatus:@"清理中"];
+        [SVProgressHUD showWithStatus:@"清理中" maskType:SVProgressHUDMaskTypeBlack];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             [[SDImageCache sharedImageCache] clearDisk];

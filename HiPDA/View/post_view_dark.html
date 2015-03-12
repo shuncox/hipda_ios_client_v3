@@ -274,6 +274,16 @@ var img_click = function (img) {
     location.href = 'image://' + img;
 };
 
+//http://stackoverflow.com/questions/4712310/javascript-how-to-detect-if-a-word-is-highlighted
+function getSelectedText() {
+    var text = "";
+    if (typeof window.getSelection != "undefined") {
+        text = window.getSelection().toString();
+    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
 
 </script>
 

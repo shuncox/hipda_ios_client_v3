@@ -11,6 +11,7 @@
 #import "HPNewPost.h"
 #import "EGOCache.h"
 #import "HPSetting.h"
+#import "HPThread.h"
 
 #define DEBUG_CACHE 0
 #define kHPBgList @"kHPBgList"
@@ -32,6 +33,8 @@
         
         sharedCache.preloadThreads = [NSMutableArray arrayWithCapacity:10];
         sharedCache.preloadThreadsCount = 0;
+        
+        sharedCache.history = [[NSMutableArray alloc] initWithArray:(NSArray *)[[EGOCache globalCache] objectForKey:kHPHistoryListCacheKey]];
     });
     
     return sharedCache;
@@ -174,7 +177,7 @@
     
     return NO;
 }
-- (void)readThread:(NSInteger)tid {
+- (void)readThreadWithTid:(NSInteger)tid {
     
     NSString *key = [NSString stringWithFormat:@"read_%ld", tid];
     
@@ -182,6 +185,46 @@
     
     // 864000 10days
     [[EGOCache globalCache] setObject:@YES forKey:key withTimeoutInterval:864000];
+}
+
+- (void)readThread:(HPThread *)thread {
+    
+    [self readThreadWithTid:thread.tid];
+    
+    //
+    __block NSInteger i = -1;
+    [self.history enumerateObjectsUsingBlock:^(HPThread *t, NSUInteger idx, BOOL *stop) {
+        //NSLog(@"%d %@ %@",i, thread ,t);
+        if (t.tid == thread.tid) {
+            i = idx;
+            *stop = YES;
+        }
+    }];
+    if (i >= 0) [self.history removeObjectAtIndex:i];
+    
+    //
+    if (self.history.count > 50) {
+        [self.history removeLastObject];
+    }
+    
+    //
+    [self.history insertObject:thread atIndex:0];
+    [[EGOCache globalCache] setObject:self.history forKey:kHPHistoryListCacheKey withTimeoutInterval:864000];
+}
+
+- (NSArray *)histotyList {
+    
+    return self.history;
+}
+
+- (void)clearHistoty {
+    [self.history removeAllObjects];
+    [[EGOCache globalCache] setObject:self.history forKey:kHPHistoryListCacheKey withTimeoutInterval:864000];
+}
+
+- (void)removeHistotyAtIndex:(NSInteger)index {
+    [self.history removeObjectAtIndex:index];
+    [[EGOCache globalCache] setObject:self.history forKey:kHPHistoryListCacheKey withTimeoutInterval:864000];
 }
 
 - (BOOL)existAvatar:(NSInteger)uid {

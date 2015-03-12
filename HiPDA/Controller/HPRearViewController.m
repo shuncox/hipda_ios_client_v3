@@ -23,6 +23,7 @@
 #import "HPMyReplyViewController.h"
 #import "HPSearchViewController.h"
 #import "HPSettingViewController.h"
+#import "HPHistoryViewController.h"
 
 #import "NSUserDefaults+Convenience.h"
 #import "UIAlertView+Blocks.h"
@@ -75,6 +76,7 @@
                     [HPMyReplyViewController class],
                     [HPFavoriteViewController class],
                     [HPBackgroundViewController class],
+                    [HPHistoryViewController class]
                     ];
     
     _vc_names = @[@"HOME",
@@ -83,7 +85,8 @@
                   @"我的帖子",
                   @"我的回帖",
                   @"收藏",
-                  @"待读"];
+                  @"待读",
+                  @"历史"];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
     for (int i = 0; i < _vc_classes.count; i++) {
@@ -270,17 +273,19 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    CGFloat rowHeight = (kScreenHeight == 480.f ? 40.f : 44.f);
+    
     if (indexPath.row == 0) {
         return TOP_CELL_HEIGHT;
     } else if (indexPath.row == _vc_classes.count){
         
         CGFloat screent_height = self.view.bounds.size.height;
-        CGFloat other_hight_sum = TOP_CELL_HEIGHT + (_vc_classes.count-1)*44.f + _fids.count*44.f;
+        CGFloat other_hight_sum = TOP_CELL_HEIGHT + (_vc_classes.count-1)*rowHeight + _fids.count*rowHeight;
         
         return MAX(screent_height - other_hight_sum, 0.f);
         
     } else {
-        return 44.f;
+        return rowHeight;
     }
 }
 

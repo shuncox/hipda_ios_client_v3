@@ -9,6 +9,7 @@
 #import "HPBgFetchViewController.h"
 #import "HPSetting.h"
 #import "MultilineTextItem.h"
+#import "HPAppDelegate.h"
 
 
 @interface HPBgFetchViewController ()
@@ -29,6 +30,13 @@
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // update bgFetch setting
+    HPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate setupBgFetch];
+}
 
 - (void)viewDidLoad
 {
@@ -61,9 +69,26 @@
         [Flurry logEvent:@"Setting ToggleBgFetchThread" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+    NSInteger min_interval = 10;
+    NSInteger max_interval = 360;
+    CGFloat value = ((float)interval-min_interval)/(max_interval-min_interval);
+    // 10min ~ 6h(360)
+    // (x - 10) / (360 - 10)
+    REFloatItem *intervalItem = [REFloatItem itemWithTitle:[NSString stringWithFormat:@"刷新间隔: 约每%ld分", interval]
+                                                     value:value
+                                  sliderValueChangeHandler:^(REFloatItem *item) {
+                                      CGFloat v = item.value * (max_interval-min_interval) + min_interval;
+                                      NSLog(@"Value: %f -> %d", item.value, (int)v);
+                                      item.title = [NSString stringWithFormat:@"刷新间隔: 约每%d分", (int)v];
+                                      [Setting saveInteger:(int)v forKey:HPBgFetchInterval];
+                                      [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+                                  }];
+    
     self.manager[@"MultilineTextItem"] = @"MultilineTextCell";
     [section addItem:enableBgFetchNoticeItem];
     [section addItem:enableBgFetchThreadItem];
+    [section addItem:intervalItem];
     [section addItem:[MultilineTextItem itemWithTitle:
         @"你的 iOS 设备可以根据你使用 HiPDA 的频率和时间智能安排来更新未读提醒并提示您。\n\n"
         @"开启帖子列表选项后, 你的 iOS 设备在你打开 HiPDA 之前, 通常会提前为您刷新好帖子列表。\n\n"
@@ -72,6 +97,57 @@
         @"2. 你需要在系统 设置 > 通用 > 应用程序后台刷新中允许 HiPDA 才可以使本页的设置生效。\n"
         @"3. iOS8 系统发送本地推送需要您的授权, 所以您还需要确保在设置中开启 HiPDA 推送的权限。"
     ]];
+    
+    
+    RETableViewSection *logSection = [RETableViewSection sectionWithHeaderTitle:@"Log"];
+    
+    /*
+    @{@"counter":@(counter),
+    @"date":[NSDate date],
+    @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
+    */
+    
+    NSMutableArray *log = [NSStandardUserDefaults objectForKey:@"HPBgFetchLog"];
+    for (NSInteger i = 0; i < log.count; i++) {
+        id obj = log[i];
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MM-dd HH:mm:ss"];
+        
+        NSString *r = nil;
+        switch ([obj[@"result"] integerValue]) {
+            case 0:
+                r = @"有新消息";
+                break;
+            case 1:
+                r = @"无新消息";
+                break;
+            case 2:
+                r = @"获取失败";
+                break;
+            default:
+                r = @"WTF";
+                break;
+        }
+        
+        NSInteger min = 0;
+        if (i + 1 < log.count) {
+            id obj_last = log[i+1];
+            NSDate *last = obj_last[@"date"];
+            NSTimeInterval i = [obj[@"date"] timeIntervalSinceDate:last];
+            min = i / 60;
+        }
+        
+        NSString *text = [NSString stringWithFormat:@"%@,距上次%02ld分,%@",
+                          [formatter stringFromDate:obj[@"date"]],
+                          (long)min,
+                          r];
+        RETableViewItem *item = [[RETableViewItem alloc] initWithTitle:text];
+        
+        [logSection addItem:item];
+    }
+    
+    [_manager addSection:logSection];
 }
 
 - (void)didReceiveMemoryWarning
