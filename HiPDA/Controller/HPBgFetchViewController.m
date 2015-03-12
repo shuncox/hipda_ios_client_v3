@@ -71,10 +71,13 @@
     
     NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
     NSInteger min_interval = 10;
-    NSInteger max_interval = 360;
+    NSInteger max_interval = 100;
+    // v3.4.1 设置了 interval 最大为360, 但真机测试, 当interval > 100时, 基本得不到刷新
+    // HPAppDelegate.m:292 中 尝试修正了当max_interval>100时
+    
     CGFloat value = ((float)interval-min_interval)/(max_interval-min_interval);
-    // 10min ~ 6h(360)
-    // (x - 10) / (360 - 10)
+    // 10min ~ 1.5h(100)
+    // (x - 10) / (100 - 10)
     REFloatItem *intervalItem = [REFloatItem itemWithTitle:[NSString stringWithFormat:@"刷新间隔: 约每%ld分", interval]
                                                      value:value
                                   sliderValueChangeHandler:^(REFloatItem *item) {

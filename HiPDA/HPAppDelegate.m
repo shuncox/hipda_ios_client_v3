@@ -287,6 +287,14 @@
     if (enableBgFetch) {
         
         NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+        
+        // to remove
+        // v3.4.1 设置了 interval 最大为360, 但真机测试, 当interval > 100时, 基本得不到刷新
+        if (interval > 100) {
+            interval = 100;
+            [Setting saveInteger:interval forKey:HPBgFetchInterval];
+        }
+        
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
         
         NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
