@@ -87,7 +87,7 @@
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                if (error.code == -1003) {
                    
-                   [SVProgressHUD showErrorWithStatus:@"DNS解析错误, 正在重试中...\n您也许需要更换DNS, 可能是论坛上的联通高层又发力了..." ];
+                   [SVProgressHUD showErrorWithStatus:@"DNS解析错误, 正在重试中...\n您也许需要更换DNS, 可能是论坛上的联通高层又调皮了..." ];
                    
                    NSTimeInterval delay = 0.1;
                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
