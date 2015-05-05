@@ -38,6 +38,12 @@
  */
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date;
 
+
+/*
+ *
+ */
+- (void)accessoryPressed:(UIButton *)sender;
+
 /**
  *  Asks the delegate for the message type for the row at the specified index path.
  *

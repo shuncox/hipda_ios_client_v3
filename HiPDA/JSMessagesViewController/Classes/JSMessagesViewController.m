@@ -101,6 +101,10 @@
     [inputView.sendButton addTarget:self
                              action:@selector(sendPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
+
+    [inputView.accessoryButton addTarget:self
+                                  action:@selector(accessoryPressed:)
+                        forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:inputView];
     _messageInputView = inputView;
@@ -194,6 +198,10 @@
     [self.delegate didSendText:[self.messageInputView.textView.text js_stringByTrimingWhitespace]
                     fromSender:self.sender
                         onDate:[NSDate date]];
+}
+
+- (void)accessoryPressed:(UIButton *)sender {
+    [self.delegate accessoryPressed:sender];
 }
 
 - (void)handleTapGestureRecognizer:(UITapGestureRecognizer *)tap

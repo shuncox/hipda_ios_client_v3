@@ -143,6 +143,9 @@
 		EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */; };
 		EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F6A4318D9E4AD0034F880 /* HPForum.m */; };
 		EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */; };
+		EA6760921AF8704F00BA0EF3 /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = EA67608F1AF8704F00BA0EF3 /* clip.png */; };
+		EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760901AF8704F00BA0EF3 /* clip@2x.png */; };
+		EA6760941AF8704F00BA0EF3 /* clip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760911AF8704F00BA0EF3 /* clip@3x.png */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
 		EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C22183E21000067F62B /* HPLoginViewController.m */; };
@@ -581,6 +584,9 @@
 		EA5F6A4318D9E4AD0034F880 /* HPForum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPForum.m; path = Model/HPForum.m; sourceTree = "<group>"; };
 		EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPQiniuUploader.h; path = Model/HPQiniuUploader.h; sourceTree = "<group>"; };
 		EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPQiniuUploader.m; path = Model/HPQiniuUploader.m; sourceTree = "<group>"; };
+		EA67608F1AF8704F00BA0EF3 /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
+		EA6760901AF8704F00BA0EF3 /* clip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@2x.png"; sourceTree = "<group>"; };
+		EA6760911AF8704F00BA0EF3 /* clip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@3x.png"; sourceTree = "<group>"; };
 		EA7111D918B10C44007AD5D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EA7111DB18B10C5D007AD5D1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Blocks.h"; path = "Helper/UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1612,6 +1618,9 @@
 		EA9A39A31A5BE92E0028BE7D /* input-bar-flat */ = {
 			isa = PBXGroup;
 			children = (
+				EA67608F1AF8704F00BA0EF3 /* clip.png */,
+				EA6760901AF8704F00BA0EF3 /* clip@2x.png */,
+				EA6760911AF8704F00BA0EF3 /* clip@3x.png */,
 				EA9A39A41A5BE92E0028BE7D /* button-photo.png */,
 				EA9A39A51A5BE92E0028BE7D /* button-photo@2x.png */,
 				EA9A39A61A5BE92E0028BE7D /* input-bar-flat.png */,
@@ -1999,6 +2008,7 @@
 				EA9A39D51A5BE92E0028BE7D /* bubble.png in Resources */,
 				EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */,
 				EA083D9918C8D14F00BD8F07 /* keyboard_del.png in Resources */,
+				EA6760921AF8704F00BA0EF3 /* clip.png in Resources */,
 				EAAD5B9A188CEFCC0084EC2D /* IDMPhotoBrowser.bundle in Resources */,
 				EAD7F5EE183CC84600A750D9 /* hp_smile_default_cry.gif in Resources */,
 				EA083DB118C8D14F00BD8F07 /* keyboard_text.png in Resources */,
@@ -2055,6 +2065,7 @@
 				EA5DF0E518311F05008E4248 /* clock@2x.png in Resources */,
 				EA083DA818C8D14F00BD8F07 /* keyboard_segment_normal_selected@2x.png in Resources */,
 				EA8186B418E1DA0D0092BDD7 /* search_highlight@2x.png in Resources */,
+				EA6760941AF8704F00BA0EF3 /* clip@3x.png in Resources */,
 				EA083DA918C8D14F00BD8F07 /* keyboard_segment_selected.png in Resources */,
 				EA9A39E31A5BE92E0028BE7D /* message-received.aiff in Resources */,
 				EA9A39BC1A5BE92E0028BE7D /* bubble-classic-blue@2x.png in Resources */,
@@ -2076,6 +2087,7 @@
 				EA06A61B18C2384800EDBDEA /* love.png in Resources */,
 				EA9A39DE1A5BE92E0028BE7D /* send-button@2x.png in Resources */,
 				EA083DAD18C8D14F00BD8F07 /* keyboard_switch.png in Resources */,
+				EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */,
 				EA9A39B91A5BE92E0028BE7D /* avatar-placeholder.png in Resources */,
 				EA083DAC18C8D14F00BD8F07 /* keyboard_segment_selected_normal@2x.png in Resources */,
 				EA9A39C01A5BE92E0028BE7D /* bubble-classic-green@2x.png in Resources */,

@@ -211,6 +211,10 @@
     }];
 }
 
+- (void)accessoryPressed:(UIButton *)sender {
+    ;
+}
+
 - (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *current_name = [[_messages objectAtIndex:indexPath.row] objectForKey:@"username"];

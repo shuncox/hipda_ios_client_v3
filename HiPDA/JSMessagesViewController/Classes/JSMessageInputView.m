@@ -19,6 +19,8 @@
 #import "NSString+JSMessagesView.h"
 #import "UIColor+JSMessagesView.h"
 
+static const CGFloat accessoryButtonWidth = 44.f;
+
 @interface JSMessageInputView ()
 
 - (void)setup;
@@ -45,7 +47,7 @@
 {
     CGFloat sendButtonWidth = (style == JSMessageInputViewStyleClassic) ? 78.0f : 64.0f;
     
-    CGFloat width = self.frame.size.width - sendButtonWidth;
+    CGFloat width = self.frame.size.width - sendButtonWidth - accessoryButtonWidth;
     CGFloat height = [JSMessageInputView textViewLineHeight];
     
     JSMessageTextView *textView = [[JSMessageTextView  alloc] initWithFrame:CGRectZero];
@@ -69,7 +71,7 @@
         [self addSubview:inputFieldBack];
     }
     else {
-        _textView.frame = CGRectMake(4.0f, 4.5f, width, height);
+        _textView.frame = CGRectMake(4.0f + accessoryButtonWidth, 4.5f, width, height);
         _textView.backgroundColor = [UIColor clearColor];
         _textView.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
         _textView.layer.borderWidth = 0.65f;
@@ -126,6 +128,20 @@
     [self setSendButton:sendButton];
 }
 
+- (void)configureAccessoryButtonWithStyle:(JSMessageInputViewStyle)style
+{
+    UIButton *accessoryButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, accessoryButtonWidth, 32.0f)];
+    [accessoryButton setImage:[UIImage imageNamed:@"clip"] forState:UIControlStateNormal];
+   
+    accessoryButton.contentMode = UIViewContentModeScaleAspectFit;
+    accessoryButton.backgroundColor = [UIColor clearColor];
+    accessoryButton.tintColor = [UIColor lightGrayColor];
+
+    accessoryButton.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin);
+
+    [self setAccessoryButton:accessoryButton];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
                         style:(JSMessageInputViewStyle)style
                      delegate:(id<UITextViewDelegate, JSDismissiveTextViewDelegate>)delegate
@@ -137,7 +153,8 @@
         [self setup];
         [self configureInputBarWithStyle:style];
         [self configureSendButtonWithStyle:style];
-        
+        [self configureAccessoryButtonWithStyle:style];
+
         _textView.delegate = delegate;
         _textView.keyboardDelegate = delegate;
         _textView.dismissivePanGestureRecognizer = panGestureRecognizer;
@@ -179,6 +196,17 @@
     
     [self addSubview:btn];
     _sendButton = btn;
+}
+
+- (void)setAccessoryButton:(UIButton *)btn {
+    if (_accessoryButton)
+        [_accessoryButton removeFromSuperview];
+
+    CGFloat padding = 8.0f;
+    btn.frame = CGRectMake(0, padding, accessoryButtonWidth, self.textView.frame.size.height - padding);
+
+    [self addSubview:btn];
+    _accessoryButton = btn;
 }
 
 #pragma mark - Message input view
