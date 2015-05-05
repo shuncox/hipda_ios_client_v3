@@ -20,3 +20,4 @@ pod 'RETableViewManager'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod 'SDURLCache', :git => 'https://github.com/wujichao/SDURLCache.git'
+pod 'Qiniu', :git => 'https://github.com/qiniu/objc-sdk.git', :branch => 'AFNetworking-1.x'

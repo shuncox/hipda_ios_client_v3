@@ -142,6 +142,7 @@
 		EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164718D7062900F6AAB3 /* NSHTTPCookieStorage+info.m */; };
 		EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */; };
 		EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F6A4318D9E4AD0034F880 /* HPForum.m */; };
+		EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
 		EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C22183E21000067F62B /* HPLoginViewController.m */; };
@@ -578,6 +579,8 @@
 		EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadCell.m; path = View/HPThreadCell.m; sourceTree = "<group>"; };
 		EA5F6A4218D9E4AD0034F880 /* HPForum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPForum.h; path = Model/HPForum.h; sourceTree = "<group>"; };
 		EA5F6A4318D9E4AD0034F880 /* HPForum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPForum.m; path = Model/HPForum.m; sourceTree = "<group>"; };
+		EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPQiniuUploader.h; path = Model/HPQiniuUploader.h; sourceTree = "<group>"; };
+		EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPQiniuUploader.m; path = Model/HPQiniuUploader.m; sourceTree = "<group>"; };
 		EA7111D918B10C44007AD5D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EA7111DB18B10C5D007AD5D1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Blocks.h"; path = "Helper/UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1223,6 +1226,8 @@
 				EA8186BE18E29FD10092BDD7 /* HPIndecator.h */,
 				EA8186BF18E29FD10092BDD7 /* HPIndecator.m */,
 				EA06A5F618C0E45F00EDBDEA /* More */,
+				EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */,
+				EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2225,6 +2230,7 @@
 				EA9A39AF1A5BE92E0028BE7D /* JSBubbleImageViewFactory.m in Sources */,
 				EA480F2C18BA19F300C1E522 /* HPDatabase.m in Sources */,
 				EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */,
+				EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */,
 				EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */,
 				EA743C32183F9EE70067F62B /* HPMyReplyViewController.m in Sources */,
 				EA43E70418328B1800968B94 /* GTMNSString+HTML.m in Sources */,
