@@ -33,7 +33,8 @@
          {
              NSLog(@"%@ %@ %@", i, k, resp);
              dispatch_async(dispatch_get_main_queue(), ^{
-                 completionBlock(resp[@"key"], i.error);
+                 NSString *url = [NSString stringWithFormat:@"%@%@", HP_QINIU_PREFIX, resp[@"key"]];
+                 completionBlock(url, i.error);
              });
          } option:opt];
     });

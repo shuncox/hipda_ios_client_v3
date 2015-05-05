@@ -18,10 +18,17 @@
 #import "UIAlertView+Blocks.h"
 #import "UIBarButtonItem+ImageItem.h"
 
-@interface HPMessageDetailViewController () <JSMessagesViewDataSource, JSMessagesViewDelegate, UIActionSheetDelegate>
+#import "HPImageMultipleUploadViewController.h"
+#import "HPImageUploadViewController.h"
+
+#import "IDMPhotoBrowser.h"
+#import "HPSetting.h"
+
+@interface HPMessageDetailViewController () <JSMessagesViewDataSource, JSMessagesViewDelegate, UIActionSheetDelegate, HPImageUploadDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (nonatomic, assign) HPMessageRange range;
+@property (nonatomic, assign) NSInteger viewAppearCount;
 
 @end
 
@@ -65,16 +72,22 @@
     UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(back:)];
     rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwipeGesture];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didTapImage:) name:HP_MESSAGE_CELL_TAP_IMAGE object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self refresh:nil];
+
+    self.viewAppearCount++;
+    if (self.viewAppearCount == 1) {
+        [self refresh:nil];
+    }
 }
 
 - (void)dealloc {
     NSLog(@"dealloc");
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HP_MESSAGE_CELL_TAP_IMAGE object:nil];
 }
 
 #pragma mark -
@@ -212,7 +225,49 @@
 }
 
 - (void)accessoryPressed:(UIButton *)sender {
-    ;
+
+    if (![Setting boolForKey:HP_SHOW_MESSAGE_IMAGE_NOTICE]) {
+        [UIAlertView showConfirmationDialogWithTitle:@"私信图片使用须知" message:@"1 私信图片服务由iOS客户端私自提供, 不代表论坛立场\n2 图片上传后不保密, 不可删除, 不长久保存" handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == alertView.cancelButtonIndex) {
+                return;
+            } else {
+                [Setting saveBool:YES forKey:HP_SHOW_MESSAGE_IMAGE_NOTICE];
+                [self accessoryPressed:sender];
+            }
+        }];
+        return;
+    }
+
+    if (IOS7_OR_LATER) {
+        HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
+        ivc.delegate = self;
+        ivc.useQiniu = YES;
+        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
+    } else {
+        HPImageUploadViewController *ivc = [[HPImageUploadViewController alloc] init];
+        ivc.delegate = self;
+        ivc.useQiniu = YES;
+        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
+    }
+}
+
+- (void)completeWithAttachString:(NSString *)string error:(NSError *)error {
+    UITextView *t = self.messageInputView.textView;
+    t.text = [t.text stringByAppendingString:[NSString stringWithFormat:@"%@\n", string]];
+    [t.delegate textViewDidChange:t];
+}
+
+- (void)didTapImage:(NSNotification *)n {
+    NSLog(@"%@", n);
+    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[n.object]];
+
+    browser.displayActionButton = YES;
+    browser.displayArrowButton = NO;
+    browser.displayCounterLabel = YES;
+    [browser setInitialPageIndex:0];
+
+    browser.wantsFullScreenLayout = NO;
+    [self presentViewController:browser animated:YES completion:nil];
 }
 
 - (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath

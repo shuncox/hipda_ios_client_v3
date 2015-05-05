@@ -18,6 +18,8 @@
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
 
+#import "HPQiniuUploader.h"
+
 #define kBoarderWidth 3.0
 #define kCornerRadius 8.0
 
@@ -205,32 +207,48 @@
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"上传中...(0/%ldkb)", size] maskType:SVProgressHUDMaskTypeBlack];
     
     __weak typeof(self) weakSelf = self;
-    [HPSendPost uploadImage:_imageData
-                  imageName:nil
-              progressBlock:^(CGFloat progress)
+    [self uploadImage:_imageData
+            imageName:nil
+        progressBlock:^(CGFloat progress)
      {
          NSInteger size = _imageSize/1024;
          NSString *progessString = [NSString stringWithFormat:@"上传中...(%d/%ldkb)", (int)(progress*size), size];
          [SVProgressHUD showProgress:progress status:progessString maskType:SVProgressHUDMaskTypeBlack];
      }
-                      block:^(NSString *attach, NSError *error)
+                block:^(NSString *attach, NSError *error)
      {
-         
+
          if (error) {
              [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
              weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
-             
+
          } else {
-             
+
              [SVProgressHUD dismiss];
              [weakSelf.delegate completeWithAttachString:attach error:nil];
              [weakSelf dismissViewControllerAnimated:YES completion:^{
                  ;
              }];
-             
+
          }
          NSLog(@"attach %@, error %@", attach, [error localizedDescription]);
      }];
+}
+
+- (void)uploadImage:(NSData *)imageData
+          imageName:(NSString *)imageName
+      progressBlock:(void (^)(CGFloat progress))progressBlock
+              block:(void (^)(NSString *attach, NSError *error))block {
+    if (!self.useQiniu) {
+        [HPSendPost uploadImage:imageData
+                      imageName:nil
+                  progressBlock:progressBlock
+                          block:block];
+    } else {
+        [HPQiniuUploader updateImage:imageData
+                       progressBlock:progressBlock
+                     completionBlock:block];
+    }
 }
 
 #pragma mark -

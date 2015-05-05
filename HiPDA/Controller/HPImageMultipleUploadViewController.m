@@ -21,6 +21,8 @@
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
 
+#import "HPQiniuUploader.h"
+
 @interface HPImageMultipleUploadViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UITableViewDataSource, UITableViewDelegate, CTAssetsPickerControllerDelegate, UIPopoverControllerDelegate>
 
 @property (nonatomic, strong)NSMutableArray *assets;
@@ -372,19 +374,36 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"upload....");
             progressBlock([NSString stringWithFormat:@"上传中...(0/%@kb)", @(size)]);
-            [HPSendPost uploadImage:imageData
-                          imageName:nil
-                      progressBlock:^(CGFloat progress)
+
+            [self uploadImage:imageData
+                    imageName:nil
+                progressBlock:^(CGFloat progress)
              {
                  progressBlock([NSString stringWithFormat:@"上传中...(%d/%@kb)", (int)(progress*size), @(size)]);
              }
-                              block:^(NSString *attach, NSError *error)
+                        block:^(NSString *attach, NSError *error)
              {
                  NSLog(@"attach %@, error %@", attach, [error localizedDescription]);
                  block(attach, error);
              }];
         });
     });
+}
+
+- (void)uploadImage:(NSData *)imageData
+          imageName:(NSString *)imageName
+      progressBlock:(void (^)(CGFloat progress))progressBlock
+              block:(void (^)(NSString *attach, NSError *error))block {
+    if (!self.useQiniu) {
+        [HPSendPost uploadImage:imageData
+                      imageName:nil
+                  progressBlock:progressBlock
+                          block:block];
+    } else {
+        [HPQiniuUploader updateImage:imageData
+                       progressBlock:progressBlock
+                     completionBlock:block];
+    }
 }
 
 #pragma mark -

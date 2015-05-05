@@ -115,6 +115,8 @@
  
 #define TAG_NightModeView 149410
 
+#define HP_QINIU_PREFIX @"http://hpclient.qiniudn.com/"
+#define HP_MESSAGE_CELL_TAP_IMAGE @"HP_MESSAGE_CELL_TAP_IMAGE"
 
 #define HPSettingDic @"HPSettingDic"
 
@@ -165,6 +167,8 @@
 #define HPPMCount @"HPPMCount"
 #define HPNoticeCount @"HPNoticeCount"
 #define HPCheckDisable @"HPCheckDisable"
+
+#define HP_SHOW_MESSAGE_IMAGE_NOTICE @"HP_SHOW_MESSAGE_IMAGE_NOTICE"
 
 //#define kHPImageDisplayViaWWAN @"HPImageDisplayViaWWAN"
 //#define kHPImageDisplayViaWifi @"HPImageDisplayViaWifi"

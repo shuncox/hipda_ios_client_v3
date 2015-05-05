@@ -25,7 +25,7 @@
 #define kBubblePaddingRight 35.0f
 
 
-@interface JSBubbleView()
+@interface JSBubbleView()<UITextViewDelegate>
 
 - (void)setup;
 
@@ -79,6 +79,7 @@
         textView.contentInset = UIEdgeInsetsZero;
         textView.scrollIndicatorInsets = UIEdgeInsetsZero;
         textView.contentOffset = CGPointZero;
+        textView.delegate = self;
         [self addSubview:textView];
         [self bringSubviewToFront:textView];
         _textView = textView;
@@ -245,6 +246,18 @@
 {
     CGSize size = [JSBubbleView neededSizeForText:text];
     return size.height + kMarginTop + kMarginBottom;
+}
+
+#pragma mark - 
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    NSString *url = [textView.text substringWithRange:characterRange];
+    //NSLog(@"%@ %@", URL, [textView.text substringWithRange:characterRange]);
+    if ([[URL absoluteString] hasPrefix:HP_QINIU_PREFIX]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:HP_MESSAGE_CELL_TAP_IMAGE object:url];
+        return NO;
+    }
+    return YES;
 }
 
 @end

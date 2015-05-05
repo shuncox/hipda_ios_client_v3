@@ -111,7 +111,8 @@
                                HPSettingBSForumOrderByDate:@NO,
                                HPSettingForceLogin:@NO,
                                HPSettingSwipeBack:@NO,
-                               HPBgFetchInterval:@(60)
+                               HPBgFetchInterval:@(60),
+                               HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO)
                                };
     return defaults;
 }

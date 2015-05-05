@@ -15,5 +15,6 @@
 @interface HPImageMultipleUploadViewController : HPViewController
 
 @property (nonatomic, strong) id <HPImageUploadDelegate> delegate;
+@property (nonatomic, assign) BOOL useQiniu;
 
 @end
