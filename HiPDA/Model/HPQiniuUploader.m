@@ -30,7 +30,7 @@
         [imageData writeToFile:path atomically:YES];
 
         NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@"unknown"];
-        NSString *key = [NSString stringWithFormat:@"%@/%ld.jpg", [username hp_urlFriendlyFileName], (long)([[NSDate date] timeIntervalSince1970] * 1000)];
+        NSString *key = [NSString stringWithFormat:@"%@/%lld.jpg", [username hp_urlFriendlyFileName], (long long)([[NSDate date] timeIntervalSince1970] * 1000)];
 
         [upManager putFile:path key:key token:@"1CquS-wW66-Mf_Bg6RQv5Iz0SxSjLf82wDwNClLM:auF2ND-jQzZ0uC1QuQxTAoFUnrA=:eyJzY29wZSI6ImhwY2xpZW50IiwiZGVhZGxpbmUiOjE4MDkxODQ2ODB9"
                   complete: ^(QNResponseInfo *i, NSString *k, NSDictionary *resp)
