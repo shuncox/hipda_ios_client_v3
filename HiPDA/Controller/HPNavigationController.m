@@ -75,7 +75,8 @@
          @"注意事项: "
          @"1. 重启 App 后生效\n"
          @"2. 开启全局返回需要hack系统的右边缘返回手势, 所以有可能会有工作不正常\n"
-         @"经过我近一个月的测试, 只出现过几次不正常的情况\n你可以在设置中随时关闭这个功能"
+         @"经过我近一个月的测试, 只出现过几次不正常的情况\n你可以在设置中随时关闭这个功能\n"
+         @"3. 如果你遇到不正常的情况且可以重现, 请联系我, 我们一起把它优化好 ~"
                                              handler:^(UIAlertView *alertView, NSInteger buttonIndex)
         {
             if (buttonIndex == alertView.cancelButtonIndex) {
