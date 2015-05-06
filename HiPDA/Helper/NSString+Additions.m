@@ -439,6 +439,18 @@ NSString *substr(NSString *str, int start, int length)
     return [[s componentsSeparatedByCharactersInSet:doNotWant] componentsJoinedByString:@"_"];
 }
 
+- (BOOL)hasSuffixes:(NSArray *)suffixes
+{
+    __block BOOL f = NO;
+    [suffixes enumerateObjectsUsingBlock:^(NSString *suffix, NSUInteger idx, BOOL *stop) {
+        if ([self hasSuffix:suffix]) {
+            f = YES;
+            *stop = YES;
+        }
+    }];
+    return f;
+}
+
 @end
 
 @implementation NSObject (isEmpty)

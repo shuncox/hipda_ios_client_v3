@@ -50,6 +50,8 @@ NSString *substr(NSString *str, int start, int length);
 - (NSString *)URLEncodedString;
 - (NSString *)hp_urlFriendlyFileName;
 
+- (BOOL)hasSuffixes:(NSArray *)suffixes;
+
 @end
 
 @interface NSObject (isEmpty)
