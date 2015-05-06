@@ -186,9 +186,6 @@
 		EA831B901840EAEB00616E94 /* acknowledgement.html in Resources */ = {isa = PBXBuildFile; fileRef = EA831B8F1840EAEB00616E94 /* acknowledgement.html */; };
 		EA831B931841092600616E94 /* HPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA831B921841092600616E94 /* HPMessage.m */; };
 		EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */; };
-		EA944D7919E6D5380035A5BE /* SloppySwiper.m in Sources */ = {isa = PBXBuildFile; fileRef = EA944D7419E6D5380035A5BE /* SloppySwiper.m */; };
-		EA944D7A19E6D5380035A5BE /* SSWAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = EA944D7619E6D5380035A5BE /* SSWAnimator.m */; };
-		EA944D7B19E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA944D7819E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.m */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
 		EA9A39AC1A5BE92E0028BE7D /* UIColor+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A395B1A5BE92E0028BE7D /* UIColor+JSMessagesView.m */; };
@@ -280,6 +277,7 @@
 		EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0619EC1F18006F5C92 /* libz.dylib */; };
 		EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB04C0919EC1F82006F5C92 /* Flurry.m */; };
 		EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB36A88183B248B00EB0B88 /* UIViewController+KNSemiModal.m */; };
+		EAB38C481AF9FE6B00CF1ADC /* HPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB38C471AF9FE6B00CF1ADC /* HPNavigationController.m */; };
 		EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB5382618CB6DDF00FD183E /* HPBaseTableViewController.m */; };
 		EAB7CEC119F00E90003830AC /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = EAB7CEBB19F00E90003830AC /* down.png */; };
 		EAB7CEC219F00E90003830AC /* down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAB7CEBC19F00E90003830AC /* down@2x.png */; };
@@ -641,12 +639,6 @@
 		EA831B921841092600616E94 /* HPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessage.m; path = Model/HPMessage.m; sourceTree = "<group>"; };
 		EA87A6821A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageMultipleUploadViewController.h; path = Controller/HPImageMultipleUploadViewController.h; sourceTree = "<group>"; };
 		EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageMultipleUploadViewController.m; path = Controller/HPImageMultipleUploadViewController.m; sourceTree = "<group>"; };
-		EA944D7319E6D5380035A5BE /* SloppySwiper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SloppySwiper.h; path = Vender/SloppySwiper/SloppySwiper.h; sourceTree = "<group>"; };
-		EA944D7419E6D5380035A5BE /* SloppySwiper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SloppySwiper.m; path = Vender/SloppySwiper/SloppySwiper.m; sourceTree = "<group>"; };
-		EA944D7519E6D5380035A5BE /* SSWAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSWAnimator.h; path = Vender/SloppySwiper/SSWAnimator.h; sourceTree = "<group>"; };
-		EA944D7619E6D5380035A5BE /* SSWAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSWAnimator.m; path = Vender/SloppySwiper/SSWAnimator.m; sourceTree = "<group>"; };
-		EA944D7719E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSWDirectionalPanGestureRecognizer.h; path = Vender/SloppySwiper/SSWDirectionalPanGestureRecognizer.h; sourceTree = "<group>"; };
-		EA944D7819E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSWDirectionalPanGestureRecognizer.m; path = Vender/SloppySwiper/SSWDirectionalPanGestureRecognizer.m; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
 		EA9A39581A5BE92E0028BE7D /* NSString+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSMessagesView.h"; sourceTree = "<group>"; };
@@ -778,6 +770,8 @@
 		EAB04C0919EC1F82006F5C92 /* Flurry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flurry.m; sourceTree = "<group>"; };
 		EAB36A87183B248B00EB0B88 /* UIViewController+KNSemiModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+KNSemiModal.h"; path = "Vender/KNSemiModalViewController/UIViewController+KNSemiModal.h"; sourceTree = "<group>"; };
 		EAB36A88183B248B00EB0B88 /* UIViewController+KNSemiModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+KNSemiModal.m"; path = "Vender/KNSemiModalViewController/UIViewController+KNSemiModal.m"; sourceTree = "<group>"; };
+		EAB38C461AF9FE6B00CF1ADC /* HPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNavigationController.h; path = Controller/HPNavigationController.h; sourceTree = "<group>"; };
+		EAB38C471AF9FE6B00CF1ADC /* HPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNavigationController.m; path = Controller/HPNavigationController.m; sourceTree = "<group>"; };
 		EAB5382518CB6DDF00FD183E /* HPBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBaseTableViewController.h; path = Controller/HPBaseTableViewController.h; sourceTree = "<group>"; };
 		EAB5382618CB6DDF00FD183E /* HPBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBaseTableViewController.m; path = Controller/HPBaseTableViewController.m; sourceTree = "<group>"; };
 		EAB7CEBB19F00E90003830AC /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = down.png; path = Image/toolbar/down.png; sourceTree = "<group>"; };
@@ -1185,6 +1179,8 @@
 			children = (
 				EA9A060E18DB11F000D5D7D9 /* HPViewController.h */,
 				EA9A060F18DB11F000D5D7D9 /* HPViewController.m */,
+				EAB38C461AF9FE6B00CF1ADC /* HPNavigationController.h */,
+				EAB38C471AF9FE6B00CF1ADC /* HPNavigationController.m */,
 				EA0CE6B318D832030033EC36 /* HPRearViewController.h */,
 				EA0CE6B418D832030033EC36 /* HPRearViewController.m */,
 				EA1273781830F40700DE9851 /* HPThreadViewController.h */,
@@ -1244,7 +1240,6 @@
 				EA9A39551A5BE92E0028BE7D /* JSMessagesViewController */,
 				EA19F96E1A14FD2A00333503 /* Crashlytics.framework */,
 				EAB04C0119EC1EAA006F5C92 /* UMeng */,
-				EA944D7219E6D52B0035A5BE /* SloppySwiper */,
 				EA075F5818E4078D00A07C08 /* BBBadgeBarButtonItem */,
 				EA8186BA18E1E1E40092BDD7 /* IBActionSheet */,
 				EA083D5A18C8D0FD00BD8F07 /* WUEmoticonsKeyboard */,
@@ -1444,19 +1439,6 @@
 				EA8186BC18E1E1F10092BDD7 /* IBActionSheet.m */,
 			);
 			name = IBActionSheet;
-			sourceTree = "<group>";
-		};
-		EA944D7219E6D52B0035A5BE /* SloppySwiper */ = {
-			isa = PBXGroup;
-			children = (
-				EA944D7319E6D5380035A5BE /* SloppySwiper.h */,
-				EA944D7419E6D5380035A5BE /* SloppySwiper.m */,
-				EA944D7519E6D5380035A5BE /* SSWAnimator.h */,
-				EA944D7619E6D5380035A5BE /* SSWAnimator.m */,
-				EA944D7719E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.h */,
-				EA944D7819E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.m */,
-			);
-			name = SloppySwiper;
 			sourceTree = "<group>";
 		};
 		EA9A39551A5BE92E0028BE7D /* JSMessagesViewController */ = {
@@ -2290,14 +2272,13 @@
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
-				EA944D7919E6D5380035A5BE /* SloppySwiper.m in Sources */,
-				EA944D7A19E6D5380035A5BE /* SSWAnimator.m in Sources */,
 				EA499F481830C2D800172989 /* XPathQuery.m in Sources */,
 				EA368A8018C75E9900C5C5BD /* HPBaseCompostionViewController.m in Sources */,
 				EA083D6D18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroup.m in Sources */,
 				EAA1E68518D03A4100E1CFE1 /* UIImage+fixOrientation.m in Sources */,
 				EA0FF7BC1837B06400B0EBA6 /* script.js in Sources */,
 				EA0FF7C71837B09B00B0EBA6 /* NJKWebViewProgress.m in Sources */,
+				EAB38C481AF9FE6B00CF1ADC /* HPNavigationController.m in Sources */,
 				EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */,
 				EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */,
 				EA083D6C18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
@@ -2333,7 +2314,6 @@
 				EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */,
 				EA368A8818C77A1D00C5C5BD /* HPReplyTopicViewController.m in Sources */,
 				EA9A39B01A5BE92E0028BE7D /* JSBubbleMessageCell.m in Sources */,
-				EA944D7B19E6D5380035A5BE /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA743C26183EE6DE0067F62B /* HPFavoriteViewController.m in Sources */,
 				EAAD5B9D188CEFCC0084EC2D /* IDMZoomingScrollView.m in Sources */,
 				EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */,

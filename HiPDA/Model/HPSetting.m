@@ -110,7 +110,7 @@
                                HPSettingBugTrackEnable:@YES,
                                HPSettingBSForumOrderByDate:@NO,
                                HPSettingForceLogin:@NO,
-                               HPSettingSwipeBack:@NO,
+                               HPSettingSwipeBack:@YES,
                                HPBgFetchInterval:@(60),
                                HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO)
                                };

@@ -8,6 +8,7 @@
 
 #import "HPCommon.h"
 #import "HPSetting.h"
+#import "HPNavigationController.h"
 //#import <SystemConfiguration/CaptiveNetwork.h>
 
 @implementation HPCommon
@@ -24,7 +25,7 @@
 }
 
 + (UINavigationController *)NVCWithRootVC:(UIViewController *)rootVC {
-    UINavigationController *NVC = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    UINavigationController *NVC = [[HPNavigationController alloc] initWithRootViewController:rootVC];
     if (![Setting boolForKey:HPSettingNightMode]) {
         NVC.navigationBar.barStyle = UIBarStyleDefault;
     } else {

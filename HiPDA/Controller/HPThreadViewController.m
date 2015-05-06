@@ -35,7 +35,6 @@
 #import "EGORefreshTableFooterView.h"
 #import "BBBadgeBarButtonItem.h"
 #import "HPIndecator.h"
-#import "SloppySwiper.h"
 
 typedef enum{
 	PullToRefresh = 0,
@@ -61,8 +60,6 @@ typedef enum{
 @property (nonatomic, strong) NSDate *lastBgFetchDate;
 
 @property (nonatomic, assign) NSInteger currentFontSize;
-
-@property (strong, nonatomic) SloppySwiper *swiper;
 
 @end
 
@@ -116,12 +113,6 @@ typedef enum{
     
     //
     [self refresh:[UIButton new]];
-    
-    //
-    if (IOS7_OR_LATER && [Setting boolForKey:HPSettingSwipeBack]) {
-        self.swiper = [[SloppySwiper alloc] initWithNavigationController:self.navigationController];
-        self.navigationController.delegate = self.swiper;
-    }
 }
 
 

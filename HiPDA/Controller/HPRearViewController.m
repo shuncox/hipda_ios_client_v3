@@ -11,6 +11,7 @@
 #import "HPRearCell.h"
 #import "HPAccount.h"
 
+#import "HPNavigationController.h"
 #import "HPRearViewController.h"
 #import "SWRevealViewController.h"
 
@@ -101,7 +102,7 @@
     
     
     _threadViewController = [[HPThreadViewController alloc] initDefaultForum:_current_fid title:_current_title];
-    _threadNavViewController = [[UINavigationController alloc] initWithRootViewController:_threadViewController];
+    _threadNavViewController = [[HPNavigationController alloc] initWithRootViewController:_threadViewController];
     NSLog(@"%@", _fids);
 }
 
