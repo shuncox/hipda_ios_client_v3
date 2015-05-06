@@ -20,6 +20,8 @@
 
 @interface HPFavoriteViewController ()
 
+@property (nonatomic, assign)NSInteger viewAppearCount;
+
 @end
 
 @implementation HPFavoriteViewController
@@ -49,6 +51,11 @@
     
     [self addGuesture];
     [super viewWillAppear:animated];
+
+    self.viewAppearCount++;
+    if (self.viewAppearCount != 1) {
+         [self refresh:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
