@@ -220,6 +220,7 @@
             
             [weakSelf finishSend];
             [weakSelf scrollToBottomAnimated:YES];
+            [weakSelf refresh:nil];
         }
     }];
 }
@@ -253,7 +254,7 @@
 
 - (void)completeWithAttachString:(NSString *)string error:(NSError *)error {
     UITextView *t = self.messageInputView.textView;
-    t.text = [t.text stringByAppendingString:[NSString stringWithFormat:@"%@\n", string]];
+    t.text = [t.text stringByAppendingString:[NSString stringWithFormat:@"[url]%@[/url]\n", string]];
     [t.delegate textViewDidChange:t];
 }
 
