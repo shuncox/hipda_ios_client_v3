@@ -46,6 +46,10 @@ NSString *substr(NSString *str, int start);
 __attribute__((overloadable))
 NSString *substr(NSString *str, int start, int length);
 
+
+- (NSString *)URLEncodedString;
+- (NSString *)hp_urlFriendlyFileName;
+
 @end
 
 @interface NSObject (isEmpty)

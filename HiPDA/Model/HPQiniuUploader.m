@@ -8,6 +8,7 @@
 
 #import "HPQiniuUploader.h"
 #import <QiniuSDK.h>
+#import "NSString+Additions.h"
 
 @implementation HPQiniuUploader
 
@@ -27,8 +28,11 @@
         
         NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"qiniu_temp_image_data"];
         [imageData writeToFile:path atomically:YES];
-        
-        [upManager putFile:path key:nil token:@"1CquS-wW66-Mf_Bg6RQv5Iz0SxSjLf82wDwNClLM:auF2ND-jQzZ0uC1QuQxTAoFUnrA=:eyJzY29wZSI6ImhwY2xpZW50IiwiZGVhZGxpbmUiOjE4MDkxODQ2ODB9"
+
+        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@"unknown"];
+        NSString *key = [NSString stringWithFormat:@"%@/%ld.jpg", [username hp_urlFriendlyFileName], (long)([[NSDate date] timeIntervalSince1970] * 1000)];
+
+        [upManager putFile:path key:key token:@"1CquS-wW66-Mf_Bg6RQv5Iz0SxSjLf82wDwNClLM:auF2ND-jQzZ0uC1QuQxTAoFUnrA=:eyJzY29wZSI6ImhwY2xpZW50IiwiZGVhZGxpbmUiOjE4MDkxODQ2ODB9"
                   complete: ^(QNResponseInfo *i, NSString *k, NSDictionary *resp)
          {
              NSLog(@"%@ %@ %@", i, k, resp);
