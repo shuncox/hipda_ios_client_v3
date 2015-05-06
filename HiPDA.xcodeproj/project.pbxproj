@@ -166,6 +166,7 @@
 		EA74459718CA1E62002467EE /* compose_emotion_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */; };
 		EA74459818CA1E62002467EE /* compose_emotion.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458C18CA1E62002467EE /* compose_emotion.png */; };
 		EA74459918CA1E62002467EE /* compose_emotion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458D18CA1E62002467EE /* compose_emotion@2x.png */; };
+		EA7B5A3E1AFA4F34005657DC /* HPURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */; };
 		EA80F3D618E069FA00B3633C /* post_view_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = EA80F3D518E069FA00B3633C /* post_view_dark.html */; };
 		EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869D18E1D9E30092BDD7 /* home_refresh.png */; };
 		EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */; };
@@ -615,6 +616,8 @@
 		EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion_on@2x.png"; path = "Image/compose/compose_emotion_on@2x.png"; sourceTree = "<group>"; };
 		EA74458C18CA1E62002467EE /* compose_emotion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_emotion.png; path = Image/compose/compose_emotion.png; sourceTree = "<group>"; };
 		EA74458D18CA1E62002467EE /* compose_emotion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion@2x.png"; path = "Image/compose/compose_emotion@2x.png"; sourceTree = "<group>"; };
+		EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPURLCache.h; path = Model/HPURLCache.h; sourceTree = "<group>"; };
+		EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLCache.m; path = Model/HPURLCache.m; sourceTree = "<group>"; };
 		EA80F3D518E069FA00B3633C /* post_view_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view_dark.html; path = View/post_view_dark.html; sourceTree = "<group>"; };
 		EA81869D18E1D9E30092BDD7 /* home_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_refresh.png; path = Image/Home/home_refresh.png; sourceTree = "<group>"; };
 		EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home_refresh@2x.png"; path = "Image/Home/home_refresh@2x.png"; sourceTree = "<group>"; };
@@ -1230,6 +1233,8 @@
 				EA06A5F618C0E45F00EDBDEA /* More */,
 				EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */,
 				EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */,
+				EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */,
+				EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2243,6 +2248,7 @@
 				EA8186C018E29FD10092BDD7 /* HPIndecator.m in Sources */,
 				EA9A39B31A5BE92E0028BE7D /* JSMessage.m in Sources */,
 				EA499F681830CE6700172989 /* HPHttpClient.m in Sources */,
+				EA7B5A3E1AFA4F34005657DC /* HPURLCache.m in Sources */,
 				EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */,
 				EA4C5A0E18E5674000B12442 /* StandardPaths.m in Sources */,
 				EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */,
