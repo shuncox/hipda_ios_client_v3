@@ -178,6 +178,13 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         // if remove this: rotation works, but screw presentation/animation
         if(kUSE_CURRENT_CONTEXT_PRESENTATION_STYLE) _applicationRootViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
         
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+        {
+            self.modalPresentationStyle = UIModalPresentationCustom;
+            self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            self.modalPresentationCapturesStatusBarAppearance = YES;
+        }
+        
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
         // Listen for IDMPhoto notifications
