@@ -12,9 +12,12 @@
 #import "HPSetting.h"
 #import <SVProgressHUD.h>
 #import "NSString+Additions.h"
+#import "HPSettingViewController.h"//¬_¬
 
-@interface HPHttpClient()
+@interface HPHttpClient()<UIAlertViewDelegate>
 @property (nonatomic, assign)NSInteger dnsErrorCount;
+@property (nonatomic, strong)UIAlertView *alertView;
+@property (nonatomic, assign)BOOL isCancel;
 @end
 
 @implementation HPHttpClient
@@ -87,7 +90,13 @@
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                if (error.code == -1003) {
                    
-                   [SVProgressHUD showErrorWithStatus:@"DNS解析错误, 正在重试中...\n您也许需要更换DNS, 可能是论坛上的联通高层又调皮了..." ];
+                   NSString *tip = @"DNS解析错误, 正在重试中...(%@)\n您也许需要更换DNS或切换节点, 可能是论坛上的联通高层又调皮了...";
+                   if (!self.alertView) {
+                       self.alertView = [[UIAlertView alloc] initWithTitle:@"DNS错误" message:S(tip, @"") delegate:self cancelButtonTitle:@"停止" otherButtonTitles:@"切换节点", nil];
+                       [self.alertView show];
+                   } else {
+                       self.alertView.message = S(tip, @(self.dnsErrorCount));
+                   }
                    
                    NSTimeInterval delay = 0.1;
                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
@@ -102,7 +111,11 @@
                                                                                 @"path":path}];
                        }
                        self.dnsErrorCount += 1;
-                       [self getPath:path parameters:parameters success:success failure:failure];
+                       if (self.isCancel) {
+                           self.isCancel = NO;
+                       } else {
+                           [self getPath:path parameters:parameters success:success failure:failure];
+                       }
                    });
                    
                } else {
@@ -198,6 +211,17 @@
     }
     
     return src;
+}
+
+#pragma mark -
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    self.isCancel = YES;
+    self.alertView = nil;
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        // 不要鄙视我¬_¬
+        HPSettingViewController *settingVC = [HPSettingViewController new];
+        [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:[HPCommon NVCWithRootVC:settingVC] animated:YES completion:nil];
+    }
 }
 
 @end
