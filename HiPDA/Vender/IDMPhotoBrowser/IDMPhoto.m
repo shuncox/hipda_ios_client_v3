@@ -136,7 +136,7 @@ caption = _caption;
             // Load async from file
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
-            
+            /*
             SDURLCache *cache = (SDURLCache *)[SDURLCache sharedURLCache];
             BOOL isCached = [cache isCached:_photoURL];
             NSLog(@"isCache %d",isCached);
@@ -148,7 +148,7 @@ caption = _caption;
                 
                 [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
             } else {
-                
+                */
                 SDWebImageManager *manager = [SDWebImageManager sharedManager];
                 [manager downloadWithURL:_photoURL
                                  options:0
@@ -176,7 +176,7 @@ caption = _caption;
                                    self.underlyingImage = image;
                                    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
                                }];
-            }
+            //}
             
             
         } else {

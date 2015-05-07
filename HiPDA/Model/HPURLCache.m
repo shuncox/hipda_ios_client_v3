@@ -6,14 +6,6 @@
 //  Copyright (c) 2015年 wujichao. All rights reserved.
 //
 
-/*
- * 不工作
- * 没有足够的信息由 sd image cache 里的 image 生成 NSCachedURLResponse
- * 缺少相应的response
- * 尽管使用已知一个response来模拟
- * 但不知为何不工作
- */
-
 #import "HPURLCache.h"
 #import <SDWebImageManager.h>
 
@@ -32,12 +24,6 @@
     }];
     return f;
 }
-@end
-
-@interface HPURLCache()
-
-@property (nonatomic, strong)NSHTTPURLResponse *aResponse;
-
 @end
 
 @implementation HPURLCache
@@ -64,24 +50,28 @@
         NSString *cacheKey = [[self class] cacheKeyForURL:request.URL];
         UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:cacheKey];
 
-        if (cachedImage && self.aResponse) {
+
+
+        if (cachedImage /*&& self.aResponse*/) {
             NSLog(@"get cachedImage");
+            /*
             NSURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:request.URL
                                                                   statusCode:self.aResponse.statusCode
                                                                  HTTPVersion:@"HTTP/1.1"
                                                                 headerFields:self.aResponse.allHeaderFields];
             cachedResponse = [[NSCachedURLResponse alloc]
                               initWithResponse:response
-                              data:UIImageJPEGRepresentation(cachedImage, 1.f)];
+                              data:UIImageJPEGRepresentation(cachedImage, 1.f)];*/
+
+            //https://github.com/evermeer/EVURLCache/blob/master/EVURLCache.m:87
+            NSData *content = UIImageJPEGRepresentation(cachedImage, 1.f);
+            NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"cache" expectedContentLength:[content length] textEncodingName:nil] ;
+            cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:content] ;
+
         } else {
             NSLog(@"not get cachedImage");
         }
     });
-
-    // OPTI: Store the response to memory cache for potential future requests
-    if (cachedResponse) {
-        [self storeCachedResponse:cachedResponse forRequest:request];
-    }
 
     return cachedResponse;
 }
@@ -90,7 +80,7 @@
 {
     if ([self shouldCache:request]) {
 
-        self.aResponse = cachedResponse.response;
+        //self.aResponse = cachedResponse.response;
 
         NSLog(@"storeCachedResponse %@", request.URL);
         UIImage *image = [[UIImage alloc] initWithData:cachedResponse.data];

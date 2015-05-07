@@ -24,6 +24,7 @@
 #import "NSString+Additions.h"
 #import "HPMessage.h"
 #import "HPNotice.h"
+#import "HPURLCache.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -53,14 +54,17 @@
     }
     
     //
-    SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:[SDURLCache defaultCachePath]];
-    URLCache.filterBlock = ^BOOL(NSURLRequest *request) {
-        if ([[request.URL absoluteString] hasSuffixes:@[@".jpg", @".jpeg", @".gif", @".png"]]
-            /*&& request.cachePolicy != NSURLRequestReloadIgnoringLocalCacheData*/) {
-            return YES;
-        }
-        return NO;
-    };
+    HPURLCache *URLCache = [[HPURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:nil];
+
+//    SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:[SDURLCache defaultCachePath]];
+//    URLCache.filterBlock = ^BOOL(NSURLRequest *request) {
+//        if ([[request.URL absoluteString] hasSuffixes:@[@".jpg", @".jpeg", @".gif", @".png"]]
+//            /*&& request.cachePolicy != NSURLRequestReloadIgnoringLocalCacheData*/) {
+//            return YES;
+//        }
+//        return NO;
+//    };
+
     [NSURLCache setSharedURLCache:URLCache];
     
     //
