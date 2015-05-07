@@ -75,7 +75,19 @@ webview 请求一个image
         if (memCachedImage) {
             NSLog(@"get memcache");
             // 无法从uiimage 判断jpeg png gif, 所以俺jpeg处理
-            data = UIImageJPEGRepresentation(memCachedImage, 1.f);
+            if (!memCachedImage.images) {
+                data = UIImageJPEGRepresentation(memCachedImage, 1.f);
+            } else {
+                data = nil;
+                //data = UIImageJPEGRepresentation(memCachedImage, 1.f);
+                /*
+                 效率太差
+                data = [AnimatedGIFImageSerialization animatedGIFDataWithImage:memCachedImage
+                                                                      duration:1.0
+                                                                     loopCount:1
+                                                                         error:nil];
+                 */
+            }
         } else {
             NSLog(@"get disk cache");
             data = [[SDImageCache sharedImageCache] hp_imageDataFromDiskCacheForKey:cacheKey];
