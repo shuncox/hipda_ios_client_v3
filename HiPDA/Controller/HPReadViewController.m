@@ -51,6 +51,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "UIWebView+Capture.h"
+#import <UIImageView+WebCache.h>
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -87,6 +88,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
+
+@property (nonatomic, strong) UIImageView *animatedFromView;
 
 @property (nonatomic, assign) NSInteger current_page;
 @property (nonatomic, assign) BOOL forceFullPage;
@@ -1051,7 +1054,30 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)openImage:(NSString *)src {
     NSLog(@"openImage %@", src);
-    
+
+    src = [src stringByReplacingOccurrencesOfString:@"???a" withString:@"{"];
+    src = [src stringByReplacingOccurrencesOfString:@"???b" withString:@"}"];
+    src = [src stringByReplacingOccurrencesOfString:@"???s" withString:@", "];
+    RxMatch *m = [RX(@"___(.*?)___") firstMatchWithDetails:src];
+    src = [src replace:RX(@"___(.*?)___") with:@""];
+
+    if (m.groups.count == 2) {
+        CGRect r = CGRectFromString([(RxMatchGroup *)(m.groups[1]) value]);
+        r.origin.y += 64.f;
+
+        if (!self.animatedFromView) {
+            self.animatedFromView = [[UIImageView alloc] initWithFrame:CGRectZero];
+            self.animatedFromView.backgroundColor = [UIColor clearColor];
+        }
+        self.animatedFromView.frame = r;
+
+        //UIImage *i = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:src];
+        //self.animatedFromView.image = i;
+        [self.animatedFromView sd_setImageWithURL:[NSURL URLWithString:src] placeholderImage:nil options:SDWebImageLowPriority];
+
+        [self.view addSubview:self.animatedFromView];
+    }
+
     __block NSArray *images = nil;
     __block NSUInteger index = 0;
     [_posts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -1070,17 +1096,25 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     }
     
     
-    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images];
+    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images animatedFromView:self.animatedFromView];
     
     browser.displayActionButton = YES;
     browser.displayArrowButton = NO;
     browser.displayCounterLabel = YES;
     [browser setInitialPageIndex: index];
+
+    browser.delegate = self;
     
     browser.wantsFullScreenLayout = NO; // iOS 5 & 6 only: Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
     // Present
     [self presentViewController:browser animated:YES completion:nil];
     
+}
+
+
+- (void)photoBrowser:(IDMPhotoBrowser *)photoBrowser didDismissAtPageIndex:(NSUInteger)index {
+    [self.animatedFromView removeFromSuperview];
+    self.animatedFromView = nil;
 }
 
 - (void)copyLink {

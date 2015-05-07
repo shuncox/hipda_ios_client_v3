@@ -254,7 +254,7 @@ list.addEventListener("click", function(event) {
         if (el.getAttribute('data-id')) {
             location.href = el.getAttribute('data-id');
         } else {
-            location.href = 'image://' + el.src; 
+            img_click(el);
         }
 
     } else if (el.nodeName == 'SPAN' && el.getAttribute('data-id')) {
@@ -270,8 +270,12 @@ list.addEventListener("click", function(event) {
     }
 });
 
-var img_click = function (img) {
-    location.href = 'image://' + img;
+var img_click = function(el) {
+    var p = getPosition(el);
+    
+    //location.href = 'image://'+el.src+'_'+p.x+'_'+p.y+'_';
+    //location.href = 'image://'+el.src+'_{{'+p.x+', '+p.y+'}, {'+el.clientWidth+', '+el.clientHeight+'}}_';
+    location.href = 'image://'+el.src+'___???a???a'+p.x+'???s'+p.y+'???b???s???a'+el.clientWidth+'???s'+el.clientHeight+'???b???b___';
 };
 
 //http://stackoverflow.com/questions/4712310/javascript-how-to-detect-if-a-word-is-highlighted
@@ -284,6 +288,19 @@ function getSelectedText() {
     }
     return text;
 }
+
+function getPosition(element) {
+    var xPosition = 0;
+    var yPosition = 0;
+    
+    while(element) {
+        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+        element = element.offsetParent;
+    }
+    return { x: xPosition, y: yPosition };
+}
+
 
 </script>
 
