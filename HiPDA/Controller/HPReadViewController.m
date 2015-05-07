@@ -440,7 +440,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     self.htmlString = string;
     NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
+    [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://cnc.hi-pda.com/forum/"]];
     //[self.webView loadHTMLString:string baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
     
     BOOL printable = !_forceFullPage && (_current_page == 1 && _current_author_uid == 0);
@@ -478,7 +478,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 NSString *list = nil;
                 BOOL isBlocked = [Setting isBlocked:post.user.username];
                 if ([Setting boolForKey:HPSettingShowAvatar]) {
-                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' src=\"%@\" onerror=\"this.onerror=null;this.src='http://www.hi-pda.com/forum/uc_server/images/noavatar_middle.gif'\" ></span><span class=\"author\" data-id='user://%@'>%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor,  [post.user usernameForUrl], [post.user.avatarImageURL absoluteString], [post.user usernameForUrl], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
+                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' src=\"%@\" onerror=\"this.onerror=null;this.src='http://cnc.hi-pda.com/forum/uc_server/images/noavatar_middle.gif'\" ></span><span class=\"author\" data-id='user://%@'>%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor,  [post.user usernameForUrl], [post.user.avatarImageURL absoluteString], [post.user usernameForUrl], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
                     
                 } else {
                     
@@ -504,7 +504,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             NSString *final = [HPNewPost preProcessHTML:string];
             
             //NSLog(@"%@", final);
-            [weakSelf.webView loadHTMLString:final baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
+            [weakSelf.webView loadHTMLString:final baseURL:[NSURL URLWithString:@"http://cnc.hi-pda.com/forum/"]];
             
             [weakSelf endLoad:YES];
             
@@ -726,11 +726,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         return NO;
         
-    } else if ([urlString isEqualToString:@"http://www.hi-pda.com/forum/"]){
+    } else if ([urlString isEqualToString:@"http://cnc.hi-pda.com/forum/"]){
         
         return YES;
         
-    } else if ([urlString hasPrefix:@"http://www.hi-pda.com/forum/#floor_"]){
+    } else if ([urlString hasPrefix:@"http://cnc.hi-pda.com/forum/#floor_"]){
     
         return YES;
         
@@ -1032,7 +1032,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 # pragma mark - actions
 
 - (NSURL *)pageUrl {
-    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%@&extra=&page=%@", @(_thread.tid), @(_current_page)];
+    NSString *url = [NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/viewthread.php?tid=%@&extra=&page=%@", @(_thread.tid), @(_current_page)];
     return [NSURL URLWithString:url];
 }
 
@@ -1118,7 +1118,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (void)copyLink {
-    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
+    NSString *url = [NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     [pasteBoard setString:url];
     [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
@@ -2020,7 +2020,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 #pragma mark - capture
 - (void)prepareCapture
 {
-    NSString *url = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
+    NSString *url = [NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/viewthread.php?tid=%ld&extra=&page=%ld", _thread.tid, _current_page];
     NSString *info = [NSString stringWithFormat:@"本页链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
     NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
     [self.webView stringByEvaluatingJavaScriptFromString:js];

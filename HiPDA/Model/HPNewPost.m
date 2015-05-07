@@ -385,7 +385,7 @@
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             //NSLog(@"%@", m1.value);
-            NSString *src = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/%@", m1.value];
+            NSString *src = [NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/%@", m1.value];
             
             [imgsArray addObject:src];
             
@@ -397,7 +397,7 @@
         _body_html = [RX(@"<br /><br /><img src=\"images/attachicons.*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
-            NSString *src = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/%@", m1.value];
+            NSString *src = [NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/%@", m1.value];
             
             if ([imgsArray indexOfObject:src] == NSNotFound) {
                 [imgsArray addObject:src];
@@ -548,7 +548,7 @@
         for (RxMatch *i in imageMatchs) {
             RxMatchGroup *ii = [i.groups objectAtIndex:1];
             NSLog(@"src %@", ii.value);
-            [images addObject:[NSString stringWithFormat:@"http://www.hi-pda.com/forum/%@", ii.value]];
+            [images addObject:[NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/%@", ii.value]];
         }
         
         self.images = [NSArray arrayWithArray:images];
@@ -613,7 +613,7 @@
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             //NSLog(@"%@", m1.value);
-            NSString *src = [NSString stringWithFormat:@"http://www.hi-pda.com/forum/%@", m1.value];
+            NSString *src = [NSString stringWithFormat:@"http://cnc.hi-pda.com/forum/%@", m1.value];
             
             [imgsArray addObject:src];
             
@@ -841,7 +841,7 @@
                 
                 RxMatchGroup *m1 = [match.groups objectAtIndex:1];
                 //NSLog(@"%@", m1.value);
-                return S(@"<div class='img_placeholder' onclick='img_click(\"http://www.hi-pda.com/forum/%@\")'>点击查看图片</div>",m1.value);
+                return S(@"<div class='img_placeholder' onclick='img_click(\"http://cnc.hi-pda.com/forum/%@\")'>点击查看图片</div>",m1.value);
             }
     
         }];

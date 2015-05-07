@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <AFHTTPClient.h>
 
-static NSString * const kHPClientBaseURLString = @"http://www.hi-pda.com/";
+static NSString * const kHPClientBaseURLString = @"http://cnc.hi-pda.com/";
 
 @interface HPHttpClient : AFHTTPClient
 
