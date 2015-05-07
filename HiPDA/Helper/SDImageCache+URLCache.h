@@ -12,6 +12,7 @@
 //
 - (UIImage *)scaledImageForKey:(NSString *)key image:(UIImage *)image;
 @property (strong, readonly, nonatomic) NSCache *memCache;
+- (NSData *)diskImageDataBySearchingAllPathsForKey:(NSString *)key;
 
 //
 - (UIImage *)hp_imageWithData:(NSData *)data key:(NSString *)key;
