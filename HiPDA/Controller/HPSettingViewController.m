@@ -355,6 +355,35 @@
         [Flurry logEvent:@"Setting EnterStupidBar"];
     }];
     
+    RERadioItem *nodeItem = [RERadioItem itemWithTitle:@"节点" value:HPBaseURL selectionHandler:^(RERadioItem *item) {
+        
+        [item deselectRowAnimated:YES];
+        
+        NSArray *nodes = @[@"www.hi-pda.com", @"cnc.hi-pda.com"];
+        // Present options controller
+        //
+        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:nodes multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            
+            [item reloadRowWithAnimation:UITableViewRowAnimationNone];
+            
+            [Setting saveObject:item.value forKey:HPSettingBaseURL];
+            
+            [Flurry logEvent:@"Setting Node" withParameters:@{@"option":item.value}];
+            
+            [UIAlertView showWithTitle:@"注意" message:@"需要重新启动后完全生效" handler:nil];
+        }];
+        
+        optionsController.delegate = weakSelf;
+        optionsController.style = section.style;
+        if (weakSelf.tableView.backgroundView == nil) {
+            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
+            optionsController.tableView.backgroundView = nil;
+        }
+        
+        [weakSelf.navigationController pushViewController:optionsController animated:YES];
+    }];
+    
     
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];
@@ -368,6 +397,7 @@
     [section addItem:isPullReplyItem];
     [section addItem:isSwipeBackItem];
     [section addItem:setStupidBarItem];
+    [section addItem:nodeItem];
     
     [_manager addSection:section];
     return section;

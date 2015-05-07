@@ -118,6 +118,9 @@
 #define HP_QINIU_PREFIX @"http://hpclient.qiniudn.com/"
 #define HP_MESSAGE_CELL_TAP_IMAGE @"HP_MESSAGE_CELL_TAP_IMAGE"
 
+#define HPSettingBaseURL @"HPSettingBaseURL"
+#define HPBaseURL ([Setting objectForKey:HPSettingBaseURL])
+
 #define HPSettingDic @"HPSettingDic"
 
 #define HPSettingTail @"HPSettingTail"
