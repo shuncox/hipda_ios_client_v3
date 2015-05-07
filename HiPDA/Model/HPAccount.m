@@ -143,7 +143,7 @@
          @"questionid":questionid,
          @"answer":answer,
          @"cookietime":@"2592000",
-         @"referer":@"http://cnc.hi-pda.com/forum/index.php",
+         @"referer":@"http://www.hi-pda.com/forum/index.php",
          @"formhash":formhash
     };
     
