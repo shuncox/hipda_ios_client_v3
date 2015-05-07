@@ -80,6 +80,7 @@
 
 + (NSDictionary *)defualts {
     NSDictionary *defaults = @{HPSettingTail:@"iOS fly ~",
+                               HPSettingBaseURL:@"www.hi-pda.com",
                                HPSettingFavForums:@[@2, @6, @59],
                                HPSettingFavForumsTitle:@[@"Discovery", @"Buy & Sell", @"E-INK"],
                                HPSettingShowAvatar:@YES,
