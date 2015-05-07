@@ -210,7 +210,7 @@
     
     [Flurry logEvent:@"Account SignUp"];
 
-    NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/tobenew.php"];
+    NSURL *url = [NSURL URLWithString:S(@"http://%@/forum/tobenew.php", HPBaseURL)];
     [[UIApplication sharedApplication] openURL:url];
     
     /*

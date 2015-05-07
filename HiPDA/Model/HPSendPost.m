@@ -75,10 +75,10 @@
                            @"usesig":@"1",
                            @"noticeauthor":[NSString stringWithFormat:@"r|%d|[i]%@[/i]",post.user.uid, post.user.username],
                            /*@"noticeauthor":[NSString stringWithFormat:@"r|%d|[i]%@[/i]",644982, @"geka"],*/
-                           @"noticetrimstr":[NSString stringWithFormat:@"[b]回复 [url=http://www.hi-pda.com/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b]", post.pid, tid, post.floor, post.user.username],
+                           @"noticetrimstr":[NSString stringWithFormat:@"[b]回复 [url=http://%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b]", HPBaseURL, post.pid, tid, post.floor, post.user.username],
                            @"noticeauthormsg":@"",
                            @"subject":@"",
-                           @"message":[NSString stringWithFormat:@"[b]回复 [url=http://www.hi-pda.com/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b] \n    %@%@", post.pid, tid, post.floor, post.user.username, content, postTail]
+                           @"message":[NSString stringWithFormat:@"[b]回复 [url=http://%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b] \n    %@%@", HPBaseURL, post.pid, tid, post.floor, post.user.username, content, postTail]
                            };
             break;
         }
@@ -98,7 +98,7 @@
             
             //NSLog(@"%@", postcontent);
             
-            NSString *noticetrimstr = [NSString stringWithFormat:@"[quote]%@\n[size=2][color=#999999]%@ 发表于 %@[/color][url=http://www.hi-pda.com/forum/redirect.php?goto=findpost&pid=%d&ptid=%d][img]http://www.hi-pda.com/forum/images/common/back.gif[/img][/url][/size][/quote]", postcontent, post.user.username, [HPNewPost dateString:post.date], post.pid, tid];
+            NSString *noticetrimstr = [NSString stringWithFormat:@"[quote]%@\n[size=2][color=#999999]%@ 发表于 %@[/color][url=http://%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d][img]http://%@/forum/images/common/back.gif[/img][/url][/size][/quote]", postcontent, post.user.username, [HPNewPost dateString:post.date], HPBaseURL, post.pid, tid, HPBaseURL];
             
             
             parameters = @{
@@ -551,7 +551,7 @@
 + (void)editPost:(NSDictionary *)parameters
            block:(void (^)(NSError *error))block {
     
-    NSString *path = @"http://www.hi-pda.com/forum/post.php?action=edit&extra=&editsubmit=yes&mod=";
+    NSString *path = @"forum/post.php?action=edit&extra=&editsubmit=yes&mod=";
     NSLog(@"%@", parameters);
     [[HPHttpClient sharedClient] postPath:path
                                parameters:parameters

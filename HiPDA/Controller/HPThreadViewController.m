@@ -233,7 +233,7 @@ typedef enum{
                                     message:@"返回结果为空, 可能是由于您设置了每页帖子15条, 而置顶帖超过15个, 是否前往个人中心修改为默认?"
                                     handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                      if (buttonIndex != [alertView cancelButtonIndex]) {
-                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/memcp.php?action=profile&typeid=5"]];
+                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:S(@"http://%@/forum/memcp.php?action=profile&typeid=5", HPBaseURL)]];
                      }
                  }];
                  
