@@ -264,7 +264,12 @@
 
 - (void)didTapImage:(NSNotification *)n {
     NSLog(@"%@", n);
-    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[n.object]];
+    NSString *src = n.object;
+    src = [src stringByReplacingOccurrencesOfString:HP_QINIU_SUFFIX withString:@""];
+    if (!src) {
+        return;
+    }
+    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:@[src]];
 
     browser.displayActionButton = YES;
     browser.displayArrowButton = NO;
