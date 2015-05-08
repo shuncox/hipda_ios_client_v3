@@ -269,6 +269,7 @@ typedef enum{
                      }
                      if (!isSame) [_threads addObject:thread];
                  }
+                 /*
                  NSUInteger endingIndex = [_threads count];
                  
                  NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:endingIndex - statingIndex];
@@ -280,6 +281,9 @@ typedef enum{
                  [weakSelf.tableView beginUpdates];
                  [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationBottom];
                  [weakSelf.tableView endUpdates];
+                  */
+                 // 直接reloadData比insertRows动画效果好
+                 [weakSelf.tableView reloadData];
              }
              
              [weakSelf.tableView flashScrollIndicators];
@@ -491,9 +495,7 @@ typedef enum{
         [_loadingMoreView setState:EGOOPullRefreshLoading];
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.2];
-        //UIEdgeInsets edgeInset = UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f);
-        // -70大概是一个cell的高, 此举可实现下拉刷新后上滚的效果
-        UIEdgeInsets edgeInset = UIEdgeInsetsMake(-70.f, 0.0f, 60.0f, 0.0f);
+        UIEdgeInsets edgeInset = UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f);
         if (IOS7_OR_LATER) {
             edgeInset.top += 64.0f;
         }
