@@ -1071,9 +1071,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         }
         self.animatedFromView.frame = r;
 
-        //UIImage *i = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:src];
-        //self.animatedFromView.image = i;
-        [self.animatedFromView sd_setImageWithURL:[NSURL URLWithString:src] placeholderImage:nil options:SDWebImageLowPriority];
+        UIImage *i = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:src];
+        if (i) self.animatedFromView.image = i;
+        //[self.animatedFromView sd_setImageWithURL:[NSURL URLWithString:src] placeholderImage:nil options:SDWebImageLowPriority];
 
         [self.view addSubview:self.animatedFromView];
     }
