@@ -116,14 +116,16 @@ webview 请求一个image
         [[SDWebImageManager sharedManager] saveImageToCache:image forURL:request.URL];
         */
 
-        NSString *cacheKey = [self.class cacheKeyForURL:request.URL];
-        UIImage *image = [[[SDWebImageManager sharedManager] imageCache] hp_imageWithData:cachedResponse.data key:cacheKey];
-        if (image) {
-            [[[SDWebImageManager sharedManager] imageCache] storeImage:image recalculateFromImage:NO imageData:cachedResponse.data forKey:cacheKey toDisk:YES];
-        } else {
-            //404, ...
-        }
-
+        dispatch_async(get_disk_io_queue(), ^{
+            NSString *cacheKey = [self.class cacheKeyForURL:request.URL];
+            UIImage *image = [[[SDWebImageManager sharedManager] imageCache] hp_imageWithData:cachedResponse.data key:cacheKey];
+            if (image) {
+                [[[SDWebImageManager sharedManager] imageCache] storeImage:image recalculateFromImage:NO imageData:cachedResponse.data forKey:cacheKey toDisk:YES];
+            } else {
+                //404, ...
+            }
+        });
+        
         return;
     }
     [super storeCachedResponse:cachedResponse forRequest:request];
@@ -151,6 +153,15 @@ static dispatch_queue_t get_disk_cache_queue()
         _diskCacheQueue = dispatch_queue_create("com.jichaowu.disk-cache.processing", NULL);
     });
     return _diskCacheQueue;
+}
+
+static dispatch_queue_t get_disk_io_queue() {
+    static dispatch_queue_t _diskIOQueue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _diskIOQueue = dispatch_queue_create("com.jichaowu.disk-cache.io", NULL);
+    });
+    return _diskIOQueue;
 }
 
 - (BOOL)shouldCache:(NSURLRequest *)request
