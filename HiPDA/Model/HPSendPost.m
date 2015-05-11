@@ -547,6 +547,20 @@
         
         [dict setObject:g.value?g.value:@"" forKey:@"message"];
         
+        
+        // images
+        //onclick="delImgAttach(2070092,1)
+        NSMutableArray *images = [NSMutableArray array];
+        NSArray *imageMatches = [RX(@"delImgAttach\\((\\d+)") matchesWithDetails:html];
+        for (RxMatch *m in imageMatches) {
+            RxMatchGroup *g = [m.groups objectAtIndex:1];
+            NSString *imageId = g.value;
+            [images addObject:imageId];
+        }
+        if (images.count) {
+            [dict setObject:[images copy] forKey:@"images"];
+        }
+        
         //message
         NSLog(@"%@", dict);
         block([NSDictionary dictionaryWithDictionary:dict], nil);

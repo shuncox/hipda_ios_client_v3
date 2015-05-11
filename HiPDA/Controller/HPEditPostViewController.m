@@ -138,6 +138,13 @@
                 weakSelf.title = title;
             }
             
+            NSArray *images = [result objectForKey:@"images"];
+            if (images.count) {
+                if (!weakSelf.imagesString) {
+                    weakSelf.imagesString = [NSMutableArray arrayWithCapacity:3];
+                }
+                [weakSelf.imagesString addObjectsFromArray:images];
+            }
         } else {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         }
@@ -156,13 +163,24 @@
     [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
-    [_parameters setObject:self.contentTextFiled.text forKey:@"message"];
+    NSString *content = self.contentTextFiled.text;
+    [_parameters setObject:content forKey:@"message"];
     
-    if ([self.imagesString count]) {
-        // add image
+    if (self.imagesString.count) {
+        NSMutableSet *del_images = [NSMutableSet set];
         for (NSString *image in self.imagesString) {
-            NSString *key = [NSString stringWithFormat:@"attachnew[%@][description]", image];
-            [_parameters setObject:@"" forKey:key];
+            if ([content indexOf:image] > 0) {
+                // add
+                NSString *key = [NSString stringWithFormat:@"attachnew[%@][description]", image];
+                [_parameters setObject:@"" forKey:key];
+            } else {
+                // del from server
+                //[new_parameters setObject:image forKey:@"attachdel[]"];
+                [del_images addObject:image];
+            }
+        }
+        if (del_images.count) {
+            [_parameters setObject:del_images forKey:@"attachdel[]"];
         }
     }
     
