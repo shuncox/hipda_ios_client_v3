@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong) NSMutableDictionary *parameters;
 
+@property (nonatomic, strong) UITextField *titleField;
+
 @end
 
 @implementation HPEditPostViewController
@@ -80,6 +82,19 @@
             
         }];
     }
+}
+
+- (UITextField *)titleField {
+    if (_titleField) return _titleField;
+    
+    UITextField *titleField = [UITextField new];
+    titleField.textAlignment = NSTextAlignmentCenter;
+    [titleField sizeToFit];
+    titleField.frame = CGRectMake(0, 0, CGFLOAT_MAX, titleField.frame.size.height);
+    titleField.backgroundColor = [UIColor lightGrayColor];
+    
+    _titleField = titleField;
+    return _titleField;
 }
 
 - (void)loadFormhashAndPidWithBlock:(void(^)())block {
@@ -135,7 +150,14 @@
             NSString *title = [result objectForKey:@"subject"];
             NSLog(@"%@", title);
             if (title && ![title isEqualToString:@""]) {
-                weakSelf.title = title;
+                //weakSelf.title = title;
+                weakSelf.titleField.text = title;
+                [weakSelf.navigationItem setTitleView:weakSelf.titleField];
+                
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3f * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                    [weakSelf.titleField becomeFirstResponder];
+                });
             }
             
             NSArray *images = [result objectForKey:@"images"];
@@ -165,6 +187,11 @@
     
     NSString *content = self.contentTextFiled.text;
     [_parameters setObject:content forKey:@"message"];
+    
+    // have title
+    if (_titleField) {
+        [_parameters setObject:_titleField.text forKey:@"subject"];
+    }
     
     if (self.imagesString.count) {
         NSMutableSet *del_images = [NSMutableSet set];

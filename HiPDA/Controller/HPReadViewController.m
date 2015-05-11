@@ -423,7 +423,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view_dark" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
     }
     
-    if (_thread.title)
+    if (_thread.title && !refresh)
         [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
     
     NSString *targetFontSize = [NSString stringWithFormat:@"%i.000001%%",_currentFontSize];
