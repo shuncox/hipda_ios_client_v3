@@ -1209,8 +1209,6 @@
 		EA499F261830BDE900172989 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EA499F2B1830BFE000172989 /* HPHttpClient.h */,
-				EA499F671830CE6700172989 /* HPHttpClient.m */,
 				EA5F6A4218D9E4AD0034F880 /* HPForum.h */,
 				EA5F6A4318D9E4AD0034F880 /* HPForum.m */,
 				EA499F281830BE3B00172989 /* HPThread.h */,
@@ -1233,13 +1231,9 @@
 				EA5F164118D1DA3500F6AAB3 /* HPTheme.m */,
 				EA8186BE18E29FD10092BDD7 /* HPIndecator.h */,
 				EA8186BF18E29FD10092BDD7 /* HPIndecator.m */,
-				EA06A5F618C0E45F00EDBDEA /* More */,
 				EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */,
 				EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */,
-				EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */,
-				EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */,
-				EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */,
-				EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */,
+				EA06A5F618C0E45F00EDBDEA /* More */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1769,6 +1763,19 @@
 			name = DZSmile;
 			sourceTree = "<group>";
 		};
+		EAF18F231B01031400B50E19 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EA499F2B1830BFE000172989 /* HPHttpClient.h */,
+				EA499F671830CE6700172989 /* HPHttpClient.m */,
+				EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */,
+				EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */,
+				EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */,
+				EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 		EAFDB8391829EFA900C1718B = {
 			isa = PBXGroup;
 			children = (
@@ -1815,6 +1822,7 @@
 		EAFDB84B1829EFA900C1718B /* HiPDA */ = {
 			isa = PBXGroup;
 			children = (
+				EAF18F231B01031400B50E19 /* Network */,
 				EAFDB8541829EFA900C1718B /* HPAppDelegate.h */,
 				EAFDB8551829EFA900C1718B /* HPAppDelegate.m */,
 				EA499F261830BDE900172989 /* Model */,
