@@ -11,7 +11,7 @@
 #import <UIImage+MultiFormat.h>
 #import "SDImageCache+URLCache.h"
 
-#if 0
+#if 1
 #define NSLog(...) do { } while (0)
 #endif
 
