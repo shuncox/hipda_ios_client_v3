@@ -172,15 +172,23 @@
     
     
     if ([images count]) {
-        // add image
         
         NSMutableDictionary *new_parameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
+        NSMutableSet *del_images = [NSMutableSet set];
         for (NSString *image in images) {
-            NSString *key = [NSString stringWithFormat:@"attachnew[%@][description]", image];
-            
-            [new_parameters setObject:@"" forKey:key];
+            if ([content indexOf:image] > 0) {
+                // add
+                NSString *key = [NSString stringWithFormat:@"attachnew[%@][description]", image];
+                [new_parameters setObject:@"" forKey:key];
+            } else {
+                // del from server
+                //[new_parameters setObject:image forKey:@"attachdel[]"];
+                [del_images addObject:image];
+            }
         }
-        
+        if (del_images.count) {
+            [new_parameters setObject:del_images forKey:@"attachdel[]"];
+        }
         parameters = [NSDictionary dictionaryWithDictionary:new_parameters];
     }
     
