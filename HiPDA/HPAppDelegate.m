@@ -25,6 +25,7 @@
 #import "HPMessage.h"
 #import "HPNotice.h"
 #import "HPURLCache.h"
+#import "HPURLProtocol.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -84,6 +85,11 @@
     // defualt setting
     //
     [Setting loadSetting];
+    
+    
+    //
+    //[HPURLProtocol registerURLProtocol];
+    
     
     // reachabilty
     //

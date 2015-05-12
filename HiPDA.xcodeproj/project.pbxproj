@@ -354,6 +354,7 @@
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
+		EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF18F251B01037300B50E19 /* HPURLProtocol.m */; };
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
 		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
@@ -861,6 +862,8 @@
 		EAEC58CB1948465000F5931A /* UIImage+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Save.m"; path = "Helper/UIImage+Save.m"; sourceTree = "<group>"; };
 		EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+ScreenShot.h"; path = "Helper/UIView+ScreenShot.h"; sourceTree = "<group>"; };
 		EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+ScreenShot.m"; path = "Helper/UIView+ScreenShot.m"; sourceTree = "<group>"; };
+		EAF18F241B01037300B50E19 /* HPURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPURLProtocol.h; path = Model/HPURLProtocol.h; sourceTree = "<group>"; };
+		EAF18F251B01037300B50E19 /* HPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLProtocol.m; path = Model/HPURLProtocol.m; sourceTree = "<group>"; };
 		EAF3C567194C11E700168263 /* HPSetStupidBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetStupidBarController.h; path = Controller/HPSetStupidBarController.h; sourceTree = "<group>"; };
 		EAF3C568194C11E700168263 /* HPSetStupidBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetStupidBarController.m; path = Controller/HPSetStupidBarController.m; sourceTree = "<group>"; };
 		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
@@ -1772,6 +1775,8 @@
 				EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */,
 				EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */,
 				EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */,
+				EAF18F241B01037300B50E19 /* HPURLProtocol.h */,
+				EAF18F251B01037300B50E19 /* HPURLProtocol.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -1822,10 +1827,10 @@
 		EAFDB84B1829EFA900C1718B /* HiPDA */ = {
 			isa = PBXGroup;
 			children = (
-				EAF18F231B01031400B50E19 /* Network */,
 				EAFDB8541829EFA900C1718B /* HPAppDelegate.h */,
 				EAFDB8551829EFA900C1718B /* HPAppDelegate.m */,
 				EA499F261830BDE900172989 /* Model */,
+				EAF18F231B01031400B50E19 /* Network */,
 				EA127381183101DF00DE9851 /* View */,
 				EA499F101830B8C700172989 /* Controller */,
 				EA5DF0D718311EC9008E4248 /* Image */,
@@ -2270,6 +2275,7 @@
 				EA5F163F18D1D65100F6AAB3 /* HPSetting.m in Sources */,
 				EA743C38183FADF70067F62B /* HPSearch.m in Sources */,
 				EAFDB8561829EFA900C1718B /* HPAppDelegate.m in Sources */,
+				EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */,
 				EA9A39AE1A5BE92E0028BE7D /* JSAvatarImageFactory.m in Sources */,
 				EAA3A31C1A9F1FBB00927278 /* UIActivity+Blocks.m in Sources */,
 				EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */,
