@@ -35,6 +35,6 @@
  @note You can only call this method once during your application lifecycle.
  */
 + (void)registerURLProtocolWithURLMapping:(id<HPURLMapping>)URLMapping;
-+ (void)registerURLProtocol;
++ (void)registerURLProtocolIfNeed;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "HPURLProtocol.h"
+#import "HPSetting.h"
 
 @interface HPURLMappingProvider : NSObject <HPURLMapping>
 
@@ -19,8 +20,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         URLMappingDitionary = @{
-                                @"www.hi-pda.com" : @"180.153.105.124",
-                                @"cnc.hi-pda.com" : @"140.207.217.69"
+                                HP_WWW_BASE_URL : HP_WWW_BASE_IP,
+                                HP_CNC_BASE_URL : HP_CNC_BASE_IP
                                 };
     });
     
@@ -39,12 +40,19 @@ static id<HPURLMapping> s_URLMapping;
 
 @implementation HPURLProtocol
 
++ (void)registerURLProtocolIfNeed {
+    [NSURLProtocol unregisterClass:self];
+    if ([Setting boolForKey:HPSettingForceDNS]) {
+        [self.class registerURLProtocol];
+    }
+}
+
 + (void)registerURLProtocol {
     return [self.class registerURLProtocolWithURLMapping:[HPURLMappingProvider new]];
 }
 
 + (void)registerURLProtocolWithURLMapping:(id<HPURLMapping>)URLMapping {
-    NSAssert(!s_URLMapping, @"You can only invoke -%@ once.", NSStringFromSelector(_cmd));
+    //NSAssert(!s_URLMapping, @"You can only invoke -%@ once.", NSStringFromSelector(_cmd));
     
     s_URLMapping = URLMapping;
     

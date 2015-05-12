@@ -30,6 +30,8 @@
 #import "DZWebBrowser.h"
 #import <SDWebImage/SDImageCache.h>
 
+#import "HPURLProtocol.h"
+
 // mail
 #import <MessageUI/MFMailComposeViewController.h>
 #import "sys/utsname.h"
@@ -359,15 +361,32 @@
         
         [item deselectRowAnimated:YES];
         
-        NSArray *nodes = @[@"www.hi-pda.com", @"cnc.hi-pda.com"];
+        NSArray *nodeNames = @[
+            [NSString stringWithFormat:@"%@ (电信)", HP_WWW_BASE_URL],
+            [NSString stringWithFormat:@"%@ (联通)", HP_CNC_BASE_URL],
+            [NSString stringWithFormat:@"%@ (电信, 强制指向)", HP_WWW_BASE_IP],
+            [NSString stringWithFormat:@"%@ (联通, 强制指向)", HP_CNC_BASE_IP]
+        ];
+        
+        NSArray *nodes = @[
+            HP_WWW_BASE_URL,
+            HP_CNC_BASE_URL,
+            HP_WWW_BASE_URL,
+            HP_CNC_BASE_URL
+        ];
+        
         // Present options controller
         //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:nodes multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
+        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:nodeNames multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
             [weakSelf.navigationController popViewControllerAnimated:YES];
             
             [item reloadRowWithAnimation:UITableViewRowAnimationNone];
             
-            [Setting saveObject:item.value forKey:HPSettingBaseURL];
+            NSUInteger index = [nodeNames indexOfObject:item.value];
+            NSString *node = [nodes objectAtIndex:index];
+            [Setting saveObject:node forKey:HPSettingBaseURL];
+            [Setting saveBool:index > 1 forKey:HPSettingForceDNS];
+            [HPURLProtocol registerURLProtocolIfNeed];
             
             [Flurry logEvent:@"Setting Node" withParameters:@{@"option":item.value}];
             

@@ -119,7 +119,13 @@
 #define HP_QINIU_PREFIX ([NSString stringWithFormat:@"http://hpclient.qiniudn.com/%@", HP_QINIU_SUFFIX])
 #define HP_MESSAGE_CELL_TAP_IMAGE @"HP_MESSAGE_CELL_TAP_IMAGE"
 
+#define HP_WWW_BASE_URL @"www.hi-pda.com"
+#define HP_CNC_BASE_URL @"cnc.hi-pda.com"
+#define HP_WWW_BASE_IP @"180.153.105.124"
+#define HP_CNC_BASE_IP @"140.207.217.69"
+
 #define HPSettingBaseURL @"HPSettingBaseURL"
+#define HPSettingForceDNS @"HPSettingForceDNS"
 #define HPBaseURL ([Setting objectForKey:HPSettingBaseURL])
 
 #define HPSettingDic @"HPSettingDic"

@@ -88,7 +88,7 @@
     
     
     //
-    //[HPURLProtocol registerURLProtocol];
+    [HPURLProtocol registerURLProtocolIfNeed];
     
     
     // reachabilty
