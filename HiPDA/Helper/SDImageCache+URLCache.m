@@ -15,9 +15,9 @@
 - (NSData *)hp_imageDataFromDiskCacheForKey:(NSString *)key {
 
     NSData *data = [self diskImageDataBySearchingAllPathsForKey:key];
-    UIImage *diskImage = [self hp_imageWithData:data key:key];
+    UIImage *diskImage = nil;
 
-    if (diskImage) {
+    if (data && (diskImage = [self hp_imageWithData:data key:key])) {
         CGFloat cost = diskImage.size.height * diskImage.size.width * diskImage.scale;
         [self.memCache setObject:diskImage forKey:key cost:cost];
     }
