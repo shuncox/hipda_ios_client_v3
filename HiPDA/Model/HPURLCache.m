@@ -160,6 +160,10 @@ static dispatch_queue_t get_disk_io_queue() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _diskIOQueue = dispatch_queue_create("com.jichaowu.disk-cache.io", NULL);
+        
+        // set priority
+        dispatch_queue_t globalLowQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_set_target_queue(_diskIOQueue, globalLowQueue);
     });
     return _diskIOQueue;
 }
