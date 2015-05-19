@@ -144,6 +144,7 @@
         
         [item deselectRowAnimated:YES];
     }];
+    versionItem.selectionStyle = UITableViewCellSelectionStyleNone;
     versionItem.textAlignment = NSTextAlignmentCenter;
     [versionSection addItem:versionItem];
     
