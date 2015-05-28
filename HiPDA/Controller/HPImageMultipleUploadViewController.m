@@ -332,12 +332,13 @@
 
 - (void)uploadImage:(NSUInteger)index {
 
+    [SVProgressHUD showWithStatus:@"" maskType:SVProgressHUDMaskTypeBlack];
+    
     ALAsset *asset = self.assets[index];
     NSString *current = [NSString stringWithFormat:@"(%@/%@)", @(index+1), @(self.assets.count)];
     UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
                                          scale:asset.defaultRepresentation.scale
                                    orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-    [SVProgressHUD showWithStatus:@"" maskType:SVProgressHUDMaskTypeBlack];
     
     __weak typeof(self) weakSelf = self;
     [self uploadImage:image progressBlock:^(NSString *progress) {
