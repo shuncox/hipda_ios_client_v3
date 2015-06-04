@@ -283,6 +283,8 @@
     self.title = @"搜索";
     _current_page = 1;
     self.navigationItem.rightBarButtonItem = _searchButtonItem;
+    
+    [self search:searchBar];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
