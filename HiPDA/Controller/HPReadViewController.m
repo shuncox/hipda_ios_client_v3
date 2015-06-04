@@ -545,6 +545,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSInteger pageCount = [[parameters objectForKey:@"pageCount"] integerValue];
     NSString *title = [parameters objectForKey:@"title"];
     NSInteger fid = [[parameters objectForKey:@"fid"] integerValue];
+    NSInteger tid = [[parameters objectForKey:@"tid"] integerValue];
     
     NSInteger page = [[parameters objectForKey:@"current_page"] integerValue];
     if ( find_pid == 0) find_pid = [[parameters objectForKey:@"find_pid"] integerValue];
@@ -556,6 +557,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     if (formhash) _thread.formhash = formhash;
     if (title) _thread.title = title;
     if (fid) _thread.fid = fid;
+    if (tid) _thread.tid = tid;
     
     if (pageCount) _thread.pageCount = pageCount;
     
