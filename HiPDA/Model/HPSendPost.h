@@ -71,6 +71,11 @@ typedef NSUInteger ActionType;
       progressBlock:(void (^)(CGFloat progress))progressBlock
               block:(void (^)(NSString *attach, NSError *error))block;
 
++ (void)uploadImage:(NSData *)imageData
+          imageName:(NSString *)imageName
+           mimeType:(NSString *)mimeType
+      progressBlock:(void (^)(CGFloat progress))progressBlock
+              block:(void (^)(NSString *attach, NSError *error))block;
 
 /*
  edit

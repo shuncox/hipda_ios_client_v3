@@ -23,6 +23,34 @@
 
 #import "HPQiniuUploader.h"
 
+@implementation ALAsset (gif)
+
+- (BOOL)isGIF {
+    
+    ALAsset *asset = self;
+    
+    ALAssetRepresentation *representation = [asset defaultRepresentation];
+    
+    NSLog(@"size of asset in bytes: %d", [representation size]);
+    
+    unsigned char bytes[4];
+    [representation getBytes:bytes fromOffset:0 length:4 error:nil];
+    NSLog(@"first four bytes: %02x (%c) %02x (%c) %02x (%c) %02x (%c)",
+          bytes[0], bytes[0],
+          bytes[1], bytes[1],
+          bytes[2], bytes[2],
+          bytes[3], bytes[3]);
+    
+    unsigned char gif_bytes[] = {'G', 'I', 'F', '8'};
+    if (memcmp(bytes, gif_bytes, sizeof(bytes)) == 0) {
+        return YES;
+    }
+    
+    return NO;
+    
+}
+
+@end
 @interface HPImageMultipleUploadViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UITableViewDataSource, UITableViewDelegate, CTAssetsPickerControllerDelegate, UIPopoverControllerDelegate>
 
 @property (nonatomic, strong)NSMutableArray *assets;
@@ -336,12 +364,10 @@
     
     ALAsset *asset = self.assets[index];
     NSString *current = [NSString stringWithFormat:@"(%@/%@)", @(index+1), @(self.assets.count)];
-    UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
-                                         scale:asset.defaultRepresentation.scale
-                                   orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+   
     
     __weak typeof(self) weakSelf = self;
-    [self uploadImage:image progressBlock:^(NSString *progress) {
+    [self uploadAsset:asset progressBlock:^(NSString *progress) {
         [SVProgressHUD showWithStatus:S(@"%@ %@", current, progress) maskType:SVProgressHUDMaskTypeBlack];
     } block:^(NSString *attach, NSError *error) {
         if (!error) {
@@ -357,27 +383,47 @@
     }];
 }
 
-- (void)uploadImage:(UIImage *)fullResolutionImage
+- (void)uploadAsset:(ALAsset *)asset
       progressBlock:(void (^)(NSString *progress))progressBlock
               block:(void (^)(NSString *attach, NSError *error))block {
-
+    
     progressBlock(@"压缩中...");
     NSLog(@"compress...");
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
+        NSData *imageData = nil;
+        BOOL isGIF = [asset isGIF];
+        
+        if (isGIF) {
+            ALAssetRepresentation *rep = [asset defaultRepresentation];
+            Byte *imageBuffer = (Byte*)malloc(rep.size);
+            NSUInteger bufferSize = [rep getBytes:imageBuffer fromOffset:0.0 length:rep.size error:nil];
+            
+            imageData = [NSData dataWithBytesNoCopy:imageBuffer length:bufferSize freeWhenDone:YES];
+            
+        } else {
+            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
+                                        scale:asset.defaultRepresentation.scale
+                                  orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+            image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(self.targetSize, self.targetSize) interpolationQuality:kCGInterpolationDefault];
+            imageData = UIImageJPEGRepresentation(image, 0.35);
+        }
+        
+        NSParameterAssert(imageData);
+        
         // 文件尺寸: 小于 976KB
         // 可用扩展名: jpg, jpeg, gif, png, bmp
-        UIImage *image = [fullResolutionImage resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(self.targetSize, self.targetSize) interpolationQuality:kCGInterpolationDefault];
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.35);
+        
         NSInteger size = imageData.length/1024;
         NSLog(@"compress done %@", @(size));
         
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"upload....");
             progressBlock([NSString stringWithFormat:@"上传中...(0/%@kb)", @(size)]);
-
+            
             [self uploadImage:imageData
-                    imageName:nil
+                    imageName:isGIF?@"_.gif":nil
+                     mimeType:isGIF?@"image/gif":nil
                 progressBlock:^(CGFloat progress)
              {
                  progressBlock([NSString stringWithFormat:@"上传中...(%d/%@kb)", (int)(progress*size), @(size)]);
@@ -393,11 +439,13 @@
 
 - (void)uploadImage:(NSData *)imageData
           imageName:(NSString *)imageName
+           mimeType:(NSString *)mimeType
       progressBlock:(void (^)(CGFloat progress))progressBlock
               block:(void (^)(NSString *attach, NSError *error))block {
     if (!self.useQiniu) {
         [HPSendPost uploadImage:imageData
                       imageName:nil
+                       mimeType:mimeType
                   progressBlock:progressBlock
                           block:block];
     } else {

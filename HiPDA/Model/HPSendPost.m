@@ -279,10 +279,20 @@
                               block:block];
 }
 
-
++ (void)uploadImage:(NSData *)imageData
+          imageName:(NSString *)imageName
+      progressBlock:(void (^)(CGFloat progress))progressBlock
+              block:(void (^)(NSString *attach, NSError *error))block {
+    return [self.class uploadImage:imageData
+                         imageName:imageName
+                          mimeType:nil
+                     progressBlock:progressBlock
+                             block:block];
+}
 
 + (void)uploadImage:(NSData *)imageData
           imageName:(NSString *)imageName
+           mimeType:(NSString *)mimeType
       progressBlock:(void (^)(CGFloat progress))progressBlock
               block:(void (^)(NSString *attach, NSError *error))block {
     
@@ -296,7 +306,7 @@
             
             NSString *uid = [parameters objectForKey:@"uid"];
             NSString *hash = [parameters objectForKey:@"hash"];
-            NSString *fileName = imageName?imageName:[NSString stringWithFormat:@"iOS_fly_%d", arc4random() % 101];
+            NSString *fileName = imageName?imageName:[NSString stringWithFormat:@"iOS_fly_%d.jpeg", arc4random() % 101];
             
             if ([uid isEqual:[NSNull null]] || [hash isEqual:[NSNull null]]) {
                 NSLog(@"error !uid || !hash");
@@ -311,7 +321,10 @@
             NSMutableURLRequest *request = [[HPHttpClient sharedClient] multipartFormRequestWithMethod:@"POST" path:path parameters:nil constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
                 [formData appendPartWithFormData:[uid dataUsingEncoding:NSUTF8StringEncoding] name:@"uid"];
                 [formData appendPartWithFormData:[hash dataUsingEncoding:NSUTF8StringEncoding] name:@"hash"];
-                [formData appendPartWithFileData:imageData name:@"Filedata" fileName:[NSString stringWithFormat:@"%@.jpeg", fileName] mimeType:@"image/jpeg"];
+                [formData appendPartWithFileData:imageData
+                                            name:@"Filedata"
+                                        fileName:fileName
+                                        mimeType:mimeType?:@"image/jpeg"];
             }];
             
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
