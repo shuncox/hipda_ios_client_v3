@@ -332,7 +332,7 @@ function getPosition(element) {
 
 var images = document.getElementsByTagName('IMG');
 for (var i in images) {
-    if (this.src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
+    if (images[i].src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
         continue;
     }
     images[i].onerror = function() {
