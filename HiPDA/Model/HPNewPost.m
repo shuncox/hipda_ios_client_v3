@@ -823,7 +823,7 @@
         NSLog(@"other status %d", status);
     }
     //NSLog(@"style %d", style);
-    if (style != HPImageDisplayStyleFull) {
+    if (1) {
         
         __block int i = 0;
         NSArray *matches = [RX(@"<img class=\"attach_image\" src=\"(.*?)\" />") matches:string];
@@ -832,17 +832,9 @@
             
             i++;
             
-            if (i == matches.count && style == HPImageDisplayStyleOne) {
-                
-                //NSLog(@"one %@", match.value);
-                return match.value;
-                
-            } else {
-                
-                RxMatchGroup *m1 = [match.groups objectAtIndex:1];
-                //NSLog(@"%@", m1.value);
-                return S(@"<div class='img_placeholder' onclick='img_click(\"http://%@/forum/%@\")'>点击查看图片</div>", HPBaseURL, m1.value);
-            }
+            RxMatchGroup *m1 = [match.groups objectAtIndex:1];
+            //NSLog(@"%@", m1.value);
+            return S(@"<img class=\"attach_image\" aaa=\"%@\" src=\"%@\" />",m1.value, @"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAABlBMVEXu6+cAAACdhUxyAAAADUlEQVR42gECAP3/AAAAAgABUyucMAAAAABJRU5ErkJggg==");
     
         }];
     }

@@ -332,13 +332,21 @@ function getPosition(element) {
 
 var images = document.getElementsByTagName('IMG');
 for (var i in images) {
-    if (this.src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
+    if (images[i].src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
         continue;
     }
+    var src = images[i].getAttribute("aaa");
+   //alert(images[i].src+'\n'+ src);
+    //images[i].src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAABlBMVEXu6+cAAACdhUxyAAAADUlEQVR42gECAP3/AAAAAgABUyucMAAAAABJRU5ErkJggg==";
+    (function(image, src){
+     setTimeout(function(){
+                image.src =src;
+                },1000);
+     })(images[i], src);
     images[i].onerror = function() {
         this.onerror = null;
         this.src = this.src;
-        alert(this.src);
+        //alert(this.src);
     }
 }
 
