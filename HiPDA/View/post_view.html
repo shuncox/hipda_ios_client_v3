@@ -330,6 +330,18 @@ function getPosition(element) {
     return { x: xPosition, y: yPosition };
 }
 
+var images = document.getElementsByTagName('IMG');
+for (var i in images) {
+    if (this.src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
+        continue;
+    }
+    images[i].onerror = function() {
+        this.onerror = null;
+        this.src = this.src;
+        alert(this.src);
+    }
+}
+
 </script>
 
 </body>
