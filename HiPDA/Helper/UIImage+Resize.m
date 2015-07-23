@@ -35,7 +35,12 @@
 // No warranty is expressed or implied.
 
 #import "UIImage+Resize.h"
-#import "StandardPaths.h"
+//from StandardPaths.h
+#ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
+#define SP_SCREEN_SCALE() ([[NSScreen mainScreen] respondsToSelector:@selector(backingScaleFactor)]? [[NSScreen mainScreen] backingScaleFactor]: 1.0f)
+#else
+#define SP_SCREEN_SCALE() ([UIScreen mainScreen].scale)
+#endif
 
 @implementation UIImage (Resize)
 
