@@ -60,7 +60,9 @@ static NSString *kHandlerAssociatedKey = @"kHandlerAssociatedKey";
 }
 
 - (void)didPresentAlertView:(UIAlertView *)alertView {
-    if (IOS8_OR_LATER && [alertView textFieldAtIndex:0]) {
+    // crash on iOS9 beta
+    // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/557679d2f505b5ccf0144b1b
+    if (IOS8_OR_LATER && !IOS9_OR_LATER && [alertView textFieldAtIndex:0]) {
         // http://stackoverflow.com/questions/25563108/uialertviews-textfield-does-not-show-keyboard-in-ios8
         // hack alert: fix bug in iOS 8 that prevents text field from appearing
         NSLog(@"%@", [alertView textFieldAtIndex:0]);
