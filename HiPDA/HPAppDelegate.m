@@ -31,6 +31,7 @@
 #define AlertNoticeTag 2468
 
 #import <Crashlytics/Crashlytics.h>
+#import "HPHotPatch.h"
 
 @interface HPAppDelegate()
 
@@ -42,6 +43,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[HPHotPatch shared] check];
+    
     //
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -198,6 +201,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    // 省流量
+    //[[BFHotPatch shared] check];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
