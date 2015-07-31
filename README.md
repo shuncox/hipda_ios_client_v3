@@ -13,7 +13,7 @@ Discuz7.2 没有api可用, 用爬虫的方法模拟用户看帖/回帖/收藏等
 - 用隐藏的 UIWebView 载入页面然后用 JavaScript 提取数据 (WebKit的DOM树) [参考链接](https://github.com/gaosboy/iOSSF/blob/master/SegmentFault/DataCenters/SFQuestion.m)
 
 经测试, 正则提取在渣CPU(iphone4)上明显较快, 但是写起来麻烦, 要细心调试  
-相关代码: [HPNewPost](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPNewPost.m), [HPThread](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPThread.m), [HPSendPost](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPSendPost.m) 等
+相关代码: [HPNewPost](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPNewPost.m), [HPThread](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPThread.m), [HPSendPost](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPSendPost.m) 等(很久以前写的, 代码较渣)
 
 ### 2. UIWebView 和 Native 交互
 使用 UIWebView 展示帖子详情, 并和 Native 配合做一些交互
@@ -26,6 +26,7 @@ Discuz7.2 没有api可用, 用爬虫的方法模拟用户看帖/回帖/收藏等
 - html模板: [post_view.html](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/View/post_view.html), 
 - webview与native的交互: [HPReadViewController.m:669](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Controller/HPReadViewController.m#L669)
 - webview的image与native的照片浏览器无缝动画: [HPReadViewController.m:1057](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Controller/HPReadViewController.m#L1057)
+
 
 ### 3. UIWebView 和 Native 共享头像/图片缓存
 在帖子列表页(native)和帖子详情页(webview)都有用户头像  
