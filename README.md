@@ -65,7 +65,8 @@ webview的contentSize是不断变化的, 所以需要相应调整控件的 origi
 - 通过自定义 UIActivity 实现`复制链接`, `复制全文`, `保存页面完整截图`的功能
 
 ### 8. 使用七牛云服务为站内短消息加上发送图片的功能
-Discuz7.2 站内短消息不能发送图片, 所以使用七牛云服务实现了此功能  相关代码: [HPQiniuUploader](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPQiniuUploader.m)
+Discuz7.2 站内短消息不能发送图片, 所以使用七牛云服务实现了此功能  
+相关代码: [HPQiniuUploader](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPQiniuUploader.m)
 
 # 注意
 - 请不要打包后以任何形式分发
@@ -73,4 +74,4 @@ Discuz7.2 站内短消息不能发送图片, 所以使用七牛云服务实现�
 
 # 目前的不足
 1. 因为没有api, 又因为刚开始编写时经验不足, 跳过了自行设计api的过程, 留下了参数不足, 不明确的隐患
-2. 两年前第一次独立写完整的软件项目, 没有什么大局观, 基本是想到哪写到哪, 自(tian)豪(zhen)的采用__M__assive__V__iew__C__ontroller架构 :)
+2. 两年前第一次独立写完整的软件项目, 没有什么大局观, 基本是想到哪写到哪, 自(tian)豪(zhen)的采用**M**assive**V**iew**C**ontroller架构 :)
