@@ -50,9 +50,9 @@ HiPDA这个论坛的域名在移动线路上有时获取不到正确的ip
 使用 [Background Fetch](https://developer.apple.com/library/ios/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/BackgroundExecution/BackgroundExecution.html) 获取新消息后通过发[本地通知](https://developer.apple.com/library/ios/documentation/iPhone/Reference/UILocalNotification_Class/UILocalNotification)的方式, 实现伪推送  
 Moke 等第三方微博客户端也采取这个方法做伪推送
 
-### 6. UIWebview 的上拉刷新 & 上拉加载上一页 & 下拉加载下一页
-在 webview.scrollview 最上面加上拉刷新/上拉加载上一页和最下面加下拉加载下一页的控件  
-其中在最下面加上下拉加载下一页的控件有一个问题:  
+### 6. UIWebview 的下拉刷新 & 下拉加载上一页 & 上拉翻页
+在 webview.scrollview 顶部加上`下拉刷新/下拉加载上一页`和底部加上`上拉翻页`的控件  
+其中在最下面加上`上拉翻页`的控件有一个问题:  
 webview的contentSize是不断变化的, 所以需要相应调整控件的 origin.y  
 实时调整的思路: 键值观察获得 contentSize 然后实时调整 origin.y  
 ```
