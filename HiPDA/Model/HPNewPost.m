@@ -378,30 +378,40 @@
         
         
         __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
+        __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
+        
         NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" />";
         
         // 帖子内部 image
-        _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+        _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
+            RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             //NSLog(@"%@", m1.value);
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
             
             [imgsArray addObject:src];
+            if (m2 && m2.value) {
+                [aidArray addObject:m2.value];
+            }
             
             return [NSString stringWithFormat:imageElement, m1.value];
         }];
         
         
         // 帖子底部 image
-        _body_html = [RX(@"<br /><br /><img src=\"images/attachicons.*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+        _body_html = [RX(@"<br /><br /><img src=\"images/attachicons.*?aid=(\\d+).*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
-            NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
+            RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             
-            if ([imgsArray indexOfObject:src] == NSNotFound) {
+            NSString *aid = m1.value;
+            NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m2.value];
+            
+            if ([imgsArray indexOfObject:src] == NSNotFound &&
+                [aidArray indexOfObject:aid] == NSNotFound) {
                 [imgsArray addObject:src];
-                return [NSString stringWithFormat:imageElement, m1.value];
+                return [NSString stringWithFormat:imageElement, m2.value];
             } else {
                 return @"";
             }
