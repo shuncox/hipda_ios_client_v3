@@ -604,10 +604,13 @@
         _body_html = [_body_html stringByAppendingString:img_html];
     }
     
-    if ([_body_html indexOf:@"attachments/day_"] != -1 ) {
+    if ([_body_html indexOf:@"attachments/day_"] != -1 ||
+        [_body_html indexOf:@"attachment.php"] != -1) {
         
         /*
          * 注意 此处 和 processContentHTML 一样
+         * 201508 有变化 和processContentHTML 可能不同 
+         * 论坛普通版的没有_day前缀了 打印版还有
          */
         // remove extra
         _body_html = [RX(@"<span style=\"position: absolute; display: none\" id=\"attach_.*?</span>\r\n") replace:_body_html with:@""];
