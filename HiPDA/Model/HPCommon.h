@@ -122,8 +122,8 @@
 
 #define HP_WWW_BASE_URL @"www.hi-pda.com"
 #define HP_CNC_BASE_URL @"cnc.hi-pda.com"
-#define HP_WWW_BASE_IP @"180.153.105.124"
-#define HP_CNC_BASE_IP @"140.207.217.69"
+#define HP_WWW_BASE_IP @"58.215.45.20"
+#define HP_CNC_BASE_IP @"58.215.45.20"
 
 #define HPSettingBaseURL @"HPSettingBaseURL"
 #define HPSettingForceDNS @"HPSettingForceDNS"
