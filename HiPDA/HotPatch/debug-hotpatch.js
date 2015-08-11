@@ -19,7 +19,7 @@ defineClass("HPNewPost", {
         var a = self.images();
         var b = require('NSMutableArray').alloc().init();
         for (var i=0; i < a.count(); i++) {
-            if (a.objectAtIndex(i).rangeOfString("attachments/day_").length <= 0) {
+            if (a.objectAtIndex(i).rangeOfString("attachments/day_").length > 0) {
               b.addObject(a.objectAtIndex(i));
             }
         }
