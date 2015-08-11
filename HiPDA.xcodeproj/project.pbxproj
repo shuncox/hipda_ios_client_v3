@@ -356,6 +356,7 @@
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
 		EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF18F251B01037300B50E19 /* HPURLProtocol.m */; };
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
+		EAF55C981B7A478B0022F2CB /* debug-hotpatch.js in Resources */ = {isa = PBXBuildFile; fileRef = EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */; };
 		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
 		EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8451829EFA900C1718B /* Foundation.framework */; };
@@ -866,6 +867,7 @@
 		EAF18F251B01037300B50E19 /* HPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLProtocol.m; path = Model/HPURLProtocol.m; sourceTree = "<group>"; };
 		EAF3C567194C11E700168263 /* HPSetStupidBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetStupidBarController.h; path = Controller/HPSetStupidBarController.h; sourceTree = "<group>"; };
 		EAF3C568194C11E700168263 /* HPSetStupidBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetStupidBarController.m; path = Controller/HPSetStupidBarController.m; sourceTree = "<group>"; };
+		EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "debug-hotpatch.js"; path = "HotPatch/debug-hotpatch.js"; sourceTree = "<group>"; };
 		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
 		EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPEditPostViewController.m; path = Controller/HPEditPostViewController.m; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
@@ -1147,6 +1149,7 @@
 			children = (
 				EA2454BA1B60BF3000BCD6C6 /* HPHotPatch.h */,
 				EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */,
+				EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */,
 			);
 			name = Hotpatch;
 			sourceTree = "<group>";
@@ -2140,6 +2143,7 @@
 				EAFDB8581829EFA900C1718B /* Images.xcassets in Resources */,
 				EA9A39D61A5BE92E0028BE7D /* bubble@2x.png in Resources */,
 				EA083DA218C8D14F00BD8F07 /* keyboard_grid_bg@2x.png in Resources */,
+				EAF55C981B7A478B0022F2CB /* debug-hotpatch.js in Resources */,
 				EA083DA018C8D14F00BD8F07 /* keyboard_emotion_selected@2x.png in Resources */,
 				EA74459318CA1E62002467EE /* compose_camera_on@2x.png in Resources */,
 				EA083D9818C8D14F00BD8F07 /* keyboard_bg@2x.png in Resources */,

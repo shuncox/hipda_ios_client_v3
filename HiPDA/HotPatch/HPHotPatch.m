@@ -77,6 +77,12 @@
             NSAssert(NO, @"js exception: %@", exception);
             [MobClick event:@"_js_exception" attributes:@{@"exception": exception?:@"null"}];
         };
+        
+#ifdef DEBUG
+        NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"debug-hotpatch" ofType:@"js"];
+        NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
+        [JPEngine evaluateScript:script];
+#endif
     }
     return self;
 }
