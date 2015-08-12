@@ -69,7 +69,7 @@
         // error log
         JSContext *context = [JPEngine context];
         context[@"_OC_catch"] = ^(JSValue *msg, JSValue *stack) {
-            NSAssert(NO, @"js exception, \nmsg: %@, \nstack: \n %@", [msg toObject], [stack toObject]);
+            NSAssert(NO, @"oc exception, \nmsg: %@, \nstack: \n %@", [msg toObject], [stack toObject]);
             [MobClick event:@"_OC_catch" attributes:@{@"msg":[msg toObject], @"stack":[stack toObject]}];
         };
         
