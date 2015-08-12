@@ -40,7 +40,7 @@ PODS:
     - AFNetworking (~> 1.0)
   - REFormattedNumberField (1.1.5)
   - RegexKitLite (4.0)
-  - RETableViewManager (1.6):
+  - RETableViewManager (1.5.14):
     - REFormattedNumberField (~> 1.1.5)
     - REValidation (~> 0.1.4)
   - REValidation (0.1.4)
@@ -79,7 +79,7 @@ DEPENDENCIES:
   - Objective-LevelDB
   - Qiniu (from `https://github.com/qiniu/objc-sdk.git`, branch `AFNetworking-1.x`)
   - RegexKitLite
-  - RETableViewManager
+  - RETableViewManager (= 1.5.14)
   - Reveal-iOS-SDK
   - SDURLCache (from `https://github.com/wujichao/SDURLCache.git`)
   - SDWebImage
@@ -130,7 +130,7 @@ SPEC CHECKSUMS:
   Qiniu: 7affd88b4054a81e1d58716281a1a0afaf6ce84f
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
-  RETableViewManager: 9667ecb29c005c32df40a1dd1828224840a351a2
+  RETableViewManager: 317f43f31c0a5818c6257cb7544167819a8ae170
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
   Reveal-iOS-SDK: c9c55cad2729c85f6ced415f1b21857c9a2d8ef9
   SDURLCache: 7f432f0acfd5e70ba38804896775d73b0dbbde1a
