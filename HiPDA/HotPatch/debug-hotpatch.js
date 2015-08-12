@@ -39,5 +39,16 @@ defineClass("HPNewPost", {
     
         self.setBody__html(html);
     },
+    processFuckContentHTML: function() {
+        var html = self.body__html();
+        html = html.stringByAppendingString("@@@attachments/day_@@@");
+        self.setBody__html(html);
+        
+        self.ORIGprocessFuckContentHTML();
+        
+        var html = self.body__html();
+        html = html.stringByReplacingOccurrencesOfString_withString("@@@attachments/day_@@@", "");
+        self.setBody__html(html);
+    },
 })
 
