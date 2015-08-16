@@ -59,8 +59,9 @@
     self = [super init];
     if (self) {
         
-        //
-        _db = [LevelDB databaseInLibraryWithName:@"hotpatch.ldb"];
+        //每个app 版本对应一个db
+        NSString *db = [NSString stringWithFormat:@"hotpatch_%@.ldb", VERSION];
+        _db = [LevelDB databaseInLibraryWithName:db];
         _client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://hpclient.qiniudn.com/patch"]];
         
         //
@@ -111,6 +112,18 @@
             }
         }
     }
+    
+#ifdef DEBUG
+    NSLog(@"######## patch in db #########");
+    [self.db enumerateKeysAndObjectsUsingBlock:^(LevelDBKey *key, id value, BOOL *stop) {
+        NSLog(@"key: %@ - value: %@", NSStringFromLevelDBKey(key), value);
+    }];
+    NSLog(@"######## patch in db #########");
+#endif
+    
+    /*
+     * patch 更新, 清除, 请使用新的或空的patch文件, 相同url, 来置换
+     */
     
     // update config
     NSString *url = [NSString stringWithFormat:@"patch_config_%@.json", VERSION];
