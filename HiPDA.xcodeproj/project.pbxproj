@@ -188,6 +188,7 @@
 		EA831B901840EAEB00616E94 /* acknowledgement.html in Resources */ = {isa = PBXBuildFile; fileRef = EA831B8F1840EAEB00616E94 /* acknowledgement.html */; };
 		EA831B931841092600616E94 /* HPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA831B921841092600616E94 /* HPMessage.m */; };
 		EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */; };
+		EA9024501B88C1EE000EAF20 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA90244F1B88C1EE000EAF20 /* Launch Screen.storyboard */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
 		EA9A39AC1A5BE92E0028BE7D /* UIColor+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A395B1A5BE92E0028BE7D /* UIColor+JSMessagesView.m */; };
@@ -647,6 +648,7 @@
 		EA831B921841092600616E94 /* HPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessage.m; path = Model/HPMessage.m; sourceTree = "<group>"; };
 		EA87A6821A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageMultipleUploadViewController.h; path = Controller/HPImageMultipleUploadViewController.h; sourceTree = "<group>"; };
 		EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageMultipleUploadViewController.m; path = Controller/HPImageMultipleUploadViewController.m; sourceTree = "<group>"; };
+		EA90244F1B88C1EE000EAF20 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
 		EA9A39581A5BE92E0028BE7D /* NSString+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSMessagesView.h"; sourceTree = "<group>"; };
@@ -1864,6 +1866,7 @@
 				EAFDB8511829EFA900C1718B /* main.m */,
 				EAFDB8531829EFA900C1718B /* HiPDA-Prefix.pch */,
 				EA7111DA18B10C44007AD5D1 /* Localizable.strings */,
+				EA90244F1B88C1EE000EAF20 /* Launch Screen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2052,6 +2055,7 @@
 				EA083DAE18C8D14F00BD8F07 /* keyboard_switch@2x.png in Resources */,
 				EA9A39D11A5BE92E0028BE7D /* bubble-stroked.png in Resources */,
 				EAD7F5DE183CC84600A750D9 /* hp_smile_coolmonkey_02.gif in Resources */,
+				EA9024501B88C1EE000EAF20 /* Launch Screen.storyboard in Resources */,
 				EAD7F600183CC84600A750D9 /* hp_smile_default_victory.gif in Resources */,
 				EA9A39C11A5BE92E0028BE7D /* bubble-classic-selected.png in Resources */,
 				EA083DB318C8D14F00BD8F07 /* keyboard_text_selected.png in Resources */,
