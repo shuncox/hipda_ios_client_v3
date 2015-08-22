@@ -423,6 +423,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view_dark" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
     }
     
+    if (IS_IPAD) {
+        // ipad 上禁用 FastClick,
+        // ipad上老误触, 禁用了虽然延迟但是忍了
+        [string replaceOccurrencesOfString:@"FastClick.attach(document.body);" withString:@";" options:0 range:NSMakeRange(0, string.length)];
+    }
+    
     if (_thread.title && !refresh)
         [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
     

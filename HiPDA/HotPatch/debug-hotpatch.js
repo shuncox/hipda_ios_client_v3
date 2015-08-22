@@ -1,5 +1,5 @@
 //_OC_log("test");
-
+/*
 // fix ip change
 defineClass("HPURLMappingProvider", {
     apiToolsHostForOriginalURLHost: function(originalURLHost) {
@@ -51,4 +51,4 @@ defineClass("HPNewPost", {
         self.setBody__html(html);
     },
 })
-
+*/
