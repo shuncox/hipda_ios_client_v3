@@ -464,6 +464,7 @@ typedef enum{
     if (_loadingMoreView == nil) {
         _loadingMoreView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self tableViewHeight], CGRectGetWidth([[UIScreen mainScreen] bounds]), 600.0f)];
 		_loadingMoreView.backgroundColor = [UIColor clearColor];
+        _loadingMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		[self.tableView addSubview:_loadingMoreView];
 		self.tableView.showsVerticalScrollIndicator = YES;
     }
