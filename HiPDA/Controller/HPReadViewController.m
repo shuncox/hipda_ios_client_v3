@@ -110,6 +110,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @property (nonatomic, assign) NSInteger current_floor;
 
+@property (nonatomic, weak) IBActionSheet *currentActionSheet;
+
 @end
 
 @implementation HPReadViewController {
@@ -240,6 +242,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [super viewWillDisappear:animated];
     
     [self indicatorStop];
+    
+    [self.currentActionSheet dismissWithClickedButtonIndex:110 animated:YES];
 }
 
 
@@ -849,6 +853,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   @"细节调整",
                                   @"更多",
                                   nil];
+    self.currentActionSheet = actionSheet;
    
     [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
     [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
@@ -892,7 +897,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   @"引用",
                                   @"发送短消息",
                                   _current_author_uid != 0 ? @"查看全部" : @"只看该作者", nil];
-   
+    self.currentActionSheet = actionSheet;
+    
     [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
     [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
     [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
@@ -956,6 +962,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                                       destructiveButtonTitle:nil
                                                       otherButtonTitles:
                                                       @"复制链接", @"复制全文", @"保存此页截图",nil];
+                        self.currentActionSheet = actionSheet;
                         
                         [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
                         [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
