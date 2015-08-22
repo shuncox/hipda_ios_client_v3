@@ -16,7 +16,7 @@
 
 #define PERCENT ([Setting integerForKey:HPSettingFontSizeAdjust]/100.f)
 
-#define CELL_CONTENT_WIDTH (CGRectGetWidth([[UIScreen mainScreen] bounds]))
+#define CELL_CONTENT_WIDTH (CGRectGetWidth([[[[UIApplication sharedApplication] delegate] window] bounds]))
 #define CELL_CONTENT_MARGIN (ceilf(PERCENT*8.0f))
 #define CELL_IMAGE_WIDTH (ceilf(PERCENT*44.0f))
 #define CELL_IMAGE_MARGIN (ceilf(PERCENT*8.0f))
