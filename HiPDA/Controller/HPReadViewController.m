@@ -645,6 +645,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         if (!_refreshHeaderView) {
             _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.webView.scrollView.bounds.size.height, CGRectGetWidth([[UIScreen mainScreen] bounds]), self.webView.scrollView.bounds.size.height)];
+            _refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             _refreshHeaderView.backgroundColor = [UIColor clearColor];
         }
         
@@ -657,6 +658,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (!_refreshFooterView) {
         _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self contentSize], CGRectGetWidth([[UIScreen mainScreen] bounds]), 600.0f)];
+        _refreshFooterView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _refreshFooterView.backgroundColor = [UIColor clearColor];
         [self.webView.scrollView addSubview:_refreshFooterView];
     }

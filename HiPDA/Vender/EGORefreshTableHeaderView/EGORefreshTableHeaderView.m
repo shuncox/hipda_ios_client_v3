@@ -202,6 +202,13 @@
 	_state = aState;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    _arrowImage.frame = CGRectMake(self.frame.size.width/2-15.f, self.frame.size.height - 65.0f, 30.0f, 55.0f);
+    _activityView.frame = CGRectMake(self.frame.size.width/2-10.f, self.frame.size.height - 38.0f, 20.0f, 20.0f);
+}
+
 - (void)setup:(CGRect)frame {
     NSLog(@"%@", NSStringFromCGRect(frame));
     
