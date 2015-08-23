@@ -33,7 +33,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "HPHotPatch.h"
 
-@interface HPAppDelegate()
+@interface HPAppDelegate()<UISplitViewControllerDelegate>
 
 @property (nonatomic, strong)HPRearViewController *rearViewController;
 @property (nonatomic, strong)UIAlertView *notificationAlertView;
@@ -135,7 +135,18 @@
     revealController.delegate = _rearViewController;
     
     self.viewController = revealController;
-    self.window.rootViewController = self.viewController;
+    
+    if (IS_IPAD) {
+        UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
+        UINavigationController *detailViewController = [[UINavigationController alloc] initWithRootViewController:[UIViewController new]];
+        splitViewController.viewControllers = @[revealController, detailViewController];
+        splitViewController.delegate = self;
+        splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+        self.window.rootViewController = splitViewController;
+    } else {
+        self.window.rootViewController = revealController;
+    }
+    
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
@@ -176,6 +187,7 @@
     return YES;
 }
 
+#pragma mark 
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
