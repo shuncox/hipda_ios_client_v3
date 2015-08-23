@@ -1,4 +1,4 @@
-platform :ios, '6.1'
+platform :ios, '7.0'
 pod 'AFNetworking', '1.3.3'
 pod 'SDWebImage'
 pod 'MTLog'
@@ -12,7 +12,7 @@ pod 'NSString+Emoji'
 pod 'FMDB'
 pod 'MCSwipeTableViewCell'
 pod 'SSKeychain'
-pod 'RETableViewManager', '1.5.14'
+pod 'RETableViewManager', '1.6.0'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod 'Qiniu', :git => 'https://github.com/qiniu/objc-sdk.git', :branch => 'AFNetworking-1.x'

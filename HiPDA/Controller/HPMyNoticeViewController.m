@@ -20,7 +20,6 @@
 #import "NSString+Additions.h"
 #import <SVProgressHUD.h>
 
-#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 #import "HPRearViewController.h"
 
@@ -194,7 +193,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
         [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [cell.detailTextLabel setMinimumScaleFactor:FONT_SIZE];
