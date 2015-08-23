@@ -7,6 +7,7 @@ PODS:
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
+  - FrameAccessor (2.0)
   - HMSegmentedControl (1.5.2)
   - JDStatusBarNotification (1.5.2)
   - JSPatch (0.0.3)
@@ -15,6 +16,7 @@ PODS:
   - Mantle (1.5.4):
     - Mantle/extobjc (= 1.5.4)
   - Mantle/extobjc (1.5.4)
+  - Masonry (0.6.2)
   - MCSwipeTableViewCell (2.1.3)
   - MTLog (0.6.1)
   - NSString+Emoji (0.2.0)
@@ -46,11 +48,13 @@ DEPENDENCIES:
   - ALActionBlocks
   - CTAssetsPickerController (from `https://github.com/wujichao/CTAssetsPickerController.git`)
   - FMDB
+  - FrameAccessor
   - HMSegmentedControl
   - JDStatusBarNotification
   - JSPatch
   - JSQSystemSoundPlayer (~> 1.5)
   - Mantle (= 1.5.4)
+  - Masonry
   - MCSwipeTableViewCell
   - MTLog
   - NSString+Emoji
@@ -91,12 +95,14 @@ SPEC CHECKSUMS:
   ALActionBlocks: ac91b1a37b60a8004fb687ddade0600446f3d3fa
   CTAssetsPickerController: 7d7804624eaab05c124720899f1e673bc2f7507a
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  FrameAccessor: 443a13e58e23a10ff22180da0897b28c3f6abf66
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   JDStatusBarNotification: a36d09ccbb047217572b074a61e7ca10dddc5f0a
   JSPatch: 494b4bc34254e219317ddb0200c0df6a55b9792d
   JSQSystemSoundPlayer: 443466bd5f4537d0b7f15a0184244169ae65f8e5
   leveldb-library: 4b0b6d3bdf102d072d6cf6e046615a6f88ea4bf1
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
+  Masonry: 362e8a1cc0beada4a4c4832d5e863da2a51533be
   MCSwipeTableViewCell: 28a50729ba9a1359d70f57737a7e5022b3137297
   MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4

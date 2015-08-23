@@ -138,6 +138,7 @@
 		EA5DF0EB18311F19008E4248 /* profile-image-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0E918311F19008E4248 /* profile-image-placeholder@2x.png */; };
 		EA5DF0EC18311F19008E4248 /* profile-image-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0EA18311F19008E4248 /* profile-image-placeholder.png */; };
 		EA5E44D11B89CBFD00977684 /* HPActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5E44D01B89CBFD00977684 /* HPActionSheet.m */; };
+		EA5E44DA1B89F98300977684 /* UIViewController+SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5E44D91B89F98300977684 /* UIViewController+SplitViewController.m */; };
 		EA5F163F18D1D65100F6AAB3 /* HPSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F163E18D1D65100F6AAB3 /* HPSetting.m */; };
 		EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164118D1DA3500F6AAB3 /* HPTheme.m */; };
 		EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164718D7062900F6AAB3 /* NSHTTPCookieStorage+info.m */; };
@@ -578,6 +579,8 @@
 		EA5DF0EA18311F19008E4248 /* profile-image-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "profile-image-placeholder.png"; path = "Image/profile-image-placeholder.png"; sourceTree = "<group>"; };
 		EA5E44CF1B89CBFD00977684 /* HPActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPActionSheet.h; path = View/HPActionSheet.h; sourceTree = "<group>"; };
 		EA5E44D01B89CBFD00977684 /* HPActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPActionSheet.m; path = View/HPActionSheet.m; sourceTree = "<group>"; };
+		EA5E44D81B89F98300977684 /* UIViewController+SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+SplitViewController.h"; path = "Helper/UIViewController+SplitViewController.h"; sourceTree = "<group>"; };
+		EA5E44D91B89F98300977684 /* UIViewController+SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+SplitViewController.m"; path = "Helper/UIViewController+SplitViewController.m"; sourceTree = "<group>"; };
 		EA5F163D18D1D65100F6AAB3 /* HPSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetting.h; path = Model/HPSetting.h; sourceTree = "<group>"; };
 		EA5F163E18D1D65100F6AAB3 /* HPSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetting.m; path = Model/HPSetting.m; sourceTree = "<group>"; };
 		EA5F164018D1DA3500F6AAB3 /* HPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTheme.h; path = Model/HPTheme.h; sourceTree = "<group>"; };
@@ -1325,6 +1328,8 @@
 				EAEC58CB1948465000F5931A /* UIImage+Save.m */,
 				EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */,
 				EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */,
+				EA5E44D81B89F98300977684 /* UIViewController+SplitViewController.h */,
+				EA5E44D91B89F98300977684 /* UIViewController+SplitViewController.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2292,6 +2297,7 @@
 				EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */,
 				EA083D7018C8D11A00BD8F07 /* WUEmoticonsKeyboardToolsView.m in Sources */,
 				EA073F5C1844CD77000577C7 /* HPRegisterViewController.m in Sources */,
+				EA5E44DA1B89F98300977684 /* UIViewController+SplitViewController.m in Sources */,
 				EA5F163F18D1D65100F6AAB3 /* HPSetting.m in Sources */,
 				EA743C38183FADF70067F62B /* HPSearch.m in Sources */,
 				EAFDB8561829EFA900C1718B /* HPAppDelegate.m in Sources */,
