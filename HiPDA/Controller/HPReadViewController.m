@@ -32,7 +32,7 @@
 #import "SDURLCache.h"
 
 
-#import "IBActionSheet.h"
+#import "HPActionSheet.h"
 #import <SVProgressHUD.h>
 #import "NSUserDefaults+Convenience.h"
 #import "IDMPhotoBrowser.h"
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 */
 
 
-@interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
+@interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, UIActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
 
@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @property (nonatomic, assign) NSInteger current_floor;
 
-@property (nonatomic, weak) IBActionSheet *currentActionSheet;
+@property (nonatomic, weak) UIActionSheet *currentActionSheet;
 
 @end
 
@@ -844,7 +844,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         firstTitle = @"举报";
     }
     
-    IBActionSheet *actionSheet = [[IBActionSheet alloc]
+    Class clz = [HPActionSheet actionSheetClass];
+    UIActionSheet *actionSheet = [[clz alloc]
                                   initWithTitle:nil
                                   delegate:self cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:firstTitle
@@ -857,9 +858,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   nil];
     self.currentActionSheet = actionSheet;
    
-    [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
-    [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
-    [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
     actionSheet.tag = 1;
     [actionSheet showInView:self.navigationController.view];
 }
@@ -888,7 +886,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     _current_action_post = [_posts objectAtIndex:floor-1];
     NSLog(@"floor %ld %@", floor, _current_action_post.user.username);
     
-    IBActionSheet *actionSheet = [[IBActionSheet alloc]
+    Class clz = [HPActionSheet actionSheetClass];
+    UIActionSheet *actionSheet = [[clz alloc]
                                   initWithTitle:nil
                                   delegate:self cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:
@@ -901,14 +900,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   _current_author_uid != 0 ? @"查看全部" : @"只看该作者", nil];
     self.currentActionSheet = actionSheet;
     
-    [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
-    [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
-    [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
     actionSheet.tag = 2;
     [actionSheet showInView:self.navigationController.view];
 }
 
-- (void)actionSheet:(IBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     //NSLog(@"%@",actionSheet);
     NSLog(@"buttonIndex = %ld", buttonIndex);
@@ -958,7 +954,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     if (IOS8_OR_LATER) {
                         [self share:actionSheet];
                     } else {
-                        IBActionSheet *actionSheet = [[IBActionSheet alloc]
+                        Class clz = [HPActionSheet actionSheetClass];
+                        UIActionSheet *actionSheet = [[clz alloc]
                                                       initWithTitle:nil
                                                       delegate:self cancelButtonTitle:@"取消"
                                                       destructiveButtonTitle:nil
@@ -966,9 +963,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                                       @"复制链接", @"复制全文", @"保存此页截图",nil];
                         self.currentActionSheet = actionSheet;
                         
-                        [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
-                        [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
-                        [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
                         actionSheet.tag = 3;
                         [actionSheet showInView:self.navigationController.view];
                     }

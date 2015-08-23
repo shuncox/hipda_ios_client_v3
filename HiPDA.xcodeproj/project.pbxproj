@@ -137,6 +137,7 @@
 		EA5DF0E818311F05008E4248 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0E018311F05008E4248 /* check.png */; };
 		EA5DF0EB18311F19008E4248 /* profile-image-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0E918311F19008E4248 /* profile-image-placeholder@2x.png */; };
 		EA5DF0EC18311F19008E4248 /* profile-image-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0EA18311F19008E4248 /* profile-image-placeholder.png */; };
+		EA5E44D11B89CBFD00977684 /* HPActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5E44D01B89CBFD00977684 /* HPActionSheet.m */; };
 		EA5F163F18D1D65100F6AAB3 /* HPSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F163E18D1D65100F6AAB3 /* HPSetting.m */; };
 		EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164118D1DA3500F6AAB3 /* HPTheme.m */; };
 		EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164718D7062900F6AAB3 /* NSHTTPCookieStorage+info.m */; };
@@ -575,6 +576,8 @@
 		EA5DF0E018311F05008E4248 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = Image/SwipeTableViewCell/check.png; sourceTree = "<group>"; };
 		EA5DF0E918311F19008E4248 /* profile-image-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "profile-image-placeholder@2x.png"; path = "Image/profile-image-placeholder@2x.png"; sourceTree = "<group>"; };
 		EA5DF0EA18311F19008E4248 /* profile-image-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "profile-image-placeholder.png"; path = "Image/profile-image-placeholder.png"; sourceTree = "<group>"; };
+		EA5E44CF1B89CBFD00977684 /* HPActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPActionSheet.h; path = View/HPActionSheet.h; sourceTree = "<group>"; };
+		EA5E44D01B89CBFD00977684 /* HPActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPActionSheet.m; path = View/HPActionSheet.m; sourceTree = "<group>"; };
 		EA5F163D18D1D65100F6AAB3 /* HPSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetting.h; path = Model/HPSetting.h; sourceTree = "<group>"; };
 		EA5F163E18D1D65100F6AAB3 /* HPSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetting.m; path = Model/HPSetting.m; sourceTree = "<group>"; };
 		EA5F164018D1DA3500F6AAB3 /* HPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTheme.h; path = Model/HPTheme.h; sourceTree = "<group>"; };
@@ -1112,6 +1115,8 @@
 				EA150EAB189165490044CE48 /* MultilineTextCell */,
 				EA13B910194B53D900E01AF5 /* HPStupidBar.h */,
 				EA13B911194B53D900E01AF5 /* HPStupidBar.m */,
+				EA5E44CF1B89CBFD00977684 /* HPActionSheet.h */,
+				EA5E44D01B89CBFD00977684 /* HPActionSheet.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2302,6 +2307,7 @@
 				EA9A39B71A5BE92E0028BE7D /* JSMessageTableView.m in Sources */,
 				EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */,
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
+				EA5E44D11B89CBFD00977684 /* HPActionSheet.m in Sources */,
 				EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */,
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,
 				EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */,
