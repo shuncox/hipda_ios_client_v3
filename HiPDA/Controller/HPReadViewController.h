@@ -13,7 +13,7 @@
 
 @interface HPReadViewController : HPViewController
 
-@property (nonatomic, readonly, strong) UIWebView *webView;
+@property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) HPThread *thread;
 
 - (id)initWithThread:(HPThread *)thread;

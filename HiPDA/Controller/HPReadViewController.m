@@ -101,6 +101,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @property (nonatomic, strong) UIView *adjustView;
 @property (nonatomic, strong) UIView *semiTransparentView;
+@property (nonatomic, strong) UIView *pageTransparentView;
 @property (nonatomic, strong) UIStepper *fontsizeStepper;
 @property (nonatomic, strong) UILabel *fontSizeLabel;
 @property (nonatomic, assign) NSInteger currentFontSize;
@@ -204,6 +205,25 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIWebView *wv = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    wv.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.webView = wv;
+    [self.view addSubview:wv];
+    
+    [wv setScalesPageToFit:YES];
+    wv.dataDetectorTypes = UIDataDetectorTypeNone;
+    wv.delegate = self;
+    wv.backgroundColor = [HPTheme backgroundColor];
+    
+    for(UIView *view in [[[wv subviews] objectAtIndex:0] subviews]) {
+        if([view isKindOfClass:[UIImageView class]]) {
+            view.hidden = YES; }
+    }
+    [wv setOpaque:NO];
+    
+    // scrollView
+    wv.scrollView.delegate = self;
+    [wv.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
     
     //
     _currentFontSize = [Setting integerForKey:HPSettingFontSizeAdjust];
@@ -246,33 +266,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self.currentActionSheet dismissWithClickedButtonIndex:110 animated:YES];
 }
 
-
-- (void)loadView {
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    UIWebView *wv = [[UIWebView alloc] initWithFrame:screenFrame];
-    [wv setScalesPageToFit:YES];
-    wv.dataDetectorTypes = UIDataDetectorTypeNone;
-    wv.delegate = self;
-    wv.backgroundColor = [HPTheme backgroundColor];
-   
-    for(UIView *view in [[[wv subviews] objectAtIndex:0] subviews]) {
-        if([view isKindOfClass:[UIImageView class]]) {
-            view.hidden = YES; }
-    }
-    [wv setOpaque:NO];
-    
-    // scrollView
-    wv.scrollView.delegate = self;
-    [wv.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
-    
-    [self setView:wv];
-}
-
-
-- (UIWebView *)webView {
-    return (UIWebView *)[self view];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -284,8 +277,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 {
     // deal with web view special needs
     NSLog(@"UIWebViewVC dealloc");
-    [(UIWebView*)self.view stopLoading];
-    [(UIWebView*)self.view setDelegate:nil];
+    [self.webView stopLoading];
+    [self.webView setDelegate:nil];
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
 }
@@ -644,7 +637,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         _reloadingHeader = NO;
         
         if (!_refreshHeaderView) {
-            _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.webView.scrollView.bounds.size.height, CGRectGetWidth([[UIScreen mainScreen] bounds]), self.webView.scrollView.bounds.size.height)];
+            _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.webView.scrollView.bounds.size.height, self.view.frame.size.width, self.webView.scrollView.bounds.size.height)];
             _refreshHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             _refreshHeaderView.backgroundColor = [UIColor clearColor];
         }
@@ -657,7 +650,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)updateFooterView {
     
     if (!_refreshFooterView) {
-        _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self contentSize], CGRectGetWidth([[UIScreen mainScreen] bounds]), 600.0f)];
+        _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self contentSize], self.view.frame.size.width, 600.0f)];
         _refreshFooterView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _refreshFooterView.backgroundColor = [UIColor clearColor];
         [self.webView.scrollView addSubview:_refreshFooterView];
@@ -952,7 +945,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 case 5://更多
                 {
                     if (IOS8_OR_LATER) {
-                        [self share:actionSheet];
+                        if ([actionSheet isKindOfClass:UIActionSheet.class]) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self share:actionSheet];
+                            });
+                        } else {
+                            [self share:actionSheet];
+                        }
                     } else {
                         Class clz = [HPActionSheet actionSheetClass];
                         UIActionSheet *actionSheet = [[clz alloc]
@@ -1055,10 +1054,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
     webBrowser.showProgress = YES;
     webBrowser.allowSharing = YES;
+    webBrowser.pushed = YES;
     
     NSLog(@"open browser");
-    UINavigationController *webBrowserNC = [[UINavigationController alloc] initWithRootViewController:webBrowser];
-    [self presentViewController:webBrowserNC animated:YES completion:NULL];
+    [self.navigationController pushViewController:webBrowser animated:YES];
     
     [Flurry logEvent:@"Read OpenUrl" withParameters:@{@"url":url.absoluteString}];
 }
@@ -1374,7 +1373,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [SVProgressHUD showErrorWithStatus:@"当前页"];
     }
     
-    [self dimissPageView:nil];
+    [self dismissPageView:nil];
 }
 
 - (void)goToPage:(id)sender {
@@ -1402,7 +1401,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [self load];
         
         if ([sender isKindOfClass:[UIButton class]]) {
-            [self dimissPageView:nil];
+            [self dismissPageView:nil];
         }
     }
     
@@ -1430,7 +1429,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [self load];
         
         if ([sender isKindOfClass:[UIButton class]]) {
-            [self dimissPageView:nil];
+            [self dismissPageView:nil];
         }
     }
     
@@ -1585,10 +1584,23 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (void)showPageView:(id)sender {
-    [self presentSemiView:self.pageView withOptions:@{
-                                                      KNSemiModalOptionKeys.pushParentBack : @(NO),
-                                                      KNSemiModalOptionKeys.animationDuration : @(0.3)
-                                                      }];
+    
+    
+    if (!self.pageTransparentView) {
+        self.pageTransparentView = [[UIView alloc] initWithFrame:self.view.bounds];
+        UITapGestureRecognizer *cancelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissPageView:)];
+        [self.pageTransparentView addGestureRecognizer:cancelTap];
+        self.pageTransparentView.backgroundColor = [UIColor blackColor];
+        self.pageTransparentView.alpha = 0.0f;
+        
+        [self.view insertSubview:self.pageTransparentView belowSubview:self.pageView];
+    }
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^() {
+                         self.pageTransparentView.alpha = 0.2f;
+                         self.pageView.alpha = 1.0f;
+                     }];
     
     _pageSlider.maximumValue = _thread.pageCount;
     _pageSlider.minimumValue = 0;
@@ -1598,8 +1610,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [Flurry logEvent:@"Read ShowPagePanel"];
 }
 
-- (void)dimissPageView:(id)sender {
-    [self dismissSemiModalView];
+- (void)dismissPageView:(id)sender {
+    [UIView animateWithDuration:0.5f
+                     animations:^() {
+                         self.pageView.alpha = 0.0f;
+                         self.pageView.alpha = 0.0f;
+                     }];
 }
 
 - (void)sliderValueChanged:(id)sender{
@@ -1813,7 +1829,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self adjustView];
     
     if (!_semiTransparentView) {
-        self.semiTransparentView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        self.semiTransparentView = [[UIView alloc] initWithFrame:self.view.bounds];
         UITapGestureRecognizer *cancelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dimissAdjustView:)];
         [self.semiTransparentView addGestureRecognizer:cancelTap];
         self.semiTransparentView.backgroundColor = [UIColor blackColor];
