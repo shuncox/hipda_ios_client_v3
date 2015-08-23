@@ -415,7 +415,7 @@ typedef enum{
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [HPThreadCell heightForCellWithThread:[_threads objectAtIndex:indexPath.row]];
+    return [HPThreadCell heightForCellWithThread:[_threads objectAtIndex:indexPath.row] width:self.tableView.frame.size.width];
 }
 
 
@@ -433,7 +433,8 @@ typedef enum{
     
     HPReadViewController *readVC =
     [[HPReadViewController alloc] initWithThread:thread];
-    [self.navigationController pushViewController:readVC animated:YES];
+    
+    [self hp_pushViewController:readVC animated:YES];
 }
 
 #pragma mark - NSKeyValueObserving
@@ -462,7 +463,7 @@ typedef enum{
     if (_threads.count == 0) return;
     
     if (_loadingMoreView == nil) {
-        _loadingMoreView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self tableViewHeight], CGRectGetWidth([[UIScreen mainScreen] bounds]), 600.0f)];
+        _loadingMoreView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, [self tableViewHeight], self.view.frame.size.width, 600.0f)];
 		_loadingMoreView.backgroundColor = [UIColor clearColor];
         _loadingMoreView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		[self.tableView addSubview:_loadingMoreView];
@@ -578,7 +579,7 @@ typedef enum{
                                       page:NSIntegerMax
                                       forceFullPage:YES];
          
-         [self.navigationController pushViewController:rvc animated:YES];
+         [self hp_pushViewController:rvc animated:YES];
          
          [Flurry logEvent:@"ThreadVC SwipeToJump"];
      }];
