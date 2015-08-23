@@ -5,7 +5,7 @@ pod 'MTLog'
 pod 'UI7Kit'
 pod 'HMSegmentedControl'
 pod 'RegexKitLite'
-pod 'SVProgressHUD', '1.0'
+pod 'SVProgressHUD', :head
 pod 'ZAActivityBar'
 pod 'JSQSystemSoundPlayer', '~>1.5'
 #pod 'JSMessagesViewController'

@@ -54,7 +54,7 @@ PODS:
   - SevenSwitch (1.3.0)
   - SKBounceAnimation (1.0.04)
   - SSKeychain (1.2.3)
-  - SVProgressHUD (1.0)
+  - SVProgressHUD (HEAD based on 1.1.3)
   - UI7Kit (0.9.22):
     - cdebug
     - FoundationExtension
@@ -85,7 +85,7 @@ DEPENDENCIES:
   - SDWebImage
   - SDWebImage-ProgressView
   - SSKeychain
-  - SVProgressHUD (= 1.0)
+  - SVProgressHUD (HEAD)
   - UI7Kit
   - ZAActivityBar
 
@@ -139,7 +139,7 @@ SPEC CHECKSUMS:
   SevenSwitch: 4faf7584ea9fcfa053ab0375353531c402ed2bf0
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
-  SVProgressHUD: 46088807596a795cbcb4affd92cf3f13b6ab3dda
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   UI7Kit: a2be10b7ced09944b8d2dca5d373743665d29639
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
