@@ -32,9 +32,9 @@
 - (void)addTextViewObservers;
 - (void)removeTextViewObservers;
 
-+ (CGSize)textSizeForText:(NSString *)txt;
-+ (CGSize)neededSizeForText:(NSString *)text;
-+ (CGFloat)neededHeightForText:(NSString *)text;
++ (CGSize)textSizeForText:(NSString *)txt width:(CGFloat)width;
++ (CGSize)neededSizeForText:(NSString *)text width:(CGFloat)width;
++ (CGFloat)neededHeightForText:(NSString *)text width:(CGFloat)width;
 
 @end
 
@@ -175,9 +175,9 @@
 
 #pragma mark - Getters
 
-- (CGRect)bubbleFrame
+- (CGRect)bubbleFrame:(CGFloat)width
 {
-    CGSize bubbleSize = [JSBubbleView neededSizeForText:self.textView.text];
+    CGSize bubbleSize = [JSBubbleView neededSizeForText:self.textView.text width:width];
     
     return CGRectIntegral(CGRectMake((self.type == JSBubbleMessageTypeOutgoing ? self.frame.size.width - bubbleSize.width : 0.0f),
                                      kMarginTop,
@@ -191,7 +191,7 @@
 {
     [super layoutSubviews];
     
-    self.bubbleImageView.frame = [self bubbleFrame];
+    self.bubbleImageView.frame = [self bubbleFrame:self.width];
     
     CGFloat textX = self.bubbleImageView.frame.origin.x;
     
@@ -209,9 +209,9 @@
 
 #pragma mark - Bubble view
 
-+ (CGSize)textSizeForText:(NSString *)txt
++ (CGSize)textSizeForText:(NSString *)txt width:(CGFloat)width
 {
-    CGFloat maxWidth = [UIScreen mainScreen].applicationFrame.size.width * 0.70f;
+    CGFloat maxWidth = width;
     CGFloat maxHeight = MAX([JSMessageTextView numberOfLinesForMessage:txt],
                          [txt js_numberOfLines]) * [JSMessageInputView textViewLineHeight];
     maxHeight += kJSAvatarImageSize;
@@ -234,17 +234,17 @@
     return CGSizeMake(roundf(stringSize.width), roundf(stringSize.height));
 }
 
-+ (CGSize)neededSizeForText:(NSString *)text
++ (CGSize)neededSizeForText:(NSString *)text width:(CGFloat)width
 {
-    CGSize textSize = [JSBubbleView textSizeForText:text];
+    CGSize textSize = [JSBubbleView textSizeForText:text width:width];
     
 	return CGSizeMake(textSize.width + kBubblePaddingRight,
                       textSize.height + kPaddingTop + kPaddingBottom);
 }
 
-+ (CGFloat)neededHeightForText:(NSString *)text
++ (CGFloat)neededHeightForText:(NSString *)text width:(CGFloat)width
 {
-    CGSize size = [JSBubbleView neededSizeForText:text];
+    CGSize size = [JSBubbleView neededSizeForText:text width:width];
     return size.height + kMarginTop + kMarginBottom;
 }
 

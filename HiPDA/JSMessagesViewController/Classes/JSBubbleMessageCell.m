@@ -132,8 +132,6 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
                    avatar:(BOOL)hasAvatar
 {
     CGFloat bubbleY = 0.0f;
-    CGFloat bubbleX = 0.0f;
-    
     CGFloat offsetX = 0.0f;
     
     if (displaysTimestamp) {
@@ -146,18 +144,17 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 	}
     
     if (hasAvatar) {
-        offsetX = 4.0f;
-        bubbleX = kJSAvatarImageSize;
-        if (type == JSBubbleMessageTypeOutgoing) {
-            offsetX = kJSAvatarImageSize - 4.0f;
-        }
-        
         [self configureAvatarImageView:[[UIImageView alloc] init] forMessageType:type];
     }
     
-    CGRect frame = CGRectMake(bubbleX - offsetX,
+    CGFloat w = self.contentView.width * JSBubbleMessageCellMultipliedBy;
+    offsetX = 4.0f;
+    if (type == JSBubbleMessageTypeOutgoing) {
+        offsetX = self.contentView.width - w - offsetX;
+    }
+    CGRect frame = CGRectMake(offsetX,
                               bubbleY,
-                              self.contentView.frame.size.width - bubbleX,
+                              w,
                               self.contentView.frame.size.height - _timestampLabel.frame.size.height - _subtitleLabel.frame.size.height);
     
     JSBubbleView *bubbleView = [[JSBubbleView alloc] initWithFrame:frame
@@ -275,6 +272,7 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 + (CGFloat)neededHeightForBubbleMessageCellWithMessage:(id<JSMessageData>)message
                                         displaysAvatar:(BOOL)displaysAvatar
                                      displaysTimestamp:(BOOL)displaysTimestamp
+                                                 width:(CGFloat)width
 {
     CGFloat timestampHeight = displaysTimestamp ? kJSTimeStampLabelHeight : 0.0f;
     CGFloat avatarHeight = displaysAvatar ? kJSAvatarImageSize : 0.0f;
@@ -282,7 +280,7 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
     
     CGFloat subviewHeights = timestampHeight + subtitleHeight + kJSLabelPadding;
     
-    CGFloat bubbleHeight = [JSBubbleView neededHeightForText:[message text]];
+    CGFloat bubbleHeight = [JSBubbleView neededHeightForText:[message text] width:width];
     
     return subviewHeights + MAX(avatarHeight, bubbleHeight);
 }

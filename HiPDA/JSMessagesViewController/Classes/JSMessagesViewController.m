@@ -282,7 +282,8 @@
     
     return [JSBubbleMessageCell neededHeightForBubbleMessageCellWithMessage:message
                                                              displaysAvatar:avatar != nil
-                                                          displaysTimestamp:displayTimestamp];
+                                                          displaysTimestamp:displayTimestamp
+                                                                      width:tableView.width * JSBubbleMessageCellMultipliedBy];
 }
 
 #pragma mark - Messages view controller

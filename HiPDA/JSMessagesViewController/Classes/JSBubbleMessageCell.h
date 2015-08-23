@@ -16,6 +16,8 @@
 #import "JSBubbleView.h"
 #import "JSMessageData.h"
 
+#define JSBubbleMessageCellMultipliedBy (0.7)
+
 /**
  *  The `JSBubbleMessageCell` class defines the attributes and behavior of the cells that appear in `JSMessagesViewController`. This class includes properties and methods for setting and managing cell content.
  */
@@ -106,6 +108,7 @@
  */
 + (CGFloat)neededHeightForBubbleMessageCellWithMessage:(id<JSMessageData>)message
                                         displaysAvatar:(BOOL)displaysAvatar
-                                     displaysTimestamp:(BOOL)displaysTimestamp;
+                                     displaysTimestamp:(BOOL)displaysTimestamp
+                                                 width:(CGFloat)width;
 
 @end
