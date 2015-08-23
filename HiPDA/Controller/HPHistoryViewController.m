@@ -166,7 +166,7 @@
     HPThread *thread = [self.histotyList objectAtIndex:indexPath.row];
     HPReadViewController *rvc = [[HPReadViewController alloc] initWithThread:thread];
     
-    [self.navigationController pushViewController:rvc animated:YES];
+    [self hp_pushViewController:rvc animated:YES];
 }
 
 #pragma mark - theme

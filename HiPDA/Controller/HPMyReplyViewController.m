@@ -200,7 +200,7 @@
                                                                     find_pid:thread.pid];
 
     
-    [self.navigationController pushViewController:rvc animated:YES];
+    [self hp_pushViewController:rvc animated:YES];
 }
 
 

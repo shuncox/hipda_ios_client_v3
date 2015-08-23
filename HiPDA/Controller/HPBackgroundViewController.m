@@ -200,7 +200,7 @@
     HPThread *thread = [_cachedThreads objectAtIndex:indexPath.row];
     HPReadViewController *rvc = [[HPReadViewController alloc] initWithThread:thread];
     
-    [self.navigationController pushViewController:rvc animated:YES];
+    [self hp_pushViewController:rvc animated:YES];
     
     //[_cachedThreads removeObjectAtIndex:indexPath.row];
     [[HPCache sharedCache] removeBgThreadAtIndex:indexPath.row];

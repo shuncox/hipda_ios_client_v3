@@ -24,6 +24,9 @@
     #import "RegExCategories.h"
     #import "MobClick.h"
     #import "Flurry.h"
+    #import <Masonry.h>
+    #import <FrameAccessor.h>
+    #import "UIViewController+SplitViewController.h"
 
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>

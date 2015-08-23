@@ -186,7 +186,7 @@
     HPThread *thread = [_favoritedThreads objectAtIndex:indexPath.row];
     HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:thread];
     
-    [self.navigationController pushViewController:readVC animated:YES];
+    [self hp_pushViewController:readVC animated:YES];
 }
 
 

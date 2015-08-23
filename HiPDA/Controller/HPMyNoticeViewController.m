@@ -288,7 +288,7 @@
         
     }
     
-    [self.navigationController pushViewController:rvc animated:YES];
+    [self hp_pushViewController:rvc animated:YES];
 }
 
 

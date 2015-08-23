@@ -222,7 +222,7 @@
     NSDictionary *info = [_message_list objectAtIndex:indexPath.row];
     detailViewController.user = [info objectForKey:@"user"];
     
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    [self hp_pushViewController:detailViewController animated:YES];
 }
 
 @end
