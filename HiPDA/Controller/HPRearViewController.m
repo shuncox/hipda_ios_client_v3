@@ -142,8 +142,9 @@
     NSLog(@"viewDidLoad");
     [super viewDidLoad];
 	
-    _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-
+    CGRect leftFrame = CGRectMake(0, 0, self.revealViewController.rearViewRevealWidth, self.view.bounds.size.height);
+    _tableView = [[UITableView alloc]initWithFrame:leftFrame style:UITableViewStylePlain];
+    
     /*
     tableView.rowHeight = 45;
     tableView.sectionFooterHeight = 22;
@@ -188,6 +189,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = CGRectMake(0, 0, self.revealViewController.rearViewRevealWidth, self.view.bounds.size.height);
+    [self.tableView reloadData];
 }
 
 
@@ -596,7 +603,6 @@
         //[frontView addGestureRecognizer:revealController.panGestureRecognizer];
     }
 }
-
 
 /*
 - (void)revealController:(SWRevealViewController *)revealController willMoveToPosition:(FrontViewPosition)position {

@@ -491,6 +491,7 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
 
     // create a custom content view for the controller
     _contentView = [[SWRevealView alloc] initWithFrame:frame controller:self];
+    _contentView.layer.masksToBounds = YES;
     
     // set the content view to resize along with its superview
      [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
