@@ -16,7 +16,6 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 
-#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 
 @interface HPMyThreadViewController ()
@@ -184,7 +183,7 @@
     
     // Configure the cell...
     if (!cell) {
-        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [_myThreads objectAtIndex:indexPath.row];

@@ -1,28 +1,12 @@
 PODS:
   - AFNetworking (1.3.3)
   - ALActionBlocks (1.0.3)
-  - cdebug (0.1.1)
   - CTAssetsPickerController (2.9.2)
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
-  - FoundationExtension (1.0.0):
-    - cdebug (~> 0.1)
-    - FoundationExtension/AddressBookExtension (= 1.0.0)
-    - FoundationExtension/CocoaExtension (= 1.0.0)
-    - FoundationExtension/FoundationExtension (= 1.0.0)
-    - FoundationExtension/UIKitExtension (= 1.0.0)
-  - FoundationExtension/AddressBookExtension (1.0.0):
-    - cdebug (~> 0.1)
-    - FoundationExtension/FoundationExtension
-  - FoundationExtension/FoundationExtension (1.0.0):
-    - cdebug (~> 0.1)
-  - FoundationExtension/UIKitExtension (1.0.0):
-    - cdebug (~> 0.1)
-    - FoundationExtension/FoundationExtension
-  - GIKPopoverBackgroundView/Core (0.0.1)
   - HMSegmentedControl (1.5.2)
   - JDStatusBarNotification (1.5.2)
   - JSPatch (0.0.3)
@@ -40,7 +24,7 @@ PODS:
     - AFNetworking (~> 1.0)
   - REFormattedNumberField (1.1.5)
   - RegexKitLite (4.0)
-  - RETableViewManager (1.5.14):
+  - RETableViewManager (1.6):
     - REFormattedNumberField (~> 1.1.5)
     - REValidation (~> 0.1.4)
   - REValidation (0.1.4)
@@ -51,15 +35,9 @@ PODS:
   - SDWebImage-ProgressView (0.4.0):
     - SDWebImage (~> 3.7.0)
   - SDWebImage/Core (3.7.3)
-  - SevenSwitch (1.3.0)
   - SKBounceAnimation (1.0.04)
   - SSKeychain (1.2.3)
   - SVProgressHUD (HEAD based on 1.1.3)
-  - UI7Kit (0.9.22):
-    - cdebug
-    - FoundationExtension
-    - GIKPopoverBackgroundView/Core
-    - SevenSwitch (~> 1.3.0)
   - ZAActivityBar (0.1.1):
     - SKBounceAnimation (~> 1.0)
 
@@ -79,14 +57,13 @@ DEPENDENCIES:
   - Objective-LevelDB
   - Qiniu (from `https://github.com/qiniu/objc-sdk.git`, branch `AFNetworking-1.x`)
   - RegexKitLite
-  - RETableViewManager (= 1.5.14)
+  - RETableViewManager (= 1.6.0)
   - Reveal-iOS-SDK
   - SDURLCache (from `https://github.com/wujichao/SDURLCache.git`)
   - SDWebImage
   - SDWebImage-ProgressView
   - SSKeychain
   - SVProgressHUD (HEAD)
-  - UI7Kit
   - ZAActivityBar
 
 EXTERNAL SOURCES:
@@ -112,11 +89,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 127629aef6e631d57291c25154defc678c8a7337
   ALActionBlocks: ac91b1a37b60a8004fb687ddade0600446f3d3fa
-  cdebug: 32bf88e54d22ad187b23122872b3977e5d0c1bde
   CTAssetsPickerController: 7d7804624eaab05c124720899f1e673bc2f7507a
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
-  FoundationExtension: b834d50afb2691d0e0becbff0e70b9f15bd6a1b3
-  GIKPopoverBackgroundView: 9cde2752e608df4d1e35ebca12af762b9a7dca3e
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   JDStatusBarNotification: a36d09ccbb047217572b074a61e7ca10dddc5f0a
   JSPatch: 494b4bc34254e219317ddb0200c0df6a55b9792d
@@ -130,17 +104,15 @@ SPEC CHECKSUMS:
   Qiniu: 7affd88b4054a81e1d58716281a1a0afaf6ce84f
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
-  RETableViewManager: 317f43f31c0a5818c6257cb7544167819a8ae170
+  RETableViewManager: 9667ecb29c005c32df40a1dd1828224840a351a2
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
   Reveal-iOS-SDK: c9c55cad2729c85f6ced415f1b21857c9a2d8ef9
   SDURLCache: 7f432f0acfd5e70ba38804896775d73b0dbbde1a
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SDWebImage-ProgressView: cdc29091ec0d53fd6dab3df65039a4f308e0a5ae
-  SevenSwitch: 4faf7584ea9fcfa053ab0375353531c402ed2bf0
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  UI7Kit: a2be10b7ced09944b8d2dca5d373743665d29639
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
 COCOAPODS: 0.37.1

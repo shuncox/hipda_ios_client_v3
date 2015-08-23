@@ -15,7 +15,6 @@
 #import "HPSetting.h"
 #import "HPReadViewController.h"
 
-#import <UI7Kit/UI7TableViewCell.h>
 #import <SVProgressHUD.h>
 #import "UIAlertView+Blocks.h"
 
@@ -131,7 +130,7 @@
     
     // Configure the cell...
     if (!cell) {
-        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [self.histotyList objectAtIndex:indexPath.row];

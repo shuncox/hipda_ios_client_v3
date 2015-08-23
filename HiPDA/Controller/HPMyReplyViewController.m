@@ -16,7 +16,6 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 
-#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 
 @interface HPMyReplyViewController ()
@@ -180,7 +179,7 @@
     
     // Configure the cell...
     if (!cell) {
-        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [_myReplies objectAtIndex:indexPath.row];

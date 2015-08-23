@@ -16,7 +16,6 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 
-#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 #import "HPRearViewController.h"
 
@@ -183,7 +182,7 @@
     //UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     
     if (!cell) {
-        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
         //[cell.contentView addSubview:dateLabel];
     }

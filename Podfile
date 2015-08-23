@@ -1,8 +1,7 @@
-platform :ios, '6.1'
+platform :ios, '7.0'
 pod 'AFNetworking', '1.3.3'
 pod 'SDWebImage'
 pod 'MTLog'
-pod 'UI7Kit'
 pod 'HMSegmentedControl'
 pod 'RegexKitLite'
 pod 'SVProgressHUD', :head
@@ -16,7 +15,7 @@ pod 'FMDB'
 pod 'JDStatusBarNotification'
 pod 'MCSwipeTableViewCell'
 pod 'SSKeychain'
-pod 'RETableViewManager', '1.5.14'
+pod 'RETableViewManager', '1.6.0'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod 'SDURLCache', :git => 'https://github.com/wujichao/SDURLCache.git'

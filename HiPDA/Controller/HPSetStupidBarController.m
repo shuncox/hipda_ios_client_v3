@@ -96,9 +96,6 @@
             [switchCtl addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
             switchCtl.backgroundColor = [UIColor clearColor];
             switchCtl.tag = 1313;
-            
-            //dirty fix for ios6 & ui7kit
-            _cell0.textLabel.backgroundColor = [UIColor clearColor];
         
             [_cell0.contentView addSubview:switchCtl];
         }
@@ -124,7 +121,6 @@
             switchCtl.backgroundColor = [UIColor clearColor];
             switchCtl.tag = 1414;
             
-            //dirty fix for ios6 & ui7kit
             _cell1.textLabel.backgroundColor = [UIColor clearColor];
             
             [_cell1.contentView addSubview:switchCtl];

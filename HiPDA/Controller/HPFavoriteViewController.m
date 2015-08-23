@@ -15,7 +15,6 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 
-#import <UI7TableViewCell.h>
 #import "SWRevealViewController.h"
 
 @interface HPFavoriteViewController ()
@@ -145,7 +144,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        cell = [[HP_GUITlY_CELL_CLASS alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [_favoritedThreads objectAtIndex:indexPath.row];
