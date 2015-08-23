@@ -16,7 +16,7 @@
 
 #define PERCENT ([Setting integerForKey:HPSettingFontSizeAdjust]/100.f)
 
-#define CELL_CONTENT_WIDTH (CGRectGetWidth([[[[UIApplication sharedApplication] delegate] window] bounds]))
+#define CELL_CONTENT_WIDTH (___width)
 #define CELL_CONTENT_MARGIN (ceilf(PERCENT*8.0f))
 #define CELL_IMAGE_WIDTH (ceilf(PERCENT*44.0f))
 #define CELL_IMAGE_MARGIN (ceilf(PERCENT*8.0f))
@@ -193,7 +193,8 @@
     [self setNeedsLayout];
 }
 
-+ (CGFloat)titleHeight:(NSString *)title {
++ (CGFloat)titleHeight:(NSString *)title
+                 width:(CGFloat)___width {
     
     // text
     //
@@ -222,12 +223,13 @@
     return ceilf(size.height);
 }
 
-+ (CGFloat)heightForCellWithThread:(HPThread *)thread {
++ (CGFloat)heightForCellWithThread:(HPThread *)thread
+                             width:(CGFloat)___width {
     
     // text
     //
     NSString *title = thread.title;
-    CGFloat titleHeight = [[self class] titleHeight:title];
+    CGFloat titleHeight = [[self class] titleHeight:title width:___width];
     
     
     CGFloat height = 0.f;
@@ -247,6 +249,8 @@
     //NSLog(@"layoutSubviews");
     [super layoutSubviews];
     
+    CGFloat ___width = self.contentView.frame.size.width;
+    
     float image_width = 0.f, image_margin = 0.f;
    
     if ([Setting boolForKey:HPSettingShowAvatar]) {
@@ -255,9 +259,8 @@
         image_width = CELL_IMAGE_WIDTH;
         image_margin = CELL_IMAGE_MARGIN;
     }
-    
-    
-    CGFloat titleHeight = [HPThreadCell titleHeight:_thread.title];
+
+    CGFloat titleHeight = [HPThreadCell titleHeight:_thread.title width:___width];
     
     CGFloat width = CELL_CONTENT_WIDTH - image_width - (CELL_CONTENT_MARGIN * 2) - image_margin;
     [_titleLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN + image_width + image_margin ,  CELL_SUB_HEIGHT + CELL_CONTENT_MARGIN * 1.7 , width, titleHeight)];
