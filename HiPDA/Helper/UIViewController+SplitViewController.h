@@ -10,4 +10,6 @@
 
 @interface UIViewController (SplitViewController)
 
+- (void)hp_pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+
 @end
