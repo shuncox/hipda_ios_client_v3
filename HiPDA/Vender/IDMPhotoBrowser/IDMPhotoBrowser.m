@@ -361,11 +361,11 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     self.view.alpha = 0.0f;
     
     UIImage *imageFromView = _scaleImage ? _scaleImage : [self getImageFromView:_senderViewForAnimation];
-    imageFromView = [self rotateImageToCurrentOrientation:imageFromView];
+    //imageFromView = [self rotateImageToCurrentOrientation:imageFromView];
     
     _resizableImageViewFrame = [_senderViewForAnimation.superview convertRect:_senderViewForAnimation.frame toView:nil];
     
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGRect screenBound = [[[[UIApplication sharedApplication] delegate] window] bounds];
     CGFloat screenWidth = screenBound.size.width;
     CGFloat screenHeight = screenBound.size.height;
     
@@ -404,7 +404,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     UIImage *imageFromView = [scrollView.photo underlyingImage];
     //imageFromView = [self rotateImageToCurrentOrientation:imageFromView];
 
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGRect screenBound = [[[[UIApplication sharedApplication] delegate] window] bounds];
     CGFloat screenWidth = screenBound.size.width;
     CGFloat screenHeight = screenBound.size.height;
     
