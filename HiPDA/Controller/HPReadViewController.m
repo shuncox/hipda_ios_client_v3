@@ -242,10 +242,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // add stupid bar
     if (![Setting boolForKey:HPSettingStupidBarDisable]) {
-        HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-(IOS7_OR_LATER ? 0.f : 64.f)+20-20, self.view.frame.size.width, 20.f)];
+        HPStupidBar *stupidBar = [HPStupidBar new];
         stupidBar.tag = 2020202;
         stupidBar.delegate = self;
         [self.view addSubview:stupidBar];
+        [stupidBar mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.bottom.right.equalTo(self.view);
+            make.height.equalTo(@20.f);
+        }];
     }
 }
 

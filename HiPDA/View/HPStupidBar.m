@@ -25,13 +25,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width/3, frame.size.height)];
+        _leftBtn = [UIButton new];
         [_leftBtn addTarget:self action:@selector(leftBtnTap:) forControlEvents:UIControlEventTouchUpInside];
         
-        _centerBtn = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width/3, 0, frame.size.width/3, frame.size.height)];
+        _centerBtn = [UIButton new];
         [_centerBtn addTarget:self action:@selector(centerBtnTap:) forControlEvents:UIControlEventTouchUpInside];
         
-        _rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width/3*2, 0, frame.size.width/3, frame.size.height)];
+        _rightBtn = [UIButton new];
         [_rightBtn addTarget:self action:@selector(rightBtnTap:) forControlEvents:UIControlEventTouchUpInside];
         
         if (![Setting boolForKey:HPSettingStupidBarHide]) {
@@ -49,6 +49,14 @@
         
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.leftBtn.frame = CGRectMake(0, 0, self.width/3, self.height);
+    self.centerBtn.frame = CGRectMake(self.width/3, 0, self.width/3, self.height);
+    self.rightBtn.frame = CGRectMake(self.width/3*2, 0, self.width/3, self.height);
 }
 
 - (void)leftBtnTap:(id)sender {
