@@ -162,6 +162,7 @@ NSString * const kNewAttachmentKey = @"kNewAttachmentKey";
         _webView.delegate = _progressProxy;
         _progressProxy.webViewProxyDelegate = self;
         _progressProxy.progressDelegate = self;
+        [self progressView];
     }
     else {
         [self.navigationItem setTitleView:self.titleView];
