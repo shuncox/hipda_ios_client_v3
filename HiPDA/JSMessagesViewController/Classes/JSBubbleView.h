@@ -69,7 +69,7 @@
  *
  *  @return The frame of the bubble view.
  */
-- (CGRect)bubbleFrame;
+- (CGRect)bubbleFrame:(CGFloat)width;
 
 #pragma mark - Class methods
 

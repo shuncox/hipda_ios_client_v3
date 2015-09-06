@@ -330,7 +330,7 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
         return;
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
-    CGRect targetRect = [self convertRect:[self.bubbleView bubbleFrame]
+    CGRect targetRect = [self convertRect:[self.bubbleView bubbleFrame:self.contentView.width]
                                  fromView:self.bubbleView];
     
     [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
