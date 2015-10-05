@@ -8,7 +8,6 @@
 
 #import "IDMPhoto.h"
 #import "IDMPhotoBrowser.h"
-#import "SDURLCache.h"
 
 // Private
 @interface IDMPhoto () {

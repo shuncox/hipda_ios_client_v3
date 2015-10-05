@@ -10,7 +10,6 @@
 #import "SWRevealViewController.h"
 #import "HPThreadViewController.h"
 #import <AFNetworking.h>
-#import "SDURLCache.h"
 #import "HPAccount.h"
 #import "HPHttpClient.h"
 #import "HPMessage.h"

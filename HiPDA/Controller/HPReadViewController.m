@@ -26,11 +26,7 @@
 #import "HPHttpClient.h"
 #import "HPTheme.h"
 #import "HPSetting.h"
-
 #import "HPStupidBar.h"
-
-#import "SDURLCache.h"
-
 
 #import "IBActionSheet.h"
 #import <SVProgressHUD.h>

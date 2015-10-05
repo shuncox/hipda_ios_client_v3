@@ -19,8 +19,6 @@
 #import "HPAccount.h"
 #import "HPTheme.h"
 
-#import "SDURLCache.h"
-
 #import "NSUserDefaults+Convenience.h"
 #import "RETableViewManager.h"
 #import "RETableViewOptionsController.h"
@@ -503,7 +501,6 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             [[SDImageCache sharedImageCache] clearDisk];
-            [[SDURLCache sharedURLCache] removeAllCachedResponses];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showSuccessWithStatus:@"清理完成"];
