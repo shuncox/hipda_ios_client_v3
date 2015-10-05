@@ -1,42 +1,26 @@
 PODS:
   - AFNetworking (1.3.3)
   - ALActionBlocks (1.0.3)
-  - cdebug (0.1.1)
   - CTAssetsPickerController (2.9.2)
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
-  - FoundationExtension (1.0.0):
-    - cdebug (~> 0.1)
-    - FoundationExtension/AddressBookExtension (= 1.0.0)
-    - FoundationExtension/CocoaExtension (= 1.0.0)
-    - FoundationExtension/FoundationExtension (= 1.0.0)
-    - FoundationExtension/UIKitExtension (= 1.0.0)
-  - FoundationExtension/AddressBookExtension (1.0.0):
-    - cdebug (~> 0.1)
-    - FoundationExtension/FoundationExtension
-  - FoundationExtension/FoundationExtension (1.0.0):
-    - cdebug (~> 0.1)
-  - FoundationExtension/UIKitExtension (1.0.0):
-    - cdebug (~> 0.1)
-    - FoundationExtension/FoundationExtension
-  - GIKPopoverBackgroundView/Core (0.0.1)
-  - HMSegmentedControl (1.5.2)
-  - JDStatusBarNotification (1.5.2)
-  - JSPatch (0.0.3)
+  - JSPatch (0.1.3):
+    - JSPatch/Core (= 0.1.3)
+  - JSPatch/Core (0.1.3)
   - JSQSystemSoundPlayer (1.5.2)
   - leveldb-library (1.18.1)
   - Mantle (1.5.4):
     - Mantle/extobjc (= 1.5.4)
   - Mantle/extobjc (1.5.4)
-  - MCSwipeTableViewCell (2.1.3)
+  - MCSwipeTableViewCell (2.1.4)
   - MTLog (0.6.1)
   - NSString+Emoji (0.2.0)
   - Objective-LevelDB (2.1.4):
     - leveldb-library (~> 1.18)
-  - Qiniu (7.0.6):
+  - Qiniu (7.0.7):
     - AFNetworking (~> 1.0)
   - REFormattedNumberField (1.1.5)
   - RegexKitLite (4.0)
@@ -45,21 +29,12 @@ PODS:
     - REValidation (~> 0.1.4)
   - REValidation (0.1.4)
   - Reveal-iOS-SDK (1.5.1)
-  - SDURLCache (1.2.1)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
-  - SDWebImage-ProgressView (0.4.0):
-    - SDWebImage (~> 3.7.0)
   - SDWebImage/Core (3.7.3)
-  - SevenSwitch (1.3.0)
   - SKBounceAnimation (1.0.04)
   - SSKeychain (1.2.3)
   - SVProgressHUD (1.0)
-  - UI7Kit (0.9.22):
-    - cdebug
-    - FoundationExtension
-    - GIKPopoverBackgroundView/Core
-    - SevenSwitch (~> 1.3.0)
   - ZAActivityBar (0.1.1):
     - SKBounceAnimation (~> 1.0)
 
@@ -68,8 +43,6 @@ DEPENDENCIES:
   - ALActionBlocks
   - CTAssetsPickerController (from `https://github.com/wujichao/CTAssetsPickerController.git`)
   - FMDB
-  - HMSegmentedControl
-  - JDStatusBarNotification
   - JSPatch
   - JSQSystemSoundPlayer (~> 1.5)
   - Mantle (= 1.5.4)
@@ -81,12 +54,9 @@ DEPENDENCIES:
   - RegexKitLite
   - RETableViewManager (= 1.5.14)
   - Reveal-iOS-SDK
-  - SDURLCache (from `https://github.com/wujichao/SDURLCache.git`)
   - SDWebImage
-  - SDWebImage-ProgressView
   - SSKeychain
   - SVProgressHUD (= 1.0)
-  - UI7Kit
   - ZAActivityBar
 
 EXTERNAL SOURCES:
@@ -95,52 +65,38 @@ EXTERNAL SOURCES:
   Qiniu:
     :branch: AFNetworking-1.x
     :git: https://github.com/qiniu/objc-sdk.git
-  SDURLCache:
-    :git: https://github.com/wujichao/SDURLCache.git
 
 CHECKOUT OPTIONS:
   CTAssetsPickerController:
     :commit: 9bfd227d1b81659f286cd9fbc51c5f6e53f1e369
     :git: https://github.com/wujichao/CTAssetsPickerController.git
   Qiniu:
-    :commit: 825e72341951cc9efc931f2e97585d641661207d
+    :commit: 637cdc555b4f0c6227ae785964c717f950359af4
     :git: https://github.com/qiniu/objc-sdk.git
-  SDURLCache:
-    :commit: 5772184252d99bff9bc4d2c25525af96d6e3f9b1
-    :git: https://github.com/wujichao/SDURLCache.git
 
 SPEC CHECKSUMS:
   AFNetworking: 127629aef6e631d57291c25154defc678c8a7337
   ALActionBlocks: ac91b1a37b60a8004fb687ddade0600446f3d3fa
-  cdebug: 32bf88e54d22ad187b23122872b3977e5d0c1bde
-  CTAssetsPickerController: 7d7804624eaab05c124720899f1e673bc2f7507a
+  CTAssetsPickerController: 817e7570fc84bf48fab9b56ccfa80d16b7bffa41
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
-  FoundationExtension: b834d50afb2691d0e0becbff0e70b9f15bd6a1b3
-  GIKPopoverBackgroundView: 9cde2752e608df4d1e35ebca12af762b9a7dca3e
-  HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
-  JDStatusBarNotification: a36d09ccbb047217572b074a61e7ca10dddc5f0a
-  JSPatch: 494b4bc34254e219317ddb0200c0df6a55b9792d
+  JSPatch: d667f53dd37bffe640e056198d26c5f0f1219e55
   JSQSystemSoundPlayer: 443466bd5f4537d0b7f15a0184244169ae65f8e5
   leveldb-library: 4b0b6d3bdf102d072d6cf6e046615a6f88ea4bf1
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
-  MCSwipeTableViewCell: 28a50729ba9a1359d70f57737a7e5022b3137297
+  MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
   MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
-  Qiniu: 7affd88b4054a81e1d58716281a1a0afaf6ce84f
+  Qiniu: 1cf45054ac5395e047f3644bdc72da7040f5b35d
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   RETableViewManager: 317f43f31c0a5818c6257cb7544167819a8ae170
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
   Reveal-iOS-SDK: c9c55cad2729c85f6ced415f1b21857c9a2d8ef9
-  SDURLCache: 7f432f0acfd5e70ba38804896775d73b0dbbde1a
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
-  SDWebImage-ProgressView: cdc29091ec0d53fd6dab3df65039a4f308e0a5ae
-  SevenSwitch: 4faf7584ea9fcfa053ab0375353531c402ed2bf0
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   SVProgressHUD: 46088807596a795cbcb4affd92cf3f13b6ab3dda
-  UI7Kit: a2be10b7ced09944b8d2dca5d373743665d29639
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.38.2
