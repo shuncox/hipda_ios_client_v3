@@ -12,6 +12,7 @@
 
 #define kHPClientBaseURLString (S(@"http://%@/", HPBaseURL))
 
+@class HPThread;
 @interface HPHttpClient : AFHTTPClient
 
 + (HPHttpClient *)sharedClient;
@@ -22,5 +23,8 @@
             parameters:(NSDictionary *)parameters
                success:(void (^)(AFHTTPRequestOperation *operation, NSString *html))success
                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+
+- (void)cancelOperationsWithThread:(HPThread *)thread;
 
 @end

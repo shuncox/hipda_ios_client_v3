@@ -13,6 +13,7 @@
 #import <SVProgressHUD.h>
 #import "NSString+Additions.h"
 #import "HPSettingViewController.h"//¬_¬
+#import "HPThread.h"
 
 @interface HPHttpClient()<UIAlertViewDelegate>
 @property (nonatomic, assign)NSInteger dnsErrorCount;
@@ -221,6 +222,25 @@
         // 不要鄙视我¬_¬
         HPSettingViewController *settingVC = [HPSettingViewController new];
         [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:[HPCommon NVCWithRootVC:settingVC] animated:YES completion:nil];
+    }
+}
+
+#pragma mark -
+- (void)cancelOperationsWithThread:(HPThread *)thread
+{
+    if (thread.tid <= 0) return;
+    
+    for (NSOperation *operation in [self.operationQueue operations]) {
+        if (![operation isKindOfClass:[AFHTTPRequestOperation class]]) {
+            continue;
+        }
+        
+        NSString *url = [[[(AFHTTPRequestOperation *)operation request] URL] absoluteString];
+        if ([url indexOf:@"viewthread.php"] != -1
+            && [url indexOf:[NSString stringWithFormat:@"%@", @(thread.tid)]] != -1) {
+            
+            [operation cancel];
+        }
     }
 }
 

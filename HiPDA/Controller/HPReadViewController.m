@@ -288,6 +288,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [(UIWebView*)self.view setDelegate:nil];
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
+    
+    [[HPHttpClient sharedClient] cancelOperationsWithThread:self.thread];
 }
 
 #pragma mark - prepare view
