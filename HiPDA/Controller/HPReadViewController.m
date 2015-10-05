@@ -462,6 +462,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                  redirectFromPid:_find_pid ? _find_pid:0
                            block:
      ^(NSArray *posts, NSDictionary *parameters, NSError *error) {
+        
+        if (!weakSelf) return;
          
         if (!error) {
             
