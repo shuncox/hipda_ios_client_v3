@@ -483,7 +483,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 
                 HPNewPost *post = (HPNewPost *)obj;
                 
-                NSString *liClass = (post.floor == _gotoFloor) ? @"gotoFloor" : @"";
+                NSString *liClass = (post.floor == weakSelf.gotoFloor) ? @"gotoFloor" : @"";
                 
                 NSString *list = nil;
                 BOOL isBlocked = [Setting isBlocked:post.user.username];
