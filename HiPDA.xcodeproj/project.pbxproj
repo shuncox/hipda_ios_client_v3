@@ -2545,7 +2545,7 @@
 					"\"${PODS_ROOT}/Headers/cdebug\"",
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
@@ -2598,7 +2598,7 @@
 					"\"${PODS_ROOT}/Headers/cdebug\"",
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
