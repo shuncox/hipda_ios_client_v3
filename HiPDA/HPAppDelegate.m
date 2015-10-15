@@ -25,6 +25,7 @@
 #import "HPNotice.h"
 #import "HPURLCache.h"
 #import "HPURLProtocol.h"
+#import <AVOSCloud/AVOSCloud.h>
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -174,6 +175,10 @@
     }
     
     [Flurry trackUserIfNeeded];
+    
+    // leancloud
+    [AVOSCloud setApplicationId:@"wTSunaTDyUpFdqqd4Lv6mFN1"
+                      clientKey:@"uOklvU8jPJtBkSfchH6XHC9a"];
     
     return YES;
 }

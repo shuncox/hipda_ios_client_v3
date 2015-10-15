@@ -19,3 +19,4 @@ pod 'Qiniu', :git => 'https://github.com/qiniu/objc-sdk.git', :branch => 'AFNetw
 pod 'JSPatch'
 pod 'Mantle', '1.5.4'
 pod 'Objective-LevelDB'
+pod 'AVOSCloud'
