@@ -161,11 +161,14 @@
         //note
         [MobClick setCrashReportEnabled:NO];
         [MobClick setLogEnabled:NO];
+        [MobClick setBackgroundTaskEnabled:NO];
+        [MobClick setLatency:30];
         
 #if DEBUG
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:@"debug"];
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:BATCH channelId:@"debug"];
+        
 #else
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:SEND_ON_EXIT channelId:nil];
+        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:BATCH channelId:nil];
 #endif
         
     }
