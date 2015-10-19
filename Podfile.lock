@@ -23,6 +23,13 @@ PODS:
     - leveldb-library (~> 1.18)
   - Qiniu (7.0.7):
     - AFNetworking (~> 1.0)
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
+    - ReactiveCocoa/Core
   - REFormattedNumberField (1.1.5)
   - RegexKitLite (4.0)
   - RETableViewManager (1.6):
@@ -53,6 +60,7 @@ DEPENDENCIES:
   - NSString+Emoji
   - Objective-LevelDB
   - Qiniu (from `https://github.com/qiniu/objc-sdk.git`, branch `AFNetworking-1.x`)
+  - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6.0)
   - Reveal-iOS-SDK
@@ -91,6 +99,7 @@ SPEC CHECKSUMS:
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
   Qiniu: 1cf45054ac5395e047f3644bdc72da7040f5b35d
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   RETableViewManager: 9667ecb29c005c32df40a1dd1828224840a351a2
