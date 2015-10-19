@@ -1,0 +1,53 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'leanengine', '--save' ]
+2 info using npm@1.5.0-alpha-4
+3 info using node@v0.10.29
+4 verbose node symlink /usr/local/bin/node
+5 verbose config Skipping project config: /Users/wujichao/.npmrc. (matches userconfig)
+6 verbose cache add [ 'leanengine', null ]
+7 verbose cache add spec="leanengine" args=["leanengine",null]
+8 verbose parsed spec { raw: 'leanengine',
+8 verbose parsed spec   scope: null,
+8 verbose parsed spec   name: 'leanengine',
+8 verbose parsed spec   rawSpec: '',
+8 verbose parsed spec   spec: '*',
+8 verbose parsed spec   type: 'range' }
+9 verbose addNamed [ 'leanengine', '*' ]
+10 verbose addNamed [ null, '*' ]
+11 silly lockFile 88b20d69-leanengine leanengine@*
+12 verbose lock leanengine@* /Users/wujichao/.npm/88b20d69-leanengine.lock
+13 silly addNameRange { name: 'leanengine', range: '*', hasData: false }
+14 verbose mapToRegistry name leanengine
+15 verbose mapToRegistry uri https://registry.npmjs.org/leanengine
+16 verbose request where is /leanengine
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id dd0d5441f26d160e
+19 verbose request url raw /leanengine
+20 verbose request url resolving [ 'https://registry.npmjs.org/', './leanengine' ]
+21 verbose request url resolved https://registry.npmjs.org/leanengine
+22 verbose request where is https://registry.npmjs.org/leanengine
+23 verbose request no basic auth needed
+24 info trying registry request attempt 1 at 15:23:32
+25 http GET https://registry.npmjs.org/leanengine
+26 info retry will retry, error on last attempt: Error: read ECONNRESET
+27 info trying registry request attempt 2 at 15:27:03
+28 http GET https://registry.npmjs.org/leanengine
+29 info retry will retry, error on last attempt: Error: read ECONNRESET
+30 info trying registry request attempt 3 at 15:33:07
+31 http GET https://registry.npmjs.org/leanengine
+32 silly lockFile 88b20d69-leanengine leanengine@*
+33 silly lockFile 88b20d69-leanengine leanengine@*
+34 error network socket hang up
+34 error network This is most likely not a problem with npm itself
+34 error network and is related to network connectivity.
+34 error network In most cases you are behind a proxy or have bad network settings.
+34 error network
+34 error network If you are behind a proxy, please make sure that the
+34 error network 'proxy' config is set properly.  See: 'npm help config'
+35 error System Darwin 14.4.0
+36 error command "node" "/usr/local/bin/npm" "install" "leanengine" "--save"
+37 error cwd /Users/wujichao/Documents/objc/project/HiPDA_v3/HiPDA/hipda_ios_client_v3/avoscloud/hpclient
+38 error node -v v0.10.29
+39 error npm -v 1.5.0-alpha-4
+40 error code ECONNRESET
+41 verbose exit [ 1, true ]
