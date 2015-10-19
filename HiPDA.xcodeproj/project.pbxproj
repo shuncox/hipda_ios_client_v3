@@ -356,6 +356,8 @@
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
 		EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF18F251B01037300B50E19 /* HPURLProtocol.m */; };
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
+		EAF45E2A1BD0945E00CBEBED /* HPUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF45E291BD0945E00CBEBED /* HPUserService.m */; settings = {ASSET_TAGS = (); }; };
+		EAF45E2E1BD0948B00CBEBED /* HPBlockService.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF45E2D1BD0948B00CBEBED /* HPBlockService.m */; settings = {ASSET_TAGS = (); }; };
 		EAF55C981B7A478B0022F2CB /* debug-hotpatch.js in Resources */ = {isa = PBXBuildFile; fileRef = EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */; };
 		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
@@ -867,6 +869,10 @@
 		EAF18F251B01037300B50E19 /* HPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLProtocol.m; path = Model/HPURLProtocol.m; sourceTree = "<group>"; };
 		EAF3C567194C11E700168263 /* HPSetStupidBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetStupidBarController.h; path = Controller/HPSetStupidBarController.h; sourceTree = "<group>"; };
 		EAF3C568194C11E700168263 /* HPSetStupidBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetStupidBarController.m; path = Controller/HPSetStupidBarController.m; sourceTree = "<group>"; };
+		EAF45E281BD0945E00CBEBED /* HPUserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPUserService.h; path = Service/HPUserService.h; sourceTree = "<group>"; };
+		EAF45E291BD0945E00CBEBED /* HPUserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPUserService.m; path = Service/HPUserService.m; sourceTree = "<group>"; };
+		EAF45E2C1BD0948B00CBEBED /* HPBlockService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBlockService.h; path = Service/HPBlockService.h; sourceTree = "<group>"; };
+		EAF45E2D1BD0948B00CBEBED /* HPBlockService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBlockService.m; path = Service/HPBlockService.m; sourceTree = "<group>"; };
 		EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "debug-hotpatch.js"; path = "HotPatch/debug-hotpatch.js"; sourceTree = "<group>"; };
 		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
 		EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPEditPostViewController.m; path = Controller/HPEditPostViewController.m; sourceTree = "<group>"; };
@@ -1791,6 +1797,17 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		EAF45E2B1BD0946900CBEBED /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				EAF45E281BD0945E00CBEBED /* HPUserService.h */,
+				EAF45E291BD0945E00CBEBED /* HPUserService.m */,
+				EAF45E2C1BD0948B00CBEBED /* HPBlockService.h */,
+				EAF45E2D1BD0948B00CBEBED /* HPBlockService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		EAFDB8391829EFA900C1718B = {
 			isa = PBXGroup;
 			children = (
@@ -1843,6 +1860,7 @@
 				EAF18F231B01031400B50E19 /* Network */,
 				EA127381183101DF00DE9851 /* View */,
 				EA499F101830B8C700172989 /* Controller */,
+				EAF45E2B1BD0946900CBEBED /* Service */,
 				EA5DF0D718311EC9008E4248 /* Image */,
 				EA499F351830C13A00172989 /* Vender */,
 				EA499F3E1830C1F400172989 /* Helper */,
@@ -2318,7 +2336,9 @@
 				EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */,
 				EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */,
 				EA083D6C18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
+				EAF45E2A1BD0945E00CBEBED /* HPUserService.m in Sources */,
 				EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */,
+				EAF45E2E1BD0948B00CBEBED /* HPBlockService.m in Sources */,
 				EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */,
 				EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */,
 				EA06A60818C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m in Sources */,

@@ -15,6 +15,7 @@
 #import "UIAlertView+Blocks.h"
 #import "HPMessage.h"
 #import "HPSetting.h"
+#import "HPBlockService.h"
 
 @interface HPUserViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -199,8 +200,19 @@
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         
         if ([Setting isBlocked:_user.username]) {
+            // TODO: remove old
+            HPAVBlockUser *user = [HPAVBlockUser object];
+            user.username = self.username;
+            user.uid = self.uid;
+            [[HPBlockService shared] removeUser:user];
             [Setting removeBlockWithUsername:_user.username];
         } else {
+            // TODO: remove old
+            HPAVBlockUser *user = [HPAVBlockUser object];
+            user.username = self.username;
+            user.uid = self.uid;
+            user.tags = @[@"1", @"2"];
+            [[HPBlockService shared] addUser:user];
             [Setting addBlockWithUsername:_user.username];
         }
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

@@ -25,7 +25,9 @@
 #import "HPNotice.h"
 #import "HPURLCache.h"
 #import "HPURLProtocol.h"
-#import <AVOSCloud/AVOSCloud.h>
+// TODO: remove blockService in this file
+#import "HPUserService.h"
+#import "HPBlockService.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -179,7 +181,29 @@
     // leancloud
     [AVOSCloud setApplicationId:@"wTSunaTDyUpFdqqd4Lv6mFN1"
                       clientKey:@"uOklvU8jPJtBkSfchH6XHC9a"];
+#ifdef DEBUG
+    [AVOSCloud setAllLogsEnabled:YES];
+#endif
+    // TODO: remove blockService in this file
+    dispatch_block_t b = ^(void){
+        [[HPBlockService shared] updateWithBlock:^(BOOL succeeded, NSError *error) {
+            ;
+        }];
+    };
     
+    if (![[HPUserService shared] isLogin]) {
+        [[HPUserService shared] signUpWithUsername:@"test12" password:@"123456" block:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                [[HPUserService shared] logInWithUsername:@"test12" password:@"123456" block:^(AVUser *user, NSError *error) {
+                    b();
+                }];
+            } else {
+                b();
+            }
+        }];
+    } else {
+        b();
+    }
     return YES;
 }
 
