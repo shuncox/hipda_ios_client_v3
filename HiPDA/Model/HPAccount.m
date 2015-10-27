@@ -258,14 +258,35 @@
 - (void)logout {
     
     NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+    
+    // clear username
+    [NSStandardUserDefaults saveObject:@"" forKey:kHPAccountUserName];
+    // clear password
     [SSKeychain deletePasswordForService:kHPKeychainService account:username];
 
-
+    //clear userDefaults
+    // 有些不清空
+    NSMutableDictionary *keepSettings = [NSMutableDictionary dictionary];
+    NSDictionary *d = [NSStandardUserDefaults dictionaryRepresentation];
+    [d enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+        // 用户的设置不清空
+        if ([key hasPrefix:HPSettingDic]) {
+            [keepSettings setObject:obj forKey:key];
+        }
+    }];
+    //
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //
+    [keepSettings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [NSStandardUserDefaults setObject:obj forKey:key];
+    }];
+    [NSStandardUserDefaults synchronize];
     
+    
+    //
     [Setting loadDefaults];
-   
+
     // clear cookies
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *each in cookieStorage.cookies) {

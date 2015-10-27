@@ -117,7 +117,7 @@
     RETableViewItem *logoutItem = [RETableViewItem itemWithTitle:@"登出" accessoryType:UITableViewCellAccessoryNone selectionHandler:^(RETableViewItem *item) {
         
         [UIAlertView showConfirmationDialogWithTitle:@"登出"
-                                             message:@"您确定要登出当前账号吗?"
+                                             message:@"您确定要登出当前账号吗?\n该账号的设置不会丢失"
                                              handler:^(UIAlertView *alertView, NSInteger buttonIndex)
          {
              

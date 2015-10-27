@@ -35,12 +35,23 @@
     return sharedSetting;
 }
 
-
++ (NSString *)keyForSetting
+{
+    NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+    
+    return [NSString stringWithFormat:@"%@_for_%@", HPSettingDic, username];
+}
 
 - (void)loadSetting {
     
     //_globalSettings = [NSStandardUserDefaults objectForKey:HPSettingDic];
-    NSDictionary *savedSettings = [NSStandardUserDefaults objectForKey:HPSettingDic];
+    NSDictionary *savedSettings = [NSStandardUserDefaults objectForKey:[self.class keyForSetting]];
+    if (!savedSettings) {
+        // 兼容老版本
+        savedSettings = [NSStandardUserDefaults objectForKey:HPSettingDic];
+        [self save];
+    }
+    
     NSLog(@"savedSettings %@", savedSettings);
     
     ///////////
@@ -120,7 +131,7 @@
 }
 
 - (void)save {
-    [NSStandardUserDefaults saveObject:_globalSettings forKey:HPSettingDic];
+    [NSStandardUserDefaults saveObject:_globalSettings forKey:[self.class keyForSetting]];
     if (DEBUG_SETTING) NSLog(@"save  _globalSettings %@", _globalSettings);
 }
 

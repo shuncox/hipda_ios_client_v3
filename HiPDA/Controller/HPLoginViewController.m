@@ -167,6 +167,7 @@
                                               completion:
                       ^{
                           [Flurry logEvent:@"Account Login" withParameters:@{@"userid":username}];
+                          [Setting loadSetting];
                           [Flurry trackUserIfNeeded];
                           [HPRearViewController threadVCRefresh];
                           
