@@ -68,6 +68,7 @@
 		EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0901A9185316DD0067961E /* HPSetForumsViewController.m */; };
 		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; settings = {ASSET_TAGS = (); }; };
 		EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF84A1BDF197000DDBB78 /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
+		EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */; settings = {ASSET_TAGS = (); }; };
 		EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CE6B418D832030033EC36 /* HPRearViewController.m */; };
 		EA0CE6B818D86A180033EC36 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B618D86A180033EC36 /* menu.png */; };
 		EA0CE6B918D86A180033EC36 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B718D86A180033EC36 /* menu@2x.png */; };
@@ -466,6 +467,8 @@
 		EA0901A9185316DD0067961E /* HPSetForumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetForumsViewController.m; path = Controller/HPSetForumsViewController.m; sourceTree = "<group>"; };
 		EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		EA0AF84A1BDF197000DDBB78 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		EA0AF84C1BDF258F00DDBB78 /* UIViewController+Tracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Tracking.h"; path = "Helper/UIViewController+Tracking.h"; sourceTree = "<group>"; };
+		EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Tracking.m"; path = "Helper/UIViewController+Tracking.m"; sourceTree = "<group>"; };
 		EA0CE6B318D832030033EC36 /* HPRearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearViewController.h; path = Controller/HPRearViewController.h; sourceTree = "<group>"; };
 		EA0CE6B418D832030033EC36 /* HPRearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearViewController.m; path = Controller/HPRearViewController.m; sourceTree = "<group>"; };
 		EA0CE6B618D86A180033EC36 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Image/menu.png; sourceTree = "<group>"; };
@@ -1322,6 +1325,8 @@
 				EAEC58CB1948465000F5931A /* UIImage+Save.m */,
 				EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */,
 				EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */,
+				EA0AF84C1BDF258F00DDBB78 /* UIViewController+Tracking.h */,
+				EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2312,6 +2317,7 @@
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
+				EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */,
 				EA499F481830C2D800172989 /* XPathQuery.m in Sources */,
 				EA368A8018C75E9900C5C5BD /* HPBaseCompostionViewController.m in Sources */,
 				EA083D6D18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroup.m in Sources */,
