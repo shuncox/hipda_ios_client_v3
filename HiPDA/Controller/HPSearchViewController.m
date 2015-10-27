@@ -8,9 +8,12 @@
 
 #import "HPSearchViewController.h"
 #import "HPReadViewController.h"
+#import "HPUserViewController.h"
+#import "HPSearchUserCell.h"
 
 #import "HPSearch.h"
 #import "HPUser.h"
+#import "HPDatabase.h"
 
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
@@ -53,7 +56,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    [self.tableView registerClass:HPSearchUserCell.class forCellReuseIdentifier:NSStringFromClass(HPSearchUserCell.class)];
     
     self.title = @"搜索";
     
@@ -79,7 +83,7 @@
     [_searchBar becomeFirstResponder];
     
     _searchBar.showsScopeBar = YES;
-    _searchBar.scopeButtonTitles = @[@"标题", @"全文"];
+    _searchBar.scopeButtonTitles = @[@"标题", @"全文", @"用户"];
     
     _searchBar.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 44 + 40);
 
@@ -120,6 +124,11 @@
     
     if (_user) {
         [self searchForUser:sender];
+        return;
+    }
+    
+    if (self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
+        [self searchUserWithKey:self.searchBar.text];
         return;
     }
     
@@ -245,6 +254,36 @@
                              }];
 }
 
+
+- (void)searchUserWithKey:(NSString *)key
+{
+    NSMutableArray *results = [NSMutableArray array];
+    [[HPDatabase sharedDb] open];
+    
+    FMResultSet *resultSet = [[[HPDatabase sharedDb] db] executeQuery:@"SELECT * FROM user WHERE username LIKE ?", [NSString stringWithFormat:@"%%%@%%", key]];
+    while ([resultSet next]) {
+        NSString *username = [resultSet stringForColumnIndex:0];
+        NSString *uid = [resultSet stringForColumnIndex:1];
+        
+        HPUser *user = [HPUser new];
+        user.username = username;
+        user.uid = [uid integerValue];
+        [results addObject:@{@"user": user}];
+    }
+    
+    [[HPDatabase sharedDb] close];
+    
+    _results = [results copy];
+    _page_count = 1;
+    
+    [self.tableView reloadData];
+    if (_results.count > 0) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        [self.tableView flashScrollIndicators];
+    }
+}
+
 - (void)prevPage:(id)sender {
     
     if (_current_page <= 1) {
@@ -292,6 +331,12 @@
     self.navigationItem.rightBarButtonItem = _searchButtonItem;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
+        [self search:searchText];
+    }
+}
 
 #pragma mark - Table view data source
 
@@ -349,6 +394,13 @@
             cell.detailTextLabel.text = moreInfo;
             break;
         }
+        case HPSearchTypeUser:
+        {
+            HPSearchUserCell *userCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HPSearchUserCell.class)];
+            HPUser *user = [dict objectForKey:@"user"];
+            userCell.user = user;
+            return userCell;
+        }
         default:
             NSLog(@"error HPSearchType %d", type);
             break;
@@ -362,16 +414,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSMutableDictionary *dict = [_results objectAtIndex:indexPath.row];
+    UIViewController *vc = nil;
     
-    HPThread *thread = [HPThread new];
-    thread.fid = [[dict objectForKey:@"fidString"] integerValue];
-    thread.tid = [[dict objectForKey:@"tidString"] integerValue];
-    thread.title = [dict objectForKey:@"title"];
-    NSInteger find_pid = [[dict objectForKey:@"pidString"] integerValue];
+    if (self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
+        HPUser *user = dict[@"user"];
+        HPUserViewController *uvc = [HPUserViewController new];
+        uvc.username = user.username;
+        uvc.uid = user.uid;
+        vc = uvc;
+        
+    } else {
+        HPThread *thread = [HPThread new];
+        thread.fid = [[dict objectForKey:@"fidString"] integerValue];
+        thread.tid = [[dict objectForKey:@"tidString"] integerValue];
+        thread.title = [dict objectForKey:@"title"];
+        NSInteger find_pid = [[dict objectForKey:@"pidString"] integerValue];
+        
+        vc = [[HPReadViewController alloc] initWithThread:thread find_pid:find_pid];
+    }
     
-    HPReadViewController *rvc = [[HPReadViewController alloc] initWithThread:thread find_pid:find_pid];
-    
-    [self.navigationController pushViewController:rvc animated:YES];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -388,6 +450,11 @@
         case HPSearchTypeFullText:
         {
             text = [dict objectForKey:@"detail"];
+            break;
+        }
+        case HPSearchTypeUser:
+        {
+            return 50.f;
             break;
         }
         default:

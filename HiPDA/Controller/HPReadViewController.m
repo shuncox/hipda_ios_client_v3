@@ -793,7 +793,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         NSLog(@"not ready");
     }
     
-    NSInteger floor = [_posts[0] floor] + _posts.count - 1;
+    NSInteger floor = [(HPNewPost *)_posts[0] floor] + _posts.count - 1;
 
     NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",floor];
     [self.webView stringByEvaluatingJavaScriptFromString:js];
@@ -875,7 +875,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         return;
     }
     
-    NSInteger s = [_posts[0] floor];
+    NSInteger s = [(HPNewPost *)_posts[0] floor];
     floor = floor - s + 1;
     
     if (floor < 1 || floor > _posts.count) {
@@ -2186,8 +2186,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         NSLog(@"not ready");
     }
 
-    int start = [_posts[0] floor];
-    int end = [_posts[0] floor] + _posts.count - 1;
+    int start = [(HPNewPost *)_posts[0] floor];
+    int end = [(HPNewPost *)_posts[0] floor] + _posts.count - 1;
     
     if (_current_floor > end) {
         _current_floor =  end;

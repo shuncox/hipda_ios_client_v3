@@ -277,6 +277,7 @@
 		EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B97188CEFCC0084EC2D /* IDMPhotoBrowser.m */; };
 		EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */; };
 		EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAE256C18E135870059EEB7 /* HPRearCell.m */; };
+		EAAFD2351BDFB71E001E24EC /* clear_color.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAFD2341BDFB71E001E24EC /* clear_color.png */; settings = {ASSET_TAGS = (); }; };
 		EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */; };
 		EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0619EC1F18006F5C92 /* libz.dylib */; };
 		EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB04C0919EC1F82006F5C92 /* Flurry.m */; };
@@ -353,6 +354,7 @@
 		EAD7F616183CC84600A750D9 /* hp_smile_grapeman_22.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5D9183CC84600A750D9 /* hp_smile_grapeman_22.gif */; };
 		EAD7F617183CC84600A750D9 /* hp_smile_grapeman_23.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DA183CC84600A750D9 /* hp_smile_grapeman_23.gif */; };
 		EAD7F618183CC84600A750D9 /* hp_smile_grapeman_24.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */; };
+		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; settings = {ASSET_TAGS = (); }; };
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
@@ -776,6 +778,7 @@
 		EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DACircularProgressView.m; path = Vender/DACircularProgress/DACircularProgressView.m; sourceTree = "<group>"; };
 		EAAE256B18E135870059EEB7 /* HPRearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearCell.h; path = View/HPRearCell.h; sourceTree = "<group>"; };
 		EAAE256C18E135870059EEB7 /* HPRearCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearCell.m; path = View/HPRearCell.m; sourceTree = "<group>"; };
+		EAAFD2341BDFB71E001E24EC /* clear_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clear_color.png; path = Image/clear_color.png; sourceTree = "<group>"; };
 		EAB04C0219EC1EB7006F5C92 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Vender/UMeng/MobClick.h; sourceTree = "<group>"; };
 		EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = Vender/UMeng/libMobClickLibrary.a; sourceTree = "<group>"; };
 		EAB04C0619EC1F18006F5C92 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -862,6 +865,8 @@
 		EAD7F5D9183CC84600A750D9 /* hp_smile_grapeman_22.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_22.gif; path = Image/DZSmile/hp_smile_grapeman_22.gif; sourceTree = "<group>"; };
 		EAD7F5DA183CC84600A750D9 /* hp_smile_grapeman_23.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_23.gif; path = Image/DZSmile/hp_smile_grapeman_23.gif; sourceTree = "<group>"; };
 		EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_24.gif; path = Image/DZSmile/hp_smile_grapeman_24.gif; sourceTree = "<group>"; };
+		EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSearchUserCell.h; path = View/HPSearchUserCell.h; sourceTree = "<group>"; };
+		EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchUserCell.m; path = View/HPSearchUserCell.m; sourceTree = "<group>"; };
 		EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+Capture.h"; path = "Helper/UIWebView+Capture.h"; sourceTree = "<group>"; };
 		EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+Capture.m"; path = "Helper/UIWebView+Capture.m"; sourceTree = "<group>"; };
 		EAEC58CA1948465000F5931A /* UIImage+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Save.h"; path = "Helper/UIImage+Save.h"; sourceTree = "<group>"; };
@@ -1116,6 +1121,8 @@
 				EA150EAB189165490044CE48 /* MultilineTextCell */,
 				EA13B910194B53D900E01AF5 /* HPStupidBar.h */,
 				EA13B911194B53D900E01AF5 /* HPStupidBar.m */,
+				EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */,
+				EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1347,6 +1354,7 @@
 		EA5DF0D718311EC9008E4248 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				EAAFD2341BDFB71E001E24EC /* clear_color.png */,
 				EAA3A31E1A9F29EC00927278 /* activity */,
 				EAD7F59A183CA68F00A750D9 /* DZSmile */,
 				EA7111BF18B0FE1C007AD5D1 /* toolbar */,
@@ -2157,6 +2165,7 @@
 				EA74459318CA1E62002467EE /* compose_camera_on@2x.png in Resources */,
 				EA083D9818C8D14F00BD8F07 /* keyboard_bg@2x.png in Resources */,
 				EAD7F5FD183CC84600A750D9 /* hp_smile_default_sweat.gif in Resources */,
+				EAAFD2351BDFB71E001E24EC /* clear_color.png in Resources */,
 				EA74459918CA1E62002467EE /* compose_emotion@2x.png in Resources */,
 				EA9A39D31A5BE92E0028BE7D /* bubble-tailless.png in Resources */,
 				EA083D7518C8D14000BD8F07 /* EmotionTextKeys.plist in Resources */,
@@ -2342,6 +2351,7 @@
 				EA743C29183F32410067F62B /* HPMyThread.m in Sources */,
 				EA083DBD18C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
 				EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */,
+				EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */,
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
