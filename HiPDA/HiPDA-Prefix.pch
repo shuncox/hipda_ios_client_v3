@@ -22,6 +22,8 @@
 
     #import "HPCommon.h"
     #import "RegExCategories.h"
+    #import <Masonry.h>
+    #import <ReactiveCocoa.h>
     #import "MobClick.h"
     #import "Flurry.h"
     #import "UIViewController+Tracking.h"
