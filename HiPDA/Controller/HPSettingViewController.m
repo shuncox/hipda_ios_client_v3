@@ -13,6 +13,8 @@
 #import "HPBgFetchViewController.h"
 #import "HPSetStupidBarController.h"
 #import "HPBlockListViewController.h"
+#import "HPLoginViewController.h"
+#import "HPAppDelegate.h"
 
 #import "MultilineTextItem.h"
 #import "HPSetting.h"
@@ -127,7 +129,7 @@
                  
                  [Flurry logEvent:@"Account Logout"];
                  [[HPAccount sharedHPAccount] logout];
-                 [self close:nil];
+                 [self closeAndShowLoginVC];
              }
          }];
         
@@ -772,6 +774,21 @@
 - (void)close:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
         [[HPRearViewController sharedRearVC] forumDidChanged];
+    }];
+}
+
+- (void)closeAndShowLoginVC {
+    [self dismissViewControllerAnimated:YES completion:^{
+        // 板块列表复原
+        [[HPRearViewController sharedRearVC] forumDidChanged];
+        // 换到帖子列表
+        [[HPRearViewController sharedRearVC] switchToThreadVC];
+        // 关闭侧边栏
+        HPAppDelegate *d = [[UIApplication sharedApplication] delegate];
+        [d.viewController revealToggle:d];
+        // 弹出登录, 登录好了会刷新帖子列表
+        HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:[HPCommon NVCWithRootVC:loginvc] animated:YES completion:^{}];
     }];
 }
 

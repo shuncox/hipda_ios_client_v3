@@ -364,6 +364,9 @@
 }
 
 #pragma mark -
+- (void)switchToThreadVC {
+    [self switchToVC:0];
+}
 
 - (void)switchToMessageVC {
     [self switchToVC:1];

@@ -22,6 +22,7 @@
 
 - (void)themeDidChanged;
 
+- (void)switchToThreadVC;
 - (void)switchToMessageVC;
 - (void)switchToNoticeVC;
 
