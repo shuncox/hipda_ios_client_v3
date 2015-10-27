@@ -271,10 +271,6 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     //NSLog(@"searchBar.text %@", searchBar.text);
-    
-    if (searchBar.text.length > 0) {
-        [self search:searchBar];
-    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
@@ -285,7 +281,9 @@
     _current_page = 1;
     self.navigationItem.rightBarButtonItem = _searchButtonItem;
     
-    [self search:searchBar];
+    if (searchBar.text.length > 0) {
+        [self search:searchBar];
+    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
