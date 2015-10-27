@@ -39,7 +39,7 @@
             path = [NSString stringWithFormat:@"forum/search.php?srchtype=fulltext&srchtxt=%@&searchsubmit=true&st=on&srchuname=&srchfilter=all&srchfrom=0&before=&orderby=lastpost&ascdesc=desc&page=%ld", key, page];
             break;
         }
-        case HPSearchTypeUser:
+        case HPSearchTypeUserTopic:
         {
             NSString *key = [parameters objectForKey:@"key"];
             if (page == 1) {
@@ -70,7 +70,7 @@
          
          switch (type) {
              case HPSearchTypeTitle:
-             case HPSearchTypeUser:
+             case HPSearchTypeUserTopic:
              {
                  pattern = @"th class=\"subject.*?<a href=\"viewthread\\.php\\?tid=(\\d+)[^>]+>(.*?)</a>.*?fid=(\\d+)\">(.*?)</a>.*?uid=(\\d+)\">(.*?)</a>.*?<em>(.*?)</em>";
                  

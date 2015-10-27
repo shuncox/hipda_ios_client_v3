@@ -213,7 +213,7 @@
     
     __weak typeof(self) weakSelf = self;
     [HPSearch searchWithParameters:parameters
-                              type:HPSearchTypeUser
+                              type:HPSearchTypeUserTopic
                               page:_current_page
                              block:^(NSArray *results, NSInteger pageCount, NSError *error) {
                                  
@@ -272,7 +272,9 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     //NSLog(@"searchBar.text %@", searchBar.text);
     
-    [self search:searchBar];
+    if (searchBar.text.length > 0) {
+        [self search:searchBar];
+    }
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
