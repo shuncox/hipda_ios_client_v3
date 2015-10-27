@@ -453,6 +453,29 @@
     [[EGOCache globalCache] clearCache];
 }
 
+#pragma mark - topViewController
+//http://stackoverflow.com/questions/6131205/iphone-how-to-find-topmost-view-controller/20515681#20515681
+- (UIViewController*)hp_topViewController {
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
 
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    
+    if ([rootViewController isKindOfClass:[SWRevealViewController class]]) {
+        SWRevealViewController *v = (SWRevealViewController *)rootViewController;
+        return [self topViewControllerWithRootViewController:v.frontViewController];
+    } else if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
 
 @end
