@@ -66,6 +66,8 @@
 		EA083DBE18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBB18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m */; };
 		EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */; };
 		EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0901A9185316DD0067961E /* HPSetForumsViewController.m */; };
+		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; settings = {ASSET_TAGS = (); }; };
+		EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF84A1BDF197000DDBB78 /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
 		EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CE6B418D832030033EC36 /* HPRearViewController.m */; };
 		EA0CE6B818D86A180033EC36 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B618D86A180033EC36 /* menu.png */; };
 		EA0CE6B918D86A180033EC36 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B718D86A180033EC36 /* menu@2x.png */; };
@@ -82,7 +84,6 @@
 		EA1427DB18BF05AA00A7E9B1 /* post_view.html in Resources */ = {isa = PBXBuildFile; fileRef = EA1427DA18BF05AA00A7E9B1 /* post_view.html */; };
 		EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */; };
 		EA181ED918BB725200EE57F1 /* uid.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EA181ED818BB725200EE57F1 /* uid.sqlite */; };
-		EA19F96F1A14FD2A00333503 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA19F96E1A14FD2A00333503 /* Crashlytics.framework */; };
 		EA2454BC1B60BF3000BCD6C6 /* HPHotPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */; };
 		EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6C18C6003E00C5C5BD /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -463,6 +464,8 @@
 		EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WUDemoKeyboardBuilder.m; path = Vender/WUEmoticonsKeyboard/custom/WUDemoKeyboardBuilder.m; sourceTree = "<group>"; };
 		EA0901A8185316DD0067961E /* HPSetForumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetForumsViewController.h; path = Controller/HPSetForumsViewController.h; sourceTree = "<group>"; };
 		EA0901A9185316DD0067961E /* HPSetForumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetForumsViewController.m; path = Controller/HPSetForumsViewController.m; sourceTree = "<group>"; };
+		EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
+		EA0AF84A1BDF197000DDBB78 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		EA0CE6B318D832030033EC36 /* HPRearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearViewController.h; path = Controller/HPRearViewController.h; sourceTree = "<group>"; };
 		EA0CE6B418D832030033EC36 /* HPRearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearViewController.m; path = Controller/HPRearViewController.m; sourceTree = "<group>"; };
 		EA0CE6B618D86A180033EC36 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Image/menu.png; sourceTree = "<group>"; };
@@ -488,7 +491,6 @@
 		EA1427DC18BF78E200A7E9B1 /* HPReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPReadViewController.h; path = Controller/HPReadViewController.h; sourceTree = "<group>"; };
 		EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPReadViewController.m; path = Controller/HPReadViewController.m; sourceTree = "<group>"; };
 		EA181ED818BB725200EE57F1 /* uid.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = uid.sqlite; sourceTree = "<group>"; };
-		EA19F96E1A14FD2A00333503 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		EA2454BA1B60BF3000BCD6C6 /* HPHotPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHotPatch.h; path = HotPatch/HPHotPatch.h; sourceTree = "<group>"; };
 		EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHotPatch.m; path = HotPatch/HPHotPatch.m; sourceTree = "<group>"; };
 		EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableFooterView.m; path = Vender/EGORefreshTableHeaderView/EGORefreshTableFooterView.m; sourceTree = "<group>"; };
@@ -902,10 +904,11 @@
 				EA499F611830C3E100172989 /* Security.framework in Frameworks */,
 				EA499F5F1830C3D800172989 /* SystemConfiguration.framework in Frameworks */,
 				EA499F5D1830C3CA00172989 /* MobileCoreServices.framework in Frameworks */,
+				EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */,
 				EA499F5B1830C3BD00172989 /* ImageIO.framework in Frameworks */,
 				EA499F591830C3B600172989 /* QuartzCore.framework in Frameworks */,
 				EA499F571830C3AE00172989 /* MessageUI.framework in Frameworks */,
-				EA19F96F1A14FD2A00333503 /* Crashlytics.framework in Frameworks */,
+				EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */,
 				EA499F551830C39A00172989 /* CoreText.framework in Frameworks */,
 				EA499F531830C37E00172989 /* libxml2.2.dylib in Frameworks */,
 				EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */,
@@ -1256,8 +1259,9 @@
 		EA499F351830C13A00172989 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */,
+				EA0AF84A1BDF197000DDBB78 /* Fabric.framework */,
 				EA9A39551A5BE92E0028BE7D /* JSMessagesViewController */,
-				EA19F96E1A14FD2A00333503 /* Crashlytics.framework */,
 				EAB04C0119EC1EAA006F5C92 /* UMeng */,
 				EA075F5818E4078D00A07C08 /* BBBadgeBarButtonItem */,
 				EA8186BA18E1E1E40092BDD7 /* IBActionSheet */,
@@ -2244,7 +2248,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 336a8682811030a9c9e624b36e32131ea1d5a8fd 14526b38f2ae365f4eeb049dc5f8f2422ddc4c4a2dca10dcb3b46b08fdc0f4f6";
+			shellScript = "./Fabric.framework/run 336a8682811030a9c9e624b36e32131ea1d5a8fd 14526b38f2ae365f4eeb049dc5f8f2422ddc4c4a2dca10dcb3b46b08fdc0f4f6";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2519,6 +2523,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HiPDA/HiPDA-Prefix.pch";
@@ -2572,6 +2577,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HiPDA/HiPDA-Prefix.pch";

@@ -25,12 +25,14 @@
 #import "HPNotice.h"
 #import "HPURLCache.h"
 #import "HPURLProtocol.h"
+#import "HPHotPatch.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
 
+#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "HPHotPatch.h"
+
 
 @interface HPAppDelegate()
 
@@ -151,7 +153,7 @@
     BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
     BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
     if (bugTrackingEnable) {
-        [Crashlytics startWithAPIKey:@"336a8682811030a9c9e624b36e32131ea1d5a8fd"];
+        [Fabric with:@[[Crashlytics class]]];
     }
     if (dataTrackingEnable) {
         
