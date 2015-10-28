@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define HPSearch_FONT_SIZE 16.0f
+
 enum {
     HPSearchTypeTitle     = 0,
     HPSearchTypeFullText  = 1,

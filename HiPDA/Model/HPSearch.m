@@ -122,14 +122,40 @@
                      // 『』
                      // \n
                      if ([prop isEqualToString:@"title"] || [prop isEqualToString:@"detail"]) {
+                         value = value ?: @"";
                          NSMutableString *raw = [NSMutableString stringWithString:value];
-                         [raw replaceOccurrencesOfString:@"<em style=\"color:red;\">" withString:@"「" options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
-                         [raw replaceOccurrencesOfString:@"</em>" withString:@"」" options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
                          
+                         //
                          [raw replaceOccurrencesOfString:@"\n" withString:@"  " options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
-                         value = [NSString stringWithString:raw];
+                         
+                         //
+                         NSString *left = @"<em style=\"color:red;\">";
+                         NSString *right = @"</em>";
+                         NSString *pattern = [NSString stringWithFormat:@"%@(.*?)%@", left, right];
+                         
+                         NSArray *matches = [RX(pattern) matchesWithDetails:raw];
+                         NSMutableArray *ranges = [NSMutableArray array];
+                         
+                         NSInteger offset = 0;
+                         for (RxMatch *m in matches) {
+                             NSRange r = [m.groups[1] range];
+                             r = NSMakeRange(r.location - left.length - offset, r.length);
+                             offset += (left.length + right.length);
+                             [ranges addObject:[NSValue valueWithRange:r]];
+                         }
+                         
+                         [raw replaceOccurrencesOfString:left withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
+                         [raw replaceOccurrencesOfString:right withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
+                         
+                         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:raw];
+                         for (NSValue *v in ranges) {
+                             [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[v rangeValue]];
+                         }
+                        
+                         [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:HPSearch_FONT_SIZE] range:NSMakeRange(0, [attr length])];
+                         
+                         value = [attr copy];
                      }
-                     
                      
                      [dict setObject:value forKey:prop];
                  }

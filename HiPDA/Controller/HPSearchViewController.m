@@ -20,7 +20,6 @@
 
 #import "SWRevealViewController.h"
 
-#define FONT_SIZE 16.0f
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
 
@@ -366,7 +365,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         
         cell.textLabel.numberOfLines = 0;
-        cell.textLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
+        cell.textLabel.font = [UIFont systemFontOfSize:HPSearch_FONT_SIZE];
         //cell.detailTextLabel.numberOfLines = 0;
     }
     
@@ -377,7 +376,7 @@
     switch (type) {
         case HPSearchTypeTitle:
         {
-            cell.textLabel.text = [dict objectForKey:@"title"];
+            cell.textLabel.attributedText = [dict objectForKey:@"title"];
             
             
             NSString *moreInfo = [NSString stringWithFormat:@"%@  -  %@  -  %@",
@@ -389,8 +388,7 @@
         }
         case HPSearchTypeFullText:
         {
-            cell.textLabel.text = [dict objectForKey:@"detail"];
-            
+            cell.textLabel.attributedText = [dict objectForKey:@"detail"];
             
             NSString *moreInfo = [NSString stringWithFormat:@"标题: %@, 作者: %@",
                                   [dict objectForKey:@"title"],
@@ -431,7 +429,8 @@
         HPThread *thread = [HPThread new];
         thread.fid = [[dict objectForKey:@"fidString"] integerValue];
         thread.tid = [[dict objectForKey:@"tidString"] integerValue];
-        thread.title = [dict objectForKey:@"title"];
+        NSAttributedString *title = [dict objectForKey:@"title"];
+        thread.title = [title string];
         NSInteger find_pid = [[dict objectForKey:@"pidString"] integerValue];
         
         vc = [[HPReadViewController alloc] initWithThread:thread find_pid:find_pid];
@@ -443,7 +442,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSMutableDictionary *dict = [_results objectAtIndex:indexPath.row];
-    NSString *text = nil;
+    NSAttributedString *text = nil;
     HPSearchType type = _searchBar.selectedScopeButtonIndex;
     switch (type) {
         case HPSearchTypeTitle:
@@ -469,10 +468,7 @@
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
-    NSAttributedString *attributedText = [[NSAttributedString alloc]initWithString:text?:@"" attributes:@{
-                                                                                            NSFontAttributeName:[UIFont systemFontOfSize:FONT_SIZE]
-                                        }];
-    CGRect rect = [attributedText boundingRectWithSize:constraint
+    CGRect rect = [text boundingRectWithSize:constraint
                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                context:nil];
     CGSize size = rect.size;
