@@ -27,14 +27,14 @@
     [self.contentView addSubview:_avatarView];
     
     [_avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(10.f);
-        make.top.equalTo(self.contentView).offset(10.f);
-        make.bottom.equalTo(self.contentView).offset(-10.f);
+        make.left.equalTo(self.contentView).offset(15.f);
+        make.top.equalTo(self.contentView).offset(4.f);
+        make.bottom.equalTo(self.contentView).offset(-4.f);
         make.width.equalTo(_avatarView.mas_height);
     }];
     
     [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_avatarView.mas_right).offset(5.f);
+        make.left.equalTo(_avatarView.mas_right).offset(10.f);
         make.centerY.equalTo(self.contentView);
     }];
     
