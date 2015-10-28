@@ -278,6 +278,7 @@
 		EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */; };
 		EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAE256C18E135870059EEB7 /* HPRearCell.m */; };
 		EAAFD2351BDFB71E001E24EC /* clear_color.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAFD2341BDFB71E001E24EC /* clear_color.png */; settings = {ASSET_TAGS = (); }; };
+		EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */; settings = {ASSET_TAGS = (); }; };
 		EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */; };
 		EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0619EC1F18006F5C92 /* libz.dylib */; };
 		EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB04C0919EC1F82006F5C92 /* Flurry.m */; };
@@ -779,6 +780,8 @@
 		EAAE256B18E135870059EEB7 /* HPRearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearCell.h; path = View/HPRearCell.h; sourceTree = "<group>"; };
 		EAAE256C18E135870059EEB7 /* HPRearCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearCell.m; path = View/HPRearCell.m; sourceTree = "<group>"; };
 		EAAFD2341BDFB71E001E24EC /* clear_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clear_color.png; path = Image/clear_color.png; sourceTree = "<group>"; };
+		EAAFD2371BE09D34001E24EC /* HPSwipeRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSwipeRootViewController.h; path = Controller/HPSwipeRootViewController.h; sourceTree = "<group>"; };
+		EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSwipeRootViewController.m; path = Controller/HPSwipeRootViewController.m; sourceTree = "<group>"; };
 		EAB04C0219EC1EB7006F5C92 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Vender/UMeng/MobClick.h; sourceTree = "<group>"; };
 		EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = Vender/UMeng/libMobClickLibrary.a; sourceTree = "<group>"; };
 		EAB04C0619EC1F18006F5C92 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1130,6 +1133,8 @@
 		EA1427DF18BF866C00A7E9B1 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				EAAFD2371BE09D34001E24EC /* HPSwipeRootViewController.h */,
+				EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */,
 				EA0901A8185316DD0067961E /* HPSetForumsViewController.h */,
 				EA0901A9185316DD0067961E /* HPSetForumsViewController.m */,
 				EA3B991D18F9812900F726E1 /* HPBgFetchViewController.h */,
@@ -2352,6 +2357,7 @@
 				EA083DBD18C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
 				EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */,
 				EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */,
+				EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */,
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,

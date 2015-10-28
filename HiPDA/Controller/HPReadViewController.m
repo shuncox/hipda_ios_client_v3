@@ -1061,8 +1061,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     webBrowser.allowSharing = YES;
     
     NSLog(@"open browser");
-    UINavigationController *webBrowserNC = [[UINavigationController alloc] initWithRootViewController:webBrowser];
-    [self presentViewController:webBrowserNC animated:YES completion:NULL];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:webBrowser] animated:YES completion:NULL];
     
     [Flurry logEvent:@"Read OpenUrl" withParameters:@{@"url":url.absoluteString}];
 }
@@ -1178,7 +1177,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     HPReplyTopicViewController *sendvc = [[HPReplyTopicViewController alloc] initWithThread:_thread delegate:self];
     
-    [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:sendvc] animated:YES completion:nil];
     
     [Flurry logEvent:@"Read Reply"];
 }
@@ -1192,21 +1191,21 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                            page:_current_page
                                        delegate:self];
     
-    [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:sendvc] animated:YES completion:nil];
     
     [Flurry logEvent:@"Read ReplySomeone"];
 }
 
 - (void)editThread {
     HPEditPostViewController *evc = [[HPEditPostViewController alloc] initWithPost:[_posts objectAtIndex:0] actionType:ActionTypeEditThread thread:_thread page:_current_page delegate:self];
-    [self presentViewController:[HPCommon NVCWithRootVC:evc] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:evc] animated:YES completion:nil];
     
     [Flurry logEvent:@"Read EditThread"];
 }
 
 - (void)editPost:(HPNewPost *)post {
     HPEditPostViewController *evc = [[HPEditPostViewController alloc] initWithPost:post actionType:ActionTypeEditPost thread:_thread page:_current_page delegate:self];
-    [self presentViewController:[HPCommon NVCWithRootVC:evc] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:evc] animated:YES completion:nil];
     
     [Flurry logEvent:@"Read EditPost"];
 }
@@ -1220,7 +1219,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                            page:_current_page
                                        delegate:self];
     
-    [self presentViewController:[HPCommon NVCWithRootVC:sendvc] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:sendvc] animated:YES completion:nil];
     
     [Flurry logEvent:@"Read QuoteSomeone"];
 }

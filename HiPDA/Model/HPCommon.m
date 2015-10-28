@@ -10,6 +10,7 @@
 #import "HPSetting.h"
 #import "HPNavigationController.h"
 //#import <SystemConfiguration/CaptiveNetwork.h>
+#import "HPSwipeRootViewController.h"
 
 @implementation HPCommon
 
@@ -34,6 +35,22 @@
     return NVC;
 }
 
++ (UINavigationController *)swipeableNVCWithRootVC:(UIViewController *)rootVC {
+    UINavigationController *NVC = [[HPNavigationController alloc] initWithRootViewController:rootVC];
+    if (![Setting boolForKey:HPSettingNightMode]) {
+        NVC.navigationBar.barStyle = UIBarStyleDefault;
+    } else {
+        NVC.navigationBar.barStyle = UIBarStyleBlack;
+    }
+    
+    if (IOS8_OR_LATER) {
+        UIViewController *root = [HPSwipeRootViewController new];
+        NVC.viewControllers = @[root, rootVC];
+        NVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    }
+    
+    return NVC;
+}
 
 + (id)fetchSSIDInfo
 {

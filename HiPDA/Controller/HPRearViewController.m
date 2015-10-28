@@ -449,7 +449,7 @@
 - (void)showSettingVC:(id)sender {
     
     HPSettingViewController *settingVC = [HPSettingViewController new];
-    [self presentViewController:[HPCommon NVCWithRootVC:settingVC] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:settingVC] animated:YES completion:nil];
     
     [Flurry logEvent:@"UserCenter to" withParameters:@{@"name":@"设置"}];
 }
@@ -457,7 +457,7 @@
 - (void)showSearchVC:(id)sender {
     
     HPSearchViewController *searchVC = [HPSearchViewController new];
-    [self presentViewController:[HPCommon NVCWithRootVC:searchVC] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:searchVC] animated:YES completion:nil];
     
     [Flurry logEvent:@"UserCenter to" withParameters:@{@"name":@"搜索"}];
 }

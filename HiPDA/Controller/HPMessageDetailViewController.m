@@ -247,7 +247,7 @@
         HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
         ivc.delegate = self;
         ivc.useQiniu = YES;
-        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
+        [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
     } else {
         HPImageUploadViewController *ivc = [[HPImageUploadViewController alloc] init];
         ivc.delegate = self;

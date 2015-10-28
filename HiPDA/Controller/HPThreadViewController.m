@@ -628,7 +628,7 @@ typedef enum{
 - (void)newThread:(id)sender {
     HPNewThreadViewController *tvc = [[HPNewThreadViewController alloc] initWithFourm:_current_fid delegate:self];
     
-    [self presentViewController:[HPCommon NVCWithRootVC:tvc] animated:YES completion:nil];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:tvc] animated:YES completion:nil];
     
     [Flurry logEvent:@"ThreadVC NewThread"];
 }
