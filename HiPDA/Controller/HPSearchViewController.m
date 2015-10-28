@@ -92,6 +92,42 @@
     if (_user) {
         [self search:nil];
     }
+    
+    
+    RACSignal *textSignal = [[self rac_signalForSelector:@selector(searchBar:textDidChange:)
+                                            fromProtocol:@protocol(UISearchBarDelegate)] map:^id(RACTuple *tuple) {
+        return tuple.second;
+    }];
+    RACSignal *scopeSignal = [[self rac_signalForSelector:@selector(searchBar:selectedScopeButtonIndexDidChange:)
+                                            fromProtocol:@protocol(UISearchBarDelegate)] map:^id(RACTuple *tuple) {
+        UISearchBar *s = tuple[0];
+        return s.text;
+    }];
+    
+    @weakify(self);
+    [[[[[[textSignal merge:scopeSignal]
+        filter:^BOOL(NSString *text) {
+        @strongify(self);
+        return text.length > 0 && self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser;
+    }] throttle:0.3]
+       flattenMap:^RACStream *(NSString *key) {
+           @strongify(self);
+           return [self.class signalForSearchUserWithKey:key];
+       }]
+      deliverOn:[RACScheduler mainThreadScheduler]]
+     subscribeNext:^(NSArray *results) {
+         @strongify(self);
+         
+         _results = results;
+         _page_count = 1;
+         
+         [self.tableView reloadData];
+         if (_results.count > 0) {
+             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+             [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+             [self.tableView flashScrollIndicators];
+         }
+     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,6 +140,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - scrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark -
@@ -128,10 +170,8 @@
     }
     
     if (self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
-        [self searchUserWithKey:self.searchBar.text];
         return;
     }
-    
     
     [_searchBar resignFirstResponder];
     
@@ -254,36 +294,6 @@
                              }];
 }
 
-
-- (void)searchUserWithKey:(NSString *)key
-{
-    NSMutableArray *results = [NSMutableArray array];
-    [[HPDatabase sharedDb] open];
-    
-    FMResultSet *resultSet = [[[HPDatabase sharedDb] db] executeQuery:@"SELECT * FROM user WHERE username LIKE ?", [NSString stringWithFormat:@"%%%@%%", key]];
-    while ([resultSet next]) {
-        NSString *username = [resultSet stringForColumnIndex:0];
-        NSString *uid = [resultSet stringForColumnIndex:1];
-        
-        HPUser *user = [HPUser new];
-        user.username = username;
-        user.uid = [uid integerValue];
-        [results addObject:@{@"user": user}];
-    }
-    
-    [[HPDatabase sharedDb] close];
-    
-    _results = [results copy];
-    _page_count = 1;
-    
-    [self.tableView reloadData];
-    if (_results.count > 0) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-        [self.tableView flashScrollIndicators];
-    }
-}
-
 - (void)prevPage:(id)sender {
     
     if (_current_page <= 1) {
@@ -310,6 +320,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     //NSLog(@"searchBar.text %@", searchBar.text);
+    [self search:searchBar];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
@@ -329,13 +340,6 @@
     // update ui
     self.title = @"搜索";
     self.navigationItem.rightBarButtonItem = _searchButtonItem;
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    if (searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
-        [self search:searchText];
-    }
 }
 
 #pragma mark - Table view data source
@@ -486,7 +490,46 @@
 }
 
 
-
++ (RACSignal *)signalForSearchUserWithKey:(NSString *)key {
+    
+    static NSOperationQueue *q = nil;
+    if (!q) {
+        q = [[NSOperationQueue alloc] init];
+        [q setMaxConcurrentOperationCount:1];
+    }
+    
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        NSBlockOperation *op = [[NSBlockOperation alloc] init];
+        
+        [op addExecutionBlock:^{
+            
+            NSMutableArray *results = [NSMutableArray array];
+            [[HPDatabase sharedDb] open];
+            
+            FMResultSet *resultSet = [[[HPDatabase sharedDb] db] executeQuery:@"SELECT * FROM user WHERE username LIKE ?", [NSString stringWithFormat:@"%%%@%%", key]];
+            while ([resultSet next]) {
+                
+                NSString *username = [resultSet stringForColumnIndex:0];
+                NSString *uid = [resultSet stringForColumnIndex:1];
+                
+                HPUser *user = [HPUser new];
+                user.username = username;
+                user.uid = [uid integerValue];
+                [results addObject:@{@"user": user}];
+            }
+            
+            [[HPDatabase sharedDb] close];
+            
+            [subscriber sendNext:[results copy]];
+            [subscriber sendCompleted];
+        }];
+        
+        [q addOperation:op];
+        
+        return nil;
+    }];
+}
 
 
 @end
