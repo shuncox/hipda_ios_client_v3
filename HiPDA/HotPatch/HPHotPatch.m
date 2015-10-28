@@ -62,7 +62,7 @@
         //每个app 版本对应一个db
         NSString *db = [NSString stringWithFormat:@"hotpatch_%@.ldb", VERSION];
         _db = [LevelDB databaseInLibraryWithName:db];
-        _client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://hpclient.qiniudn.com/patch"]];
+        _client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://7xnvdg.com1.z0.glb.clouddn.com/patch"]];
         
         //
         [JPEngine startEngine];
@@ -146,30 +146,54 @@
             return;
         }
         
-        db[@"config"] = config;
-        for (NSString *url in config.patches) {
+        __block NSInteger validPatchCount = 0;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             
-            [self.client getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            dispatch_group_t downloadGroup = dispatch_group_create();
+            for (NSString *url in config.patches) {
                 
-                NSString *script = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                dispatch_group_enter(downloadGroup);
                 
-                // save
-                db[url] = script;
-                
-                NSLog(@"patch %@: %@", url, script);
-                // 只patch新的 已经patch的忽略(小心新旧冲突)  然后等下次patch
-                if ([old_config.patches containsObject:url]) {
-                    NSLog(@"pass");
-                } else {
-                    NSLog(@"patch");
-                    if (script.length) {
-                        [JPEngine evaluateScript:script];
+                [self.client getPath:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    
+                    NSString *script = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                    
+                    // script 必须以 '//{config.version}' 开头, 用来校验patch的版本
+                    // 防止 在某些情况下, 需要更新patch文件, 但是由于CDN延迟, patch文件还是旧的, 但是config却保存下来, 下次误判为最新的, 不再更新patch
+                    if ([script hasPrefix:[NSString stringWithFormat:@"//%@", @(config.version)]]) {
+                        
+                        //
+                        validPatchCount++;
+                        
+                        // save
+                        db[url] = script;
+                        
+                        NSLog(@"patch %@: %@", url, script);
+                        // 只patch新的 已经patch的忽略(小心新旧冲突)  然后等下次patch
+                        if ([old_config.patches containsObject:url]) {
+                            NSLog(@"pass");
+                        } else {
+                            NSLog(@"patch");
+                            if (script.length) {
+                                [JPEngine evaluateScript:script];
+                            }
+                        }
                     }
+                    
+                    dispatch_group_leave(downloadGroup);
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    ;
+                    dispatch_group_leave(downloadGroup);
+                }];
+            }
+            
+            dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (validPatchCount == config.patches.count) {
+                    db[@"config"] = config;
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                ;
-            }];
-        }
+            });
+        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ;
     }];
