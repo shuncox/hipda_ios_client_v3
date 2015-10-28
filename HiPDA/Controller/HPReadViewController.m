@@ -13,6 +13,7 @@
 #import "HPRearViewController.h"
 #import "HPUserViewController.h"
 #import "HPEditPostViewController.h"
+#import "HPSFSafariViewController.h"
 
 #import "HPNewPost.h"
 #import "HPDatabase.h"
@@ -1056,13 +1057,20 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // todo
     // setting safari
     
-    DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
-    webBrowser.showProgress = YES;
-    webBrowser.allowSharing = YES;
-    
-    NSLog(@"open browser");
-    [self presentViewController:[HPCommon swipeableNVCWithRootVC:webBrowser] animated:YES completion:NULL];
-    
+    if (IOS9_OR_LATER) {
+        
+        HPSFSafariViewController *sfvc = [[HPSFSafariViewController alloc] initWithURL:url];
+        [self presentViewController:[HPCommon swipeableNVCWithRootVC:sfvc] animated:YES completion:NULL];
+        
+    } else {
+        DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
+        webBrowser.showProgress = YES;
+        webBrowser.allowSharing = YES;
+        
+        NSLog(@"open browser");
+        [self presentViewController:[HPCommon swipeableNVCWithRootVC:webBrowser] animated:YES completion:NULL];
+    }
+   
     [Flurry logEvent:@"Read OpenUrl" withParameters:@{@"url":url.absoluteString}];
 }
 
