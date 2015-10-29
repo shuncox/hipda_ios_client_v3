@@ -134,6 +134,19 @@
          NSLog(@"response Set-Cookie cookie %@", cookie);
         */
         
+        HPCrawlerErrorContext *context = [HPCrawlerErrorContext new];
+        context.url = [NSString stringWithFormat:@"%@%@", [[HPHttpClient sharedClient] baseURL], path];
+        context.html = html;
+        context.requestHeaders = ({
+            NSURLRequest *request = [operation request];
+            [request allHTTPHeaderFields];
+        });
+        context.responseHeaders = ({
+            NSHTTPURLResponse *response = [operation response];
+            [response allHeaderFields];
+        });
+        context.cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+        
         
         if ([html indexOf:@"normalthread_"] == -1 && block) {
             
@@ -142,9 +155,17 @@
             NSString *msg = nil;
             if (alert_info) msg = alert_info;
             else if (alert_error) msg = alert_error;
-            else msg = html;
-            
-            block([NSArray array], [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:msg, @"html":html}]);
+            else {
+                NSError *e = nil;
+                if (msg) {
+                    e = [NSError errorWithErrorCodeMsg:HPERROR_DISCUZ_ALERT_CODE errorMsg:msg];
+                } else if ([html indexOf:@"stickthread_"] != -1) {
+                    e = [NSError errorWithErrorCodeMsg:HPERROR_NOT_DEFAULT_THREAD_SETTING_CODE errorMsg:html];
+                } else {
+                    e = [NSError crawlerErrorWithContext:context];
+                }
+                block([NSArray array], e);
+            }
             return;
         }
         
@@ -162,6 +183,11 @@
             } else {
                 [threads addObject:thread];
             }
+        }
+        
+        if (threads.count == 0) {
+            block([NSArray array], [NSError crawlerErrorWithContext:context]);
+            return;
         }
         
         // cache

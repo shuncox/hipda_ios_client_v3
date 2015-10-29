@@ -26,6 +26,7 @@
 #import "HPRearViewController.h"
 #import "HPNewThreadViewController.h"
 #import "HPUserViewController.h"
+#import "HPDebugCrawlerViewController.h"
 
 #import <SVProgressHUD.h>
 #import <ZAActivityBar/ZAActivityBar.h>
@@ -228,21 +229,7 @@ typedef enum{
              
              error_count = 0;
             
-             if (threads.count == 0) {
-                 [UIAlertView showWithTitle:@"加载失败"
-                                    message:@"返回结果为空, 可能是由于您设置了每页帖子15条, 而置顶帖超过15个, 是否前往个人中心修改为默认?"
-                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                     if (buttonIndex != [alertView cancelButtonIndex]) {
-                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:S(@"http://%@/forum/memcp.php?action=profile&typeid=5", HPBaseURL)]];
-                     }
-                 }];
-                 
-                 if (weakSelf.bgFetchBlock) {
-                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
-                     weakSelf.bgFetchBlock = nil;
-                 }
-                 
-             } else if (type != LoadMore) {
+             if (type != LoadMore) {
                  
                  _threads = [NSMutableArray arrayWithArray:threads];
                  [weakSelf.tableView reloadData];
@@ -311,9 +298,33 @@ typedef enum{
                          weakSelf.bgFetchBlock = nil;
                      }
                  }
+             } else  if (error.code == HPERROR_NOT_DEFAULT_THREAD_SETTING_CODE) {
+                 [UIAlertView showWithTitle:@"加载失败"
+                                    message:@"返回结果为空, 可能是由于您设置了每页帖子15条, 而置顶帖超过15个, 前往个人中心修改为默认?"
+                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:S(@"http://%@/forum/memcp.php?action=profile&typeid=5", HPBaseURL)]];
+                                    }];
                  
+                 if (weakSelf.bgFetchBlock) {
+                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
+                     weakSelf.bgFetchBlock = nil;
+                 }
+             } else if (error.code == HPERROR_CRAWLER_CODE) {
+                 HPCrawlerErrorContext *context = error.userInfo[@"context"];
+                 [Flurry logEvent:@"Crawler_Error" withParameters:@{@"info":[NSString stringWithFormat:@"url:%@, html:%@", context.url, context.html]}];
+                 [UIAlertView showWithTitle:@"加载失败"
+                                    message:@"看看是不是论坛挂了或者是被运营商劫持了"
+                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                        HPDebugCrawlerViewController *dvc = [HPDebugCrawlerViewController new];
+                                        dvc.context = context;
+                                        [self presentViewController:[HPCommon swipeableNVCWithRootVC:dvc] animated:YES completion:nil];
+                                    }];
+                 
+                 if (weakSelf.bgFetchBlock) {
+                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
+                     weakSelf.bgFetchBlock = nil;
+                 }
              } else {
-                 
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
                  
                  if (weakSelf.bgFetchBlock) {
