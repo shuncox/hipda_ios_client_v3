@@ -43,7 +43,6 @@ PODS:
   - SDWebImage/Core (3.7.3)
   - SKBounceAnimation (1.0.04)
   - SSKeychain (1.2.3)
-  - SVProgressHUD (1.0)
   - ZAActivityBar (0.1.1):
     - SKBounceAnimation (~> 1.0)
 
@@ -68,7 +67,6 @@ DEPENDENCIES:
   - Reveal-iOS-SDK
   - SDWebImage
   - SSKeychain
-  - SVProgressHUD (= 1.0)
   - ZAActivityBar
 
 EXTERNAL SOURCES:
@@ -111,7 +109,6 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
-  SVProgressHUD: 46088807596a795cbcb4affd92cf3f13b6ab3dda
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
 COCOAPODS: 0.38.2

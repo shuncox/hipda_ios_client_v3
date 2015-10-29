@@ -66,9 +66,9 @@
 		EA083DBE18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBB18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m */; };
 		EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */; };
 		EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0901A9185316DD0067961E /* HPSetForumsViewController.m */; };
-		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; settings = {ASSET_TAGS = (); }; };
-		EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF84A1BDF197000DDBB78 /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
-		EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */; settings = {ASSET_TAGS = (); }; };
+		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; };
+		EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF84A1BDF197000DDBB78 /* Fabric.framework */; };
+		EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */; };
 		EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CE6B418D832030033EC36 /* HPRearViewController.m */; };
 		EA0CE6B818D86A180033EC36 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B618D86A180033EC36 /* menu.png */; };
 		EA0CE6B918D86A180033EC36 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B718D86A180033EC36 /* menu@2x.png */; };
@@ -84,7 +84,7 @@
 		EA13B912194B53D900E01AF5 /* HPStupidBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13B911194B53D900E01AF5 /* HPStupidBar.m */; };
 		EA1427DB18BF05AA00A7E9B1 /* post_view.html in Resources */ = {isa = PBXBuildFile; fileRef = EA1427DA18BF05AA00A7E9B1 /* post_view.html */; };
 		EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */; };
-		EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */; settings = {ASSET_TAGS = (); }; };
+		EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */; };
 		EA181ED918BB725200EE57F1 /* uid.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EA181ED818BB725200EE57F1 /* uid.sqlite */; };
 		EA2454BC1B60BF3000BCD6C6 /* HPHotPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */; };
 		EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -169,6 +169,8 @@
 		EA74459718CA1E62002467EE /* compose_emotion_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */; };
 		EA74459818CA1E62002467EE /* compose_emotion.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458C18CA1E62002467EE /* compose_emotion.png */; };
 		EA74459918CA1E62002467EE /* compose_emotion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458D18CA1E62002467EE /* compose_emotion@2x.png */; };
+		EA7840781BE1F06F00139141 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EA7840751BE1F06F00139141 /* SVProgressHUD.bundle */; };
+		EA7840791BE1F06F00139141 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7840771BE1F06F00139141 /* SVProgressHUD.m */; };
 		EA7B5A3E1AFA4F34005657DC /* HPURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */; };
 		EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */; };
 		EA80F3D618E069FA00B3633C /* post_view_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = EA80F3D518E069FA00B3633C /* post_view_dark.html */; };
@@ -278,8 +280,8 @@
 		EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B97188CEFCC0084EC2D /* IDMPhotoBrowser.m */; };
 		EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5BA2188CF00F0084EC2D /* DACircularProgressView.m */; };
 		EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAE256C18E135870059EEB7 /* HPRearCell.m */; };
-		EAAFD2351BDFB71E001E24EC /* clear_color.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAFD2341BDFB71E001E24EC /* clear_color.png */; settings = {ASSET_TAGS = (); }; };
-		EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */; settings = {ASSET_TAGS = (); }; };
+		EAAFD2351BDFB71E001E24EC /* clear_color.png in Resources */ = {isa = PBXBuildFile; fileRef = EAAFD2341BDFB71E001E24EC /* clear_color.png */; };
+		EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */; };
 		EAB04C0519EC1F09006F5C92 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */; };
 		EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB04C0619EC1F18006F5C92 /* libz.dylib */; };
 		EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB04C0919EC1F82006F5C92 /* Flurry.m */; };
@@ -356,7 +358,7 @@
 		EAD7F616183CC84600A750D9 /* hp_smile_grapeman_22.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5D9183CC84600A750D9 /* hp_smile_grapeman_22.gif */; };
 		EAD7F617183CC84600A750D9 /* hp_smile_grapeman_23.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DA183CC84600A750D9 /* hp_smile_grapeman_23.gif */; };
 		EAD7F618183CC84600A750D9 /* hp_smile_grapeman_24.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */; };
-		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; settings = {ASSET_TAGS = (); }; };
+		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; };
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
@@ -630,6 +632,9 @@
 		EA74458B18CA1E62002467EE /* compose_emotion_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion_on@2x.png"; path = "Image/compose/compose_emotion_on@2x.png"; sourceTree = "<group>"; };
 		EA74458C18CA1E62002467EE /* compose_emotion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = compose_emotion.png; path = Image/compose/compose_emotion.png; sourceTree = "<group>"; };
 		EA74458D18CA1E62002467EE /* compose_emotion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion@2x.png"; path = "Image/compose/compose_emotion@2x.png"; sourceTree = "<group>"; };
+		EA7840751BE1F06F00139141 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		EA7840761BE1F06F00139141 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		EA7840771BE1F06F00139141 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPURLCache.h; path = Model/HPURLCache.h; sourceTree = "<group>"; };
 		EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLCache.m; path = Model/HPURLCache.m; sourceTree = "<group>"; };
 		EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SDImageCache+URLCache.h"; path = "Helper/SDImageCache+URLCache.h"; sourceTree = "<group>"; };
@@ -1279,6 +1284,7 @@
 		EA499F351830C13A00172989 /* Vender */ = {
 			isa = PBXGroup;
 			children = (
+				EA7840741BE1F06F00139141 /* SVProgressHUD */,
 				EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */,
 				EA0AF84A1BDF197000DDBB78 /* Fabric.framework */,
 				EA9A39551A5BE92E0028BE7D /* JSMessagesViewController */,
@@ -1474,6 +1480,17 @@
 				EA74458D18CA1E62002467EE /* compose_emotion@2x.png */,
 			);
 			name = compose;
+			sourceTree = "<group>";
+		};
+		EA7840741BE1F06F00139141 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				EA7840751BE1F06F00139141 /* SVProgressHUD.bundle */,
+				EA7840761BE1F06F00139141 /* SVProgressHUD.h */,
+				EA7840771BE1F06F00139141 /* SVProgressHUD.m */,
+			);
+			name = SVProgressHUD;
+			path = Vender/SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		EA8186BA18E1E1E40092BDD7 /* IBActionSheet */ = {
@@ -2092,6 +2109,7 @@
 				EAB7CEC319F00E90003830AC /* down@3x.png in Resources */,
 				EAD7F5DD183CC84600A750D9 /* hp_smile_coolmonkey_01.gif in Resources */,
 				EAD7F5E3183CC84600A750D9 /* hp_smile_coolmonkey_07.gif in Resources */,
+				EA7840781BE1F06F00139141 /* SVProgressHUD.bundle in Resources */,
 				EA9A39DD1A5BE92E0028BE7D /* send-button.png in Resources */,
 				EA9A39DB1A5BE92E0028BE7D /* send-button-pressed.png in Resources */,
 				EA74459418CA1E62002467EE /* compose_camera.png in Resources */,
@@ -2298,6 +2316,7 @@
 				EA3B991F18F9812900F726E1 /* HPBgFetchViewController.m in Sources */,
 				EA9A39B21A5BE92E0028BE7D /* JSDismissiveTextView.m in Sources */,
 				EA743C2F183F9A9E0067F62B /* HPMyReply.m in Sources */,
+				EA7840791BE1F06F00139141 /* SVProgressHUD.m in Sources */,
 				EAA1E68318D03A4100E1CFE1 /* UIColor+iOS7Colors.m in Sources */,
 				EA9A39B11A5BE92E0028BE7D /* JSBubbleView.m in Sources */,
 				EA0FF7D01837CE6300B0EBA6 /* HPFavorite.m in Sources */,
@@ -2576,6 +2595,7 @@
 					"\"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\"",
 					"\"${PODS_ROOT}/Headers/UIKitResources\"",
 					"\"${PODS_ROOT}/Headers/cdebug\"",
+					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -2630,6 +2650,7 @@
 					"\"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\"",
 					"\"${PODS_ROOT}/Headers/UIKitResources\"",
 					"\"${PODS_ROOT}/Headers/cdebug\"",
+					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
