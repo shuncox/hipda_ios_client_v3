@@ -10,6 +10,7 @@
 #import "IDMPhotoBrowser.h"
 #import "IDMZoomingScrollView.h"
 #import "SVProgressHUD.h"
+#import <AnimatedGIFImageSerialization.h>
 
 #define kUSE_CURRENT_CONTEXT_PRESENTATION_STYLE 1
 
@@ -1301,19 +1302,70 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         if(!_actionButtonTitles)
         {
             // Activity view
-            NSMutableArray *activityItems = [NSMutableArray arrayWithObject:[photo underlyingImage]];
-            if (photo.caption) [activityItems addObject:photo.caption];
             
-            self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-            if (IS_IPAD && IOS8_OR_LATER) self.activityViewController.popoverPresentationController.barButtonItem = sender;
+            @weakify(self);
+            SDWebImageDownloaderCompletedBlock complation = ^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                [self hideProgressHUD:YES];
+                
+                @strongify(self);
+                if (!self) {
+                    return;
+                }
+                
+                if (error) {
+                    [self showProgressHUDCompleteMessage:[NSString stringWithFormat:@"下载失败\n%@", error.localizedDescription]];
+                    return;
+                }
+                
+                NSMutableArray *activityItems = [NSMutableArray array];
+                
+                if (image.images && data) {
+                    [activityItems addObject:data];
+                } else if (image) {
+                    [activityItems addObject:image];
+                }
+                
+                if ([photo underlyingImageURL]) {
+                    [activityItems addObject:[photo underlyingImageURL]];
+                }
+                
+                if (photo.caption) {
+                    [activityItems addObject:photo.caption];
+                }
+                
+                self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+                if (IS_IPAD && IOS8_OR_LATER) self.activityViewController.popoverPresentationController.barButtonItem = sender;
+                
+                __typeof__(self) __weak selfBlock = self;
+                [self.activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
+                    [selfBlock hideControlsAfterDelay];
+                    selfBlock.activityViewController = nil;
+                }];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self presentViewController:self.activityViewController animated:YES completion:nil];
+                });
+            };
             
-            __typeof__(self) __weak selfBlock = self;
-            [self.activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
-                [selfBlock hideControlsAfterDelay];
-                selfBlock.activityViewController = nil;
-            }];
-            
-            [self presentViewController:self.activityViewController animated:YES completion:nil];
+            UIImage *image = [photo underlyingImage];
+            if (image.images) {
+                [self showProgressHUDWithMessage:@"转换中..."];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    NSError *e = nil;
+                    NSData *data = [AnimatedGIFImageSerialization animatedGIFDataWithImage:image
+                                                                                     error:&e];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        complation(image, data, e, YES);
+                    });
+                });
+            } else if (!image) {
+                [self showProgressHUDWithMessage:@"下载图片中..."];
+                [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[photo underlyingImageURL] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                    [self showProgressHUD: receivedSize * 1.f / expectedSize];
+                } completed:complation];
+            } else {
+                complation(image, nil, nil, YES);
+            }
         }
         else
         {
@@ -1374,4 +1426,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     }
 }
 
+- (void)showProgressHUD:(CGFloat)progress {
+    [SVProgressHUD showProgress:progress];
+}
 @end
