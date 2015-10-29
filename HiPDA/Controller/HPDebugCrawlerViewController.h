@@ -10,7 +10,6 @@
 
 @interface HPDebugCrawlerViewController : UIViewController
 
-@property (nonatomic, copy) NSString *url;
 @property (nonatomic, strong) HPCrawlerErrorContext *context;
 
 @end

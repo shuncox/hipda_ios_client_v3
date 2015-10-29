@@ -722,8 +722,8 @@
         
         MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
         controller.mailComposeDelegate = self;
-        [controller setToRecipients:@[@"wujichao@gmail.com"]];
-        [controller setSubject:@""];
+        [controller setToRecipients:@[@"wujichao.hpclient@gmail.com"]];
+        [controller setSubject:@"HP论坛客户端反馈: "];
         [controller setMessageBody:[NSString stringWithFormat:@"\n\n\n网络(eg:移动2g): \n设备: %@ \niOS版本: %@ \n客户端版本: v%@", device_model, system_version, VERSION] isHTML:NO];
         if (controller) [self presentViewController:controller animated:YES completion:NULL];
     }];
