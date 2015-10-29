@@ -380,6 +380,15 @@
 {
     SWRevealViewController *revealController = self.revealViewController;
     UINavigationController *frontNavigationController = (id)revealController.frontViewController;
+    
+    UIViewController *presentedViewController = self.revealViewController.rearViewController.presentedViewController;
+    presentedViewController = presentedViewController ?: frontNavigationController.presentedViewController;
+    presentedViewController = presentedViewController ?: revealController.presentedViewController;
+    
+    if (presentedViewController) {
+        [presentedViewController dismissViewControllerAnimated:NO
+                                                    completion:nil];
+    }
    
     if ( ![frontNavigationController.topViewController isKindOfClass:_vc_classes[row]] )
     {
