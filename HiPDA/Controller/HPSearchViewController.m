@@ -79,7 +79,9 @@
     _searchBar.delegate = self;
     
     _searchBar.placeholder=@"keywords";
-    [_searchBar becomeFirstResponder];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_searchBar becomeFirstResponder];
+    });
     
     _searchBar.showsScopeBar = YES;
     _searchBar.scopeButtonTitles = @[@"标题", @"全文", @"用户"];
