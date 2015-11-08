@@ -145,7 +145,16 @@
             NSHTTPURLResponse *response = [operation response];
             [response allHeaderFields];
         });
-        context.cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+        context.cookies = ({
+            NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+            NSMutableArray *r = [NSMutableArray array];
+            for (NSHTTPCookie *c in cookies) {
+                if ([c.domain hasSuffix:@".hi-pda.com"]) {
+                    [r addObject:c];
+                }
+            }
+            [r copy];
+        });
         
         
         if ([html indexOf:@"normalthread_"] == -1 && block) {
