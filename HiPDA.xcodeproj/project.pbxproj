@@ -1003,12 +1003,11 @@
 			isa = PBXGroup;
 			children = (
 				EA083DB718C8D18900BD8F07 /* WUDemoKeyboardBuilder.h */,
+				EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */,
 				EA083DB818C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.h */,
 				EA083DB918C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m */,
 				EA083DBA18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.h */,
 				EA083DBB18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m */,
-				EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */,
-				EA083DB618C8D18000BD8F07 /* custom */,
 				EA083D7818C8D14600BD8F07 /* Resources */,
 				EA083D7118C8D12200BD8F07 /* emotion */,
 				EA083D5B18C8D11A00BD8F07 /* UIResponder+WriteableInputView.h */,
@@ -1075,13 +1074,6 @@
 				EA083D9618C8D14F00BD8F07 /* keyboard_text_selected@2x.png */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		EA083DB618C8D18000BD8F07 /* custom */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = custom;
 			sourceTree = "<group>";
 		};
 		EA0FF7B41837B05300B0EBA6 /* DZWebBrowser */ = {

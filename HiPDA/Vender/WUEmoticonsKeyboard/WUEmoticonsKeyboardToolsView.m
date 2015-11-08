@@ -37,6 +37,9 @@
         [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:segmentedControl];
         self.segmentedControl = segmentedControl;
+        
+        //
+        self.segmentedControl.hidden = YES;
     }
     return self;
 }

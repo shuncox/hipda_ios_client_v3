@@ -19,6 +19,11 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.userInteractionEnabled = NO;
         button.frame = self.contentView.bounds;
+        
+        // imageView 撑满 button
+        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+        button.contentVerticalAlignment =  UIControlContentVerticalAlignmentFill;
+        
         [self.contentView addSubview:button];
         self.keyButton = button;
     }
