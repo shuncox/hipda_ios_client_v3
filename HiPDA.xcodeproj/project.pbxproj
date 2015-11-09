@@ -149,6 +149,7 @@
 		EA6760921AF8704F00BA0EF3 /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = EA67608F1AF8704F00BA0EF3 /* clip.png */; };
 		EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760901AF8704F00BA0EF3 /* clip@2x.png */; };
 		EA6760941AF8704F00BA0EF3 /* clip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760911AF8704F00BA0EF3 /* clip@3x.png */; };
+		EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
 		EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C22183E21000067F62B /* HPLoginViewController.m */; };
@@ -604,6 +605,8 @@
 		EA67608F1AF8704F00BA0EF3 /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
 		EA6760901AF8704F00BA0EF3 /* clip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@2x.png"; sourceTree = "<group>"; };
 		EA6760911AF8704F00BA0EF3 /* clip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@3x.png"; sourceTree = "<group>"; };
+		EA689B651BF04102005C402C /* SSWDirectionalPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSWDirectionalPanGestureRecognizer.h; path = Controller/SSWDirectionalPanGestureRecognizer.h; sourceTree = "<group>"; };
+		EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSWDirectionalPanGestureRecognizer.m; path = Controller/SSWDirectionalPanGestureRecognizer.m; sourceTree = "<group>"; };
 		EA7111D918B10C44007AD5D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EA7111DB18B10C5D007AD5D1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Blocks.h"; path = "Helper/UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1228,6 +1231,8 @@
 				EA9A060F18DB11F000D5D7D9 /* HPViewController.m */,
 				EAB38C461AF9FE6B00CF1ADC /* HPNavigationController.h */,
 				EAB38C471AF9FE6B00CF1ADC /* HPNavigationController.m */,
+				EA689B651BF04102005C402C /* SSWDirectionalPanGestureRecognizer.h */,
+				EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */,
 				EA0CE6B318D832030033EC36 /* HPRearViewController.h */,
 				EA0CE6B418D832030033EC36 /* HPRearViewController.m */,
 				EA1273781830F40700DE9851 /* HPThreadViewController.h */,
@@ -2388,6 +2393,7 @@
 				EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */,
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
+				EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
 				EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */,
 				EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */,

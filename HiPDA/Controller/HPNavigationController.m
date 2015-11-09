@@ -9,6 +9,7 @@
 #import "HPNavigationController.h"
 #import "HPSetting.h"
 #import "UIAlertView+Blocks.h"
+#import "SSWDirectionalPanGestureRecognizer.h"
 
 @interface HPNavigationController ()<UIGestureRecognizerDelegate>
 
@@ -35,8 +36,9 @@
     UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;
     gesture.enabled = NO;
     UIView *gestureView = gesture.view;
-    UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] init];
+    SSWDirectionalPanGestureRecognizer *popRecognizer = [[SSWDirectionalPanGestureRecognizer alloc] init];
     popRecognizer.delegate = self;
+    popRecognizer.direction = SSWPanDirectionRight;
     popRecognizer.maximumNumberOfTouches = 1;
     [gestureView addGestureRecognizer:popRecognizer];
 
