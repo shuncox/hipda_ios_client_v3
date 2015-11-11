@@ -368,6 +368,7 @@
 		EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF18F251B01037300B50E19 /* HPURLProtocol.m */; };
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
 		EAF55C981B7A478B0022F2CB /* debug-hotpatch.js in Resources */ = {isa = PBXBuildFile; fileRef = EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */; };
+		EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */; };
 		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
 		EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8451829EFA900C1718B /* Foundation.framework */; };
@@ -898,6 +899,8 @@
 		EAF3C567194C11E700168263 /* HPSetStupidBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetStupidBarController.h; path = Controller/HPSetStupidBarController.h; sourceTree = "<group>"; };
 		EAF3C568194C11E700168263 /* HPSetStupidBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetStupidBarController.m; path = Controller/HPSetStupidBarController.m; sourceTree = "<group>"; };
 		EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "debug-hotpatch.js"; path = "HotPatch/debug-hotpatch.js"; sourceTree = "<group>"; };
+		EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMOnlineConfig.a; sourceTree = "<group>"; };
+		EAF568A11BF32C1D00041A40 /* UMOnlineConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMOnlineConfig.h; sourceTree = "<group>"; };
 		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
 		EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPEditPostViewController.m; path = Controller/HPEditPostViewController.m; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
@@ -927,6 +930,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */,
 				EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */,
 				EA499F631830C3EA00172989 /* CoreLocation.framework in Frameworks */,
 				EA499F611830C3E100172989 /* Security.framework in Frameworks */,
@@ -1735,6 +1739,8 @@
 			children = (
 				EAB04C0219EC1EB7006F5C92 /* MobClick.h */,
 				EAB04C0419EC1F09006F5C92 /* libMobClickLibrary.a */,
+				EAF568A11BF32C1D00041A40 /* UMOnlineConfig.h */,
+				EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */,
 				EAB04C0819EC1F82006F5C92 /* Flurry.h */,
 				EAB04C0919EC1F82006F5C92 /* Flurry.m */,
 			);
@@ -2612,6 +2618,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
+					"$(PROJECT_DIR)/HiPDA",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2667,6 +2674,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
+					"$(PROJECT_DIR)/HiPDA",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

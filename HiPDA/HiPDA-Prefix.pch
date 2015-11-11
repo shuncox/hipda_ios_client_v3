@@ -25,6 +25,7 @@
     #import <Masonry.h>
     #import <ReactiveCocoa.h>
     #import "MobClick.h"
+    #import "UMOnlineConfig.h"
     #import "Flurry.h"
     #import "UIViewController+Tracking.h"
     #import "NSError+HPError.h"

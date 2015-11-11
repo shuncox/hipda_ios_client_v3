@@ -33,6 +33,8 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+#define UM_APP_KEY (@"543b7fe7fd98c59dcb0418ef")
+#define UM_APP_KEY_DEV (UM_APP_KEY)
 
 @interface HPAppDelegate()
 
@@ -155,6 +157,7 @@
     if (bugTrackingEnable) {
         [Fabric with:@[[Crashlytics class]]];
     }
+
     if (dataTrackingEnable) {
         
         //[Flurry setCrashReportingEnabled:NO];
@@ -167,13 +170,21 @@
         [MobClick setLatency:30];
         
 #if DEBUG
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:BATCH channelId:@"debug"];
-        
+        [MobClick startWithAppkey:UM_APP_KEY_DEV reportPolicy:BATCH channelId:@"debug"];
+        //[MobClick setLogEnabled:YES];
 #else
-        [MobClick startWithAppkey:@"543b7fe7fd98c59dcb0418ef" reportPolicy:BATCH channelId:nil];
+        [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
 #endif
         
     }
+    
+    // 友盟在线参数, 配置后十分钟生效
+#if DEBUG
+    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
+    [UMOnlineConfig setLogEnabled:YES];
+#else
+    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
+#endif
     
     [Flurry trackUserIfNeeded];
     
