@@ -59,7 +59,6 @@
     } else {
         NSLog(@"clean already");
     }
-    
     //
     HPURLCache *URLCache = [[HPURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:nil];
 

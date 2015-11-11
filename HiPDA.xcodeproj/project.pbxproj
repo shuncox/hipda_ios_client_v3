@@ -369,6 +369,7 @@
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
 		EAF55C981B7A478B0022F2CB /* debug-hotpatch.js in Resources */ = {isa = PBXBuildFile; fileRef = EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */; };
 		EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */; };
+		EAF568A51BF335AA00041A40 /* NSString+HPOnlineParamaters.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */; };
 		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
 		EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8451829EFA900C1718B /* Foundation.framework */; };
@@ -901,6 +902,8 @@
 		EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "debug-hotpatch.js"; path = "HotPatch/debug-hotpatch.js"; sourceTree = "<group>"; };
 		EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMOnlineConfig.a; sourceTree = "<group>"; };
 		EAF568A11BF32C1D00041A40 /* UMOnlineConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMOnlineConfig.h; sourceTree = "<group>"; };
+		EAF568A31BF335AA00041A40 /* NSString+HPOnlineParamaters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HPOnlineParamaters.h"; path = "Helper/NSString+HPOnlineParamaters.h"; sourceTree = "<group>"; };
+		EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HPOnlineParamaters.m"; path = "Helper/NSString+HPOnlineParamaters.m"; sourceTree = "<group>"; };
 		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
 		EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPEditPostViewController.m; path = Controller/HPEditPostViewController.m; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
@@ -1361,6 +1364,8 @@
 				EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */,
 				EA78407C1BE203D400139141 /* NSError+HPError.h */,
 				EA78407D1BE203D400139141 /* NSError+HPError.m */,
+				EAF568A31BF335AA00041A40 /* NSString+HPOnlineParamaters.h */,
+				EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2332,6 +2337,7 @@
 				EA7840791BE1F06F00139141 /* SVProgressHUD.m in Sources */,
 				EAA1E68318D03A4100E1CFE1 /* UIColor+iOS7Colors.m in Sources */,
 				EA9A39B11A5BE92E0028BE7D /* JSBubbleView.m in Sources */,
+				EAF568A51BF335AA00041A40 /* NSString+HPOnlineParamaters.m in Sources */,
 				EA0FF7D01837CE6300B0EBA6 /* HPFavorite.m in Sources */,
 				EAAD5B9B188CEFCC0084EC2D /* IDMTapDetectingImageView.m in Sources */,
 				EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */,

@@ -14,6 +14,7 @@
 #import "NSString+Additions.h"
 #import "HPSettingViewController.h"//¬_¬
 #import "HPThread.h"
+#import "NSString+HPOnlineParamaters.h"
 
 @interface HPHttpClient()<UIAlertViewDelegate>
 @property (nonatomic, assign)NSInteger dnsErrorCount;
@@ -76,6 +77,12 @@
         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
+    // append common parameters
+    NSString *s = [UMOnlineConfig getConfigParams:@"extra_parameters"] ?: @"";
+    NSMutableDictionary *d = [parameters?:@{} mutableCopy];
+    [d addEntriesFromDictionary:[s onlineParamaters]];
+    parameters = [d copy];
+    
     [super getPath:path
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject){
