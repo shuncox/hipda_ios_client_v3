@@ -12,6 +12,7 @@
 @interface HPSearchUserCell()
 
 @property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UILabel *nameLabel;
 
 @end
 
@@ -26,6 +27,11 @@
     _avatarView.backgroundColor = [UIColor lightGrayColor];
     [self.contentView addSubview:_avatarView];
     
+    _nameLabel = [UILabel new];
+    _nameLabel.font = [UIFont systemFontOfSize:18.f];
+    _nameLabel.textColor = [UIColor blackColor];
+    [self.contentView addSubview:_nameLabel];
+    
     [_avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(15.f);
         make.top.equalTo(self.contentView).offset(4.f);
@@ -33,7 +39,7 @@
         make.width.equalTo(_avatarView.mas_height);
     }];
     
-    [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_avatarView.mas_right).offset(10.f);
         make.centerY.equalTo(self.contentView);
     }];
@@ -46,7 +52,7 @@
 {
     _user = user;
     
-    self.textLabel.text = user.username;
+    self.nameLabel.text = user.username;
     self.detailTextLabel.text = [NSString stringWithFormat:@"id: %@", @(user.uid)];
     [self.avatarView sd_setImageWithURL:[HPUser avatarStringWithUid:user.uid] placeholderImage:[UIImage imageNamed:@"clear_color"] options:SDWebImageLowPriority];
 }
