@@ -126,6 +126,14 @@
     
     [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
         
+#if DEBUG
+        if (0) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"debug_crawler_html" ofType:@"html"];
+            NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+            html = content;
+        }
+#endif
+
         /*
         NSHTTPURLResponse *response = [operation response];
          NSDictionary *fields = [response allHeaderFields];
@@ -313,7 +321,7 @@
     
     NSError *error;
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"<span id=\"thread_(\\d+)\"><a ([^>]+)>(.*?)</a>(.*?)<a href=\"space\\.php\\?uid=(\\d+)\">(.*?)</a>\n</cite>\n<em>([^<]+)</em>\n</td>\n<td class=\"nums\"><strong>(\\d+)</strong>/<em>(\\d+)</em></td>"
+                                  regularExpressionWithPattern:@"<span id=\"thread_(\\d+)\"><a ([^>]+)>(.*?)</a>(.*?)<a href=\"space\\.php\\?uid=(\\d+)[^>]*\">(.*?)</a>\n</cite>\n<em>([^<]+)</em>\n</td>\n<td class=\"nums\"><strong>(\\d+)</strong>/<em>(\\d+)</em></td>"
                                   options:NSRegularExpressionDotMatchesLineSeparators
                                   error:&error
                                   ];

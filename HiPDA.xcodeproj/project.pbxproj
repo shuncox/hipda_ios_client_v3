@@ -196,6 +196,7 @@
 		EA831B901840EAEB00616E94 /* acknowledgement.html in Resources */ = {isa = PBXBuildFile; fileRef = EA831B8F1840EAEB00616E94 /* acknowledgement.html */; };
 		EA831B931841092600616E94 /* HPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA831B921841092600616E94 /* HPMessage.m */; };
 		EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */; };
+		EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */ = {isa = PBXBuildFile; fileRef = EA91EE131BF75A60009271EF /* debug_crawler_html.html */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
 		EA9A39AC1A5BE92E0028BE7D /* UIColor+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A395B1A5BE92E0028BE7D /* UIColor+JSMessagesView.m */; };
@@ -674,6 +675,7 @@
 		EA831B921841092600616E94 /* HPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessage.m; path = Model/HPMessage.m; sourceTree = "<group>"; };
 		EA87A6821A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageMultipleUploadViewController.h; path = Controller/HPImageMultipleUploadViewController.h; sourceTree = "<group>"; };
 		EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageMultipleUploadViewController.m; path = Controller/HPImageMultipleUploadViewController.m; sourceTree = "<group>"; };
+		EA91EE131BF75A60009271EF /* debug_crawler_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = debug_crawler_html.html; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
 		EA9A39581A5BE92E0028BE7D /* NSString+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSMessagesView.h"; sourceTree = "<group>"; };
@@ -1268,6 +1270,7 @@
 				EA5F6A4318D9E4AD0034F880 /* HPForum.m */,
 				EA499F281830BE3B00172989 /* HPThread.h */,
 				EA499F291830BE3B00172989 /* HPThread.m */,
+				EA91EE131BF75A60009271EF /* debug_crawler_html.html */,
 				EAC0E42818BCE89700F064B6 /* HPNewPost.h */,
 				EAC0E42918BCE89700F064B6 /* HPNewPost.m */,
 				EA499F2F1830C02200172989 /* HPUser.h */,
@@ -2047,6 +2050,7 @@
 				EA8186B518E1DA0D0092BDD7 /* settings.png in Resources */,
 				EA083DA418C8D14F00BD8F07 /* keyboard_popup@2x.png in Resources */,
 				EAD7F603183CC84600A750D9 /* hp_smile_grapeman_03.gif in Resources */,
+				EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */,
 				EAD7F60F183CC84600A750D9 /* hp_smile_grapeman_15.gif in Resources */,
 				EA083DA118C8D14F00BD8F07 /* keyboard_grid_bg.png in Resources */,
 				EAD7F5FB183CC84600A750D9 /* hp_smile_default_sleepy.gif in Resources */,
