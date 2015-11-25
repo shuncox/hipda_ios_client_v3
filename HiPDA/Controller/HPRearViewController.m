@@ -540,6 +540,7 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     }
     
+    _threadNavViewController.navigationBar.barStyle = [UINavigationBar appearance].barStyle;
 }
 
 

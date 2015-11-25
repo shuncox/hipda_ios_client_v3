@@ -169,6 +169,7 @@
     
     //
     BOOL isNightMode = [Setting boolForKey:HPSettingNightMode];
+    @weakify(self);
     REBoolItem *isNightModeItem = [REBoolItem itemWithTitle:@"夜间模式" value:isNightMode switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"isNightMode Value: %@", item.value ? @"YES" : @"NO");
@@ -181,7 +182,8 @@
         }
         
         [[HPRearViewController sharedRearVC] themeDidChanged];
-        
+        @strongify(self);
+        self.navigationController.navigationBar.barStyle = [UINavigationBar appearance].barStyle;
         [Flurry logEvent:@"Setting ToggleDarkMode" withParameters:@{@"flag":@(item.value)}];
     }];
     
