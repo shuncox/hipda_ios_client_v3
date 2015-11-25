@@ -12,7 +12,7 @@ pod 'NSString+Emoji'
 pod 'FMDB'
 pod 'MCSwipeTableViewCell'
 pod 'SSKeychain'
-pod 'RETableViewManager', '1.6.0'
+pod 'RETableViewManager', '1.6'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod 'Qiniu', :git => 'https://github.com/qiniu/objc-sdk.git', :branch => 'AFNetworking-1.x'

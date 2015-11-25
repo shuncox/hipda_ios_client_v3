@@ -63,7 +63,7 @@ DEPENDENCIES:
   - Qiniu (from `https://github.com/qiniu/objc-sdk.git`, branch `AFNetworking-1.x`)
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
-  - RETableViewManager (= 1.6.0)
+  - RETableViewManager (= 1.6)
   - Reveal-iOS-SDK
   - SDWebImage
   - SSKeychain
@@ -111,4 +111,4 @@ SPEC CHECKSUMS:
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
