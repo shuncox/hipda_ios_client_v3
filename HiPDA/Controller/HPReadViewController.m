@@ -496,14 +496,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"author\" data-id='user://%@' style=\"left: 0;\">%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor, [post.user usernameForUrl], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
                 }
                 
-                // 解决<font>未闭合造成的整体字体缩小
-                // 第一种方法
-                // 在html (list) 末尾加上 </font></div></li> 闭合font
-                // 担心影响webview解析时间
-                // 第二种方法
-                if ([list indexOf:@"<font size=\"1\">"] != -1 && [list indexOf:@"</font>"] == -1) {
-                    list = [list stringByReplacingOccurrencesOfString:@"<font size=\"1\">" withString:@""];
-                }
+                // 解决由于一些tag未闭合造成的影响
+                list = [list stringByReplacingOccurrencesOfString:@"</li>" withString:@"</strong></font></blockquote></b></i></em></li>"];
                 
                 [lists appendString:list];
             }];
