@@ -26,6 +26,12 @@
  This class allows you to easily make your application redirects some of the HTTP(s) requests it makes to your https://www.apitools.com/ account.
  APItools is a web application that stores requests and lets you track, transform and analyze the traffic between your app and the APIs it uses.
  */
+
+/*
+ 现在这个类做两件事
+ 1. 替换url里的域名为ip (这个其实可以在请求时直接替换, 然后设置http的header[host])
+ 2. 缓存所有的图片(gif由于性能的问题有些例外)
+ */
 @interface HPURLProtocol : NSURLProtocol
 
 /**
