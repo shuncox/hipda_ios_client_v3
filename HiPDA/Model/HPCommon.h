@@ -116,8 +116,8 @@
 
 #define HP_WWW_BASE_URL @"www.hi-pda.com"
 #define HP_CNC_BASE_URL @"cnc.hi-pda.com"
-#define HP_WWW_BASE_IP @"58.215.45.20"
-#define HP_CNC_BASE_IP @"58.215.45.20"
+extern NSString *HP_WWW_BASE_IP;
+extern NSString *HP_CNC_BASE_IP;
 
 #define HPSettingBaseURL @"HPSettingBaseURL"
 #define HPSettingForceDNS @"HPSettingForceDNS"

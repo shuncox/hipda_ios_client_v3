@@ -11,7 +11,10 @@
 #import <SDWebImageManager.h>
 #import <UIImage+MultiFormat.h>
 #import "SDImageCache+URLCache.h"
+#import "UMOnlineConfig.h"
 
+NSString *HP_WWW_BASE_IP;
+NSString *HP_CNC_BASE_IP;
 
 static NSString *const HPHTTPURLProtocolHandledKey = @"HPHTTPURLProtocolHandledKey";
 
@@ -25,6 +28,10 @@ static NSString *const HPHTTPURLProtocolHandledKey = @"HPHTTPURLProtocolHandledK
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
+        HP_WWW_BASE_IP = [UMOnlineConfig getConfigParams:@"www_ip"] ?: @"58.215.45.20";
+        HP_CNC_BASE_IP = [UMOnlineConfig getConfigParams:@"cnc_ip"] ?: @"58.215.45.20";
+    
         URLMappingDitionary = @{
                                 HP_WWW_BASE_URL : HP_WWW_BASE_IP,
                                 HP_CNC_BASE_URL : HP_CNC_BASE_IP
