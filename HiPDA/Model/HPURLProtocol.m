@@ -257,17 +257,10 @@ static id<HPURLMapping> s_URLMapping;
 #pragma mark - 图片缓存相关
 + (BOOL)shouldCache:(NSURLRequest *)request
 {
-    // 这里是通过url后缀来判断是不是图片的, 还可以从response.MIMEType
+    // 1. 如果是SDWebImage的请求, request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData, SDWebImage自己会处理缓存
+    // 2. 这里是通过url后缀来判断是不是图片的, 还可以从response.MIMEType
     if (request.cachePolicy != NSURLRequestReloadIgnoringLocalCacheData
         && [[[request.URL absoluteString] lowercaseString] hasSuffixes:@[@".jpg", @".jpeg", @".gif", @".png"]]) {
-        
-        // 如果是SDWebImage的请求, SDWebImage自己会处理缓存
-        NSDictionary *headers = request.allHTTPHeaderFields;
-        NSString *accept = [headers objectForKey:@"Accept"];
-        if (accept.length && [accept rangeOfString:@"image/*;q=0.8"].location != NSNotFound) {
-            NSLog(@"no need storeCachedResponse %@", request.URL);
-            return NO;
-        }
         
         return YES;
     }
