@@ -23,7 +23,6 @@
 #import "NSString+Additions.h"
 #import "HPMessage.h"
 #import "HPNotice.h"
-#import "HPURLCache.h"
 #import "HPURLProtocol.h"
 #import "HPHotPatch.h"
 
@@ -59,18 +58,9 @@
     } else {
         NSLog(@"clean already");
     }
+    
     //
-    HPURLCache *URLCache = [[HPURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:nil];
-
-//    SDURLCache *URLCache = [[SDURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:[SDURLCache defaultCachePath]];
-//    URLCache.filterBlock = ^BOOL(NSURLRequest *request) {
-//        if ([[request.URL absoluteString] hasSuffixes:@[@".jpg", @".jpeg", @".gif", @".png"]]
-//            /*&& request.cachePolicy != NSURLRequestReloadIgnoringLocalCacheData*/) {
-//            return YES;
-//        }
-//        return NO;
-//    };
-
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:nil];
     [NSURLCache setSharedURLCache:URLCache];
     
     //

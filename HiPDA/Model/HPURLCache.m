@@ -105,6 +105,11 @@ webview 请求一个image
     return cachedResponse;
 }
 
+/*
+ http://stackoverflow.com/questions/9039144/uiwebview-doesnt-always-call-nsurlcache-storecachedresponseforrequest/9900008#9900008
+ 
+ NSURLConnection doesn't even call storeCachedResponse:forRequest: for files over about 50KB (>= 52428 bytes, to be exact).
+*/
 - (void)storeCachedResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request
 {
     if ([self shouldCache:request]) {
@@ -170,6 +175,7 @@ static dispatch_queue_t get_disk_io_queue() {
 
 - (BOOL)shouldCache:(NSURLRequest *)request
 {
+    return NO;
     if (request.cachePolicy != NSURLRequestReloadIgnoringLocalCacheData
         && [[request.URL absoluteString] hasSuffixes:@[@".jpg", @".jpeg", @".gif", @".png"]]) {
         return YES;
