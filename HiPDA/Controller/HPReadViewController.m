@@ -50,6 +50,8 @@
 #import "UIWebView+Capture.h"
 #import <UIImageView+WebCache.h>
 
+#import "HPActivity.h"
+
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -2219,27 +2221,32 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     //[activityItems addObject:self.htmlString];
     [activityItems addObject:[self textForSharing]];
     
+    
+    NSString *s = [UMOnlineConfig getConfigParams:@"useHPActivity"] ?: @"0";
+    BOOL useHPActivity = [s integerValue] == 1;
+    Class clazz = useHPActivity ? [HPActivity class] : [UIActivity class];
+    
     __weak typeof(self) weakSelf = self;
-    UIActivity *copyLink = [UIActivity activityWithType:@"HPCopyLink"
-                                                  title:@"复制链接"
-                                                  image:[UIImage imageNamed:@"activity_copy_link"]
-                                            actionBlock:^{
-                                                [weakSelf copyLink];
-                                            }];
+    UIActivity *copyLink = [clazz activityWithType:@"HPCopyLink"
+                                             title:@"复制链接"
+                                             image:[UIImage imageNamed:@"activity_copy_link"]
+                                       actionBlock:^{
+                                           [weakSelf copyLink];
+                                       }];
     
-    UIActivity *copyContent = [UIActivity activityWithType:@"HPCopyContent"
-                                                  title:@"复制全文"
-                                                  image:[UIImage imageNamed:@"activity_copy_content"]
-                                            actionBlock:^{
-                                                [weakSelf copyContent];
-                                            }];
+    UIActivity *copyContent = [clazz activityWithType:@"HPCopyContent"
+                                                title:@"复制全文"
+                                                image:[UIImage imageNamed:@"activity_copy_content"]
+                                          actionBlock:^{
+                                              [weakSelf copyContent];
+                                          }];
     
-    UIActivity *capturePost = [UIActivity activityWithType:@"HPCapturePost"
-                                                     title:@"保存截图"
-                                                     image:[UIImage imageNamed:@"activity_capture_post"]
-                                               actionBlock:^{
-                                                   [weakSelf capturePost];
-                                               }];
+    UIActivity *capturePost = [clazz activityWithType:@"HPCapturePost"
+                                                title:@"保存截图"
+                                                image:[UIImage imageNamed:@"activity_capture_post"]
+                                          actionBlock:^{
+                                              [weakSelf capturePost];
+                                          }];
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, capturePost]];
     

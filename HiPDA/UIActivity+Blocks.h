@@ -8,10 +8,10 @@
 
 @interface UIActivity (Blocks)
 
-@property (assign,nonatomic)NSString *activityType;
-@property (assign,nonatomic)NSString *activityTitle;
-@property (assign,nonatomic)UIImage *activityImage;
-@property (copy)void((^actionBlock)());
+@property (nonatomic, copy) NSString *activityType;
+@property (nonatomic, copy) NSString *activityTitle;
+@property (nonatomic, strong) UIImage *activityImage;
+@property (nonatomic, copy) void((^actionBlock)());
 
 + (id)activityWithType:(NSString *)type
                  title:(NSString *)title

@@ -82,6 +82,7 @@
 		EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1273791830F40700DE9851 /* HPThreadViewController.m */; };
 		EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13B90E1949F8C300E01AF5 /* HPUserViewController.m */; };
 		EA13B912194B53D900E01AF5 /* HPStupidBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13B911194B53D900E01AF5 /* HPStupidBar.m */; };
+		EA13CD991C11B8AD0023041F /* HPActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13CD981C11B8AD0023041F /* HPActivity.m */; };
 		EA1427DB18BF05AA00A7E9B1 /* post_view.html in Resources */ = {isa = PBXBuildFile; fileRef = EA1427DA18BF05AA00A7E9B1 /* post_view.html */; };
 		EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */; };
 		EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */; };
@@ -502,6 +503,8 @@
 		EA13B90E1949F8C300E01AF5 /* HPUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPUserViewController.m; path = Controller/HPUserViewController.m; sourceTree = "<group>"; };
 		EA13B910194B53D900E01AF5 /* HPStupidBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPStupidBar.h; path = View/HPStupidBar.h; sourceTree = "<group>"; };
 		EA13B911194B53D900E01AF5 /* HPStupidBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPStupidBar.m; path = View/HPStupidBar.m; sourceTree = "<group>"; };
+		EA13CD971C11B8AD0023041F /* HPActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPActivity.h; path = Helper/HPActivity.h; sourceTree = "<group>"; };
+		EA13CD981C11B8AD0023041F /* HPActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPActivity.m; path = Helper/HPActivity.m; sourceTree = "<group>"; };
 		EA1427DA18BF05AA00A7E9B1 /* post_view.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view.html; path = View/post_view.html; sourceTree = "<group>"; };
 		EA1427DC18BF78E200A7E9B1 /* HPReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPReadViewController.h; path = Controller/HPReadViewController.h; sourceTree = "<group>"; };
 		EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPReadViewController.m; path = Controller/HPReadViewController.m; sourceTree = "<group>"; };
@@ -1323,6 +1326,8 @@
 			children = (
 				EAA3A31A1A9F1FBB00927278 /* UIActivity+Blocks.h */,
 				EAA3A31B1A9F1FBB00927278 /* UIActivity+Blocks.m */,
+				EA13CD971C11B8AD0023041F /* HPActivity.h */,
+				EA13CD981C11B8AD0023041F /* HPActivity.m */,
 				EA4C5A0918E5658700B12442 /* UIImage+Resize.h */,
 				EA4C5A0A18E5658700B12442 /* UIImage+Resize.m */,
 				EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */,
@@ -2382,6 +2387,7 @@
 				EAA1E68618D03A4100E1CFE1 /* UIImageView+Additions.m in Sources */,
 				EA499F311830C02200172989 /* HPUser.m in Sources */,
 				EA8186BD18E1E1F10092BDD7 /* IBActionSheet.m in Sources */,
+				EA13CD991C11B8AD0023041F /* HPActivity.m in Sources */,
 				EA9A39B71A5BE92E0028BE7D /* JSMessageTableView.m in Sources */,
 				EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */,
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
