@@ -74,9 +74,7 @@ static id<HPURLMapping> s_URLMapping;
 #pragma mark - 替换url相关
 + (void)registerURLProtocolIfNeed {
     [NSURLProtocol unregisterClass:self];
-    if ([Setting boolForKey:HPSettingForceDNS]) {
-        [self.class registerURLProtocol];
-    }
+    [self.class registerURLProtocol];
 }
 
 + (void)registerURLProtocol {
