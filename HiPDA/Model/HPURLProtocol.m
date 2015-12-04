@@ -72,6 +72,11 @@ static id<HPURLMapping> s_URLMapping;
 @implementation HPURLProtocol
 
 #pragma mark - 替换url相关
++ (BOOL)enableForceDNS
+{
+    return [Setting boolForKey:HPSettingForceDNS];
+}
+
 + (void)registerURLProtocolIfNeed {
     [NSURLProtocol unregisterClass:self];
     [self.class registerURLProtocol];
@@ -94,13 +99,15 @@ static id<HPURLMapping> s_URLMapping;
     NSMutableURLRequest *modifiedRequest = request.mutableCopy;
     
     // 替换url
-    NSString *newHost = [s_URLMapping apiToolsHostForOriginalURLHost:requestURL.host];
-    if (newHost) {
-        modifiedRequest.URL = [NSURL URLWithString:[requestURL.absoluteString stringByReplacingOccurrencesOfString:requestURL.host withString:newHost]];
-        if (![request.allHTTPHeaderFields objectForKey:@"host"]) {
-            NSMutableDictionary *d = [request.allHTTPHeaderFields mutableCopy];
-            [d setObject:requestURL.host forKey:@"host"];
-            modifiedRequest.allHTTPHeaderFields = d;
+    if ([self.class enableForceDNS]) {
+        NSString *newHost = [s_URLMapping apiToolsHostForOriginalURLHost:requestURL.host];
+        if (newHost) {
+            modifiedRequest.URL = [NSURL URLWithString:[requestURL.absoluteString stringByReplacingOccurrencesOfString:requestURL.host withString:newHost]];
+            if (![request.allHTTPHeaderFields objectForKey:@"host"]) {
+                NSMutableDictionary *d = [request.allHTTPHeaderFields mutableCopy];
+                [d setObject:requestURL.host forKey:@"host"];
+                modifiedRequest.allHTTPHeaderFields = d;
+            }
         }
     }
     
@@ -132,7 +139,7 @@ static id<HPURLMapping> s_URLMapping;
         return YES;
     }
     
-    if ([s_URLMapping apiToolsHostForOriginalURLHost:request.URL.host] != nil) {
+    if ([self.class enableForceDNS] && [s_URLMapping apiToolsHostForOriginalURLHost:request.URL.host] != nil) {
         NSLog(@"dns -> YES");
         return YES;
     }
@@ -160,14 +167,8 @@ static id<HPURLMapping> s_URLMapping;
                 data = UIImageJPEGRepresentation(memCachedImage, 1.f);
             } else {
                 data = nil;
-                //data = UIImageJPEGRepresentation(memCachedImage, 1.f);
-                /*
-                 效率太差
-                 data = [AnimatedGIFImageSerialization animatedGIFDataWithImage:memCachedImage
-                 duration:1.0
-                 loopCount:1
-                 error:nil];
-                 */
+                //效率太差, fallback到从disk cache中读
+                //data = [AnimatedGIFImageSerialization animatedGIFDataWithImage:memCachedImage duration:1.0 loopCount:1 error:nil];
             }
         } else {
             data = [[SDImageCache sharedImageCache] hp_imageDataFromDiskCacheForKey:cacheKey];
