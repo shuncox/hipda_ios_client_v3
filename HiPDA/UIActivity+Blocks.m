@@ -16,7 +16,7 @@
 #pragma mark  - Property
 - (void((^)()))actionBlock{
     id block = objc_getAssociatedObject(self, @"actionBlock");
-    return [block copy];
+    return block;
 }
 
 - (void)setActionBlock:(void(^)())block
@@ -61,6 +61,7 @@
 - (void)performActivity{
     
     self.actionBlock();
+    self.actionBlock = nil;
     
 	[self activityDidFinish:YES];
 }
