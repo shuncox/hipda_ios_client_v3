@@ -37,7 +37,6 @@ PODS:
     - REFormattedNumberField (~> 1.1.5)
     - REValidation (~> 0.1.4)
   - REValidation (0.1.4)
-  - Reveal-iOS-SDK (1.5.1)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -64,7 +63,6 @@ DEPENDENCIES:
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6)
-  - Reveal-iOS-SDK
   - SDWebImage
   - SSKeychain
   - ZAActivityBar
@@ -105,7 +103,6 @@ SPEC CHECKSUMS:
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   RETableViewManager: 9667ecb29c005c32df40a1dd1828224840a351a2
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
-  Reveal-iOS-SDK: c9c55cad2729c85f6ced415f1b21857c9a2d8ef9
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
