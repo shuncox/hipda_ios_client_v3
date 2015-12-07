@@ -139,49 +139,34 @@ caption = _caption;
             // Load async from file
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
-            /*
-            SDURLCache *cache = (SDURLCache *)[SDURLCache sharedURLCache];
-            BOOL isCached = [cache isCached:_photoURL];
-            NSLog(@"isCache %d",isCached);
             
-            if (isCached) {
-                NSLog(@"get cache success");
-                NSCachedURLResponse *response = [cache cachedResponseForRequest:[NSURLRequest requestWithURL:_photoURL cachePolicy:NSURLRequestReturnCacheDataDontLoad timeoutInterval:11]];
-                self.underlyingImage = [UIImage imageWithData:response.data];
-                
-                [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
-            } else {
-                */
-                SDWebImageManager *manager = [SDWebImageManager sharedManager];
-                [manager downloadWithURL:_photoURL
-                                 options:0
-                                progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                    
-                                    //NSLog(@"progress %d, %lld", receivedSize, expectedSize);
-                                    
-                                    if (expectedSize == 0) {
-                                        expectedSize = 300 * 1024;
-                                    }
-                                    
-                                    float progress = receivedSize / (float)expectedSize;
-                                    if (self.progressUpdateBlock) {
-                                        self.progressUpdateBlock(progress);
-                                    }
+            SDWebImageManager *manager = [SDWebImageManager sharedManager];
+            [manager downloadWithURL:_photoURL
+                             options:0
+                            progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                
+                                //NSLog(@"progress %d, %lld", receivedSize, expectedSize);
+                                
+                                if (expectedSize == 0) {
+                                    expectedSize = 300 * 1024;
                                 }
-                               completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                                   if (error) {
-                                       
-                                       self.underlyingImage = nil;
-                                       [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
-                                       
-                                       NSLog(@"SDWebImage failed to download image: %@, url%@", error, _photoURL);
-                                   }
-                                   self.underlyingImage = image;
+                                
+                                float progress = receivedSize / (float)expectedSize;
+                                if (self.progressUpdateBlock) {
+                                    self.progressUpdateBlock(progress);
+                                }
+                            }
+                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                               if (error) {
+                                   
+                                   self.underlyingImage = nil;
                                    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
-                               }];
-            //}
-            
-            
+                                   
+                                   NSLog(@"SDWebImage failed to download image: %@, url%@", error, _photoURL);
+                               }
+                               self.underlyingImage = image;
+                               [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
+                           }];
         } else {
             // Failed - no source
             self.underlyingImage = nil;
