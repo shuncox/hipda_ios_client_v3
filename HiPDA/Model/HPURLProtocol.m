@@ -29,7 +29,7 @@ static NSString *const HPHTTPURLProtocolHandledKey = @"HPHTTPURLProtocolHandledK
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         HP_WWW_BASE_IP = [UMOnlineConfig getConfigParams:@"www_ip"] ?: @"58.215.45.20";
-        HP_CNC_BASE_IP = [UMOnlineConfig getConfigParams:@"cnc_ip"] ?: @"58.215.45.20";
+        HP_CNC_BASE_IP = [UMOnlineConfig getConfigParams:@"cnc_ip"] ?: @"117.121.135.129";
     });
 }
 
