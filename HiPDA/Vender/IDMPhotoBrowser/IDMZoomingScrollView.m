@@ -59,7 +59,7 @@
         
         // Progress view
         _progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake((screenWidth-35.)/2., (screenHeight-35.)/2, 35.0f, 35.0f)];
-        [_progressView setProgress:0.03f];
+        [_progressView setProgress:0.02f];
         _progressView.tag = 101;
         _progressView.thicknessRatio = 0.1; //SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7") ? 0.1 : 0.2;
         _progressView.roundedCorners = NO;  //SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7") ? NO  : YES;
@@ -97,35 +97,43 @@
 
 // Get and display image
 - (void)displayImage {
-	if (_photo && _photoImageView.image == nil) {
-		// Reset
-		self.maximumZoomScale = 1;
-		self.minimumZoomScale = 1;
-		self.zoomScale = 1;
+	if (_photo /*&& _photoImageView.image == nil*/) {
         
-		self.contentSize = CGSizeMake(0, 0);
+        BOOL needReset = _photoImageView.image == nil;
+        if (needReset) {
+            // Reset
+            self.maximumZoomScale = 1;
+            self.minimumZoomScale = 1;
+            self.zoomScale = 1;
+            
+            self.contentSize = CGSizeMake(0, 0);
+        }
 		
 		// Get image from browser as it handles ordering of fetching
 		UIImage *img = [self.photoBrowser imageForPhoto:_photo];
 		if (img) {
             // Hide ProgressView
             //_progressView.alpha = 0.0f;
+            // 感觉可能渐进式加载不需要progressView了
+            // 是不是有些图片不能渐进式加载
             [_progressView removeFromSuperview];
             
             // Set image
 			_photoImageView.image = img;
 			_photoImageView.hidden = NO;
             
-            // Setup photo frame
-			CGRect photoImageViewFrame;
-			photoImageViewFrame.origin = CGPointZero;
-			photoImageViewFrame.size = img.size;
-            
-			_photoImageView.frame = photoImageViewFrame;
-			self.contentSize = photoImageViewFrame.size;
-
-			// Set zoom to minimum zoom
-			[self setMaxMinZoomScalesForCurrentBounds];
+            if (needReset) {
+                // Setup photo frame
+                CGRect photoImageViewFrame;
+                photoImageViewFrame.origin = CGPointZero;
+                photoImageViewFrame.size = img.size;
+                
+                _photoImageView.frame = photoImageViewFrame;
+                self.contentSize = photoImageViewFrame.size;
+                
+                // Set zoom to minimum zoom
+                [self setMaxMinZoomScalesForCurrentBounds];
+            }
         } else {
 			// Hide image view
 			_photoImageView.hidden = YES;
@@ -150,6 +158,8 @@
 // Image failed so just show black!
 - (void)displayImageFailure {
     [_progressView removeFromSuperview];
+    // todo reload
+    //[photo loadUnderlyingImageAndNotify];
 }
 
 #pragma mark - Setup

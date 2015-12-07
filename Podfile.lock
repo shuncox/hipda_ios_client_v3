@@ -63,7 +63,7 @@ DEPENDENCIES:
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6)
-  - SDWebImage
+  - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`)
   - SSKeychain
   - ZAActivityBar
 
@@ -73,6 +73,8 @@ EXTERNAL SOURCES:
   Qiniu:
     :branch: AFNetworking-1.x
     :git: https://github.com/qiniu/objc-sdk.git
+  SDWebImage:
+    :git: https://github.com/wujichao/SDWebImage.git
 
 CHECKOUT OPTIONS:
   CTAssetsPickerController:
@@ -81,6 +83,9 @@ CHECKOUT OPTIONS:
   Qiniu:
     :commit: 637cdc555b4f0c6227ae785964c717f950359af4
     :git: https://github.com/qiniu/objc-sdk.git
+  SDWebImage:
+    :commit: 42eb3b60863cb73ef89b0c8d1a16edd8f44dfd68
+    :git: https://github.com/wujichao/SDWebImage.git
 
 SPEC CHECKSUMS:
   AFNetworking: 127629aef6e631d57291c25154defc678c8a7337
@@ -103,7 +108,7 @@ SPEC CHECKSUMS:
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   RETableViewManager: 9667ecb29c005c32df40a1dd1828224840a351a2
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  SDWebImage: 119e50946eee9ddf15589227ec2b6b37966ecd04
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2

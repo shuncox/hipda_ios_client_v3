@@ -140,13 +140,20 @@ caption = _caption;
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
             
+            BOOL enableProgressiveDownload = [UMOnlineConfig getBoolConfigWithKey:@"EnableProgressiveDownload" defaultYES:YES];
+            SDWebImageOptions options = SDWebImageRetryFailed;
+            if (enableProgressiveDownload) {
+                options = SDWebImageProgressiveDownload|SDWebImageProgressiveDownloadClearGreyColor|SDWebImageRetryFailed;
+            }
+            
             SDWebImageManager *manager = [SDWebImageManager sharedManager];
             [manager downloadWithURL:_photoURL
-                             options:0
+                             options:options
                             progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                 
                                 //NSLog(@"progress %d, %lld", receivedSize, expectedSize);
                                 
+                                // todo remove
                                 if (expectedSize == 0) {
                                     expectedSize = 300 * 1024;
                                 }
@@ -158,7 +165,7 @@ caption = _caption;
                             }
                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
                                if (error) {
-                                   
+                                   // todo reload
                                    self.underlyingImage = nil;
                                    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
                                    
