@@ -65,6 +65,7 @@
 		EA083DBD18C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DB918C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m */; };
 		EA083DBE18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBB18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m */; };
 		EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */; };
+		EA0880191C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0880181C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m */; };
 		EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0901A9185316DD0067961E /* HPSetForumsViewController.m */; };
 		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; };
 		EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF84A1BDF197000DDBB78 /* Fabric.framework */; };
@@ -476,6 +477,8 @@
 		EA083DBA18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WUDemoKeyboardTextKeyCell.h; path = Vender/WUEmoticonsKeyboard/custom/WUDemoKeyboardTextKeyCell.h; sourceTree = "<group>"; };
 		EA083DBB18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WUDemoKeyboardTextKeyCell.m; path = Vender/WUEmoticonsKeyboard/custom/WUDemoKeyboardTextKeyCell.m; sourceTree = "<group>"; };
 		EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WUDemoKeyboardBuilder.m; path = Vender/WUEmoticonsKeyboard/custom/WUDemoKeyboardBuilder.m; sourceTree = "<group>"; };
+		EA0880171C15A2FD008F01A7 /* UMOnlineConfig+BOOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UMOnlineConfig+BOOL.h"; path = "Helper/UMOnlineConfig+BOOL.h"; sourceTree = "<group>"; };
+		EA0880181C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UMOnlineConfig+BOOL.m"; path = "Helper/UMOnlineConfig+BOOL.m"; sourceTree = "<group>"; };
 		EA0901A8185316DD0067961E /* HPSetForumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetForumsViewController.h; path = Controller/HPSetForumsViewController.h; sourceTree = "<group>"; };
 		EA0901A9185316DD0067961E /* HPSetForumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetForumsViewController.m; path = Controller/HPSetForumsViewController.m; sourceTree = "<group>"; };
 		EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
@@ -1374,6 +1377,8 @@
 				EA78407D1BE203D400139141 /* NSError+HPError.m */,
 				EAF568A31BF335AA00041A40 /* NSString+HPOnlineParamaters.h */,
 				EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */,
+				EA0880171C15A2FD008F01A7 /* UMOnlineConfig+BOOL.h */,
+				EA0880181C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2434,6 +2439,7 @@
 				EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
 				EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */,
+				EA0880191C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m in Sources */,
 				EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */,
 				EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */,
 				EA743C35183FA9690067F62B /* HPSearchViewController.m in Sources */,

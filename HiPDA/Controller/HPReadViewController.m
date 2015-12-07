@@ -2222,8 +2222,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [activityItems addObject:[self textForSharing]];
     
     
-    NSString *s = [UMOnlineConfig getConfigParams:@"useHPActivity"] ?: @"0";
-    BOOL useHPActivity = [s integerValue] == 1;
+    BOOL useHPActivity = [UMOnlineConfig getBoolConfigWithKey:@"useHPActivity" defaultYES:NO];
     Class clazz = useHPActivity ? [HPActivity class] : [UIActivity class];
     
     __weak typeof(self) weakSelf = self;
