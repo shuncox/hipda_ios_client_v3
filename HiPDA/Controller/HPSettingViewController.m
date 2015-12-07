@@ -504,6 +504,7 @@
         [SVProgressHUD showWithStatus:@"清理中" maskType:SVProgressHUDMaskTypeBlack];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
+            [[SDImageCache sharedImageCache] clearMemory];
             [[SDImageCache sharedImageCache] clearDisk];
             
             dispatch_async(dispatch_get_main_queue(), ^{
