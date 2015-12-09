@@ -14,6 +14,7 @@
 #define IOS7_OR_LATER ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending)
 #define IOS8_OR_LATER ([[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending)
 #define IOS9_OR_LATER ([[[UIDevice currentDevice] systemVersion] compare:@"9.0"] != NSOrderedAscending)
+#define IOS9_2_OR_LATER ([[[UIDevice currentDevice] systemVersion] compare:@"9.2"] != NSOrderedAscending)
 #define IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
 
 #define NSStandardUserDefaults [NSUserDefaults standardUserDefaults]

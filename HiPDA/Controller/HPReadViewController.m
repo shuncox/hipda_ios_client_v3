@@ -1056,8 +1056,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // todo
     // setting safari
-    
-    if (IOS9_OR_LATER) {
+    if (IOS9_2_OR_LATER) { //iOS 9.2 自带滑动返回
+        
+        SFSafariViewController *sfvc = [[SFSafariViewController alloc] initWithURL:url];
+        [self presentViewController:sfvc animated:YES completion:NULL];
+        
+    } else if (IOS9_OR_LATER) {
         
         HPSFSafariViewController *sfvc = [[HPSFSafariViewController alloc] initWithURL:url];
         [self presentViewController:[HPCommon swipeableNVCWithRootVC:sfvc] animated:YES completion:NULL];
