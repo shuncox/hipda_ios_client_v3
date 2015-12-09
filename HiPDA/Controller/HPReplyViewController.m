@@ -70,8 +70,10 @@
          _post.user.username
     ];
     self.title = title;
-
-    [self.contentTextFiled becomeFirstResponder];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.contentTextFiled becomeFirstResponder];
+    });
     
     if (_formhash && _correct_post) {
         NSLog(@"had _formhash %@, _pid %ld", _formhash, _correct_post.pid);

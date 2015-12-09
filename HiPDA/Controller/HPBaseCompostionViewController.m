@@ -293,29 +293,31 @@
 // keyborad height
 - (void)keyboardWasShown:(NSNotification *)notification
 {
-    
-    // Get the size of the keyboard.
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    //NSLog(@"height %f", keyboardSize.height);
-    
-    //CGFloat toolbar_height = 40;
-    //toolbar.frame = CGRectMake(0, contentTV.bottom, self.view.width, toolbar_height);
-    
-    
-    [UIView animateWithDuration:0.2f animations:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        // Get the size of the keyboard.
+        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        
+        //NSLog(@"height %f", keyboardSize.height);
+        
+        //CGFloat toolbar_height = 40;
+        //toolbar.frame = CGRectMake(0, contentTV.bottom, self.view.width, toolbar_height);
         
         
-        
-        float height = [self.view bounds].size.height - _contentTextFiled.frame.origin.y - keyboardSize.height - TOOLBAR_HEIGHT;
-        _contentTextFiled.frame =
-        CGRectMake(_contentTextFiled.frame.origin.x,
-                   _contentTextFiled.frame.origin.y,
-                   _contentTextFiled.frame.size.width,
-                   height);
-        
-        toolbar.frame = CGRectMake(0, _contentTextFiled.frame.origin.y + _contentTextFiled.frame.size.height, self.view.frame.size.width, TOOLBAR_HEIGHT);
-    }];
+        [UIView animateWithDuration:0.2f animations:^{
+            
+            
+            
+            float height = [self.view bounds].size.height - _contentTextFiled.frame.origin.y - keyboardSize.height - TOOLBAR_HEIGHT;
+            _contentTextFiled.frame =
+            CGRectMake(_contentTextFiled.frame.origin.x,
+                       _contentTextFiled.frame.origin.y,
+                       _contentTextFiled.frame.size.width,
+                       height);
+            
+            toolbar.frame = CGRectMake(0, _contentTextFiled.frame.origin.y + _contentTextFiled.frame.size.height, self.view.frame.size.width, TOOLBAR_HEIGHT);
+        }];
+    });
 }
 
 

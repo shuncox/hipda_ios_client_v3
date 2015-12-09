@@ -68,7 +68,9 @@
     _titleField = [UITextField new];
     _titleField.font = [UIFont systemFontOfSize:20.0f];
     _titleField.placeholder = @"title here...";
-    [_titleField becomeFirstResponder];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_titleField becomeFirstResponder];
+    });
     _titleField.backgroundColor = backgroudColor;
     _titleField.keyboardAppearance = [HPTheme keyboardAppearance];
     if (![Setting boolForKey:HPSettingNightMode]) {

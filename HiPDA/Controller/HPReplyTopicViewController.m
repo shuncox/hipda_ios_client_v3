@@ -50,7 +50,9 @@
     [super viewDidLoad];
     
     self.title = @"回复";
-    [self.contentTextFiled becomeFirstResponder];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.contentTextFiled becomeFirstResponder];
+    });
     
     [self loadFormhash];
 }
