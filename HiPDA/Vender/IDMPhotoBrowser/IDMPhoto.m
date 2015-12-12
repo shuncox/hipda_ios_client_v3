@@ -141,6 +141,9 @@ caption = _caption;
         } else if (_photoURL) {
             
             BOOL enableProgressiveDownload = [UMOnlineConfig getBoolConfigWithKey:@"EnableProgressiveDownload" defaultYES:YES];
+            // gif时 不开启渐进加载, 也许应该在sd内部直接判断gif格式, 不过通过suffix简单一些
+            enableProgressiveDownload = enableProgressiveDownload && ![_photoURL.absoluteString hasSuffix:@".gif"];
+            
             SDWebImageOptions options = SDWebImageRetryFailed;
             if (enableProgressiveDownload) {
                 options = SDWebImageProgressiveDownload|SDWebImageProgressiveDownloadClearGreyColor|SDWebImageRetryFailed;
