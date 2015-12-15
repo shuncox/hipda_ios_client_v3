@@ -52,6 +52,8 @@ NSString *substr(NSString *str, int start, int length);
 
 - (BOOL)hasSuffixes:(NSArray *)suffixes;
 
+- (NSArray *)hp_jsLinks;
+
 @end
 
 @interface NSObject (isEmpty)

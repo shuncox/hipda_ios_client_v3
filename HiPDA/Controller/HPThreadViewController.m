@@ -36,6 +36,7 @@
 #import "EGORefreshTableFooterView.h"
 #import "BBBadgeBarButtonItem.h"
 #import "HPIndecator.h"
+#import "NSString+Additions.h"
 
 typedef enum{
 	PullToRefresh = 0,
@@ -311,7 +312,7 @@ typedef enum{
                  }
              } else if (error.code == HPERROR_CRAWLER_CODE) {
                  HPCrawlerErrorContext *context = error.userInfo[@"context"];
-                 [Flurry logEvent:@"Crawler_Error" withParameters:@{@"info":[NSString stringWithFormat:@"url:%@, html:%@", context.url, context.html]}];
+                 [Flurry logEvent:@"Crawler_Error" withParameters:@{@"info":[NSString stringWithFormat:@"url:%@, html:%@", context.url, context.html], @"js": [[context.html hp_jsLinks] componentsJoinedByString:@", "]}];
                  [UIAlertView showWithTitle:@"加载失败"
                                     message:@"看看是不是论坛挂了或者是被运营商劫持了"
                                     handler:^(UIAlertView *alertView, NSInteger buttonIndex) {

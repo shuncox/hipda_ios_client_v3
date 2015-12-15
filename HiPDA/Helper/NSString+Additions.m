@@ -451,6 +451,11 @@ NSString *substr(NSString *str, int start, int length)
     return f;
 }
 
+- (NSArray *)hp_jsLinks
+{
+    return [RX(@"http[^ '\"<>]+\\.js") matches:self];
+}
+
 @end
 
 @implementation NSObject (isEmpty)
