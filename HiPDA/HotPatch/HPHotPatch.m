@@ -62,7 +62,12 @@
         //每个app 版本对应一个db
         NSString *db = [NSString stringWithFormat:@"hotpatch_%@.ldb", VERSION];
         _db = [LevelDB databaseInLibraryWithName:db];
-        _client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:@"http://7xnvdg.com1.z0.glb.clouddn.com/patch"]];
+        
+        NSString *url = @"http://7xnvdg.com1.z0.glb.clouddn.com/patch";
+#ifdef DEBUG
+        url = @"http://127.0.0.1:8000";
+#endif
+        _client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:url]];
         
         //
         [JPEngine startEngine];
