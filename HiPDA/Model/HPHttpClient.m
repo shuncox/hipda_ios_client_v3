@@ -273,11 +273,13 @@
                 [result appendString:[[NSString alloc] initWithBytes:ch2 length:2 encoding:enc]];
             }
             @catch (NSException *exception) {
+#if DEBUG
                 char ch3[3];
                 [data getBytes:ch3 range:NSMakeRange(i, 3)];
                 char ch10[10];
                 [data getBytes:ch10 range:NSMakeRange(i, 10)];
                 NSLog(@"%s", ch10);
+#endif
             }
             @finally {
                 ++i;    // 2字节
