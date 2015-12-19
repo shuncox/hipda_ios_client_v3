@@ -1,5 +1,29 @@
 //_OC_log("test");
 /*
+//修复gb2312Data2String的溢出
+defineClass('HPHttpClient', {}, {
+    gb2312Data2String: function(data) {
+        _OC_log("here");
+        var dd = require('NSMutableData').dataWithData(data);
+        // NSMakeRange(i, 10)(潜在的溢出) 只会在第二个分支
+        // " " < 0x7f 应进入第一个分支
+        var aaa = require('NSString').stringWithString("          ");
+        dd.appendData(aaa.dataUsingEncoding(1));
+        
+        return self.ORIGgb2312Data2String(dd);
+    },
+});
+*/
+/* //gb2312Data2String里有溢出
+//static NSDictionary *defineClass(NSString *classDeclaration, JSValue *instanceMethods, JSValue *classMethods)
+defineClass('HPHttpClient', {}, {
+    gb2312Data2String: function(data) {
+        //_OC_log("here");
+        return null;
+    },
+});
+*/
+/*
 // fix ip change
 defineClass("HPURLMappingProvider", {
     apiToolsHostForOriginalURLHost: function(originalURLHost) {
