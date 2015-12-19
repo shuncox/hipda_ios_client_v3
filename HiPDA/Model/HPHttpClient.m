@@ -269,21 +269,17 @@
             [result appendString:[[NSString alloc] initWithBytes:ch1 length:1 encoding:NSASCIIStringEncoding]];
         } else if (i + 1 < data.length) {
             [data getBytes:ch2 range:NSMakeRange(i, 2)];
-            @try {
-                [result appendString:[[NSString alloc] initWithBytes:ch2 length:2 encoding:enc]];
-            }
-            @catch (NSException *exception) {
+            [result appendString:[[NSString alloc] initWithBytes:ch2 length:2 encoding:enc] ?: @""];
 #if DEBUG
+            if (![[NSString alloc] initWithBytes:ch2 length:2 encoding:enc]) {
                 char ch3[3];
-                [data getBytes:ch3 range:NSMakeRange(i, 3)];
+                [data getBytes:ch3 range:NSMakeRange(i, MIN(3, data.length - i))];
                 char ch10[10];
-                [data getBytes:ch10 range:NSMakeRange(i, 10)];
+                [data getBytes:ch10 range:NSMakeRange(i, MIN(10, data.length - i))];
                 NSLog(@"%s", ch10);
+            }
 #endif
-            }
-            @finally {
-                ++i;    // 2字节
-            }
+            ++i;    // 2字节
         }
     }
     return result;
