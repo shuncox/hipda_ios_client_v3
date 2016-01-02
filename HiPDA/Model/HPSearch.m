@@ -127,6 +127,7 @@
                          
                          //
                          [raw replaceOccurrencesOfString:@"\n" withString:@"  " options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
+                         [raw replaceOccurrencesOfString:@"\r" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [raw length])];
                          
                          //
                          NSString *left = @"<em style=\"color:red;\">";
