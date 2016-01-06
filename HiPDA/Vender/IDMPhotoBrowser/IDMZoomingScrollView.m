@@ -10,6 +10,28 @@
 #import "IDMPhotoBrowser.h"
 #import "IDMPhoto.h"
 
+@implementation UIScrollView (ZoomToPoint)
+- (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated
+{
+    CGRect zrect = [self zoomRectForScrollView:self withScale:scale withCenter:zoomPoint];
+    [self zoomToRect:zrect animated:YES];
+}
+- (CGRect)zoomRectForScrollView:(UIScrollView *)scrollView withScale:(CGFloat)scale withCenter:(CGPoint)center {
+    CGRect zoomRect;
+    // The zoom rect is in the content view's coordinates.
+    // At a zoom scale of 1.0, it would be the size of the
+    // imageScrollView's bounds.
+    // As the zoom scale decreases, so more content is visible,
+    // the size of the rect grows.
+    zoomRect.size.height = scrollView.frame.size.height / scale;
+    zoomRect.size.width = scrollView.frame.size.width / scale;
+    // choose an origin so as to get the right center.
+    zoomRect.origin.x = center.x - (zoomRect.size.width / 2.0);
+    zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
+    return zoomRect;
+}
+@end
+
 // Declare private methods of browser
 @interface IDMPhotoBrowser ()
 - (UIImage *)imageForPhoto:(id<IDMPhoto>)photo;
@@ -177,28 +199,25 @@
     CGSize boundsSize = self.bounds.size;
     CGSize imageSize = _photoImageView.frame.size;
     
-    // Calculate Min
+    // Calculate
+    /*
+     缩放策略
+        初始铺满屏幕, 无论图片大小, 大的缩小(scale<1), 小的放大(scale>1)
+        最大为 MAX(屏幕尺寸的两倍, 原图的两倍)
+        长图(h/w>3) -> 初始宽为屏幕大小
+     */
     CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
     CGFloat yScale = boundsSize.height / imageSize.height;  // the scale needed to perfectly fit the image height-wise
     CGFloat minScale = MIN(xScale, yScale);                 // use minimum of these to allow the image to become fully visible
+    if (imageSize.height / imageSize.width > 3.f/*长图*/) {
+        minScale = xScale;
+    }
+    // max.target.w = max(image.w * 2, screen.w * 2)
+    // max.scale = max.target.w / image.w = max(2, minScale*2)
+    CGFloat maxScale = MAX(2, minScale * 2);
     
-	// If image is smaller than the screen then ensure we show it at
-	// min scale of 1
-	if (xScale > 1 && yScale > 1) {
-		//minScale = 1.0;
-	}
-    
-	// Calculate Max
-	CGFloat maxScale = 2.2; // Allow double scale
-    // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
-    // maximum zoom scale to 0.5.
-	if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
-		maxScale = maxScale / [[UIScreen mainScreen] scale];
-	}
-    
-	// Set
-	self.maximumZoomScale = maxScale;
-	self.minimumZoomScale = minScale;
+    self.maximumZoomScale = maxScale;
+    self.minimumZoomScale = minScale;
 	self.zoomScale = minScale;
     
 	// Reset position
@@ -273,16 +292,14 @@
 	[NSObject cancelPreviousPerformRequestsWithTarget:_photoBrowser];
 	
 	// Zoom
-	if (self.zoomScale == self.maximumZoomScale) {
-		
+    // 初始状态 self.minimumZoomScale = self.zoomScale
+    // 然后在`缩放到屏幕两倍`到`缩放的屏幕大小`之间切换
+	if (self.zoomScale > self.minimumZoomScale) {
 		// Zoom out
 		[self setZoomScale:self.minimumZoomScale animated:YES];
-		
 	} else {
-		
 		// Zoom in
-		[self zoomToRect:CGRectMake(touchPoint.x, touchPoint.y, 1, 1) animated:YES];
-		
+		[self zoomToPoint:touchPoint withScale:self.minimumZoomScale * 2 animated:YES];
 	}
 	
 	// Delay controls
