@@ -16,10 +16,12 @@
 #import <SVProgressHUD.h>
 
 #import "SWRevealViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface HPFavoriteViewController ()
 
 @property (nonatomic, assign)NSInteger viewAppearCount;
+@property (nonatomic, assign) NSInteger currentPage;
 
 @end
 
@@ -30,6 +32,7 @@
     [super viewDidLoad];
     
     self.title = @"收藏";
+    self.currentPage = 1;
     
     // ayscn btn
     UIBarButtonItem *ayscnButtonItem = [
@@ -44,6 +47,12 @@
     if (![_favoritedThreads count]) {
         [self confirm:nil];
     }
+    
+    @weakify(self);
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        @strongify(self);
+        [self loadMore];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,7 +111,7 @@
     _favoritedThreads = nil;
     [self.tableView reloadData];
     
-    [HPFavorite ayscnFavoritesWithBlock:^(NSArray *threads, NSError *error)
+    [HPFavorite ayscnFavoritesWithPage:1 block:^(NSArray *threads, NSError *error)
      {
          if (error) {
              [SVProgressHUD dismiss];
@@ -125,6 +134,28 @@
      }];
 }
 
+- (void)loadMore
+{
+    @weakify(self);
+    [HPFavorite ayscnFavoritesWithPage:self.currentPage+1 block:^(NSArray *threads, NSError *error)
+     {
+         @strongify(self);
+         [self.tableView.infiniteScrollingView stopAnimating];
+         if (!error) {
+             
+             self.currentPage++;
+             NSMutableArray *t = [NSMutableArray arrayWithArray:[[HPFavorite sharedFavorite] favorites]];
+             [t addObjectsFromArray:threads];
+             
+             self.favoritedThreads = [t copy];
+             [[HPFavorite sharedFavorite] favoriteThreads:self.favoritedThreads];
+             [self.tableView reloadData];
+             
+         } else {
+             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+         }
+     }];
+}
 
 #pragma mark - Table view data source
 

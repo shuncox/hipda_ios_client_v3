@@ -14,7 +14,7 @@
 
 + (HPFavorite *)sharedFavorite;
 + (BOOL)isFavoriteWithTid:(NSInteger)tid;
-+ (void)ayscnFavoritesWithBlock:(void (^)(NSArray *threads, NSError *error))block;
++ (void)ayscnFavoritesWithPage:(NSInteger)page block:(void (^)(NSArray *threads, NSError *error))block;
 
 - (void)favoriteWith:(HPThread *)thread block:(void (^)(BOOL isSuccess, NSError *error))block;
 - (void)removeFavoritesWithTid:(NSInteger)tid block:(void (^)(NSString *msg, NSError *error))block;

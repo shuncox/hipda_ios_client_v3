@@ -210,11 +210,9 @@
     }];
 }
 
-
-+ (void)ayscnFavoritesWithBlock:(void (^)(NSArray *threads, NSError *error))block
++ (void)ayscnFavoritesWithPage:(NSInteger)page block:(void (^)(NSArray *threads, NSError *error))block
 {
-
-    NSString *path = @"forum/my.php?item=favorites&type=thread";
+    NSString *path = [NSString stringWithFormat:@"forum/my.php?item=favorites&type=thread&page=%@", @(page)];
     
     [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
         

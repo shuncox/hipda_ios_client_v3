@@ -42,6 +42,7 @@ PODS:
   - SDWebImage/Core (3.7.3)
   - SKBounceAnimation (1.0.04)
   - SSKeychain (1.2.3)
+  - SVPullToRefresh (0.4.1)
   - ZAActivityBar (0.1.1):
     - SKBounceAnimation (~> 1.0)
 
@@ -65,6 +66,7 @@ DEPENDENCIES:
   - RETableViewManager (= 1.6)
   - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`, commit `a61586f`)
   - SSKeychain
+  - SVPullToRefresh
   - ZAActivityBar
 
 EXTERNAL SOURCES:
@@ -112,6 +114,7 @@ SPEC CHECKSUMS:
   SDWebImage: 119e50946eee9ddf15589227ec2b6b37966ecd04
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
+  SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
 COCOAPODS: 0.39.0
