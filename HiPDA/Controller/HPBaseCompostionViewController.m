@@ -7,7 +7,6 @@
 //
 
 #import "HPBaseCompostionViewController.h"
-#import "HPImageUploadViewController.h"
 #import "HPImageMultipleUploadViewController.h"
 #import "SWRevealViewController.h"
 
@@ -217,15 +216,9 @@
 }
 
 - (void)addImage:(id)sender {
-    if (IOS7_OR_LATER) {
-        HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
-        ivc.delegate = self;
-        [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
-    } else {
-        HPImageUploadViewController *ivc = [[HPImageUploadViewController alloc] init];
-        ivc.delegate = self;
-        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
-    }
+    HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
+    ivc.delegate = self;
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
 }
 
 - (void)close:(id)sender {

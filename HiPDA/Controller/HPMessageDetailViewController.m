@@ -19,7 +19,6 @@
 #import "UIBarButtonItem+ImageItem.h"
 
 #import "HPImageMultipleUploadViewController.h"
-#import "HPImageUploadViewController.h"
 
 #import "IDMPhotoBrowser.h"
 #import "HPSetting.h"
@@ -243,17 +242,10 @@
         return;
     }
 
-    if (IOS7_OR_LATER) {
-        HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
-        ivc.delegate = self;
-        ivc.useQiniu = YES;
-        [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
-    } else {
-        HPImageUploadViewController *ivc = [[HPImageUploadViewController alloc] init];
-        ivc.delegate = self;
-        ivc.useQiniu = YES;
-        [self presentViewController:[HPCommon NVCWithRootVC:ivc] animated:YES completion:nil];
-    }
+    HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
+    ivc.delegate = self;
+    ivc.useQiniu = YES;
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
 }
 
 - (void)completeWithAttachString:(NSString *)string error:(NSError *)error {

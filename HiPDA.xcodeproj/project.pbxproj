@@ -129,7 +129,6 @@
 		EA49AAE91861FBC900C03A02 /* last.png in Resources */ = {isa = PBXBuildFile; fileRef = EA49AAE71861FBC900C03A02 /* last.png */; };
 		EA49AAEA1861FBC900C03A02 /* last@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA49AAE81861FBC900C03A02 /* last@2x.png */; };
 		EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C5A0A18E5658700B12442 /* UIImage+Resize.m */; };
-		EA4C5A1118E56F3500B12442 /* HPImageUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C5A1018E56F3500B12442 /* HPImageUploadViewController.m */; };
 		EA5708241AA09C5200AD2247 /* HPHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */; };
 		EA5962C3192A24EE00D486C1 /* rear-cell-backgroud.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */; };
 		EA5DF0E118311F05008E4248 /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0D918311F04008E4248 /* list@2x.png */; };
@@ -584,8 +583,6 @@
 		EA49AAE81861FBC900C03A02 /* last@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "last@2x.png"; path = "Image/SwipeTableViewCell/last@2x.png"; sourceTree = "<group>"; };
 		EA4C5A0918E5658700B12442 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Helper/UIImage+Resize.h"; sourceTree = "<group>"; };
 		EA4C5A0A18E5658700B12442 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Helper/UIImage+Resize.m"; sourceTree = "<group>"; };
-		EA4C5A0F18E56F3500B12442 /* HPImageUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageUploadViewController.h; path = Controller/HPImageUploadViewController.h; sourceTree = "<group>"; };
-		EA4C5A1018E56F3500B12442 /* HPImageUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageUploadViewController.m; path = Controller/HPImageUploadViewController.m; sourceTree = "<group>"; };
 		EA5708221AA09C5200AD2247 /* HPHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHistoryViewController.h; path = Controller/HPHistoryViewController.h; sourceTree = "<group>"; };
 		EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHistoryViewController.m; path = Controller/HPHistoryViewController.m; sourceTree = "<group>"; };
 		EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rear-cell-backgroud.png"; path = "View/rear-cell-backgroud.png"; sourceTree = "<group>"; };
@@ -1220,8 +1217,6 @@
 				EA368A8218C7751500C5C5BD /* HPReplyViewController.m */,
 				EA075F5C18E447FD00A07C08 /* HPNewThreadViewController.h */,
 				EA075F5D18E447FD00A07C08 /* HPNewThreadViewController.m */,
-				EA4C5A0F18E56F3500B12442 /* HPImageUploadViewController.h */,
-				EA4C5A1018E56F3500B12442 /* HPImageUploadViewController.m */,
 				EA87A6821A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.h */,
 				EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */,
 				EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */,
@@ -2478,7 +2473,6 @@
 				EAFDB8521829EFA900C1718B /* main.m in Sources */,
 				EA743C2C183F348F0067F62B /* HPMyThreadViewController.m in Sources */,
 				EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */,
-				EA4C5A1118E56F3500B12442 /* HPImageUploadViewController.m in Sources */,
 				EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */,
 				EA43E6F1183201C700968B94 /* HPCommon.m in Sources */,
 				EA43E6EE1831F4C200968B94 /* NSUserDefaults+Convenience.m in Sources */,
