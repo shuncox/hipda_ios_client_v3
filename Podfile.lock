@@ -63,7 +63,7 @@ DEPENDENCIES:
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6)
-  - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`)
+  - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`, commit `a61586f`)
   - SSKeychain
   - ZAActivityBar
 
@@ -74,6 +74,7 @@ EXTERNAL SOURCES:
     :branch: AFNetworking-1.x
     :git: https://github.com/qiniu/objc-sdk.git
   SDWebImage:
+    :commit: a61586f
     :git: https://github.com/wujichao/SDWebImage.git
 
 CHECKOUT OPTIONS:
@@ -84,7 +85,7 @@ CHECKOUT OPTIONS:
     :commit: 637cdc555b4f0c6227ae785964c717f950359af4
     :git: https://github.com/qiniu/objc-sdk.git
   SDWebImage:
-    :commit: 42eb3b60863cb73ef89b0c8d1a16edd8f44dfd68
+    :commit: a61586f
     :git: https://github.com/wujichao/SDWebImage.git
 
 SPEC CHECKSUMS:
