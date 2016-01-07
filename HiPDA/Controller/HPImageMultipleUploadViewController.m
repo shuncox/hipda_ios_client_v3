@@ -405,8 +405,9 @@
             UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
                                         scale:asset.defaultRepresentation.scale
                                   orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-            image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(self.targetSize, self.targetSize) interpolationQuality:kCGInterpolationDefault];
-            imageData = UIImageJPEGRepresentation(image, 0.35);
+            CGFloat targetSize = MIN(MIN(image.size.width, image.size.height), self.targetSize * SP_SCREEN_SCALE());
+            image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(targetSize, targetSize) interpolationQuality:kCGInterpolationDefault];
+            imageData = UIImageJPEGRepresentation(image, 0.5);
         }
         
         NSParameterAssert(imageData);

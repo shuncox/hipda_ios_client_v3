@@ -35,12 +35,6 @@
 // No warranty is expressed or implied.
 
 #import "UIImage+Resize.h"
-//from StandardPaths.h
-#ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
-#define SP_SCREEN_SCALE() ([[NSScreen mainScreen] respondsToSelector:@selector(backingScaleFactor)]? [[NSScreen mainScreen] backingScaleFactor]: 1.0f)
-#else
-#define SP_SCREEN_SCALE() ([UIScreen mainScreen].scale)
-#endif
 
 @implementation UIImage (Resize)
 
@@ -51,7 +45,6 @@
 - (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
                                   bounds:(CGSize)bounds
                     interpolationQuality:(CGInterpolationQuality)quality {
-    CGFloat screenScale = SP_SCREEN_SCALE();
 
     // note! CGImageGetWidth/CGImageGetHeight return different values from self.size.width/self.size.height depending on orientation
     CGFloat horizontalRatio = bounds.width / self.size.width;
@@ -71,7 +64,7 @@
             [NSException raise:NSInvalidArgumentException format:@"Unsupported content mode: %d", contentMode];
     }
 
-    CGSize newSize = CGSizeMake(floorf(self.size.width * screenScale * ratio), floorf(self.size.height * screenScale * ratio));
+    CGSize newSize = CGSizeMake(floorf(self.size.width * ratio), floorf(self.size.height * ratio));
 
     return [self resizedImage:newSize interpolationQuality:quality];
 }
