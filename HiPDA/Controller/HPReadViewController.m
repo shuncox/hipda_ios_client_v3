@@ -36,7 +36,6 @@
 #import "DZWebBrowser.h"
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
-#import "UIActivity+Blocks.h"
 
 #import "UIViewController+KNSemiModal.h"
 #import "UIAlertView+Blocks.h"
@@ -2225,26 +2224,22 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     //[activityItems addObject:self.htmlString];
     [activityItems addObject:[self textForSharing]];
     
-    
-    BOOL useHPActivity = [UMOnlineConfig getBoolConfigWithKey:@"useHPActivity" defaultYES:NO];
-    Class clazz = useHPActivity ? [HPActivity class] : [UIActivity class];
-    
     __weak typeof(self) weakSelf = self;
-    UIActivity *copyLink = [clazz activityWithType:@"HPCopyLink"
+    UIActivity *copyLink = [HPActivity activityWithType:@"HPCopyLink"
                                              title:@"复制链接"
                                              image:[UIImage imageNamed:@"activity_copy_link"]
                                        actionBlock:^{
                                            [weakSelf copyLink];
                                        }];
     
-    UIActivity *copyContent = [clazz activityWithType:@"HPCopyContent"
+    UIActivity *copyContent = [HPActivity activityWithType:@"HPCopyContent"
                                                 title:@"复制全文"
                                                 image:[UIImage imageNamed:@"activity_copy_content"]
                                           actionBlock:^{
                                               [weakSelf copyContent];
                                           }];
     
-    UIActivity *capturePost = [clazz activityWithType:@"HPCapturePost"
+    UIActivity *capturePost = [HPActivity activityWithType:@"HPCapturePost"
                                                 title:@"保存截图"
                                                 image:[UIImage imageNamed:@"activity_capture_post"]
                                           actionBlock:^{

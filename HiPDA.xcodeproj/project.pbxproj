@@ -269,7 +269,6 @@
 		EAA1E68818D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68118D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m */; };
 		EAA1E68D18D03A6700E1CFE1 /* MultilineTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68A18D03A6700E1CFE1 /* MultilineTextCell.m */; };
 		EAA1E68E18D03A6700E1CFE1 /* MultilineTextItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E68C18D03A6700E1CFE1 /* MultilineTextItem.m */; };
-		EAA3A31C1A9F1FBB00927278 /* UIActivity+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A31B1A9F1FBB00927278 /* UIActivity+Blocks.m */; };
 		EAA3A3221A9F29F700927278 /* activity_capture_post@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A31F1A9F29F700927278 /* activity_capture_post@2x.png */; };
 		EAA3A3231A9F29F700927278 /* activity_copy_content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A3201A9F29F700927278 /* activity_copy_content@2x.png */; };
 		EAA3A3241A9F29F700927278 /* activity_copy_link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A3211A9F29F700927278 /* activity_copy_link@2x.png */; };
@@ -776,8 +775,6 @@
 		EAA1E68A18D03A6700E1CFE1 /* MultilineTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultilineTextCell.m; path = View/MultilineTextCell.m; sourceTree = "<group>"; };
 		EAA1E68B18D03A6700E1CFE1 /* MultilineTextItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultilineTextItem.h; path = View/MultilineTextItem.h; sourceTree = "<group>"; };
 		EAA1E68C18D03A6700E1CFE1 /* MultilineTextItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultilineTextItem.m; path = View/MultilineTextItem.m; sourceTree = "<group>"; };
-		EAA3A31A1A9F1FBB00927278 /* UIActivity+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivity+Blocks.h"; sourceTree = "<group>"; };
-		EAA3A31B1A9F1FBB00927278 /* UIActivity+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivity+Blocks.m"; sourceTree = "<group>"; };
 		EAA3A31F1A9F29F700927278 /* activity_capture_post@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_capture_post@2x.png"; path = "Image/activity/activity_capture_post@2x.png"; sourceTree = "<group>"; };
 		EAA3A3201A9F29F700927278 /* activity_copy_content@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_copy_content@2x.png"; path = "Image/activity/activity_copy_content@2x.png"; sourceTree = "<group>"; };
 		EAA3A3211A9F29F700927278 /* activity_copy_link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_copy_link@2x.png"; path = "Image/activity/activity_copy_link@2x.png"; sourceTree = "<group>"; };
@@ -1322,8 +1319,6 @@
 		EA499F3E1830C1F400172989 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				EAA3A31A1A9F1FBB00927278 /* UIActivity+Blocks.h */,
-				EAA3A31B1A9F1FBB00927278 /* UIActivity+Blocks.m */,
 				EA13CD971C11B8AD0023041F /* HPActivity.h */,
 				EA13CD981C11B8AD0023041F /* HPActivity.m */,
 				EA4C5A0918E5658700B12442 /* UIImage+Resize.h */,
@@ -2380,7 +2375,6 @@
 				EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */,
 				EA9A39AE1A5BE92E0028BE7D /* JSAvatarImageFactory.m in Sources */,
 				EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */,
-				EAA3A31C1A9F1FBB00927278 /* UIActivity+Blocks.m in Sources */,
 				EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */,
 				EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */,
 				EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */,
