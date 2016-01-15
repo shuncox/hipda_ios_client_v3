@@ -118,10 +118,10 @@
     }
 
     
-    if (printable && redirectFromPid == 0) {
-        [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
-        return;
-    }
+//    if (printable && redirectFromPid == 0) {
+//        [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
+//        return;
+//    }
     
     //
     //

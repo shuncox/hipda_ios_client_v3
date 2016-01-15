@@ -104,8 +104,17 @@ static id<HPURLMapping> s_URLMapping;
     NSURL *requestURL = request.URL;
     NSMutableURLRequest *modifiedRequest = request.mutableCopy;
     
-    // 替换url
-    if ([self.class enableForceDNS]) {
+    // 换图片的
+    if ([request.URL.absoluteString rangeOfString:@"www.hi-pda.com/forum/attachments/"].location != NSNotFound
+        && [self.class shouldCache:request]/*图片后缀 & 不是sd*/) {
+        
+        NSString *url = [request.URL.absoluteString stringByReplacingOccurrencesOfString:@"www.hi-pda.com" withString:@"7xq2vp.com1.z0.glb.clouddn.com"];
+        url = [url stringByAppendingString:@"-test"];
+        
+        modifiedRequest.URL = [NSURL URLWithString:url];
+        
+    } else if ([self.class enableForceDNS]) {
+        // 替换ip
         NSString *newHost = [s_URLMapping apiToolsHostForOriginalURLHost:requestURL.host];
         if (newHost) {
             modifiedRequest.URL = [NSURL URLWithString:[requestURL.absoluteString stringByReplacingOccurrencesOfString:requestURL.host withString:newHost]];
