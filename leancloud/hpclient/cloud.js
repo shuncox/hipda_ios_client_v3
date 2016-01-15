@@ -1,0 +1,257 @@
+var AV = require('leanengine');
+
+var headers =  {
+	'Cookie': 'cdb_auth=0a32%2FQ%2Fd8iZY8aW5qHtZVl6ebS%2Bpnj2FwidXgpu%2B4RSJ1EL1BEZGQRln8QWLsbeOCOkfFpdP%2FPclrjhzUz9CblTDX8mt;',
+	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36',
+};
+
+var Forum = AV.Object.extend('Forum');
+var Thread = AV.Object.extend('Thread');
+var Image = AV.Object.extend('Image');
+
+
+AV.Cloud.define('hello', function(request, response) {
+	response.success('Hello world!');
+
+	var fid = '2';
+
+	var forum = null;
+	var query = new AV.Query(Forum);
+	query.equalTo('fid', fid);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				forum = results[0];
+			} else {
+				forum = Forum.new({fid:fid, newCount:999, scanCount:0});
+				forum.save();
+			}
+
+			// 每次估计能拿70个帖子
+			// 上次有多少个新帖  forum.get('newCount')
+			// 每秒刷新一次的话
+			var lastNewCount = forum.get('newCount');
+			console.log('lastNewCount: ' + lastNewCount);
+			var now = +new Date();
+			var interval = (now - forum.updatedAt)/1000;
+			forum.add('log', {t: toJSONLocal(new Date()), lastNewCount: lastNewCount, interval: interval});
+			// 70 new -> 直接刷 1s
+			// 1 new -> 60s 之后
+			// {0 ... 100个} <-> {1s ... 100s}
+			var refreshInterval = Math.max(1, -lastNewCount + 100);
+			if (interval < refreshInterval) {
+				console.log('waiting next, interval ' + interval + ', refreshInterval ' + refreshInterval);
+				return;
+			}
+			console.log('do refresh, interval ' + interval + ', refreshInterval ' + refreshInterval);
+
+
+			getForumHTML(fid, function(httpResponse) {
+				//console.log(httpResponse.text);
+				console.log('get fid html ' + fid);
+				var tids = findThreads(httpResponse.text);
+				console.log(tids);
+
+				// filter tid
+				var query = new AV.Query(Thread);
+				query.containedIn('tid', tids);
+				query.find({
+					success: function(results) {
+						var newTids = [];
+						console.log('Successfully retrieved ' + results.length + ' old tids.');
+
+						for (var i = 0; i < tids.length; i++) {
+							var tid = tids[i];
+
+							var exist = false;
+							for (var j = 0; j < results.length; j++) {
+								var object = results[j];
+
+								if (tid === object.get('tid')) {
+									exist = true;
+									break;
+								}
+							}
+
+							if (exist) {
+								console.log('old tid ' + object.get('tid') + ', scanCount ' + object.get('scanCount'));
+								object.increment('scanCount');
+								object.save();
+							} else {
+								console.log('new tid ' + tid);
+								newTids.push(tid);
+							}
+						}
+
+						forum.set('newCount', newTids.length);
+						console.log('forum newCount ' + newTids.length);
+						forum.save();
+
+						for (var i = 0; i < newTids.length; i++) {
+							var tid = newTids[i];
+							var thread = Thread.new({tid: tid, fid: fid, scanCount:1});
+							thread.save();
+
+							(function(tid){
+								getThreadHTML(tid, function(httpResponse) {
+									var images = findImages(httpResponse.text);
+									console.log('get imageNames :');
+									console.log(images);
+
+									pingImagesIfNeed(images, tid);
+
+								}, function(httpResponse) {
+									console.error('getThreadHTML error ' + httpResponse.status);
+								});
+							})(tid);
+						}
+					},
+					error: function(error) {
+						console.log('query old tids Error: ' + error.code + ' ' + error.message);
+					}
+				});
+
+				
+			}, function(httpResponse) {
+				console.error('getForumHTML error ' + httpResponse.status);
+			});
+
+		},
+		error: function(error) {
+			console.log('query fid Error: ' + error.code + ' ' + error.message);
+		}
+	});
+});
+
+function getForumHTML(fid, success, error) {
+	AV.Cloud.httpRequest({
+		url: 'http://www.hi-pda.com/forum/forumdisplay.php?fid='+fid+'&orderby=dateline',
+		headers: headers,
+		success: function(httpResponse) {
+			success(httpResponse);
+		},
+		error: function(httpResponse) {
+			error(httpResponse);
+		}
+	});
+}
+
+function findThreads(html) {
+	
+	var input = html;
+	var regex = /normalthread_(\d+)/g;
+
+	var matches, output = [];
+	while (matches = regex.exec(input)) {
+		output.push(matches[1]);
+	}
+
+	var tids = output;
+	return tids;
+}
+
+function getThreadHTML(tid, success, error) {
+	AV.Cloud.httpRequest({
+		url: 'http://www.hi-pda.com/forum/viewthread.php?tid='+tid,
+		headers: headers,
+		success: function(httpResponse) {
+			success(httpResponse);
+		},
+		error: function(httpResponse) {
+			error(httpResponse);
+		}
+	});
+}
+
+function findImages(html) {
+	
+	var input = html;
+	var regex = /"attachments\/(.*?)"/g;
+
+	var matches, output = [];
+	while (matches = regex.exec(input)) {
+		output.push(matches[1]);
+	}
+
+	var images = uniq(output);
+	return images;
+}
+
+function pingImagesIfNeed(imageNames, tid) {
+
+	if (imageNames.length == 0) {
+		return;
+	}
+
+	var query = new AV.Query(Image);
+	query.containedIn('name', imageNames);
+	query.find({
+		success: function(results) {
+			var newImageNames = [];
+			console.log('Successfully retrieved ' + results.length + ' images.');
+
+			for (var i = 0; i < imageNames.length; i++) {
+				var imageName = imageNames[i];
+
+				var exist = false;
+				for (var j = 0; j < results.length; j++) {
+					var object = results[j];
+
+					if (imageName === object.get('name')) {
+						exist = true;
+						break;
+					}
+				}
+				if (exist) {
+					console.log('old imageName ' + object.get('name') + ', scanCount ' + object.get('scanCount'));
+					object.increment('scanCount');
+					object.save();
+				} else {
+					console.log('new imageName ' + imageName);
+					newImageNames.push(imageName);
+				}
+			}
+
+			for (var i = 0; i < newImageNames.length; i++) {
+				var imageName = newImageNames[i];
+				//name(半截), bucket(1)是hpimg, tid ,time自动有
+				var image = Image.new({name: imageName, bucket:1, tid:tid, scanCount:1});
+				image.save();
+
+				var url = 'http://7xq2vp.com1.z0.glb.clouddn.com/forum/attachments/'+ imageName + '-test';
+				console.log('ping image ' + url);
+
+				(function(url) {
+					AV.Cloud.httpRequest({
+						url: url,
+						success: function(httpResponse) {
+							console.log('ping image success ' + url);
+						},
+						error: function(httpResponse) {
+							console.log('ping image error ' + url);
+						}
+					});
+				})(url);
+			}
+		},
+		error: function(error) {
+			console.log('query old image Error: ' + error.code + ' ' + error.message);
+		}
+	});
+}
+
+//http://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
+function uniq(a) {
+    var seen = {};
+    return a.filter(function(item) {
+        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+    });
+}
+
+function toJSONLocal (date) {
+    var local = new Date(date);
+    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return local.toJSON().slice(5, 19);
+}
+
+module.exports = AV.Cloud;
