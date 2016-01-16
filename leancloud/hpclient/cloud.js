@@ -8,6 +8,7 @@ var headers =  {
 var Forum = AV.Object.extend('Forum');
 var Thread = AV.Object.extend('Thread');
 var Image = AV.Object.extend('Image');
+var ThreadBucket = AV.Object.extend('ThreadBucket');
 
 // v2 for decrease request count of api
 AV.Cloud.define('helloV2', function(request, response) {
@@ -34,7 +35,7 @@ function fire() {
 		getTidsForForum({fid:'2', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:1}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'2', orderby:'lastpost', page:3})/*,
+		getTidsForForum({fid:'2', orderby:'lastpost', page:3}),
 
 		getTidsForForum({fid:'6', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'6', orderby:'lastpost', page:1}),
@@ -44,61 +45,68 @@ function fire() {
 		getTidsForForum({fid:'59', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'59', orderby:'lastpost', page:1}),
 		getTidsForForum({fid:'59', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'59', orderby:'lastpost', page:3})*/
+		getTidsForForum({fid:'59', orderby:'lastpost', page:3})
 	]).then(function (values) {
 		var tids = [].concat.apply([], values);
+		tids = uniq(tids);
 
-		var query = new AV.Query(Thread);
-		query.containedIn('tid', tids);
-		query.find({
-			success: function(results) {
-				var newTids = filterTids(tids, results);
-				console.log('tids ' + tids.length + ', new ' + newTids.length + ', old ' + (tids.length - newTids.length));
-				if (results.length !== (tids.length - newTids.length)) {
-					console.log('error ' + results.length);
-				}
-
-				var threads = [];
-				for (var i = 0; i < newTids.length; i++) {
-					var tid = newTids[i];
-					var thread = Thread.new({tid: tid});
-					thread.save();
-					threads.push(thread);
-				}
-
-				(function loop(i, threads) {     
-					var thread = threads[i]; 
-
-					(function(thread) {
-						setTimeout(function () {   
-							getImagesForThread(thread.get('tid')).then(function(images) {
-								if (images.length) {
-									console.log('get imageNames :');
-									console.log(images);
-									pingImages(images);
-								} else {
-									console.log('get imageName - empty, tid ' + thread.get('tid'));
-								}
-							}, function(error) {
-								console.error('getImagesForThread error ' + error + ', tid ' + thread.get('tid'));
-								thread.destroy({
-									success: function(myObject) {
-									},
-									error: function(myObject, error) {
-										console.log('delete error ' + myObject + error);
-									}
-								});
-							});
-
-							if (--i) loop(i, threads);
-						}, 10);
-					})(thread);
-					
-				})(threads.length-1, threads);
-			},
-			error: function(error) {
-				console.log('query old tids Error: ' + error.code + ' ' + error.message);
+		var query = new AV.Query(ThreadBucket);
+		var today = getTodayDateKey();
+		query.equalTo('date', today);
+		query.first()
+		.then(function(object) {
+			if (!object) {
+				object = ThreadBucket.new({date: today, tids:[]});
+				object.save();
+				console.log('create a new threadBucket');
 			}
+			return object;
+		})
+		.then(function(threadBucket){
+			
+			var oldTids = threadBucket.get('tids');
+			var newTids = filterTids(tids, oldTids);
+
+			console.log('today tids ' + tids.length + ', new ' + newTids.length + ', old ' + (tids.length - newTids.length));
+			if (newTids.length <= 0) {
+				return;
+			}
+			// 分段save
+			for (var i = 0; i < newTids.length; i++) {
+				threadBucket.addUnique('tids', newTids[i]);
+			}
+			threadBucket.save();
+
+			// 整体save
+			/*
+			var toSaveTids = oldTids.concat(newTids);
+			threadBucket.save({'tids': toSaveTids});
+			*/
+
+			(function loop(i, newTids) {     
+				var tid = newTids[i]; 
+
+				(function(tid) {
+					setTimeout(function () {   
+						getImagesForThread(tid).then(function(images) {
+							if (images.length) {
+								console.log('get imageNames :');
+								console.log(images);
+								pingImages(images);
+							} else {
+								console.log('get imageName - empty, tid ' + tid);
+							}
+						}, function(error) {
+							console.error('getImagesForThread error ' + error + ', tid ' + tid);
+							threadBucket.remove('tids', tid);
+						});
+
+						i--;
+						if (i >= 0) loop(i, newTids);
+					}, 10);
+				})(tid);
+
+			})(newTids.length-1, newTids);
 		});
 
 	}, function(error){
@@ -280,16 +288,14 @@ function getThreadHTML(tid, success, error) {
 	});
 }
 
-function filterTids(tids, results) {
+function filterTids(tids, oldTids) {
 	var newTids = [];
 	for (var i = 0; i < tids.length; i++) {
 		var tid = tids[i];
 
 		var exist = false;
-		for (var j = 0; j < results.length; j++) {
-			var object = results[j];
-
-			if (tid === object.get('tid')) {
+		for (var j = 0; j < oldTids.length; j++) {
+			if (tid === oldTids[j]) {
 				exist = true;
 				break;
 			}
@@ -425,6 +431,12 @@ function toJSONLocal (date) {
     var local = new Date(date);
     local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return local.toJSON().slice(5, 19);
+}
+
+function getTodayDateKey () {
+	var date = new Date();
+	date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+	return date.toJSON().slice(0, 10);
 }
 
 function serialize(obj) {
