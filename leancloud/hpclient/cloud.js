@@ -28,14 +28,24 @@ AV.Cloud.define('helloV2', function(request, response) {
 
 	//1.5秒后再搞一次, leancloud允许每次超时15s, 但是定时刷新却可能不是每秒一次
 	// 但是这样会不会重叠啊
-	
+});
+
+AV.Cloud.define('TestInterval', function(request, response) {
+	response.success('Hello world!');
+
 	// 妈的 这个函数直接返回了hello world然后 我的代码还是一直跑跑着的 不过这个setInterval也不靠谱 log也时间间隔不稳定
+	// 实测他调度是看你的资源占用情况
+	// 只打log 能保证时间
+	// 可以把 分成 d hot, d new, 等等 六个函数调用
+	// 通过 setInterval 的方式搞
+	// 数据怎么共享? 不共享 不同板块的帖子tid不会一样
+	// 这样可以做到不用他的数据模块  每小时做一次持久化即可
 	var date = new Date();
 	date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
 	var key = date.toJSON().slice(11,19);
 	setInterval(function(){
 		console.log('i am alive ' + key);
-	}, 1500); 
+	}, 1000); 
 });
 
 function fire() {
