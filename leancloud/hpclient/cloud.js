@@ -24,10 +24,18 @@ AV.Cloud.define('helloV2', function(request, response) {
 	fire(); 
 
 	//  可以考虑tids按天组织成数个array
+	// 换成bucket的方式 就可以根据lastupdate的值来减少请求
 
 	//1.5秒后再搞一次, leancloud允许每次超时15s, 但是定时刷新却可能不是每秒一次
 	// 但是这样会不会重叠啊
-	//setInterval(fire, 1500); 
+	
+	// 妈的 这个函数直接返回了hello world然后 我的代码还是一直跑跑着的 不过这个setInterval也不靠谱 log也时间间隔不稳定
+	var date = new Date();
+	date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+	var key = date.toJSON().slice(11,19);
+	setInterval(function(){
+		console.log('i am alive ' + key);
+	}, 1500); 
 });
 
 function fire() {
@@ -64,6 +72,9 @@ function fire() {
 		})
 		.then(function(threadBucket){
 			
+			// todo
+			// 换成bucket的方式 就可以根据threadBucket.lastupdate的值来减少请求
+
 			var oldTids = threadBucket.get('tids');
 			var newTids = filterTids(tids, oldTids);
 
