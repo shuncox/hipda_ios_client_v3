@@ -22,6 +22,8 @@ AV.Cloud.define('helloV2', function(request, response) {
 	// 先实现Plan A
 	fire(); 
 
+	//  可以考虑tids按天组织成数个array
+
 	//1.5秒后再搞一次, leancloud允许每次超时15s, 但是定时刷新却可能不是每秒一次
 	// 但是这样会不会重叠啊
 	//setInterval(fire, 1500); 
@@ -32,7 +34,7 @@ function fire() {
 		getTidsForForum({fid:'2', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:1}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'2', orderby:'lastpost', page:3}),
+		getTidsForForum({fid:'2', orderby:'lastpost', page:3})/*,
 
 		getTidsForForum({fid:'6', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'6', orderby:'lastpost', page:1}),
@@ -42,7 +44,7 @@ function fire() {
 		getTidsForForum({fid:'59', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'59', orderby:'lastpost', page:1}),
 		getTidsForForum({fid:'59', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'59', orderby:'lastpost', page:3})
+		getTidsForForum({fid:'59', orderby:'lastpost', page:3})*/
 	]).then(function (values) {
 		var tids = [].concat.apply([], values);
 
@@ -56,20 +58,43 @@ function fire() {
 					console.log('error ' + results.length);
 				}
 
+				var threads = [];
 				for (var i = 0; i < newTids.length; i++) {
 					var tid = newTids[i];
 					var thread = Thread.new({tid: tid});
 					thread.save();
-
-					getImagesForThread(tid).then(function(images) {
-						console.log('get imageNames :');
-						console.log(images);
-
-						pingImages(images);
-					}, function(error) {
-						console.error('getImagesForThread error ' + error);
-					});
+					threads.push(thread);
 				}
+
+				(function loop(i, threads) {     
+					var thread = threads[i]; 
+
+					(function(thread) {
+						setTimeout(function () {   
+							getImagesForThread(thread.get('tid')).then(function(images) {
+								if (images.length) {
+									console.log('get imageNames :');
+									console.log(images);
+									pingImages(images);
+								} else {
+									console.log('get imageName - empty, tid ' + thread.get('tid'));
+								}
+							}, function(error) {
+								console.error('getImagesForThread error ' + error + ', tid ' + thread.get('tid'));
+								thread.destroy({
+									success: function(myObject) {
+									},
+									error: function(myObject, error) {
+										console.log('delete error ' + myObject + error);
+									}
+								});
+							});
+
+							if (--i) loop(i, threads);
+						}, 10);
+					})(thread);
+					
+				})(threads.length-1, threads);
 			},
 			error: function(error) {
 				console.log('query old tids Error: ' + error.code + ' ' + error.message);
