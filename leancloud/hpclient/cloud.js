@@ -29,7 +29,7 @@ AV.Cloud.define('helloV2', function(request, response) {
 
 function fire() {
 	AV.Promise.all([
-		getTidsForForum({fid:'2', orderby:'dateline', page:1}),/*
+		getTidsForForum({fid:'2', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:1}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:2}),
 		getTidsForForum({fid:'2', orderby:'lastpost', page:3}),
@@ -41,7 +41,7 @@ function fire() {
 
 		getTidsForForum({fid:'59', orderby:'dateline', page:1}),
 		getTidsForForum({fid:'59', orderby:'lastpost', page:1}),
-		getTidsForForum({fid:'59', orderby:'lastpost', page:2}),*/
+		getTidsForForum({fid:'59', orderby:'lastpost', page:2}),
 		getTidsForForum({fid:'59', orderby:'lastpost', page:3})
 	]).then(function (values) {
 		var tids = [].concat.apply([], values);
