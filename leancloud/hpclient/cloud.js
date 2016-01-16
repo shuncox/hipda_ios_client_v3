@@ -9,6 +9,78 @@ var Forum = AV.Object.extend('Forum');
 var Thread = AV.Object.extend('Thread');
 var Image = AV.Object.extend('Image');
 
+// v2 for decrease request count of api
+AV.Cloud.define('helloV2', function(request, response) {
+	response.success('Hello world!');
+
+	// Plan A 拿到D版BS,E版的新帖hot贴 then 拿到所有的tids 做一次查询 然后取新的去拿图片, 不去重图片, (tid已去重, image再去重没必要)
+	// 每秒一次请求 每天8w 每月30w
+	// 记录一个上次update的值来减少请求不可取, 因为记录也要api请求一次, 也是每秒一次
+	
+	// Plan B 拿到tids 在拿到所有的 images 再去重, 这样就600个get html请求出去了擦 600*200ms 12s?
+
+	// 先实现Plan A
+	fire(); 
+
+	//1.5秒后再搞一次, leancloud允许每次超时15s, 但是定时刷新却可能不是每秒一次
+	// 但是这样会不会重叠啊
+	//setInterval(fire, 1500); 
+});
+
+function fire() {
+	AV.Promise.all([
+		getTidsForForum({fid:'2', orderby:'dateline', page:1}),/*
+		getTidsForForum({fid:'2', orderby:'lastpost', page:1}),
+		getTidsForForum({fid:'2', orderby:'lastpost', page:2}),
+		getTidsForForum({fid:'2', orderby:'lastpost', page:3}),
+
+		getTidsForForum({fid:'6', orderby:'dateline', page:1}),
+		getTidsForForum({fid:'6', orderby:'lastpost', page:1}),
+		getTidsForForum({fid:'6', orderby:'lastpost', page:2}),
+		getTidsForForum({fid:'6', orderby:'lastpost', page:3}),
+
+		getTidsForForum({fid:'59', orderby:'dateline', page:1}),
+		getTidsForForum({fid:'59', orderby:'lastpost', page:1}),
+		getTidsForForum({fid:'59', orderby:'lastpost', page:2}),*/
+		getTidsForForum({fid:'59', orderby:'lastpost', page:3})
+	]).then(function (values) {
+		var tids = [].concat.apply([], values);
+
+		var query = new AV.Query(Thread);
+		query.containedIn('tid', tids);
+		query.find({
+			success: function(results) {
+				var newTids = filterTids(tids, results);
+				console.log('tids ' + tids.length + ', new ' + newTids.length + ', old ' + (tids.length - newTids.length));
+				if (results.length !== (tids.length - newTids.length)) {
+					console.log('error ' + results.length);
+				}
+
+				for (var i = 0; i < newTids.length; i++) {
+					var tid = newTids[i];
+					var thread = Thread.new({tid: tid});
+					thread.save();
+
+					getImagesForThread(tid).then(function(images) {
+						console.log('get imageNames :');
+						console.log(images);
+
+						pingImages(images);
+					}, function(error) {
+						console.error('getImagesForThread error ' + error);
+					});
+				}
+			},
+			error: function(error) {
+				console.log('query old tids Error: ' + error.code + ' ' + error.message);
+			}
+		});
+
+	}, function(error){
+		console.log('get tids error :');
+		console.log(error);
+	});
+}
 
 AV.Cloud.define('hello', function(request, response) {
 	response.success('Hello world!');
@@ -124,8 +196,16 @@ AV.Cloud.define('hello', function(request, response) {
 });
 
 function getForumHTML(fid, success, error) {
+	getForumHTMLParames({fid:fid, orderBy:'dateline'}, success, error);
+}
+
+// {fid:'2', orderby:'dateline|lastpost', page:1}
+function getForumHTMLParames(params, success, error) {
+	var p = serialize(params);
+	var url = 'http://www.hi-pda.com/forum/forumdisplay.php?'+p;
+	console.log('load url: ' + url);
 	AV.Cloud.httpRequest({
-		url: 'http://www.hi-pda.com/forum/forumdisplay.php?fid='+fid+'&orderby=dateline',
+		url: url,
 		headers: headers,
 		success: function(httpResponse) {
 			success(httpResponse);
@@ -150,6 +230,18 @@ function findThreads(html) {
 	return tids;
 }
 
+function getTidsForForum(params) {
+	var promise = new AV.Promise(function(resolve, reject){
+		getForumHTMLParames(params, function(httpResponse) {
+			var tids = findThreads(httpResponse.text);
+			resolve(tids);
+		}, function(httpResponse) {
+			reject(httpResponse.status);
+		});
+	});
+	return promise;
+}
+
 function getThreadHTML(tid, success, error) {
 	AV.Cloud.httpRequest({
 		url: 'http://www.hi-pda.com/forum/viewthread.php?tid='+tid,
@@ -161,6 +253,29 @@ function getThreadHTML(tid, success, error) {
 			error(httpResponse);
 		}
 	});
+}
+
+function filterTids(tids, results) {
+	var newTids = [];
+	for (var i = 0; i < tids.length; i++) {
+		var tid = tids[i];
+
+		var exist = false;
+		for (var j = 0; j < results.length; j++) {
+			var object = results[j];
+
+			if (tid === object.get('tid')) {
+				exist = true;
+				break;
+			}
+		}
+
+		if (!exist) {
+			newTids.push(tid);
+			console.log('new tid ' + tid);
+		}
+	}
+	return newTids;
 }
 
 function findImages(html) {
@@ -175,6 +290,39 @@ function findImages(html) {
 
 	var images = uniq(output);
 	return images;
+}
+
+function getImagesForThread(tid) {
+	var promise = new AV.Promise(function(resolve, reject){
+		getThreadHTML(tid, function(httpResponse) {
+			var images = findImages(httpResponse.text);
+			resolve(images);
+		}, function(httpResponse) {
+			reject(httpResponse.status);
+		});
+	});
+	return promise;
+}
+
+function pingImages(imageNames) {
+	for (var i = 0; i < imageNames.length; i++) {
+		var imageName = imageNames[i];
+		//name(半截), bucket(1)是hpimg, tid ,time自动有
+		var url = 'http://7xq2vp.com1.z0.glb.clouddn.com/forum/attachments/'+ imageName + '-test';
+		console.log('ping image ' + url);
+
+		(function(url) {
+			AV.Cloud.httpRequest({
+				url: url,
+				success: function(httpResponse) {
+					console.log('ping image success ' + url);
+				},
+				error: function(httpResponse) {
+					console.log('ping image error ' + url);
+				}
+			});
+		})(url);
+	}
 }
 
 function pingImagesIfNeed(imageNames, tid) {
@@ -252,6 +400,13 @@ function toJSONLocal (date) {
     var local = new Date(date);
     local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return local.toJSON().slice(5, 19);
+}
+
+function serialize(obj) {
+  var str = [];
+  for(var p in obj)
+     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+  return str.join("&");
 }
 
 module.exports = AV.Cloud;
