@@ -88,7 +88,7 @@ function fire() {
 			var oldTids = threadBucket.get('tids');
 			var newTids = filterTids(tids, oldTids);
 
-			console.log('today tids ' + tids.length + ', new ' + newTids.length + ', old ' + (tids.length - newTids.length));
+			console.log('today tids ' + oldTids.length + ', current ' + tids.length + ', new ' + newTids.length);
 			if (newTids.length <= 0) {
 				return;
 			}
@@ -257,7 +257,8 @@ function getForumHTML(fid, success, error) {
 function getForumHTMLParames(params, success, error) {
 	var p = serialize(params);
 	var url = 'http://www.hi-pda.com/forum/forumdisplay.php?'+p;
-	console.log('load url: ' + url);
+	//console.log('load url: ' + url);
+	//如果你的日志输出过于频繁（超过 50 条/秒），我们会丢弃部分日志信息。
 	AV.Cloud.httpRequest({
 		url: url,
 		headers: headers,
@@ -265,6 +266,7 @@ function getForumHTMLParames(params, success, error) {
 			success(httpResponse);
 		},
 		error: function(httpResponse) {
+			console.log('load url error: ' + url);
 			error(httpResponse);
 		}
 	});
