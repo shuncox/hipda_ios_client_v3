@@ -1,4 +1,21 @@
 var AV = require('leanengine');
+var Qiniu = require('node-qiniu');
+var QiniuUtil = require('leanengine/node_modules/avoscloud-sdk/node_modules/qiniu');
+
+/*
+./.avoscloud/qiniuKey.js
+	exports.Qiniu_ACCESS_KEY = 'xx';
+	exports.Qiniu_SECRET_KEY = 'xx';
+*/
+var ACCESS_KEY = require('./.avoscloud/qiniuKey').Qiniu_ACCESS_KEY;
+var SECRET_KEY = require('./.avoscloud/qiniuKey').Qiniu_SECRET_KEY;
+Qiniu.config({
+	access_key: ACCESS_KEY,
+	secret_key: SECRET_KEY,
+});
+QiniuUtil.conf.ACCESS_KEY = ACCESS_KEY;
+QiniuUtil.conf.SECRET_KEY = SECRET_KEY;
+
 
 /*
 整个文件在云引擎上是以单例形式活着的, 也就是说, 不同云函数可以访问到同一个全局变量
@@ -13,6 +30,8 @@ var PUSH_URL = 'http://sc.'+'ft'+'qq'+'.com/SCU898Tec0e33d62f0fc6d2da4813732f472
 
 var TIDS_BUCKET = [];
 var LIMIT = 2222;  //之前三个板块每天总共能收集2000个帖子, 现在限制limit的目的是避免频繁访问一个tid
+
+var SPACE_LIMIT = 8000000000; // 8G
 
 var TODAY_REPORT_DEFAULT = {
 	day:'',
@@ -323,11 +342,135 @@ function getTodayDateKey () {
 	return date.toJSON().slice(0, 10);
 }
 
+function getMonthKey () {
+	// 201601
+	var date = new Date();
+	date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+	return date.toJSON().slice(0, 7).replace('-', '');
+};
+
 function serialize(obj) {
   var str = [];
   for(var p in obj)
      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
   return str.join("&");
 }
+
+
+//================ CutSpaceToLimit ==================//
+AV.Cloud.define('CutSpaceToLimit', function(request, response) {
+	response.success('Hello world!');
+
+	var host = 'http://api.qiniu.com';
+	var path = '/stat/info?bucket=hpimg&month='+getMonthKey();
+	var policy = new Qiniu.Token.AccessToken();
+	var token = policy.token(path);
+	console.log('token ' + token);
+	AV.Cloud.httpRequest({
+		url: host+path,
+		headers: {'Authorization': token},
+		success: function(httpResponse) {
+			
+			console.log('space ' + httpResponse.data.space);
+			console.log('transfer ' + httpResponse.data.transfer);
+
+			getAllFiles().then(function(files) {
+				console.log('files count ' + files.length);
+				
+				files = files.sort(function (a, b) { return a.putTime - b.putTime; });
+				var paths = [];
+				var currentSize = httpResponse.data.space;
+				var sum = currentSize - SPACE_LIMIT;
+				for (var i = 0; i < files.length; i++) {
+
+					if (sum <= 0) {
+						console.log('finish');
+						break;
+					} else {
+						console.log('continue sum ' + sum);
+					}
+
+					/*
+						fsize: 84115
+						hash: "FmUrEpxvfxWGPfiRmNgCO9vuONM3"
+						key: "forum/attachments/day_130416/1304161401c921ac56a22d5941.jpg
+						"mimeType: "image/jpeg"
+						putTime: 14529251800962786
+					*/
+
+					var file = files[i];
+					var fsize = file.fsize;
+					var putTime = file.putTime;
+
+					console.log('fsize' + fsize);
+					console.log('putTime' + putTime);
+
+					paths.push(new QiniuUtil.rs.EntryPath('hpimg', file.key));
+
+					sum -= fsize;
+				}
+
+				if (paths.length == 0) {
+					console.log('no need clean');
+					return;
+				}
+				var client = new QiniuUtil.rs.Client();
+				client.batchDelete(paths, function(err, ret) {
+					if (!err) {
+						for (i in ret) {
+							if (ret[i].code !== 200) {
+								console.log(ret[i].code, ret[i].data);
+								TODAY_REPORT.errors.push({url: 'batchDelete - item', errMsg: ret});
+							}
+						}
+					} else {
+						console.log(err);
+						TODAY_REPORT.errors.push({url: 'batchDelete', errMsg: err});
+					}
+				});
+
+			}, function(error) {
+				console.log(error);
+				TODAY_REPORT.errors.push({url: 'getAllFiles', errMsg: error});
+			});
+		},
+		error: function(httpResponse) {
+			console.log('load url error: ' + url + ', ' + httpResponse);
+			TODAY_REPORT.errors.push({url: url, errMsg: httpResponse});
+		}
+	});
+});
+
+
+
+function getAllFiles() {
+	var promise = new AV.Promise(function(resolve, reject){
+		_getAllFiles(null, [], function(items) {
+			resolve(items);
+		}, function(error) {
+			reject(error);
+		});
+	});
+	return promise;
+}
+
+function _getAllFiles(marker, items, success, error) {
+	QiniuUtil.rsf.listPrefix('hpimg', '', marker, 1000, function(err, ret) {
+		console.log(ret.items.length);
+		console.log(ret.marker);
+		if (!err) {
+			items = items.concat(ret.items);
+
+			if (!ret.marker) {
+				success(items);
+			} else {
+				_getAllFiles(ret.marker, items, success, error);
+			}
+		} else {
+			error(err);
+		}
+	});
+}
+
 
 module.exports = AV.Cloud;
