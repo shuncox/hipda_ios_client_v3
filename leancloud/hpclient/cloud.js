@@ -343,19 +343,23 @@ function reportStatusIfNeeded() {
 	if (TODAY_REPORT.day !== day) {
 		var text = day;
 		var desp = JSON.stringify(TODAY_REPORT);
-		var url = PUSH_URL + '?text='+text+'&desp='+desp;
-		AV.Cloud.httpRequest({
-			url: url,
-			success: function(httpResponse) {
-				console.log('send report success: ' + url);
-			},
-			error: function(httpResponse) {
-				console.log('send report error: ' + url);
-			}
-		});	
+		report(text, desp);
 
 		TODAY_REPORT = JSON.parse(JSON.stringify(TODAY_REPORT_DEFAULT));
 	}
+}
+
+function report(text, desp) {
+	var url = PUSH_URL + '?text='+text+'&desp='+desp;
+	AV.Cloud.httpRequest({
+		url: url,
+		success: function(httpResponse) {
+			console.log('send report success: ' + url);
+		},
+		error: function(httpResponse) {
+			console.log('send report error: ' + url);
+		}
+	});	
 }
 
 //http://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
@@ -409,6 +413,9 @@ AV.Cloud.define('CutSpaceToLimit', function(request, response) {
 	var policy = new Qiniu.Token.AccessToken();
 	var token = policy.token(path);
 	console.log('token ' + token);
+
+	var reportDesp = '';
+
 	AV.Cloud.httpRequest({
 		url: host+path,
 		headers: {'Authorization': token},
@@ -416,6 +423,8 @@ AV.Cloud.define('CutSpaceToLimit', function(request, response) {
 			
 			console.log('space ' + httpResponse.data.space);
 			console.log('transfer ' + httpResponse.data.transfer);
+			reportDesp += 'space: ' + (+httpResponse.data.space/1000000000).toFixed(2) + 'g\n';
+			reportDesp += 'transfer: ' + (+httpResponse.data.transfer/1000000000).toFixed(2) + 'g\n';
 
 			getAllFiles().then(function(files) {
 				console.log('files count ' + files.length);
@@ -428,6 +437,7 @@ AV.Cloud.define('CutSpaceToLimit', function(request, response) {
 
 					if (sum <= 0) {
 						console.log('finish');
+						reportDesp += 'will delete ' + paths.length + ' files\n';
 						break;
 					} else {
 						console.log('continue sum ' + sum);
@@ -464,11 +474,17 @@ AV.Cloud.define('CutSpaceToLimit', function(request, response) {
 							if (ret[i].code !== 200) {
 								console.log(ret[i].code, ret[i].data);
 								TODAY_REPORT.errors.push({url: 'batchDelete - item', errMsg: ret});
+								reportDesp += 'error: ' + ret + '\n'
 							}
 						}
+						reportDesp += 'done';
+						report('cut space', reportDesp);
 					} else {
 						console.log(err);
 						TODAY_REPORT.errors.push({url: 'batchDelete', errMsg: err});
+						
+						reportDesp += 'error: ' + err + '\n'
+						report('cut space error', reportDesp);
 					}
 				});
 
