@@ -131,6 +131,15 @@ function schedule(paramsArray, name) {
 				clearInterval(timer);
 
 				log.save({bucket: TIDS_BUCKET, report: TODAY_REPORT});
+
+				AV.Cloud.run(name, {}, {
+					success: function(data){
+						console.log(data);
+					},
+					error: function(err){
+						console.log(err);
+					}
+				});
 			}
 		}, SEC); 
 	});
