@@ -1,5 +1,9 @@
 var AV = require('leanengine');
 
+/*
+整个文件在云引擎上是以单例形式活着的, 也就是说, 不同云函数可以访问到同一个全局变量
+*/
+
 var headers =  {
 	'Cookie': 'cdb_auth=0a32%2FQ%2Fd8iZY8aW5qHtZVl6ebS%2Bpnj2FwidXgpu%2B4RSJ1EL1BEZGQRln8QWLsbeOCOkfFpdP%2FPclrjhzUz9CblTDX8mt;',
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36',
@@ -8,17 +12,16 @@ var headers =  {
 var PUSH_URL = 'http://sc.'+'ft'+'qq'+'.com/SCU898Tec0e33d62f0fc6d2da4813732f4726ca569da35b97d4c.send';
 
 var TIDS_BUCKET = [];
-var LIMIT = 1000;  //之前三个板块每天总共能收集2000个帖子, 现在限制limit的目的是避免频繁访问一个tid
+var LIMIT = 2222;  //之前三个板块每天总共能收集2000个帖子, 现在限制limit的目的是避免频繁访问一个tid
 
 var TODAY_REPORT_DEFAULT = {
 	day:'',
-	name: '',
 	errors: [], // {url: errMsg}
 	newTidsCount: 0,
 	newImagesCount: 0,
 	newImagesSizeCount: 0,
 };
-var TODAY_REPORT = new Object(TODAY_REPORT_DEFAULT);
+var TODAY_REPORT = JSON.parse(JSON.stringify(TODAY_REPORT_DEFAULT));
 
 AV.Cloud.define('D-new-topic', function(request, response) {
 	response.success('Hello world!');
@@ -76,7 +79,7 @@ function schedule(paramsArray, name) {
 			promises.push(getTidsForForum(paramsArray[i]));
 		}
 		fire(promises);
-		reportStatusIfNeeded(name);
+		reportStatusIfNeeded();
 	}, 1000); 
 }
 
@@ -268,9 +271,7 @@ function pingImages(imageNames) {
 	}
 }
 
-function reportStatusIfNeeded(name) {
-
-	TODAY_REPORT.name = name;
+function reportStatusIfNeeded() {
 	
 	var day = dayString(new Date());
 	if (TODAY_REPORT.day === '') {
@@ -290,9 +291,9 @@ function reportStatusIfNeeded(name) {
 				console.log('send report error: ' + url);
 			}
 		});	
-	}
 
-	TODAY_REPORT = new Object(TODAY_REPORT_DEFAULT);
+		TODAY_REPORT = JSON.parse(JSON.stringify(TODAY_REPORT_DEFAULT));
+	}
 }
 
 //http://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
