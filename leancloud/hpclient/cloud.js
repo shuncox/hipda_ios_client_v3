@@ -3,12 +3,12 @@ var Qiniu = require('node-qiniu');
 var QiniuUtil = require('leanengine/node_modules/avoscloud-sdk/node_modules/qiniu');
 
 /*
-./.avoscloud/qiniuKey.js
+./qiniuKey.js
 	exports.Qiniu_ACCESS_KEY = 'xx';
 	exports.Qiniu_SECRET_KEY = 'xx';
 */
-var ACCESS_KEY = require('./.avoscloud/qiniuKey').Qiniu_ACCESS_KEY;
-var SECRET_KEY = require('./.avoscloud/qiniuKey').Qiniu_SECRET_KEY;
+var ACCESS_KEY = require('./qiniuKey').Qiniu_ACCESS_KEY;
+var SECRET_KEY = require('./qiniuKey').Qiniu_SECRET_KEY;
 Qiniu.config({
 	access_key: ACCESS_KEY,
 	secret_key: SECRET_KEY,
