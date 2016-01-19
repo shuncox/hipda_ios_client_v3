@@ -16,6 +16,7 @@ Qiniu.config({
 QiniuUtil.conf.ACCESS_KEY = ACCESS_KEY;
 QiniuUtil.conf.SECRET_KEY = SECRET_KEY;
 
+var LOG = AV.Object.extend('ScheduleLog');
 
 /*
 整个文件在云引擎上是以单例形式活着的, 也就是说, 不同云函数可以访问到同一个全局变量
@@ -91,15 +92,48 @@ AV.Cloud.define('EINK-hot-topic', function(request, response) {
 });
 
 function schedule(paramsArray, name) {
-	setInterval(function(){
-		console.log(name);
-		var promises = [];
-		for (var i = 0; i < paramsArray.length; i++) {
-			promises.push(getTidsForForum(paramsArray[i]));
+
+	var query = new AV.Query(LOG);
+	query.equalTo('name', name);
+	query.first()
+	.then(function(object) {
+		if (!object) {
+			object = LOG.new({name:name, bucket: TIDS_BUCKET, report: TODAY_REPORT});
+			object.save();
+			console.log('create a new LOG ' + object);
 		}
-		fire(promises);
-		reportStatusIfNeeded();
-	}, 1000); 
+		return object;
+	})
+	.then(function(log){
+		/*
+		 leancloud 函数只能存活大概半小时
+		 我们十分钟重启一次 600s 云引擎那里设成 630s
+		*/
+
+		TIDS_BUCKET = log.get('bucket');
+		TODAY_REPORT = log.get('report');
+
+		var SEC = 1000;
+		var limit = 10 * 60 * SEC;
+		var timer = setInterval(function(){
+			console.log(name);
+			var promises = [];
+			for (var i = 0; i < paramsArray.length; i++) {
+				promises.push(getTidsForForum(paramsArray[i]));
+			}
+			fire(promises);
+			reportStatusIfNeeded();
+
+			limit -= SEC;
+			console.log(limit);
+			if (limit <= 0) {
+				console.log('cencel');
+				clearInterval(timer);
+
+				log.save({bucket: TIDS_BUCKET, report: TODAY_REPORT});
+			}
+		}, SEC); 
+	});
 }
 
 function fire(promises) {
