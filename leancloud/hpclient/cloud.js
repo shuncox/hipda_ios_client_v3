@@ -5,252 +5,136 @@ var headers =  {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36',
 };
 
-var Forum = AV.Object.extend('Forum');
-var Thread = AV.Object.extend('Thread');
-var Image = AV.Object.extend('Image');
-var ThreadBucket = AV.Object.extend('ThreadBucket');
+var PUSH_URL = 'http://sc.'+'ft'+'qq'+'.com/SCU898Tec0e33d62f0fc6d2da4813732f4726ca569da35b97d4c.send';
 
-// v2 for decrease request count of api
-AV.Cloud.define('helloV2', function(request, response) {
+var TIDS_BUCKET = [];
+var LIMIT = 1000;  //之前三个板块每天总共能收集2000个帖子, 现在限制limit的目的是避免频繁访问一个tid
+
+var TODAY_REPORT_DEFAULT = {
+	day:'',
+	name: '',
+	errors: [], // {url: errMsg}
+	newTidsCount: 0,
+	newImagesCount: 0,
+	newImagesSizeCount: 0,
+};
+var TODAY_REPORT = new Object(TODAY_REPORT_DEFAULT);
+
+AV.Cloud.define('D-new-topic', function(request, response) {
 	response.success('Hello world!');
-
-	// Plan A 拿到D版BS,E版的新帖hot贴 then 拿到所有的tids 做一次查询 然后取新的去拿图片, 不去重图片, (tid已去重, image再去重没必要)
-	// 每秒一次请求 每天8w 每月30w
-	// 记录一个上次update的值来减少请求不可取, 因为记录也要api请求一次, 也是每秒一次
-	
-	// Plan B 拿到tids 在拿到所有的 images 再去重, 这样就600个get html请求出去了擦 600*200ms 12s?
-
-	// 先实现Plan A
-	fire(); 
-
-	//  可以考虑tids按天组织成数个array
-	// 换成bucket的方式 就可以根据lastupdate的值来减少请求
-
-	//1.5秒后再搞一次, leancloud允许每次超时15s, 但是定时刷新却可能不是每秒一次
-	// 但是这样会不会重叠啊
+	schedule([
+		{fid:'2', orderby:'dateline', page:1},
+	], 'D-new-topic');
 });
 
-AV.Cloud.define('TestInterval', function(request, response) {
+AV.Cloud.define('D-hot-topic', function(request, response) {
 	response.success('Hello world!');
+	schedule([
+		{fid:'2', orderby:'lastpost', page:1},
+		{fid:'2', orderby:'lastpost', page:2},
+		{fid:'2', orderby:'lastpost', page:3},
+	], 'D-hot-topic');
+});
 
-	// 妈的 这个函数直接返回了hello world然后 我的代码还是一直跑跑着的 不过这个setInterval也不靠谱 log也时间间隔不稳定
-	// 实测他调度是看你的资源占用情况
-	// 只打log 能保证时间
-	// 可以把 分成 d hot, d new, 等等 六个函数调用
-	// 通过 setInterval 的方式搞
-	// 数据怎么共享? 不共享 不同板块的帖子tid不会一样
-	// 这样可以做到不用他的数据模块  每小时做一次持久化即可
-	var date = new Date();
-	date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-	var key = date.toJSON().slice(11,19);
+AV.Cloud.define('BS-new-topic', function(request, response) {
+	response.success('Hello world!');
+	schedule([
+		{fid:'6', orderby:'dateline', page:1},
+	], 'BS-new-topic');
+});
+
+AV.Cloud.define('BS-hot-topic', function(request, response) {
+	response.success('Hello world!');
+	schedule([
+		{fid:'6', orderby:'lastpost', page:1},
+		{fid:'6', orderby:'lastpost', page:2},
+		{fid:'6', orderby:'lastpost', page:3},
+	], 'BS-hot-topic');
+});
+
+AV.Cloud.define('EINK-new-topic', function(request, response) {
+	response.success('Hello world!');
+	schedule([
+		{fid:'59', orderby:'dateline', page:1},
+	], 'EINK-new-topic');
+});
+
+AV.Cloud.define('EINK-hot-topic', function(request, response) {
+	response.success('Hello world!');
+	schedule([
+		{fid:'59', orderby:'lastpost', page:1},
+		{fid:'59', orderby:'lastpost', page:2},
+		{fid:'59', orderby:'lastpost', page:3},
+	], 'EINK-hot-topic');
+});
+
+function schedule(paramsArray, name) {
 	setInterval(function(){
-		console.log('i am alive ' + key);
+		console.log(name);
+		var promises = [];
+		for (var i = 0; i < paramsArray.length; i++) {
+			promises.push(getTidsForForum(paramsArray[i]));
+		}
+		fire(promises);
+		reportStatusIfNeeded(name);
 	}, 1000); 
-});
+}
 
-function fire() {
-	AV.Promise.all([
-		getTidsForForum({fid:'2', orderby:'dateline', page:1}),
-		getTidsForForum({fid:'2', orderby:'lastpost', page:1}),
-		getTidsForForum({fid:'2', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'2', orderby:'lastpost', page:3}),
-
-		getTidsForForum({fid:'6', orderby:'dateline', page:1}),
-		getTidsForForum({fid:'6', orderby:'lastpost', page:1}),
-		getTidsForForum({fid:'6', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'6', orderby:'lastpost', page:3}),
-
-		getTidsForForum({fid:'59', orderby:'dateline', page:1}),
-		getTidsForForum({fid:'59', orderby:'lastpost', page:1}),
-		getTidsForForum({fid:'59', orderby:'lastpost', page:2}),
-		getTidsForForum({fid:'59', orderby:'lastpost', page:3})
-	]).then(function (values) {
+function fire(promises) {
+	AV.Promise.all(promises).then(function (values) {
 		var tids = [].concat.apply([], values);
 		tids = uniq(tids);
 
-		var query = new AV.Query(ThreadBucket);
-		var today = getTodayDateKey();
-		query.equalTo('date', today);
-		query.first()
-		.then(function(object) {
-			if (!object) {
-				object = ThreadBucket.new({date: today, tids:[]});
-				object.save();
-				console.log('create a new threadBucket');
-			}
-			return object;
-		})
-		.then(function(threadBucket){
-			
-			// todo
-			// 换成bucket的方式 就可以根据threadBucket.lastupdate的值来减少请求
+		var newTids = filterTids(tids, TIDS_BUCKET);
 
-			var oldTids = threadBucket.get('tids');
-			var newTids = filterTids(tids, oldTids);
+		TODAY_REPORT.newTidsCount += newTids.length;
 
-			console.log('today tids ' + oldTids.length + ', current ' + tids.length + ', new ' + newTids.length);
-			if (newTids.length <= 0) {
-				return;
-			}
-			// 分段save
-			for (var i = 0; i < newTids.length; i++) {
-				threadBucket.addUnique('tids', newTids[i]);
-			}
-			threadBucket.save();
+		console.log('TIDS_BUCKET ' + TIDS_BUCKET.length + ', current ' + tids.length + ', new ' + newTids.length);
+		if (newTids.length <= 0) {
+			return;
+		}
 
-			// 整体save
-			/*
-			var toSaveTids = oldTids.concat(newTids);
-			threadBucket.save({'tids': toSaveTids});
-			*/
+		TIDS_BUCKET = TIDS_BUCKET.concat(newTids);
+		while (TIDS_BUCKET.length > LIMIT) {
+			TIDS_BUCKET.shift();
+		}
 
-			(function loop(i, newTids) {     
-				var tid = newTids[i]; 
+		(function loop(i, newTids) {     
+			var tid = newTids[i]; 
 
-				(function(tid) {
-					setTimeout(function () {   
-						getImagesForThread(tid).then(function(images) {
-							if (images.length) {
-								console.log('get imageNames :');
-								console.log(images);
-								pingImages(images);
-							} else {
-								console.log('get imageName - empty, tid ' + tid);
-							}
-						}, function(error) {
-							console.error('getImagesForThread error ' + error + ', tid ' + tid);
-							threadBucket.remove('tids', tid);
-						});
+			(function(tid) {
+				setTimeout(function () {   
+					getImagesForThread(tid).then(function(images) {
+						if (images.length) {
+							console.log('get imageNames :');
+							console.log(images);
 
-						i--;
-						if (i >= 0) loop(i, newTids);
-					}, 10);
-				})(tid);
+							TODAY_REPORT.newImagesCount += images.length;
 
-			})(newTids.length-1, newTids);
-		});
+							pingImages(images);
+						} else {
+							console.log('get imageName - empty, tid ' + tid);
+						}
+					}, function(error) {
+						console.error('getImagesForThread error ' + error + ', tid ' + tid);
 
+						// remove tid for TIDS_BUCKET
+						var index = TIDS_BUCKET.indexOf(tid);
+						if (index > -1) {
+							TIDS_BUCKET.splice(index, 1);
+						}
+					});
+
+					i--;
+					if (i >= 0) loop(i, newTids);
+				}, 10);
+			})(tid);
+
+		})(newTids.length-1, newTids);
 	}, function(error){
 		console.log('get tids error :');
 		console.log(error);
 	});
-}
-
-AV.Cloud.define('hello', function(request, response) {
-	response.success('Hello world!');
-
-	var fid = '2';
-
-	var forum = null;
-	var query = new AV.Query(Forum);
-	query.equalTo('fid', fid);
-	query.find({
-		success: function(results) {
-			if (results.length > 0) {
-				forum = results[0];
-			} else {
-				forum = Forum.new({fid:fid, newCount:999, scanCount:0});
-				forum.save();
-			}
-
-			// 每次估计能拿70个帖子
-			// 上次有多少个新帖  forum.get('newCount')
-			// 每秒刷新一次的话
-			var lastNewCount = forum.get('newCount');
-			console.log('lastNewCount: ' + lastNewCount);
-			var now = +new Date();
-			var interval = (now - forum.updatedAt)/1000;
-			forum.add('log', {t: toJSONLocal(new Date()), lastNewCount: lastNewCount, interval: interval});
-			// 70 new -> 直接刷 1s
-			// 1 new -> 60s 之后
-			// {0 ... 100个} <-> {1s ... 100s}
-			var refreshInterval = Math.max(1, -lastNewCount + 100);
-			if (interval < refreshInterval) {
-				console.log('waiting next, interval ' + interval + ', refreshInterval ' + refreshInterval);
-				return;
-			}
-			console.log('do refresh, interval ' + interval + ', refreshInterval ' + refreshInterval);
-
-
-			getForumHTML(fid, function(httpResponse) {
-				//console.log(httpResponse.text);
-				console.log('get fid html ' + fid);
-				var tids = findThreads(httpResponse.text);
-				console.log(tids);
-
-				// filter tid
-				var query = new AV.Query(Thread);
-				query.containedIn('tid', tids);
-				query.find({
-					success: function(results) {
-						var newTids = [];
-						console.log('Successfully retrieved ' + results.length + ' old tids.');
-
-						for (var i = 0; i < tids.length; i++) {
-							var tid = tids[i];
-
-							var exist = false;
-							for (var j = 0; j < results.length; j++) {
-								var object = results[j];
-
-								if (tid === object.get('tid')) {
-									exist = true;
-									break;
-								}
-							}
-
-							if (exist) {
-								console.log('old tid ' + object.get('tid') + ', scanCount ' + object.get('scanCount'));
-								object.increment('scanCount');
-								object.save();
-							} else {
-								console.log('new tid ' + tid);
-								newTids.push(tid);
-							}
-						}
-
-						forum.set('newCount', newTids.length);
-						console.log('forum newCount ' + newTids.length);
-						forum.save();
-
-						for (var i = 0; i < newTids.length; i++) {
-							var tid = newTids[i];
-							var thread = Thread.new({tid: tid, fid: fid, scanCount:1});
-							thread.save();
-
-							(function(tid){
-								getThreadHTML(tid, function(httpResponse) {
-									var images = findImages(httpResponse.text);
-									console.log('get imageNames :');
-									console.log(images);
-
-									pingImagesIfNeed(images, tid);
-
-								}, function(httpResponse) {
-									console.error('getThreadHTML error ' + httpResponse.status);
-								});
-							})(tid);
-						}
-					},
-					error: function(error) {
-						console.log('query old tids Error: ' + error.code + ' ' + error.message);
-					}
-				});
-
-				
-			}, function(httpResponse) {
-				console.error('getForumHTML error ' + httpResponse.status);
-			});
-
-		},
-		error: function(error) {
-			console.log('query fid Error: ' + error.code + ' ' + error.message);
-		}
-	});
-});
-
-function getForumHTML(fid, success, error) {
-	getForumHTMLParames({fid:fid, orderBy:'dateline'}, success, error);
 }
 
 // {fid:'2', orderby:'dateline|lastpost', page:1}
@@ -267,6 +151,8 @@ function getForumHTMLParames(params, success, error) {
 		},
 		error: function(httpResponse) {
 			console.log('load url error: ' + url);
+			TODAY_REPORT.errors.push({url: url, errMsg: httpResponse});
+
 			error(httpResponse);
 		}
 	});
@@ -299,13 +185,15 @@ function getTidsForForum(params) {
 }
 
 function getThreadHTML(tid, success, error) {
+	var url = 'http://www.hi-pda.com/forum/viewthread.php?tid='+tid;
 	AV.Cloud.httpRequest({
-		url: 'http://www.hi-pda.com/forum/viewthread.php?tid='+tid,
+		url: url,
 		headers: headers,
 		success: function(httpResponse) {
 			success(httpResponse);
 		},
 		error: function(httpResponse) {
+			TODAY_REPORT.errors.push({url: url, errMsg: httpResponse});
 			error(httpResponse);
 		}
 	});
@@ -361,7 +249,7 @@ function getImagesForThread(tid) {
 function pingImages(imageNames) {
 	for (var i = 0; i < imageNames.length; i++) {
 		var imageName = imageNames[i];
-		//name(半截), bucket(1)是hpimg, tid ,time自动有
+
 		var url = 'http://7xq2vp.com1.z0.glb.clouddn.com/forum/attachments/'+ imageName + '-test';
 		console.log('ping image ' + url);
 
@@ -373,73 +261,38 @@ function pingImages(imageNames) {
 				},
 				error: function(httpResponse) {
 					console.log('ping image error ' + url);
+					TODAY_REPORT.errors.push({url: url, errMsg: httpResponse});
 				}
 			});
 		})(url);
 	}
 }
 
-function pingImagesIfNeed(imageNames, tid) {
+function reportStatusIfNeeded(name) {
 
-	if (imageNames.length == 0) {
-		return;
+	TODAY_REPORT.name = name;
+	
+	var day = dayString(new Date());
+	if (TODAY_REPORT.day === '') {
+		TODAY_REPORT.day = day;
 	}
 
-	var query = new AV.Query(Image);
-	query.containedIn('name', imageNames);
-	query.find({
-		success: function(results) {
-			var newImageNames = [];
-			console.log('Successfully retrieved ' + results.length + ' images.');
-
-			for (var i = 0; i < imageNames.length; i++) {
-				var imageName = imageNames[i];
-
-				var exist = false;
-				for (var j = 0; j < results.length; j++) {
-					var object = results[j];
-
-					if (imageName === object.get('name')) {
-						exist = true;
-						break;
-					}
-				}
-				if (exist) {
-					console.log('old imageName ' + object.get('name') + ', scanCount ' + object.get('scanCount'));
-					object.increment('scanCount');
-					object.save();
-				} else {
-					console.log('new imageName ' + imageName);
-					newImageNames.push(imageName);
-				}
+	if (TODAY_REPORT.day !== day) {
+		var text = day;
+		var desp = JSON.stringify(TODAY_REPORT);
+		var url = PUSH_URL + '?text='+text+'&desp='+desp;
+		AV.Cloud.httpRequest({
+			url: url,
+			success: function(httpResponse) {
+				console.log('send report success: ' + url);
+			},
+			error: function(httpResponse) {
+				console.log('send report error: ' + url);
 			}
+		});	
+	}
 
-			for (var i = 0; i < newImageNames.length; i++) {
-				var imageName = newImageNames[i];
-				//name(半截), bucket(1)是hpimg, tid ,time自动有
-				var image = Image.new({name: imageName, bucket:1, tid:tid, scanCount:1});
-				image.save();
-
-				var url = 'http://7xq2vp.com1.z0.glb.clouddn.com/forum/attachments/'+ imageName + '-test';
-				console.log('ping image ' + url);
-
-				(function(url) {
-					AV.Cloud.httpRequest({
-						url: url,
-						success: function(httpResponse) {
-							console.log('ping image success ' + url);
-						},
-						error: function(httpResponse) {
-							console.log('ping image error ' + url);
-						}
-					});
-				})(url);
-			}
-		},
-		error: function(error) {
-			console.log('query old image Error: ' + error.code + ' ' + error.message);
-		}
-	});
+	TODAY_REPORT = new Object(TODAY_REPORT_DEFAULT);
 }
 
 //http://stackoverflow.com/questions/9229645/remove-duplicates-from-javascript-array
@@ -450,7 +303,14 @@ function uniq(a) {
     });
 }
 
-function toJSONLocal (date) {
+function dayString (date) {
+    var local = new Date(date);
+    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    //return local.toJSON().slice(0, 10);
+    return local.toJSON().slice(0, 14); // for debug, hour report
+}
+
+function shortDateString (date) {
     var local = new Date(date);
     local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return local.toJSON().slice(5, 19);
