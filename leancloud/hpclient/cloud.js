@@ -115,8 +115,11 @@ function schedule(paramsArray, name) {
 		 我们十分钟重启一次 600s 云引擎那里设成 630s
 		*/
 
-		TIDS_BUCKET = log.get('bucket');
-		TODAY_REPORT = log.get('report');
+		//TIDS_BUCKET = log.get('bucket');
+		//TODAY_REPORT = log.get('report');
+
+console.log(TIDS_BUCKET);
+console.log(TODAY_REPORT);
 
 		var SEC = 1000;
 		var limit = 10 * 60 * SEC;
