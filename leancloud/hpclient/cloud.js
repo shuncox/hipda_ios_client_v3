@@ -36,10 +36,10 @@ var SPACE_LIMIT = 8000000000; // 8G
 
 var TODAY_REPORT_DEFAULT = {
 	day:'',
-	errors: [], // {url: errMsg}
 	newTidsCount: 0,
 	newImagesCount: 0,
 	newImagesSizeCount: 0,
+	errors: [], // {url: errMsg}
 };
 var TODAY_REPORT = JSON.parse(JSON.stringify(TODAY_REPORT_DEFAULT));
 
@@ -132,6 +132,8 @@ function schedule(paramsArray, name) {
 
 				log.save({bucket: TIDS_BUCKET, report: TODAY_REPORT});
 
+				// 不起作用 还是会被干掉
+				/*
 				AV.Cloud.run(name, {}, {
 					success: function(data){
 						console.log(data);
@@ -139,7 +141,7 @@ function schedule(paramsArray, name) {
 					error: function(err){
 						console.log(err);
 					}
-				});
+				});*/
 			}
 		}, SEC); 
 	});
@@ -465,6 +467,7 @@ AV.Cloud.define('CutSpaceToLimit', function(request, response) {
 
 				if (paths.length == 0) {
 					console.log('no need clean');
+					report('cut space, no need clean', reportDesp);
 					return;
 				}
 				var client = new QiniuUtil.rs.Client();
