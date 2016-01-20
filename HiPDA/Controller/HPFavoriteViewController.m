@@ -20,8 +20,9 @@
 
 @interface HPFavoriteViewController ()
 
-@property (nonatomic, assign)NSInteger viewAppearCount;
+@property (nonatomic, assign) NSInteger viewAppearCount;
 @property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, readonly, strong) NSMutableArray *favoritedThreads;
 
 @end
 
@@ -44,7 +45,7 @@
     
     [self addRevealActionBI];
     
-    if (![_favoritedThreads count]) {
+    if (![self.favoritedThreads count]) {
         [self confirm:nil];
     }
     
@@ -78,6 +79,13 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - 
+
+- (NSMutableArray *)favoritedThreads
+{
+    return [[HPFavorite sharedFavorite] favorites];
+}
+
 
 #pragma mark -
 
@@ -86,8 +94,7 @@
 }
 
 - (void)setup {
-    _favoritedThreads = [[HPFavorite sharedFavorite] favorites];
-    NSLog(@"_favoritedThreads %@",_favoritedThreads);
+    
 }
 
 
@@ -108,7 +115,7 @@
     
     [SVProgressHUD showWithStatus:@"同步中..."];
     
-    _favoritedThreads = nil;
+    [[HPFavorite sharedFavorite] favoriteThreads:@[]];
     [self.tableView reloadData];
     
     [HPFavorite ayscnFavoritesWithPage:1 block:^(NSArray *threads, NSError *error)
@@ -121,7 +128,6 @@
              [SVProgressHUD dismiss];
              
              [[HPFavorite sharedFavorite] favoriteThreads:threads];
-             _favoritedThreads = [[HPFavorite sharedFavorite] favorites];
              [self.tableView reloadData];
              
              NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -147,8 +153,7 @@
              NSMutableArray *t = [NSMutableArray arrayWithArray:[[HPFavorite sharedFavorite] favorites]];
              [t addObjectsFromArray:threads];
              
-             self.favoritedThreads = [t copy];
-             [[HPFavorite sharedFavorite] favoriteThreads:self.favoritedThreads];
+             [[HPFavorite sharedFavorite] favoriteThreads:t];
              [self.tableView reloadData];
              
          } else {
@@ -166,7 +171,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_favoritedThreads count];
+    return [self.favoritedThreads count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -178,7 +183,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    HPThread *thread = [_favoritedThreads objectAtIndex:indexPath.row];
+    HPThread *thread = [self.favoritedThreads objectAtIndex:indexPath.row];
     cell.textLabel.text = thread.title;
     
     return cell;
@@ -214,7 +219,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    HPThread *thread = [_favoritedThreads objectAtIndex:indexPath.row];
+    HPThread *thread = [self.favoritedThreads objectAtIndex:indexPath.row];
     HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:thread];
     
     [self.navigationController pushViewController:readVC animated:YES];
