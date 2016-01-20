@@ -91,10 +91,15 @@ AV.Cloud.define('EINK-hot-topic', function(request, response) {
 	], 'EINK-hot-topic');
 });
 
+AV.Cloud.define('send-report', function(request, response) {
+	response.success('Hello world!');
+	reportStatus();
+});
+
 function schedule(paramsArray, name) {
 
 	var query = new AV.Query(LOG);
-	query.equalTo('name', name);
+	query.equalTo('name', name); //这里的bucket其实是一个bucket, 但是六个函数都log下, 便于查看
 	query.first()
 	.then(function(object) {
 		if (!object) {
@@ -122,7 +127,6 @@ function schedule(paramsArray, name) {
 				promises.push(getTidsForForum(paramsArray[i]));
 			}
 			fire(promises);
-			reportStatusIfNeeded();
 
 			limit -= SEC;
 			console.log(limit);
@@ -335,20 +339,18 @@ function pingImages(imageNames) {
 	}
 }
 
-function reportStatusIfNeeded() {
+function reportStatus() {
 	
 	var day = dayString(new Date());
 	if (TODAY_REPORT.day === '') {
 		TODAY_REPORT.day = day;
 	}
 
-	if (TODAY_REPORT.day !== day) {
-		var text = day;
-		var desp = JSON.stringify(TODAY_REPORT);
-		report(text, desp);
+	var text = day;
+	var desp = JSON.stringify(TODAY_REPORT);
+	report(text, desp);
 
-		TODAY_REPORT = JSON.parse(JSON.stringify(TODAY_REPORT_DEFAULT));
-	}
+	TODAY_REPORT = JSON.parse(JSON.stringify(TODAY_REPORT_DEFAULT));
 }
 
 function report(text, desp) {
