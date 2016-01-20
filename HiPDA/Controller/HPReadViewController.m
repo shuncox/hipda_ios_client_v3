@@ -14,6 +14,7 @@
 #import "HPUserViewController.h"
 #import "HPEditPostViewController.h"
 #import "HPSFSafariViewController.h"
+#import "HPViewHTMLController.h"
 
 #import "HPNewPost.h"
 #import "HPDatabase.h"
@@ -2246,7 +2247,16 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                               [weakSelf capturePost];
                                           }];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, capturePost]];
+    UIActivity *viewHTML = [HPActivity activityWithType:@"HPViewHTML"
+                                                  title:@"查看源代码"
+                                                  image:[UIImage imageNamed:@"activity_copy_content"]
+                                            actionBlock:^{
+                                                HPViewHTMLController *vc = [HPViewHTMLController new];
+                                                vc.html = weakSelf.htmlString;
+                                                [weakSelf.navigationController pushViewController:vc animated:YES];
+                                            }];
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, capturePost, viewHTML]];
     
     activityViewController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     

@@ -299,6 +299,7 @@
 		EAB7CEC519F00E90003830AC /* up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAB7CEBF19F00E90003830AC /* up@2x.png */; };
 		EAB7CEC619F00E90003830AC /* up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAB7CEC019F00E90003830AC /* up@3x.png */; };
 		EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC0E42918BCE89700F064B6 /* HPNewPost.m */; };
+		EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC202E11C4FD2050050994E /* HPViewHTMLController.m */; };
 		EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */; };
 		EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */; };
 		EAD7F5DC183CC84600A750D9 /* hp_smile_default_cool.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F59F183CC84600A750D9 /* hp_smile_default_cool.gif */; };
@@ -822,6 +823,8 @@
 		EAB7CEC019F00E90003830AC /* up@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "up@3x.png"; path = "Image/toolbar/up@3x.png"; sourceTree = "<group>"; };
 		EAC0E42818BCE89700F064B6 /* HPNewPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNewPost.h; path = Model/HPNewPost.h; sourceTree = "<group>"; };
 		EAC0E42918BCE89700F064B6 /* HPNewPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNewPost.m; path = Model/HPNewPost.m; sourceTree = "<group>"; };
+		EAC202E01C4FD2050050994E /* HPViewHTMLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewHTMLController.h; path = Controller/HPViewHTMLController.h; sourceTree = "<group>"; };
+		EAC202E11C4FD2050050994E /* HPViewHTMLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewHTMLController.m; path = Controller/HPViewHTMLController.m; sourceTree = "<group>"; };
 		EACA0B561892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EACA0B571892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EAD2AECB18365F8A00E0A6C3 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EGOCache.h; path = Vender/EGOCache/EGOCache.h; sourceTree = "<group>"; };
@@ -1257,6 +1260,8 @@
 				EA1427DF18BF866C00A7E9B1 /* More */,
 				EA78407F1BE20D4C00139141 /* HPDebugCrawlerViewController.h */,
 				EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */,
+				EAC202E01C4FD2050050994E /* HPViewHTMLController.h */,
+				EAC202E11C4FD2050050994E /* HPViewHTMLController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -2420,6 +2425,7 @@
 				EAA1E68718D03A4100E1CFE1 /* UIView+AnchorPoint.m in Sources */,
 				EA743C29183F32410067F62B /* HPMyThread.m in Sources */,
 				EA083DBD18C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
+				EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */,
 				EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */,
 				EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */,
 				EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */,
