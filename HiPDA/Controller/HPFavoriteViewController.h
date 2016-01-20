@@ -11,6 +11,4 @@
 
 @interface HPFavoriteViewController : HPBaseTableViewController
 
-@property(nonatomic, strong)NSMutableArray *favoritedThreads;
-
 @end
