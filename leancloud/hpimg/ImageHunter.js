@@ -1,10 +1,14 @@
 // constants
 var AV = require('leanengine');
 var Util = require('./Util');
+var zlib = require("zlib");
+var iconv = require('iconv-lite');
+
 var LOG = AV.Object.extend('ScheduleLog');
 var headers =  {
 	'Cookie': 'cdb_auth=0a32%2FQ%2Fd8iZY8aW5qHtZVl6ebS%2Bpnj2FwidXgpu%2B4RSJ1EL1BEZGQRln8QWLsbeOCOkfFpdP%2FPclrjhzUz9CblTDX8mt;',
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36',
+	'Accept-Encoding':'gzip',
 };
 var PAGE_LIMIT = 200;  // 每页的限额
 
@@ -138,7 +142,7 @@ method.getForumHTMLParames = function(params, success, error) {
 	var that = this;
 	//console.log('load url: ' + url);
 	//如果你的日志输出过于频繁（超过 50 条/秒），我们会丢弃部分日志信息。
-	AV.Cloud.httpRequest({
+	XHR({
 		url: url,
 		headers: headers,
 		success: function(httpResponse) {
@@ -185,7 +189,7 @@ method.getTidsForForum = function(params) {
 method.getThreadHTML = function(tid, success, error) {
 	var url = 'http://www.hi-pda.com/forum/viewthread.php?tid='+tid;
 	var that = this;
-	AV.Cloud.httpRequest({
+	XHR({
 		url: url,
 		headers: headers,
 		success: function(httpResponse) {
@@ -270,6 +274,23 @@ method.pingImages = function(imageNames) {
 			});
 		})(url);
 	}
+}
+
+function XHR(params) {
+	var success = params.success;
+	params.success = function(httpResponse) {
+		if (httpResponse.headers['content-encoding'] == 'gzip') {
+			zlib.gunzip(httpResponse.data, function(err, dezipped) {
+				// var text = dezipped.toString();
+				var text = iconv.decode(dezipped, 'gbk');
+				httpResponse.text = text;
+				success(httpResponse);
+			});
+		} else {
+			success(httpResponse);
+		}
+	}
+	AV.Cloud.httpRequest(params);
 }
 
 module.exports = ImageHunter;

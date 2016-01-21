@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   query.find({
     success: function(results) {
       res.render('todos', {
-        title: 'TODO 列表 ddd',
+        title: 'TODO 列表',
         todos: results
       });
     },
