@@ -63,7 +63,7 @@ AV.Cloud.define('send-report', function(request, response) {
 			for (var i = 0; i < logs.length; i++) {
 				var log = logs[i].attributes;
 				log.bucket = log.bucket.length;
-				desp += JSON.stringify(log);
+				desp += JSON.stringify(log, null, 2);
 				desp += '\n';
 			}
 			console.log(desp);
