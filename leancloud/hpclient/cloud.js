@@ -45,11 +45,13 @@ var tasks = [
 
 for (i in tasks) {
 	var task = tasks[i];
-	AV.Cloud.define(task.name, function(request, response) {
-		response.success('Hello world!');
-		var hunter = new ImageHunter(task.params, task.name);
-		hunter.schedule();
-	});
+	(function(task){
+		AV.Cloud.define(task.name, function(request, response) {
+			response.success('Hello world!');
+			var hunter = new ImageHunter(task.params, task.name);
+			hunter.schedule();
+		});
+	})(task);
 }
 
 AV.Cloud.define('send-report', function(request, response) {

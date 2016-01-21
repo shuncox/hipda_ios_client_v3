@@ -19,6 +19,7 @@ function ImageHunter(paramsArray, name) {
 		newTidsCount: 0,
 		newImagesCount: 0,
 		newImagesSizeCount: 0,
+		getTidsErrorCount: 0,
 		errors: [],
     };
     this._limit = PAGE_LIMIT * paramsArray.length;
@@ -79,6 +80,10 @@ method.fire = function(promises) {
 		that._report.newTidsCount += newTids.length;
 
 		console.log(that._name + ', bucket ' + that._bucket.length + ', current ' + tids.length + ', new ' + newTids.length);
+		if (tids.length == 0) {
+			console.log('get tids 0');
+			that._report.getTidsErrorCount += 1;
+		} 
 		if (newTids.length <= 0) {
 			return;
 		}
