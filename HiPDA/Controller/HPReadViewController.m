@@ -503,7 +503,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 }
                 
                 // 解决由于一些tag未闭合造成的影响
-                list = [list stringByReplacingOccurrencesOfString:@"</li>" withString:@"</strong></font></blockquote></b></i></em></li>"];
+                list = [list stringByReplacingOccurrencesOfString:@"</li>" withString:@"</table></strong></font></blockquote></b></i></em></li>"];
                 
                 [lists appendString:list];
             }];
