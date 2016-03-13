@@ -764,8 +764,15 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
    NSLog(@"webViewDidFinishLoad isisLoading %@", self.webView.isLoading?@"YES":@"NO");
     
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSLog(@"webView didFailLoadWithError error %@", error);
     
+    // 有时图片加载出错, 可能在这里能找到原因
+    [Flurry logEvent:@"Read_WebViewLoadError"
+      withParameters:@{@"code": @(error.code),
+                       @"msg": error.localizedDescription ?: @"",
+                       @"description": [NSString stringWithFormat:@"%@", error]}];
 }
 
 - (void)webViewDidAppear {
