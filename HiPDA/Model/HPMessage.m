@@ -16,6 +16,7 @@
 
 #import <AFHTTPRequestOperation.h>
 #import "NSString+Additions.h"
+#import "NSRegularExpression+HP.h"
 
 #import "NSString+HTML.h"
 #import <NSString+Emoji/NSString+Emoji.h>
@@ -164,6 +165,9 @@
          高三苦逼<br />
          谢谢</div>
          */
+        NSString *mineUid = [RX(@"discuz_uid = (\\d+)") firstMatchValue:html];
+        NSString *hisUid = @(uid).stringValue;
+        
         
         NSString *pattern = @"<cite>([^<]+)</cite>\r\n(.*?)</p>\r\n<div class=\"summary\">(.*?)</div>";
         
@@ -228,7 +232,9 @@
                                                @"date":date?:[NSDate date],
                                                /*@"dateString":dateString,*/
                                                @"message":summary?:@"",
-                                               @"isUnread":(isUnread) ? @YES:@NO
+                                               @"isUnread":(isUnread) ? @YES:@NO,
+                                               @"hisUid": hisUid?:@"",
+                                               @"mineUid": mineUid?:@"",
                                                };
                 
                 if(DEBUG_Load_Detail) NSLog(@"%@", message_info);

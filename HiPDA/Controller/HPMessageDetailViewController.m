@@ -17,11 +17,55 @@
 #import "NSUserDefaults+Convenience.h"
 #import "UIAlertView+Blocks.h"
 #import "UIBarButtonItem+ImageItem.h"
+#import "UIControl+ALActionBlocks.h"
 
 #import "HPImageMultipleUploadViewController.h"
+#import "HPUserViewController.h"
 
 #import "IDMPhotoBrowser.h"
 #import "HPSetting.h"
+
+@interface AvatarView : UIImageView
+
+@property (nonatomic, strong) UIButton *button;
+@property (nonatomic, strong) UIImageView *imageView;
+
+- (void)setAvatarURL:(NSURL *)url;
+
+@end
+@implementation AvatarView
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.userInteractionEnabled = YES;
+        _button = [UIButton new];
+        _imageView = [UIImageView new];
+        _imageView.layer.cornerRadius = 5;
+        [self addSubview:_imageView];
+        [self addSubview:_button];
+    }
+    return self;
+}
+- (void)setAvatarURL:(NSURL *)url
+{
+    if (url) {
+        [self.imageView sd_setImageWithURL:url
+                placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]
+                         options:SDWebImageLowPriority];
+    } else {
+        self.imageView.image = [UIImage imageNamed:@"profile-image-placeholder"];
+    }
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.button.frame = self.bounds;
+    self.imageView.frame = CGRectMake(5, 7, self.bounds.size.width - 10, self.bounds.size.height - 10);
+}
+
+@end
 
 @interface HPMessageDetailViewController () <JSMessagesViewDataSource, JSMessagesViewDelegate, UIActionSheetDelegate, HPImageUploadDelegate>
 
@@ -374,7 +418,22 @@
 
 - (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender
 {
-    return nil;
+    BOOL showAvatar = [Setting boolForKey:HPSettingShowAvatar];
+    
+    NSDictionary *message_info = [self.messages objectAtIndex:indexPath.row];
+    NSString *username = [message_info objectForKey:@"username"];
+    NSString *uid = message_info[[username isEqual:self.sender]?@"mineUid":@"hisUid"];
+    
+    AvatarView *view = [AvatarView new];
+    [view setAvatarURL:(showAvatar && uid.length) ? [HPUser avatarStringWithUid:[uid integerValue]] : nil];
+    @weakify(self);
+    [view.button handleControlEvents:UIControlEventTouchUpInside withBlock:^(id weakSender) {
+        @strongify(self);
+        HPUserViewController *uvc = [HPUserViewController new];
+        uvc.uid = [uid integerValue];
+        [self.navigationController pushViewController:uvc animated:YES];
+    }];
+    return view;
 }
 
 @end
