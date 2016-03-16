@@ -200,7 +200,7 @@
         
         // get title
         __block NSString *title = nil;
-        html = [RX(@"&nbsp; &nbsp; <b>标题: </b>(.*?)<br /><br />") replace:html withDetailsBlock:^(RxMatch* match){
+        html = [RX(@"&nbsp; &nbsp; <b>标题: </b>([^<]+)<br /><br />") replace:html withDetailsBlock:^(RxMatch* match){
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             title = m1.value;
