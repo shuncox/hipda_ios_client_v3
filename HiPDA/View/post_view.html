@@ -308,7 +308,7 @@ var img_click = function (el) {
     var div = document.createElement('div');
     div.innerHTML = s;
     var imageNode = div.firstChild;
-    el.parentNode.insertBefore(imageNode, el.nextSibling);
+    el.parentNode.insertBefore(imageNode, el);
     el.parentNode.removeChild(el);
 };
 
