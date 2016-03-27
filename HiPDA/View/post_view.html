@@ -303,8 +303,13 @@ var img_click_el = function(el) {
     location.href = 'image://'+el.src+'___???a???a'+p.x+'???s'+p.y+'???b???s???a'+el.clientWidth+'???s'+el.clientHeight+'???b???b___';
 };
 
-var img_click = function (img) {
-    location.href = 'image://' + img;
+var img_click = function (el) {
+    var s = el.getAttribute('image').replace(/\\/g, '');
+    var div = document.createElement('div');
+    div.innerHTML = s;
+    var imageNode = div.firstChild;
+    el.parentNode.insertBefore(imageNode, el.nextSibling);
+    el.parentNode.removeChild(el);
 };
 
 //http://stackoverflow.com/questions/4712310/javascript-how-to-detect-if-a-word-is-highlighted

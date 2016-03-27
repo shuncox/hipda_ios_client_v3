@@ -14,6 +14,8 @@
 
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
+#import "NSRegularExpression+HP.h"
+#import "NSString+HPImageSize.h"
 
 #import "HPHttpClient.h"
 #import <AFHTTPRequestOperation.h>
@@ -371,6 +373,8 @@
 
     if ([_body_html indexOf:@"attachments/day_"] != -1 ) {
         
+        NSString *html = [self.body_html copy];
+        
         // remove extra
         _body_html = [RX(@"<span style=\"position: absolute; display: none\" id=\"attach_.*?</span>\r\n") replace:_body_html with:@""];
         NSRegularExpression *rx = [NSRegularExpression rx:@"<div class=\"t_attach\" id=\"aimg_.*?\r\n</div>" options:NSRegularExpressionDotMatchesLineSeparators];
@@ -380,7 +384,11 @@
         __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
         __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
         
-        NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" />";
+        NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" a__i__d=\"%@\" />";
+        // 最后会是 <img class="attach_image" src="http://domain.com/xxx.jpg" aid="123456" size="123" />
+        // preProcessHTML: 里也要改
+        // 这里结构真是太恶心, model层应该返回的数据结构, view层再拼接展示
+        // 理想的数据结构应该是 {title:xxx, postInfo:{...} content:[html, imageInfo, html, text, imageInfo, videoInfo, otherType...]}
         
         // 帖子内部 image
         _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
@@ -389,13 +397,13 @@
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             //NSLog(@"%@", m1.value);
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
-            
             [imgsArray addObject:src];
-            if (m2 && m2.value) {
-                [aidArray addObject:m2.value];
+            NSString *aid = m2.value;
+            if (aid.length) {
+                [aidArray addObject:aid];
             }
             
-            return [NSString stringWithFormat:imageElement, m1.value];
+            return [NSString stringWithFormat:imageElement, m1.value, aid];
         }];
         
         
@@ -411,12 +419,24 @@
             if ([imgsArray indexOfObject:src] == NSNotFound &&
                 [aidArray indexOfObject:aid] == NSNotFound) {
                 [imgsArray addObject:src];
-                return [NSString stringWithFormat:imageElement, m2.value];
+                if (aid.length) [aidArray addObject:aid];
+                return [NSString stringWithFormat:imageElement, m2.value, aid];
             } else {
                 return @"";
             }
         }];
         
+        // 图片size
+        for (NSString *aid in aidArray) {
+            // 找到size
+            NSString *sizeInfo = [html getSizeString:aid];
+            if (!sizeInfo) continue;
+            
+            // 填上size
+            NSString *sizeString = [NSString stringWithFormat:@"%.2f", [sizeInfo imageSize]];
+            NSString *pattern2 = [NSString stringWithFormat:@"a__i__d=\"%@\"", aid];
+            self.body_html = [RX(pattern2) replace:self.body_html with:[NSString stringWithFormat:@"aid=\"%@\" size=\"%@\"", aid, sizeString]];
+        }
         
         // todo
         // 网络图片 也要加进来
@@ -839,9 +859,10 @@
     if (style != HPImageDisplayStyleFull) {
         
         __block int i = 0;
-        NSArray *matches = [RX(@"<img class=\"attach_image\" src=\"(.*?)\" />") matches:string];
+        NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
+        NSArray *matches = [rx matches:string];
 
-        final = [RX(@"<img class=\"attach_image\" src=\"(.*?)\" />") replace:string withDetailsBlock:^NSString *(RxMatch *match) {
+        final = [rx replace:string withDetailsBlock:^NSString *(RxMatch *match) {
             
             i++;
             
@@ -852,11 +873,13 @@
                 
             } else {
                 
-                RxMatchGroup *m1 = [match.groups objectAtIndex:1];
+                //RxMatchGroup *m1 = [match.groups objectAtIndex:1];
                 //NSLog(@"%@", m1.value);
-                return S(@"<div class='img_placeholder' onclick='img_click(\"http://%@/forum/%@\")'>点击查看图片</div>", HPBaseURL, m1.value);
+                NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
+                NSString *imageNode = [match.value stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+                
+                return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>点击查看图片(%@)</div>", imageNode, [sizeString imageSizeString]);
             }
-    
         }];
     }
     
