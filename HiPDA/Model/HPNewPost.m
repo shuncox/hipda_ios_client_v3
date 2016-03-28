@@ -119,11 +119,11 @@
         return;
     }
 
-//    
-//    if (printable && redirectFromPid == 0) {
-//        [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
-//        return;
-//    }
+    
+    if (printable && redirectFromPid == 0) {
+        [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
+        return;
+    }
     
     //
     //
@@ -383,6 +383,7 @@
         
         
         __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
+        // 用来去重 和 查找imagesize
         __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
         
         NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" a__i__d=\"%@\" />";
@@ -398,7 +399,8 @@
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             //NSLog(@"%@", m1.value);
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
-            [imgsArray addObject:src];
+            // 正则提取是倒序
+            [imgsArray insertObject:src atIndex:0];
             NSString *aid = m2.value;
             if (aid.length) {
                 [aidArray addObject:aid];
@@ -418,7 +420,8 @@
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m2.value];
             
             if ([imgsArray indexOfObject:src] == NSNotFound) {
-                [imgsArray addObject:src];
+                // 正则提取是倒序
+                [imgsArray insertObject:src atIndex:0];
             }
             if (aid.length && [aidArray indexOfObject:aid] == NSNotFound) {
                 [aidArray addObject:aid];
@@ -440,13 +443,9 @@
             self.body_html = [RX(pattern2) replace:self.body_html with:[NSString stringWithFormat:@"aid=\"%@\" size=\"%@\"", aid, sizeString]];
         }
 //=======================================================
-        // todo
-        // 网络图片 也要加进来
+        // TODO: 网络图片 也要加进来
 
-        
-        // 恢复正序 (正则提取时是倒序提取)
-        NSArray *reversedArray = [[imgsArray reverseObjectEnumerator] allObjects];
-        self.images = reversedArray;
+        self.images = [imgsArray copy];
     }
 }
 
@@ -605,6 +604,7 @@
         
         
         __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
+        // 用来去重 和 查找imagesize
         __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
         
         NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" a__i__d=\"%@\" />";
@@ -617,7 +617,8 @@
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             //NSLog(@"%@", m1.value);
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
-            [imgsArray addObject:src];
+            // 正则提取是倒序
+            [imgsArray insertObject:src atIndex:0];
             NSString *aid = m2.value;
             if (aid.length) {
                 [aidArray addObject:aid];
@@ -669,9 +670,7 @@
         }
 //===========================================================
         
-        // 恢复正序 (正则提取时是倒序提取)
-        NSArray *reversedArray = [[imgsArray reverseObjectEnumerator] allObjects];
-        self.images = reversedArray;
+        self.images = [imgsArray copy];
     }
 }
 
