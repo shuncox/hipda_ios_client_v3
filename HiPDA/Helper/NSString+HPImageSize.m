@@ -69,6 +69,17 @@
      */
     
     NSString *s = [NSString stringWithFormat:@"<div class=\"t_attach\" id=\"aimg_%@_menu\" style=\"position: absolute; display: none\">\t\t\t\t\r\n<a href=.*? \\((.*?)\\)<br />", aid];
-    return [RX(s) firstMatchValue:self];
+    NSString *sizeString = [RX(s) firstMatchValue:self];
+    if (sizeString) {
+        return sizeString;
+    }
+    
+    /*
+     id="aid1654574" class="bold" target="_blank">iOS 模拟器屏幕快照“2014-3-27 下午7.27.44”.png</a>
+     <em>(208.31 KB)</em>
+     */
+
+    NSString *s2 = [NSString stringWithFormat:@"id=\"aid%@\".*?\r\n<em>\\((.*?)\\)</em>", aid];
+    return [RX(s2) firstMatchValue:self];
 }
 @end

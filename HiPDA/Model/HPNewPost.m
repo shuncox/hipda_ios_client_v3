@@ -119,11 +119,11 @@
         return;
     }
 
-    
-    if (printable && redirectFromPid == 0) {
-        [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
-        return;
-    }
+//    
+//    if (printable && redirectFromPid == 0) {
+//        [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
+//        return;
+//    }
     
     //
     //
@@ -417,10 +417,11 @@
             NSString *aid = m1.value;
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m2.value];
             
-            if ([imgsArray indexOfObject:src] == NSNotFound &&
-                [aidArray indexOfObject:aid] == NSNotFound) {
+            if ([imgsArray indexOfObject:src] == NSNotFound) {
                 [imgsArray addObject:src];
-                if (aid.length) [aidArray addObject:aid];
+            }
+            if (aid.length && [aidArray indexOfObject:aid] == NSNotFound) {
+                [aidArray addObject:aid];
                 return [NSString stringWithFormat:imageElement, m2.value, aid];
             } else {
                 return @"";
@@ -477,7 +478,7 @@
          post.pid = [pidString integerValue];
          [post processFuckPostHTML:html];
          
-         [post processFuckContentHTML];
+         [post processFuckContentHTML:html];
           
          [postsArray addObject:post];
      }];
@@ -567,35 +568,6 @@
     
     if (debugContent) NSLog(@"content %@", self.body_html);
     
-    
-    // attach
-    //
-    NSRange range = [html rangeOfString:@"<div class=\"postattachlist\">"];
-    if ( range.length > 0 ) {
-        [html substringFromIndex:range.location];
-        
-        NSMutableArray *images = [NSMutableArray arrayWithCapacity:5];
-        NSArray *imageMatchs = [RX(@"file=\"([^\"]+)\"") matchesWithDetails:html];
-        for (RxMatch *i in imageMatchs) {
-            RxMatchGroup *ii = [i.groups objectAtIndex:1];
-            NSLog(@"src %@", ii.value);
-            [images addObject:[NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, ii.value]];
-        }
-        
-        self.images = [NSArray arrayWithArray:images];
-    }
-    
-    
-    _body_html = [RX(@"<a href=\"http://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">(\\d+)#</a>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
-        
-        RxMatchGroup *m1 = [match.groups objectAtIndex:1];
-        RxMatchGroup *m2 = [match.groups objectAtIndex:2];
-        
-        //NSLog(@"%@ %@", m1.value, m2.value);
-        
-        return [NSString stringWithFormat:@"<a href=\"gotofloor://%ld_%ld\" >%ld#</a>", [m2.value integerValue], [m1.value integerValue], [m2.value integerValue]];
-    }];
-    
     _body_html = [RX(@"<a href=\"http://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">(\\d+)#</a>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
@@ -614,19 +586,11 @@
     }];
 }
 
-- (void)processFuckContentHTML {
-    
-    // add attach images to body_html
-    if (_images) {
-        NSMutableString *img_html = [NSMutableString stringWithCapacity:_images.count];
-        [_images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [img_html appendFormat:@"<img class=\"attach_image\" src=\"%@\" />", obj];
-        }];
-        _body_html = [_body_html stringByAppendingString:img_html];
-    }
+- (void)processFuckContentHTML:(NSString *)html {
     
     if ([_body_html indexOf:@"attachments/day_"] != -1 ||
-        [_body_html indexOf:@"attachment.php"] != -1) {
+        [_body_html indexOf:@"attachment.php"] != -1 ||
+        [html indexOf:@"<div class=\"postattachlist\">"] != -1) {
         
         /*
          * 注意 此处 和 processContentHTML 一样
@@ -634,8 +598,6 @@
          * 论坛普通版的没有_day前缀了 打印版还有
          */
 //==============和processContentHTML一样=========================================
-        NSString *html = [self.body_html copy];
-        
         // remove extra
         _body_html = [RX(@"<span style=\"position: absolute; display: none\" id=\"attach_.*?</span>\r\n") replace:_body_html with:@""];
         NSRegularExpression *rx = [NSRegularExpression rx:@"<div class=\"t_attach\" id=\"aimg_.*?\r\n</div>" options:NSRegularExpressionDotMatchesLineSeparators];
@@ -663,7 +625,37 @@
             
             return [NSString stringWithFormat:imageElement, m1.value, aid];
         }];
-        
+//======================================================
+        // attach
+        NSRange range = [html rangeOfString:@"<div class=\"postattachlist\">"];
+        if (range.length > 0) {
+            
+            NSString *listPart = [html substringFromIndex:range.location];
+            NSArray *imageMatchs = [RX(@"file=\"([^\"]+)\".*?id=\"aimg_(\\d+)\"") matchesWithDetails:listPart];
+            NSMutableString *img_html = [NSMutableString stringWithCapacity:5];
+            for (RxMatch *i in imageMatchs) {
+                RxMatchGroup *m1 = [i.groups objectAtIndex:1];
+                RxMatchGroup *m2 = [i.groups objectAtIndex:2];
+
+                //NSLog(@"src %@, aid %@", g1.value, g2.value);
+                
+                NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
+                NSString *aid = m2.value;
+                
+                if ([imgsArray indexOfObject:src] == NSNotFound) {
+                    [imgsArray addObject:src];
+                }
+                // 去重
+                if (aid.length && [aidArray indexOfObject:aid] == NSNotFound) {
+                    [aidArray addObject:aid];
+                    [img_html appendFormat:imageElement, m1.value, aid];
+                }
+            }
+            if (img_html.length) {
+                self.body_html = [self.body_html stringByAppendingString:img_html];
+            }
+        }
+//======================================================
         // 图片size
         for (NSString *aid in aidArray) {
             // 找到size
@@ -676,14 +668,9 @@
             self.body_html = [RX(pattern2) replace:self.body_html with:[NSString stringWithFormat:@"aid=\"%@\" size=\"%@\"", aid, sizeString]];
         }
 //===========================================================
-        if (!_images) {
-            _images = [NSArray arrayWithArray:imgsArray];
-        } else {
-            _images = [_images arrayByAddingObjectsFromArray:imgsArray];
-        }
         
         // 恢复正序 (正则提取时是倒序提取)
-        NSArray *reversedArray = [[_images reverseObjectEnumerator] allObjects];
+        NSArray *reversedArray = [[imgsArray reverseObjectEnumerator] allObjects];
         self.images = reversedArray;
     }
 }
