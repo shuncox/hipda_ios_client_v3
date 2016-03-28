@@ -372,7 +372,8 @@
     
 
     if ([_body_html indexOf:@"attachments/day_"] != -1 ) {
-        
+// 改这里记得改 processFuckContentHTML里的 一样
+//================================================================
         NSString *html = [self.body_html copy];
         
         // remove extra
@@ -405,7 +406,7 @@
             
             return [NSString stringWithFormat:imageElement, m1.value, aid];
         }];
-        
+//=============================================
         
         // 帖子底部 image
         _body_html = [RX(@"<br /><br /><img src=\"images/attachicons.*?aid=(\\d+).*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
@@ -425,7 +426,7 @@
                 return @"";
             }
         }];
-        
+//=======================================================
         // 图片size
         for (NSString *aid in aidArray) {
             // 找到size
@@ -437,7 +438,7 @@
             NSString *pattern2 = [NSString stringWithFormat:@"a__i__d=\"%@\"", aid];
             self.body_html = [RX(pattern2) replace:self.body_html with:[NSString stringWithFormat:@"aid=\"%@\" size=\"%@\"", aid, sizeString]];
         }
-        
+//=======================================================
         // todo
         // 网络图片 也要加进来
 
@@ -632,6 +633,9 @@
          * 201508 有变化 和processContentHTML 可能不同 
          * 论坛普通版的没有_day前缀了 打印版还有
          */
+//==============和processContentHTML一样=========================================
+        NSString *html = [self.body_html copy];
+        
         // remove extra
         _body_html = [RX(@"<span style=\"position: absolute; display: none\" id=\"attach_.*?</span>\r\n") replace:_body_html with:@""];
         NSRegularExpression *rx = [NSRegularExpression rx:@"<div class=\"t_attach\" id=\"aimg_.*?\r\n</div>" options:NSRegularExpressionDotMatchesLineSeparators];
@@ -639,29 +643,43 @@
         
         
         __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
-        NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" />";
+        __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
+        
+        NSString *imageElement = @"<img class=\"attach_image\" src=\"%@\" a__i__d=\"%@\" />";
+        // 最后会是 <img class="attach_image" src="http://domain.com/xxx.jpg" aid="123456" size="123" />
         
         // 帖子内部 image
-        _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+        _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
+            RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             //NSLog(@"%@", m1.value);
             NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
-            
             [imgsArray addObject:src];
+            NSString *aid = m2.value;
+            if (aid.length) {
+                [aidArray addObject:aid];
+            }
             
-            return [NSString stringWithFormat:imageElement, m1.value];
+            return [NSString stringWithFormat:imageElement, m1.value, aid];
         }];
         
-        
+        // 图片size
+        for (NSString *aid in aidArray) {
+            // 找到size
+            NSString *sizeInfo = [html getFuckSizeString:aid];
+            if (!sizeInfo) continue;
+            
+            // 填上size
+            NSString *sizeString = [NSString stringWithFormat:@"%.2f", [sizeInfo imageSize]];
+            NSString *pattern2 = [NSString stringWithFormat:@"a__i__d=\"%@\"", aid];
+            self.body_html = [RX(pattern2) replace:self.body_html with:[NSString stringWithFormat:@"aid=\"%@\" size=\"%@\"", aid, sizeString]];
+        }
+//===========================================================
         if (!_images) {
-            
             _images = [NSArray arrayWithArray:imgsArray];
-            
         } else {
-            
             _images = [_images arrayByAddingObjectsFromArray:imgsArray];
-            
         }
         
         // 恢复正序 (正则提取时是倒序提取)

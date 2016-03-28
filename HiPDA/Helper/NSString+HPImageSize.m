@@ -7,6 +7,7 @@
 //
 
 #import "NSString+HPImageSize.h"
+#import "NSRegularExpression+HP.h"
 
 @implementation NSString (HPImageSize)
 
@@ -44,7 +45,7 @@
 }
 
 
-- (NSString*)getSizeString:(NSString *)aid {
+- (NSString *)getSizeString:(NSString *)aid {
     
     // , 5.31 MB) / 下载次数 0<br />http://www.hi-pda.com/forum/attachment.php?aid=2465087
 
@@ -59,5 +60,15 @@
         }
     }
     return nil;
+}
+
+- (NSString *)getFuckSizeString:(NSString *)aid {
+    /*
+     <div class="t_attach" id="aimg_2465891_menu" style="position: absolute; display: none">
+     <a href="attachment.php?aid=MjQ2NTg5MXw2NWYzZGYxZnwxNDU5MTI3NDUzfDlmNDRoTE0wblNqZUwxSVlZVWhYVHo0RDIxeng4dmFHTFc1eTluOTNDWkUzRzlz&amp;nothumb=yes" title="iOS_fly_69.jpeg" target="_blank"><strong>下载</strong></a> (175.4 KB)<br />
+     */
+    
+    NSString *s = [NSString stringWithFormat:@"<div class=\"t_attach\" id=\"aimg_%@_menu\" style=\"position: absolute; display: none\">\t\t\t\t\r\n<a href=.*? \\((.*?)\\)<br />", aid];
+    return [RX(s) firstMatchValue:self];
 }
 @end

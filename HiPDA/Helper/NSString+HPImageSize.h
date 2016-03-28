@@ -11,6 +11,8 @@
 @interface NSString (HPImageSize)
 
 - (NSString*)getSizeString:(NSString *)aid;
+- (NSString*)getFuckSizeString:(NSString *)aid;
+
 - (CGFloat)imageSize;
 - (NSString *)imageSizeString;
 
