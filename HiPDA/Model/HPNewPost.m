@@ -896,7 +896,10 @@
                 NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
                 NSString *imageNode = [match.value stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
                 
-                return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>点击查看图片(%@)</div>", imageNode, [sizeString imageSizeString]);
+                NSString *sizeDisplayString = [sizeString imageSizeString];
+                NSString *s = [NSString stringWithFormat:@"(%@)", sizeDisplayString];
+                NSParameterAssert(sizeDisplayString.length);
+                return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>点击查看图片%@</div>", imageNode, sizeDisplayString.length ? s : @"");
             }
         }];
     }
