@@ -125,7 +125,11 @@
                                HPSettingForceLogin:@NO,
                                HPSettingSwipeBack:@YES,
                                HPBgFetchInterval:@(60),
-                               HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO)
+                               HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO),
+                               HPSettingImageSizeFilterEnable:@YES,
+                               HPSettingImageSizeFilterMinValue:@1024,
+                               HPSettingImageCDNEnable:@NO,
+                               HPSettingImageCDNMinValue:@1024,
                                };
     return defaults;
 }

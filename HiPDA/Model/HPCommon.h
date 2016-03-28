@@ -167,6 +167,12 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingForceLogin @"HPSettingForceLogin"
 #define HPSettingSwipeBack @"HPSettingSwipeBack"
 
+// image
+#define HPSettingImageSizeFilterEnable @"HPSettingImageSizeFilterEnable"
+#define HPSettingImageSizeFilterMinValue @"HPSettingImageSizeFilterMinValue"
+#define HPSettingImageCDNEnable @"HPSettingImageCDNEnable"
+#define HPSettingImageCDNMinValue @"HPSettingImageCDNMinValue"
+
 #define HPDraft @"HPDraft"
 
 #define HPBgFetchInterval @"HPBgFetchInterval"

@@ -147,6 +147,7 @@
 		EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164718D7062900F6AAB3 /* NSHTTPCookieStorage+info.m */; };
 		EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */; };
 		EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F6A4318D9E4AD0034F880 /* HPForum.m */; };
+		EA6249D51CA94844001946B1 /* HPSetImageSizeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */; };
 		EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */; };
 		EA6760921AF8704F00BA0EF3 /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = EA67608F1AF8704F00BA0EF3 /* clip.png */; };
 		EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760901AF8704F00BA0EF3 /* clip@2x.png */; };
@@ -610,6 +611,8 @@
 		EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadCell.m; path = View/HPThreadCell.m; sourceTree = "<group>"; };
 		EA5F6A4218D9E4AD0034F880 /* HPForum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPForum.h; path = Model/HPForum.h; sourceTree = "<group>"; };
 		EA5F6A4318D9E4AD0034F880 /* HPForum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPForum.m; path = Model/HPForum.m; sourceTree = "<group>"; };
+		EA6249D31CA94844001946B1 /* HPSetImageSizeFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetImageSizeFilterViewController.h; path = Controller/HPSetImageSizeFilterViewController.h; sourceTree = "<group>"; };
+		EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetImageSizeFilterViewController.m; path = Controller/HPSetImageSizeFilterViewController.m; sourceTree = "<group>"; };
 		EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPQiniuUploader.h; path = Model/HPQiniuUploader.h; sourceTree = "<group>"; };
 		EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPQiniuUploader.m; path = Model/HPQiniuUploader.m; sourceTree = "<group>"; };
 		EA67608F1AF8704F00BA0EF3 /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
@@ -1176,6 +1179,8 @@
 				EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */,
 				EAAFD2371BE09D34001E24EC /* HPSwipeRootViewController.h */,
 				EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */,
+				EA6249D31CA94844001946B1 /* HPSetImageSizeFilterViewController.h */,
+				EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -2396,6 +2401,7 @@
 				EAA1E68618D03A4100E1CFE1 /* UIImageView+Additions.m in Sources */,
 				EA499F311830C02200172989 /* HPUser.m in Sources */,
 				EA8186BD18E1E1F10092BDD7 /* IBActionSheet.m in Sources */,
+				EA6249D51CA94844001946B1 /* HPSetImageSizeFilterViewController.m in Sources */,
 				EA13CD991C11B8AD0023041F /* HPActivity.m in Sources */,
 				EA3A7C7C1C95637A00FD4B44 /* NSRegularExpression+HP.m in Sources */,
 				EA9A39B71A5BE92E0028BE7D /* JSMessageTableView.m in Sources */,

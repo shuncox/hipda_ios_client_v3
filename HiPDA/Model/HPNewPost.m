@@ -16,6 +16,7 @@
 #import "NSString+HTML.h"
 #import "NSRegularExpression+HP.h"
 #import "NSString+HPImageSize.h"
+#import "UMOnlineConfig+BOOL.h"
 
 #import "HPHttpClient.h"
 #import <AFHTTPRequestOperation.h>
@@ -860,7 +861,16 @@
         NSLog(@"other status %d", status);
     }
     //NSLog(@"style %d", style);
-    if (style != HPImageDisplayStyleFull) {
+    
+    BOOL imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnable];
+    NSInteger imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValue];
+    
+    BOOL imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnable];
+    imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:@"imageCDNEnable" defaultYES:imageCDNEnable];
+    NSInteger imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValue];
+    imageCDNMinValue = MIN(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
+    
+    if (style != HPImageDisplayStyleFull || imageSizeFilterEnable) {
         
         __block int i = 0;
         NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
@@ -870,22 +880,40 @@
             
             i++;
             
-            if (i == matches.count && style == HPImageDisplayStyleOne) {
-                
-                //NSLog(@"one %@", match.value);
-                return match.value;
-                
-            } else {
-                
-                //RxMatchGroup *m1 = [match.groups objectAtIndex:1];
-                //NSLog(@"%@", m1.value);
-                NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
-                NSString *imageNode = [match.value stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-                
+            NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
+            double imageSize = sizeString.length ? [sizeString doubleValue] : 0.f;
+            
+            BOOL filter = imageSizeFilterEnable && imageSize >= imageSizeFilterMinValue;
+            filter = filter || style == HPImageDisplayStyleNone;
+            filter = filter || (style == HPImageDisplayStyleOne && i != matches.count/*正则是倒序*/);
+            BOOL useCDN = filter && imageCDNEnable && imageSize >= imageCDNMinValue;
+            
+            if (filter) {
+                NSString *imageNode = match.value;
+                if (useCDN) {
+                    // <img class=\"attach_image\" src=\"attachments/day_160327/1603272216a6c3122910ffe02f.jpeg\" aid=\"2465634\" size=\"719.06\" />
+                    imageNode = [RX(@"src=\"([^\"]+)\"") replace:imageNode withDetailsBlock:^NSString *(RxMatch *match) {
+                        // 只有路径的图片是hi-pda图片
+                        if ([match.value indexOf:@"http"] != -1) {
+                            return match.value;
+                        }
+                        if (match.groups.count != 2) {
+                            return match.value;
+                        }
+                        NSString *src = [(RxMatchGroup *)match.groups[1] value];
+                        return [NSString stringWithFormat:@"src=\"http://7xq2vp.com1.z0.glb.clouddn.com/forum/%@-w600\"", src];
+                    }];
+                }
                 NSString *sizeDisplayString = [sizeString imageSizeString];
-                NSString *s = [NSString stringWithFormat:@"(%@)", sizeDisplayString];
                 NSParameterAssert(sizeDisplayString.length);
-                return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>点击查看图片%@</div>", imageNode, sizeDisplayString.length ? s : @"");
+                NSString *tip = [NSString stringWithFormat:@"点击查看图片%@", sizeDisplayString.length ? [NSString stringWithFormat:@"(%@)", sizeDisplayString] : @""];
+                if (useCDN) {
+                    tip = [NSString stringWithFormat:@"原图%@ 点击查看经CDN压缩过的图片", sizeDisplayString.length ? sizeDisplayString : @""];
+                }
+                imageNode = [imageNode stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+                return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>%@</div>", imageNode, sizeDisplayString.length ? tip : @"");
+            } else {
+                return match.value;
             }
         }];
     }

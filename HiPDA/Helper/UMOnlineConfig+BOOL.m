@@ -19,4 +19,20 @@
     return [s integerValue] == 1;
 }
 
++ (NSInteger)getIntegerConfigWithKey:(NSString *)key defaultValue:(NSInteger)defaultValue
+{
+    key = [NSString stringWithFormat:@"%@-%@", key, VERSION];
+    NSString *s = [self.class getConfigParams:key];
+    if (!s) {
+        return defaultValue;
+    }
+    return [s integerValue];
+}
+
++ (BOOL)hasConfigForKey:(NSString *)key
+{
+    key = [NSString stringWithFormat:@"%@-%@", key, VERSION];
+    NSString *s = [self.class getConfigParams:key];
+    return !!s;
+}
 @end

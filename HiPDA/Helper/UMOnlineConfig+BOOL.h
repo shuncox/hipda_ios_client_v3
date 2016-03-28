@@ -11,5 +11,7 @@
 @interface UMOnlineConfig (BOOL)
 
 + (BOOL)getBoolConfigWithKey:(NSString *)key defaultYES:(BOOL)defaultYES;
++ (NSInteger)getIntegerConfigWithKey:(NSString *)key defaultValue:(NSInteger)defaultValue;
++ (BOOL)hasConfigForKey:(NSString *)key;
 
 @end

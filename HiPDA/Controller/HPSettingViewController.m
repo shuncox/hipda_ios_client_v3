@@ -12,6 +12,7 @@
 #import "HPRearViewController.h"
 #import "HPBgFetchViewController.h"
 #import "HPSetStupidBarController.h"
+#import "HPSetImageSizeFilterViewController.h"
 #import "HPBlockListViewController.h"
 #import "HPLoginViewController.h"
 #import "HPAppDelegate.h"
@@ -432,6 +433,17 @@
     
     //RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@"Image load"];
     RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
+    
+    
+    RETableViewItem *setImageSizeFilterItem = [RETableViewItem itemWithTitle:@"大图手动加载" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        
+        HPSetImageSizeFilterViewController *svc = [HPSetImageSizeFilterViewController new];
+        [self.navigationController pushViewController:svc animated:YES];
+        [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting ImageSizeFilter"];
+    }];
+    [section addItem:setImageSizeFilterItem];
     
     HPImageDisplayStyle styleViaWWAN = [Setting integerForKey:HPSettingImageWWAN];
     HPImageDisplayStyle styleViaWifi = [Setting integerForKey:HPSettingImageWifi];
