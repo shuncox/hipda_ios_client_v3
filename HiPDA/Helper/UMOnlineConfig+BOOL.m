@@ -35,4 +35,10 @@
     NSString *s = [self.class getConfigParams:key];
     return !!s;
 }
+
+// for debug
+//+ (NSString *)getConfigParams:(NSString *)key
+//{
+//    return [@{@"imageCDNEnable-3.6.1": @"0", @"imageCDNMinValue-3.6.1":@"1400"} objectForKey:key];
+//}
 @end

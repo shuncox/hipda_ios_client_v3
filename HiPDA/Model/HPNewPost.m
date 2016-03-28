@@ -868,7 +868,7 @@
     BOOL imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnable];
     imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:@"imageCDNEnable" defaultYES:imageCDNEnable];
     NSInteger imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValue];
-    imageCDNMinValue = MIN(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
+    imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
     
     if (style != HPImageDisplayStyleFull || imageSizeFilterEnable) {
         

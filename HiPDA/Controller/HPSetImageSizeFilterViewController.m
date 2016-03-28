@@ -47,7 +47,7 @@
     [self.view addSubview:self.CDNSwitch];
     [self.CDNSwitch handleControlEvents:UIControlEventValueChanged withBlock:^(UISwitch *weakSender) {
         if (![UMOnlineConfig getBoolConfigWithKey:@"imageCDNEnable" defaultYES:YES]) {
-            weakSender.on = NO;
+            [weakSender setOn:NO animated:YES];
             return;
         }
         [Setting saveInteger:weakSender.on forKey:HPSettingImageCDNEnable];
@@ -62,7 +62,7 @@
         if ([UMOnlineConfig hasConfigForKey:@"imageCDNMinValue"]) {
             NSInteger minValue = [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:0];
             if (weakSender.value < minValue) {
-                weakSender.value = minValue;
+                [weakSender setValue:minValue animated:YES];
             }
             return;
         }
@@ -99,7 +99,7 @@
     BOOL imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnable];
     imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:@"imageCDNEnable" defaultYES:imageCDNEnable];
     NSInteger imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValue];
-    imageCDNMinValue = MIN(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
+    imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
     
     self.sizeFilterSwitch.on = imageSizeFilterEnable;
     [self.filterValueSlider setValue:imageSizeFilterMinValue animated:YES];
