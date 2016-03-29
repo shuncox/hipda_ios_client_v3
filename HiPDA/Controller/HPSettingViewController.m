@@ -435,7 +435,7 @@
     RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
     
     
-    RETableViewItem *setImageSizeFilterItem = [RETableViewItem itemWithTitle:@"大图手动加载" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+    RETableViewItem *setImageSizeFilterItem = [RETableViewItem itemWithTitle:@"大图预警 & 图片CDN压缩加速" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         
         HPSetImageSizeFilterViewController *svc = [HPSetImageSizeFilterViewController new];
         [self.navigationController pushViewController:svc animated:YES];

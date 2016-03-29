@@ -10,6 +10,7 @@
 #import "HPSetting.h"
 #import "UIControl+ALActionBlocks.h"
 #import "NSString+HPImageSize.h"
+#import "UIAlertView+Blocks.h"
 
 @interface HPSetImageSizeFilterViewController ()
 
@@ -28,7 +29,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"大图手动加载";
+    self.title = @"大图预警";
     
     UILabel *filterTitleLabel = [UILabel new];
     filterTitleLabel.font = [UIFont systemFontOfSize:14.f];
@@ -66,7 +67,7 @@
     self.filterValueSlider = [UISlider new];
     [self.view addSubview:self.filterValueSlider];
     self.filterValueSlider.minimumValue = 0;
-    self.filterValueSlider.maximumValue = 3000;
+    self.filterValueSlider.maximumValue = 3 * 1024;
     self.filterValueSlider.continuous = YES;
     [self.filterValueSlider handleControlEvents:UIControlEventValueChanged withBlock:^(UISlider *weakSender) {
         [Setting saveInteger:weakSender.value forKey:HPSettingImageSizeFilterMinValue];
@@ -77,6 +78,11 @@
     [self.view addSubview:self.CDNSwitch];
     [self.CDNSwitch handleControlEvents:UIControlEventValueChanged withBlock:^(UISwitch *weakSender) {
         if (![UMOnlineConfig getBoolConfigWithKey:@"imageCDNEnable" defaultYES:YES]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"功能已下线" message:@"由于流量费用超标, 本功能暂时下线.\n未来可能作为收费项目, 大概1~3元一月." delegate:self cancelButtonTitle:nil otherButtonTitles:@"我愿意付费使用", @"我不愿意付费使用", @"下次再说",nil];
+            [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                NSArray *list = @[@"ImageCDN_Pay_Yes", @"ImageCDN_Pay_No", @"ImageCDN_Pay_NotDecide"];
+                [Flurry logEvent:list[buttonIndex % list.count]];
+            }];
             [weakSender setOn:NO animated:YES];
             return;
         }
@@ -88,7 +94,7 @@
     self.CDNfilterValueSlider = [UISlider new];
     [self.view addSubview:self.CDNfilterValueSlider];
     self.CDNfilterValueSlider.minimumValue = 0;
-    self.CDNfilterValueSlider.maximumValue = 3000;
+    self.CDNfilterValueSlider.maximumValue = 3 * 1024;
     self.CDNfilterValueSlider.continuous = YES;
     [self.CDNfilterValueSlider handleControlEvents:UIControlEventValueChanged withBlock:^(UISlider *weakSender) {
         @strongify(self);
@@ -101,6 +107,15 @@
         [Setting saveInteger:weakSender.value forKey:HPSettingImageCDNMinValue];
         updateCDNFilterTipLabel(weakSender.value);
     }];
+    
+    UILabel *descLabel = [UILabel new];
+    descLabel.text = @"通过CDN对图片进行压缩加速, 由于流量费用的缘故, 目前只对超大图片启用.\n"
+                     @"这个功能属于试验功能, 未来可能由于流量费用超标而下线.\n"
+                     @"Powered by Qiniu\n";
+    descLabel.numberOfLines = 0;
+    descLabel.font = [UIFont systemFontOfSize:12.f];
+    descLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:descLabel];
     
     // constraints
     //
@@ -132,6 +147,12 @@
     
     [self.CDNfilterValueSlider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.CDNSwitch.mas_bottom).offset(10);
+        make.left.equalTo(self.view).offset(20);
+        make.right.equalTo(self.view).offset(-20);
+    }];
+    
+    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.CDNfilterValueSlider.mas_bottom).offset(10);
         make.left.equalTo(self.view).offset(20);
         make.right.equalTo(self.view).offset(-20);
     }];
