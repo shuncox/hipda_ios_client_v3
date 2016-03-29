@@ -17,6 +17,7 @@
 
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
+#import <ReactiveCocoa.h>
 
 #import "SWRevealViewController.h"
 

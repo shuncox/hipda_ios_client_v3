@@ -23,7 +23,7 @@
     #import "HPCommon.h"
     #import "RegExCategories.h"
     #import <Masonry.h>
-    #import <ReactiveCocoa.h>
+    #import <ReactiveCocoa/RACEXTScope.h>
     #import "MobClick.h"
     #import "UMOnlineConfig.h"
     #import "UMOnlineConfig+BOOL.h"
