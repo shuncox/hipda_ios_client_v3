@@ -25,6 +25,8 @@
 #import "HPNotice.h"
 #import "HPURLProtocol.h"
 #import "HPHotPatch.h"
+#import "NSRegularExpression+HP.h"
+#import "HPReadViewController.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -211,6 +213,9 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
+//    [self routeTo:@{@"tid": @"1831924"}];
+    [self checkPasteboard];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -451,6 +456,84 @@
 
     // clear egocache
     [[EGOCache globalCache] clearCache];
+}
+
+#pragma mark - 
+- (void)checkPasteboard
+{
+    UIPasteboard *appPasteBoard = [UIPasteboard generalPasteboard];
+    NSString *content = appPasteBoard.string;
+    if (!content.length) {
+        return;
+    }
+    
+    // 去重
+    static NSMutableSet *history = nil;
+    if (!history) {
+        history = [[NSMutableSet alloc] init];
+    }
+    if ([history containsObject:content]) {
+        NSLog(@"history hit %@", content);
+        return;
+    } else {
+        [history addObject:content];
+    }
+    
+    // match
+    NSString *tid = [RX(@"hi-pda\\.com/forum/viewthread\\.php\\?tid=(\\d+)") firstMatchValue:content];
+    if (tid) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:[NSString stringWithFormat:@"是否进入id为%@的帖子", tid] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"进入", nil];
+        [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex != alertView.cancelButtonIndex) {
+                [Flurry logEvent:@"Pasteboard Tid"];
+                [self routeTo:@{@"tid": tid}];
+            }
+        }];
+        return;
+    }
+    // anything else
+}
+
+#pragma mark -
+- (void)routeTo:(NSDictionary *)path
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"routeTo %@", path);
+        
+        SWRevealViewController *revealController = self.viewController;
+        UINavigationController *frontNavigationController = (id)revealController.frontViewController;
+        
+        // dismiss presentedViewController
+        UIViewController *presentedViewController = revealController.rearViewController.presentedViewController;
+        presentedViewController = presentedViewController ?: frontNavigationController.presentedViewController;
+        presentedViewController = presentedViewController ?: revealController.presentedViewController;
+        if (presentedViewController) {
+            [presentedViewController dismissViewControllerAnimated:NO
+                                                        completion:nil];
+        }
+        
+        // close drawer
+        if (revealController.frontViewPosition != FrontViewPositionLeft) {
+            [revealController setFrontViewPosition:FrontViewPositionLeft animated:YES];
+        }
+        
+        if ([path objectForKey:@"fid"]) { //板块
+            ;
+        } else if ([path objectForKey:@"tid"]) { //帖子
+            
+            HPThread *t = [HPThread new];
+            t.tid = [path[@"tid"] integerValue];
+            HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:t];
+            [frontNavigationController pushViewController:readVC animated:YES];
+            
+        } else if ([path objectForKey:@"pid"]) { //回复
+            ;
+        } else if ([path objectForKey:@"userCenter"]) {
+            ;
+        } else {
+            ;
+        }
+    });
 }
 
 #pragma mark - topViewController

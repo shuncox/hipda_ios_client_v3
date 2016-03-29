@@ -298,7 +298,7 @@
     
     if (row == 0) {
         
-    } else if (row < _vc_classes.count) {
+    } else if (row < _vc_classes.count) { //userCenter
         if ( ![frontNavigationController.topViewController isKindOfClass:_vc_classes[row]] )
         {
             id vc = [self vcAtIndex:row];
@@ -317,7 +317,7 @@
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-    } else {
+    } else { // 板块
         
         NSInteger index = row - _vc_names.count - 1;
         
@@ -553,12 +553,7 @@
 {
     UIView *frontView = nil;
     UINavigationController *frontNC = (UINavigationController *)revealController.frontViewController;
-    if (frontNC.viewControllers.count > 1) {
-        return;
-    } else {
-        //frontView = frontNC.topViewController.view;
-        frontView = frontNC.topViewController.navigationController.view;
-    }
+    frontView = frontNC.topViewController.navigationController.view;
     
     if (revealController.frontViewPosition == FrontViewPositionRight) {
         
