@@ -767,7 +767,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"webView didFailLoadWithError error %@", error);
-    
+    if (error.code == NSURLErrorCancelled) {
+        return;
+    }
     // 有时图片加载出错, 可能在这里能找到原因
     [Flurry logEvent:@"Read_WebViewLoadError"
       withParameters:@{@"code": @(error.code),
