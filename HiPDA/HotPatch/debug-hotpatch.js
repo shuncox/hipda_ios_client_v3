@@ -1,4 +1,56 @@
 //_OC_log("test");
+
+/* //fix img.hi-pda.com
+// alert once
+dispatch_async_main(function(){
+    var key = 'hot-fix-img.hi-pda.com-alert';
+    var v = require('NSUserDefaults').standardUserDefaults().objectForKey(key);
+    if (v) {
+        return;
+    }
+    require('NSUserDefaults').standardUserDefaults().setObject_forKey('done', key);
+
+    var alertView = require('UIAlertView').alloc().init();
+    alertView.setTitle('图片问题已修复');
+    alertView.setMessage('图片问题已通过在线更新的黑科技修复\n作者最近正在忙着毕业撸论文, 抱歉修复的晚了~~');
+    alertView.addButtonWithTitle('好的');
+    alertView.show(); 
+})
+
+defineClass("HPNewPost", {
+    processContentHTML: function() {
+        var html = self.body__html();
+        html = html.stringByReplacingOccurrencesOfString_withString("http://img.hi-pda.com/forum/", "");
+        self.setBody__html(html);
+        
+        self.ORIGprocessContentHTML();
+        
+        var html2 = self.body__html();
+        html2 = html2.stringByReplacingOccurrencesOfString_withString("<img class=\"attach_image\" src=\"http://www.hi-pda", "<img class=\"attach_image\" src=\"http://img.hi-pda");
+        html2 = html2.stringByReplacingOccurrencesOfString_withString("<img class=\"attach_image\" src=\"http://cnc.hi-pda", "<img class=\"attach_image\" src=\"http://img.hi-pda");
+        html2 = html2.stringByReplacingOccurrencesOfString_withString("<img class=\"attach_image\" src=\"attachments/", "<img class=\"attach_image\" src=\"http://img.hi-pda.com/forum/attachments/");
+        self.setBody__html(html2);
+    },
+
+    processFuckPostHTML: function(html) {
+        var h = html.stringByReplacingOccurrencesOfString_withString("http://img.hi-pda.com/forum/", "");
+        return self.ORIGprocessFuckPostHTML(h);
+    },
+
+    processFuckContentHTML: function() {
+        var html = self.body__html();
+        html = html.stringByReplacingOccurrencesOfString_withString("http://img.hi-pda.com/forum/", "");
+        self.setBody__html(html);
+        
+        self.ORIGprocessFuckContentHTML();
+        
+        var html2 = self.body__html();
+        html2 = html2.stringByReplacingOccurrencesOfString_withString("<img class=\"attach_image\" src=\"http://www.hi-pda", "<img class=\"attach_image\" src=\"http://img.hi-pda");
+        html2 = html2.stringByReplacingOccurrencesOfString_withString("<img class=\"attach_image\" src=\"http://cnc.hi-pda", "<img class=\"attach_image\" src=\"http://img.hi-pda");
+        html2 = html2.stringByReplacingOccurrencesOfString_withString("<img class=\"attach_image\" src=\"attachments/", "<img class=\"attach_image\" src=\"http://img.hi-pda.com/forum/attachments/");
+        self.setBody__html(html2);
+    },
+})*/
 /*
 //修复gb2312Data2String的溢出
 defineClass('HPHttpClient', {}, {
