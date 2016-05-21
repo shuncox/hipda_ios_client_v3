@@ -34,9 +34,9 @@ Discuz7.2 没有api可用, 用爬虫的方法模拟用户看帖/回帖/收藏等
 这样就无法做到头像缓存的共用, 并且 webview 的缓存行为难以琢磨, 无法定制 ([参考链接](http://nshipster.com/nsurlcache/))
 
 经过一些研究最终实现 webview 与 native 共享 image 缓存  
-相关代码: [HPURLCache](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPURLCache.m), [SDImageCache+URLCache](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Helper/SDImageCache%2BURLCache.m)
+相关代码: [HPURLProtocol](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Model/HPURLProtocol.m), [SDImageCache+URLCache](https://github.com/wujichao/hipda_ios_client_v3/blob/developer-jichao/HiPDA/Helper/SDImageCache%2BURLCache.m)
 ```
-通过自定义 NSURLCache 和改造 SDWebImage 实现共享image缓存
+通过自定义 ~~NSURLCache~~NSURLProtocol 和改造 SDWebImage 实现共享image缓存
 实现webview请求图片/头像时先从SDImageCache(memory/disk)找, 找不到再发网络请求
 并且请求得到的头像图片缓存到cache中, 供以后native和webview使用
 ```
