@@ -74,9 +74,13 @@
     	border: 1px solid #DDD;
     	display: block !important;
     }
-    
+
     .attach_image {
-        min-height: 20px;
+        min-height: 400px;
+    }
+
+    .attach_image_free {
+        min-height: 0px;
     }
     
     .img_placeholder {
@@ -341,12 +345,18 @@ function getPosition(element) {
 
 var images = document.getElementsByTagName('IMG');
 for (var i in images) {
-    if (images[i].src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
+    var image = images[i];
+    if (image && image.src && image.src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
         continue;
     }
-    images[i].onerror = function() {
+    image.onerror = function() {
         this.onerror = null;
         this.src = this.src;
+    }
+    image.onload = function() {
+        if (this.src && this.className.indexOf('attach_image') !== -1) {
+            this.className += " attach_image_free";
+        }
     }
 }
 

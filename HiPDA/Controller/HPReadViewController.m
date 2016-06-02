@@ -747,6 +747,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
         return YES;
         
+    } else if ([request.URL.scheme isEqualToString:@"log"]) {
+        NSLog(@"webview log %@", urlString);
+        return NO;
     } else {
         
         [SVProgressHUD showErrorWithStatus:urlString];
