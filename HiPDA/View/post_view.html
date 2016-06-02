@@ -76,7 +76,7 @@
     }
 
     .attach_image {
-        min-height: 400px;
+        min-height: **[min-height]**px;
     }
 
     .attach_image_free {
@@ -253,6 +253,8 @@ window.addEventListener('load', function() {
     FastClick.attach(document.body);
 }, false);
 
+
+var screen = {width: **[screen_width]**, height: **[screen_height]**};
 
 
 function addNewStyle(newStyle) {

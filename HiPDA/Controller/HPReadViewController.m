@@ -442,6 +442,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [string replaceOccurrencesOfString:@"**[lineHeight]**" withString:S(@"%i%%", _currentLineHeight) options:0 range:NSMakeRange(0, string.length)];
     
+    [string replaceOccurrencesOfString:@"**[screen_width]**" withString:S(@"%@", @(HP_SCREEN_WIDTH)) options:0 range:NSMakeRange(0, string.length)];
+    [string replaceOccurrencesOfString:@"**[screen_height]**" withString:S(@"%@", @(HP_SCREEN_HEIGHT)) options:0 range:NSMakeRange(0, string.length)];
+    [string replaceOccurrencesOfString:@"**[min-height]**" withString:S(@"%@", @((int)(HP_SCREEN_WIDTH * 0.618))) options:0 range:NSMakeRange(0, string.length)];
+    
     // allowLossyConversion : YES OR NO
     // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/5487f43e65f8dfea154bb6ff
     // [__NSCFString dataUsingEncoding:allowLossyConversion:]: didn't convert all characters

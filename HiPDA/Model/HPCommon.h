@@ -20,6 +20,7 @@
 #define NSStandardUserDefaults [NSUserDefaults standardUserDefaults]
 
 #define HP_SCREEN_WIDTH (CGRectGetWidth([[UIScreen mainScreen] bounds]))
+#define HP_SCREEN_HEIGHT (CGRectGetHeight([[UIScreen mainScreen] bounds]))
 #define HP_CONVERT_WIDTH(a) (ceilf((a)*kScreenWidth/320.f))
 #define HP_CONVERT_HEIGHT(a) (ceilf((a)*kScreenHeight/568.f))
 
