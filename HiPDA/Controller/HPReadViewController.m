@@ -432,7 +432,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"**[screen_width]**": @(HP_SCREEN_WIDTH).stringValue,
         @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
         @"**[min-height]**" : @(HP_SCREEN_HEIGHT).stringValue,
-        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light"
+        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light",
+        @"**[debug_script]**": @"",
+//        @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
     };
     [replace enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         [string replaceOccurrencesOfString:key withString:value options:0 range:NSMakeRange(0, string.length)];
@@ -676,7 +678,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     NSString *urlString = [[request URL] absoluteString];
-    NSLog(@"%@ %ld %@",urlString, navigationType, request.URL.scheme);
+    NSLog(@"url %@, type %ld, scheme %@",urlString, navigationType, request.URL.scheme);
     
     
     if ([request.URL.scheme isEqualToString:@"floor"]) {
@@ -743,9 +745,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
         return YES;
         
-    } else if ([request.URL.scheme isEqualToString:@"log"]) {
-        NSLog(@"webview log %@", urlString);
-        return NO;
     } else {
         
         [SVProgressHUD showErrorWithStatus:urlString];

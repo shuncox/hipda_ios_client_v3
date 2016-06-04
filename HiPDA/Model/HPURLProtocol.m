@@ -16,6 +16,8 @@
 NSString *HP_WWW_BASE_IP;
 NSString *HP_CNC_BASE_IP;
 
+//#define NSLog(...) do { } while (0)
+
 static NSString *const HPHTTPURLProtocolHandledKey = @"HPHTTPURLProtocolHandledKey";
 
 @interface HPURLMappingProvider : NSObject <HPURLMapping>
