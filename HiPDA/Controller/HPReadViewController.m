@@ -436,10 +436,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"**[lineHeight]**": S(@"%@%%", @(self.currentLineHeight)),
         @"**[screen_width]**": @(HP_SCREEN_WIDTH).stringValue,
         @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
-        @"**[min-height]**" : @(HP_SCREEN_HEIGHT).stringValue,
+        @"**[min-height]**" : @((int)(HP_SCREEN_WIDTH * 0.618)).stringValue,
         @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light",
+#if DEBUG && 1
+        @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
+#else
         @"**[debug_script]**": @"",
-//        @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
+#endif
     };
     [replace enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         [string replaceOccurrencesOfString:key withString:value options:0 range:NSMakeRange(0, string.length)];
