@@ -415,7 +415,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // clear
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close();"];
     
+#if DEBUG && 1 /*直接下拉刷新即可刷新模板 cd /HiPDA/View/; python -m SimpleHTTPServer*/
+    NSData *___d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:8000/post_view.html"]];
+    NSMutableString *string = [[[NSString alloc] initWithData:___d encoding:NSUTF8StringEncoding] mutableCopy];
+#else
     NSMutableString *string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
+#endif
     
     if (IS_IPAD) {
         // ipad 上禁用 FastClick,
