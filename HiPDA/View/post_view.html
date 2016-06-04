@@ -352,6 +352,7 @@ var img_click = function (el) {
     var div = document.createElement('div');
     div.innerHTML = s;
     var imageNode = div.firstChild;
+    warpImageNode(imageNode);
     el.parentNode.insertBefore(imageNode, el);
     el.parentNode.removeChild(el);
 };
@@ -385,6 +386,10 @@ for (var i in images) {
     if (image && image.src && image.src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
         continue;
     }
+    warpImageNode(image);
+}
+
+function warpImageNode(image) {
     image.onerror = function() {
         this.onerror = null;
         this.src = this.src;
