@@ -179,7 +179,6 @@
 		EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */; };
 		EA7B5A3E1AFA4F34005657DC /* HPURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */; };
 		EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */; };
-		EA80F3D618E069FA00B3633C /* post_view_dark.html in Resources */ = {isa = PBXBuildFile; fileRef = EA80F3D518E069FA00B3633C /* post_view_dark.html */; };
 		EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869D18E1D9E30092BDD7 /* home_refresh.png */; };
 		EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */; };
 		EA8186A518E1D9E30092BDD7 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869F18E1D9E30092BDD7 /* menu2.png */; };
@@ -661,7 +660,6 @@
 		EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLCache.m; path = Model/HPURLCache.m; sourceTree = "<group>"; };
 		EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SDImageCache+URLCache.h"; path = "Helper/SDImageCache+URLCache.h"; sourceTree = "<group>"; };
 		EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SDImageCache+URLCache.m"; path = "Helper/SDImageCache+URLCache.m"; sourceTree = "<group>"; };
-		EA80F3D518E069FA00B3633C /* post_view_dark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view_dark.html; path = View/post_view_dark.html; sourceTree = "<group>"; };
 		EA81869D18E1D9E30092BDD7 /* home_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_refresh.png; path = Image/Home/home_refresh.png; sourceTree = "<group>"; };
 		EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home_refresh@2x.png"; path = "Image/Home/home_refresh@2x.png"; sourceTree = "<group>"; };
 		EA81869F18E1D9E30092BDD7 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu2.png; path = Image/Home/menu2.png; sourceTree = "<group>"; };
@@ -1146,7 +1144,6 @@
 				EA5F164C18D71FC000F6AAB3 /* HPThreadCell.h */,
 				EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */,
 				EA1427DA18BF05AA00A7E9B1 /* post_view.html */,
-				EA80F3D518E069FA00B3633C /* post_view_dark.html */,
 				EAAE256B18E135870059EEB7 /* HPRearCell.h */,
 				EAAE256C18E135870059EEB7 /* HPRearCell.m */,
 				EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */,
@@ -2271,7 +2268,6 @@
 				EAA3A3231A9F29F700927278 /* activity_copy_content@2x.png in Resources */,
 				EA083D9718C8D14F00BD8F07 /* keyboard_bg.png in Resources */,
 				EA083D9A18C8D14F00BD8F07 /* keyboard_del@2x.png in Resources */,
-				EA80F3D618E069FA00B3633C /* post_view_dark.html in Resources */,
 				EAD7F5FA183CC84600A750D9 /* hp_smile_default_shy.gif in Resources */,
 				EA9A39C61A5BE92E0028BE7D /* bubble-classic-square-blue@2x.png in Resources */,
 				EA5DF0E718311F05008E4248 /* check@2x.png in Resources */,

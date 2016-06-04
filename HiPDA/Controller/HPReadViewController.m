@@ -421,12 +421,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // clear
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close();"];
     
-    NSMutableString *string = nil;
-    if (![Setting boolForKey:HPSettingNightMode]) {
-        string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
-    } else {
-        string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view_dark" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
-    }
+    NSMutableString *string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
     
     if (IS_IPAD) {
         // ipad 上禁用 FastClick,
@@ -445,6 +440,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [string replaceOccurrencesOfString:@"**[screen_width]**" withString:S(@"%@", @(HP_SCREEN_WIDTH)) options:0 range:NSMakeRange(0, string.length)];
     [string replaceOccurrencesOfString:@"**[screen_height]**" withString:S(@"%@", @(HP_SCREEN_HEIGHT)) options:0 range:NSMakeRange(0, string.length)];
     [string replaceOccurrencesOfString:@"**[min-height]**" withString:S(@"%@", @((int)(HP_SCREEN_WIDTH * 0.618))) options:0 range:NSMakeRange(0, string.length)];
+    [string replaceOccurrencesOfString:@"**[style]**" withString:[Setting boolForKey:HPSettingNightMode] ? @"dark": @"light" options:0 range:NSMakeRange(0, string.length)];
+    
     
     // allowLossyConversion : YES OR NO
     // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/5487f43e65f8dfea154bb6ff
