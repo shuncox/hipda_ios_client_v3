@@ -412,12 +412,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     _reloadingHeader = YES;
     _reloadingFooter = YES;
     
-    /*
-    NSURL *laoFontURL = [[NSBundle mainBundle] URLForResource:@"FZLanTingHei-R-GBK" withExtension:@"TTF"];
-    NSArray *fontPostScriptNames = [UIFont registerFontFromURL:laoFontURL];
-    NSLog(@"%@", fontPostScriptNames);
-    */
-     
     // clear
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close();"];
     
@@ -432,16 +426,17 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     if (_thread.title && !refresh)
         [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
     
-    NSString *targetFontSize = [NSString stringWithFormat:@"%i.000001%%",_currentFontSize];
-    [string replaceOccurrencesOfString:@"**[txtadjust]**" withString:targetFontSize options:0 range:NSMakeRange(0, string.length)];
-    
-    [string replaceOccurrencesOfString:@"**[lineHeight]**" withString:S(@"%i%%", _currentLineHeight) options:0 range:NSMakeRange(0, string.length)];
-    
-    [string replaceOccurrencesOfString:@"**[screen_width]**" withString:S(@"%@", @(HP_SCREEN_WIDTH)) options:0 range:NSMakeRange(0, string.length)];
-    [string replaceOccurrencesOfString:@"**[screen_height]**" withString:S(@"%@", @(HP_SCREEN_HEIGHT)) options:0 range:NSMakeRange(0, string.length)];
-    [string replaceOccurrencesOfString:@"**[min-height]**" withString:S(@"%@", @((int)(HP_SCREEN_WIDTH * 0.618))) options:0 range:NSMakeRange(0, string.length)];
-    [string replaceOccurrencesOfString:@"**[style]**" withString:[Setting boolForKey:HPSettingNightMode] ? @"dark": @"light" options:0 range:NSMakeRange(0, string.length)];
-    
+    NSDictionary *replace = @{
+        @"**[txtadjust]**": S(@"%@.000001%%",@(self.currentFontSize)),
+        @"**[lineHeight]**": S(@"%@%%", @(self.currentLineHeight)),
+        @"**[screen_width]**": @(HP_SCREEN_WIDTH).stringValue,
+        @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
+        @"**[min-height]**" : @(HP_SCREEN_HEIGHT).stringValue,
+        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light"
+    };
+    [replace enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+        [string replaceOccurrencesOfString:key withString:value options:0 range:NSMakeRange(0, string.length)];
+    }];
     
     // allowLossyConversion : YES OR NO
     // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/5487f43e65f8dfea154bb6ff
