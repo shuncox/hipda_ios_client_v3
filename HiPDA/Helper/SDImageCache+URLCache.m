@@ -33,4 +33,12 @@
     return image;
 }
 
+- (BOOL)hp_imageExistsWithKey:(NSString *)key
+{
+    if ([self imageFromMemoryCacheForKey:key]) {
+        return YES;
+    }
+    
+    return [self diskImageExistsWithKey:key];
+}
 @end

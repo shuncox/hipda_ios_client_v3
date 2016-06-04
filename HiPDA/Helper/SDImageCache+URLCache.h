@@ -17,4 +17,5 @@
 //
 - (UIImage *)hp_imageWithData:(NSData *)data key:(NSString *)key;
 - (NSData *)hp_imageDataFromDiskCacheForKey:(NSString *)key;
+- (BOOL)hp_imageExistsWithKey:(NSString *)key;
 @end

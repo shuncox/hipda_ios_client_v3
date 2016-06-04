@@ -20,6 +20,8 @@
 
 #import "HPHttpClient.h"
 #import <AFHTTPRequestOperation.h>
+#import <SDWebImage/SDWebImageManager.h>
+#import "SDImageCache+URLCache.h"
 
 #define debugParameters 0
 #define debugContent 0
@@ -879,6 +881,13 @@
         final = [rx replace:string withDetailsBlock:^NSString *(RxMatch *match) {
             
             i++;
+            
+            // 缓存里有就不过滤
+            NSString *src = [(RxMatchGroup *)match.groups[1] value];
+            NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
+            if ([[SDImageCache sharedImageCache] hp_imageExistsWithKey:key]) {
+                return match.value;
+            }
             
             NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
             double imageSize = sizeString.length ? [sizeString doubleValue] : 0.f;
