@@ -233,7 +233,7 @@
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     UIViewController *vc = [self hp_topViewController];
-    if ([vc isKindOfClass:NSClassFromString(@"SFSafariViewController")])
+    if (IOS9_2_OR_LATER && [vc isKindOfClass:NSClassFromString(@"SFSafariViewController")])
     {
         if (vc.isBeingDismissed)
         {
