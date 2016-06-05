@@ -385,7 +385,7 @@ function getPosition(element) {
 var images = document.getElementsByTagName('IMG');
 for (var i in images) {
     var image = images[i];
-    if (image && image.src && image.src.indexOf("http://www.hi-pda.com/forum/uc_server/data/avatar/") === 0) {
+    if (image && image.src && image.src.indexOf("hi-pda.com/forum/uc_server/data/avatar/") === 0) {
         continue;
     }
     warpImageNode(image);

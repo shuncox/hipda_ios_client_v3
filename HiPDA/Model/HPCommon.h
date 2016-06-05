@@ -118,6 +118,7 @@
 
 #define HP_WWW_BASE_URL @"www.hi-pda.com"
 #define HP_CNC_BASE_URL @"cnc.hi-pda.com"
+#define HP_IMG_BASE_URL @"img.hi-pda.com"
 extern NSString *HP_WWW_BASE_IP;
 extern NSString *HP_CNC_BASE_IP;
 
