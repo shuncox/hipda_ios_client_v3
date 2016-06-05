@@ -416,7 +416,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // clear
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close();"];
     
-#if DEBUG && 1 /*直接下拉刷新即可刷新模板 cd /HiPDA/View/; python -m SimpleHTTPServer*/
+#if DEBUG && 0 /*直接下拉刷新即可刷新模板 cd /HiPDA/View/; python -m SimpleHTTPServer*/
     NSData *___d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:8000/post_view.html"]];
     NSMutableString *string = [[[NSString alloc] initWithData:___d encoding:NSUTF8StringEncoding] mutableCopy];
 #else
@@ -439,7 +439,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
         @"**[min-height]**" : @((int)(HP_SCREEN_WIDTH * 0.618)).stringValue,
         @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light",
-#if DEBUG && 1
+#if DEBUG && 0
         @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
 #else
         @"**[debug_script]**": @"",
