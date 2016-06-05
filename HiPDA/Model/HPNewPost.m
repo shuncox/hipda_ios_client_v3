@@ -396,12 +396,12 @@
         // 理想的数据结构应该是 {title:xxx, postInfo:{...} content:[html, imageInfo, html, text, imageInfo, videoInfo, otherType...]}
         
         // 帖子内部 image
-        _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+        _body_html = [RX(@"<img src=\"[^\"]*images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
-            //NSLog(@"%@", m1.value);
-            NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
+            NSString *src = m1.value;
+            
             // 正则提取是倒序
             [imgsArray insertObject:src atIndex:0];
             NSString *aid = m2.value;
@@ -414,13 +414,13 @@
 //=============================================
         
         // 帖子底部 image
-        _body_html = [RX(@"<br /><br /><img src=\"images/attachicons.*?aid=(\\d+).*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+        _body_html = [RX(@"<br /><br /><img src=\"[^\"]*images/attachicons.*?aid=(\\d+).*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             
             NSString *aid = m1.value;
-            NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m2.value];
+            NSString *src = m2.value;
             
             if ([imgsArray indexOfObject:src] == NSNotFound) {
                 // 正则提取是倒序
@@ -619,7 +619,7 @@
         // 最后会是 <img class="attach_image" src="http://domain.com/xxx.jpg" aid="123456" size="123" />
         
         // 帖子内部 image
-        _body_html = [RX(@"<img src=\"images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+        _body_html = [RX(@"<img src=\"[^\"]+images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
@@ -904,8 +904,9 @@
             
             if (filter) {
                 NSString *imageNode = match.value;
+                imageNode = [imageNode stringByReplacingOccurrencesOfString:@"http://img.hi-pda.com/forum/" withString:@""];
                 if (useCDN) {
-                    // <img class=\"attach_image\" src=\"attachments/day_160327/1603272216a6c3122910ffe02f.jpeg\" aid=\"2465634\" size=\"719.06\" />
+                    // <img class=\"attach_image\" src=\"http://img.hi-pda.com/forum/attachments/day_160327/1603272216a6c3122910ffe02f.jpeg\" aid=\"2465634\" size=\"719.06\" />
                     imageNode = [RX(@"src=\"([^\"]+)\"") replace:imageNode withDetailsBlock:^NSString *(RxMatch *match) {
                         // 只有路径的图片是hi-pda图片
                         if ([match.value indexOf:@"http"] != -1) {

@@ -372,7 +372,7 @@
             
             User *user = [User new];
             
-            NSString *username = [html stringBetweenString:@"<h1>" andString:@" <img src=\"images/default/online_buddy"];
+            NSString *username = [html stringBetweenString:@"<h1>" andString:@" <img src=\"[^\"]*images/default/online_buddy"];
             if (!username) {
                 username = [html stringBetweenString:@"<h1>" andString:@"</h1>"];
             }

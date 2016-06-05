@@ -107,7 +107,10 @@
                  
                  BOOL isUnread = NO;
                  if ([dateString indexOf:@"NEW"] != -1) {
-                     dateString = [dateString stringByReplacingOccurrencesOfString:@"&nbsp;&nbsp;<img src=\"images/default/notice_newpm.gif\" alt=\"NEW\" />" withString:@""];
+                     NSRange r = [dateString rangeOfString:@"&nbsp;"];
+                     if (r.location != NSNotFound) {
+                         dateString = [dateString substringToIndex:r.location];
+                     }
                      isUnread = YES;
                  }
                  
@@ -216,7 +219,10 @@
                 // date
                 BOOL isUnread = NO;
                 if ([dateString indexOf:@"NEW"] != -1) {
-                    dateString = [dateString stringByReplacingOccurrencesOfString:@"&nbsp;&nbsp;<img src=\"images/default/notice_newpm.gif\" alt=\"NEW\" />" withString:@""];
+                    NSRange r = [dateString rangeOfString:@"&nbsp;"];
+                    if (r.location != NSNotFound) {
+                        dateString = [dateString substringToIndex:r.location];
+                    }
                     isUnread = YES;
                 }
                 static NSDateFormatter *dateFormatter;
