@@ -233,9 +233,7 @@
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     UIViewController *vc = [self hp_topViewController];
-    if ([vc isKindOfClass:NSClassFromString(@"SFSafariViewController")] ||
-        [vc isKindOfClass:NSClassFromString(@"MPMoviePlayerViewController")] ||
-        [vc isKindOfClass:NSClassFromString(@"MPInlineVideoFullscreenViewController")])
+    if ([vc isKindOfClass:NSClassFromString(@"SFSafariViewController")])
     {
         if (vc.isBeingDismissed)
         {
