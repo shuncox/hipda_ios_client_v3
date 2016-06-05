@@ -553,6 +553,11 @@
     }
     if (debugContent) NSLog(@"floor %ld", self.floor);
     
+    // signature
+    //
+    NSString *signature = [html stringBetweenString:@"<div class=\"signatures\" style=\"max-height:14px;maxHeightIE:14px;\">" andString:@"</div>"];
+    self.signature = signature ?: @"";
+    
     // content
     //
     Rx *rx = [Rx rx:@"<td class=\"t_msgfont\" id=\"postmessage_\\d+\">(.*?)</td></tr></table>" options:NSRegularExpressionDotMatchesLineSeparators];

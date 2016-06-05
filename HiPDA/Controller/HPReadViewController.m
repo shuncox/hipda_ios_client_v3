@@ -15,6 +15,7 @@
 #import "HPEditPostViewController.h"
 #import "HPSFSafariViewController.h"
 #import "HPViewHTMLController.h"
+#import "HPViewSignatureViewController.h"
 
 #import "HPNewPost.h"
 #import "HPDatabase.h"
@@ -909,6 +910,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   [self canEdit:_current_action_post] ?
                                     @"编辑" : @"举报"
                                   otherButtonTitles:
+                                  @"查看签名",
                                   @"回复",
                                   @"引用",
                                   @"发送短消息",
@@ -1005,21 +1007,26 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                         [self report];
                     }
                     break;
-                case 1://回复
+                case 1://查看签名
+                {
+                    [self viewSignature:_current_action_post];
+                    break;
+                }
+                case 2://回复
                 {
                     [self replySomeone:nil];
                     break;
                 }
-                case 2://引用
+                case 3://引用
                 {
                     [self quoteSomeone:nil];
 
                     break;
                 }
-                case 3://发送短消息
+                case 4://发送短消息
                     [self promptForSendMessage:_current_action_post];
                     break;
-                case 4://只看该作者
+                case 5://只看该作者
                     [self toggleOnlySomeone:_current_action_post.user];
                     break;
                 default:
@@ -1207,6 +1214,40 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self presentViewController:[HPCommon swipeableNVCWithRootVC:sendvc] animated:YES completion:nil];
     
     [Flurry logEvent:@"Read Reply"];
+}
+
+- (void)viewSignature:(HPNewPost *)post
+{
+    void (^showSignature)(NSString *signature) = ^(NSString *signature){
+        if (signature.length) {
+            [SVProgressHUD dismiss];
+            HPViewSignatureViewController *vc = [[HPViewSignatureViewController alloc] initWithSignature:signature];
+            [self.navigationController pushViewController:vc animated:YES];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"没有签名"];
+        }
+    };
+    
+    NSString *signature = post.signature;
+    if (signature == nil) {
+        [SVProgressHUD show];
+        [HPUser getUserUidWithUserName:post.user.username block:^(NSString *uid, NSError *error) {
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                return;
+            }
+            [HPUser getUserSignatureWithUid:uid block:^(NSString *signature, NSError *error) {
+                if (error) {
+                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    return;
+                }
+                NSLog(@"%@", signature);
+                showSignature(signature);
+            }];
+        }];
+    } else {
+        showSignature(signature);
+    }
 }
 
 - (void)replySomeone:(id)sender {

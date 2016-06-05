@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F8262B6F95041CD9E0011B6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A47E8E7D8524543A37BADE9 /* libPods.a */; };
 		D772D4C0192283D100994743 /* HPAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = D772D4BF192283D100994743 /* HPAttention.m */; };
+		EA00C5141D04412B002E2301 /* HPViewSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */; };
 		EA06A60818C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06A60718C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m */; };
 		EA06A61918C2384800EDBDEA /* love_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = EA06A61118C2384800EDBDEA /* love_selected.png */; };
 		EA06A61A18C2384800EDBDEA /* love_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA06A61218C2384800EDBDEA /* love_selected@2x.png */; };
@@ -407,6 +408,8 @@
 		7A47E8E7D8524543A37BADE9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D772D4BE192283D100994743 /* HPAttention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPAttention.h; path = Model/HPAttention.h; sourceTree = "<group>"; };
 		D772D4BF192283D100994743 /* HPAttention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPAttention.m; path = Model/HPAttention.m; sourceTree = "<group>"; };
+		EA00C5121D04412B002E2301 /* HPViewSignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewSignatureViewController.h; path = Controller/HPViewSignatureViewController.h; sourceTree = "<group>"; };
+		EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewSignatureViewController.m; path = Controller/HPViewSignatureViewController.m; sourceTree = "<group>"; };
 		EA06A60618C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+ImageItem.h"; path = "Helper/UIBarButtonItem+ImageItem.h"; sourceTree = "<group>"; };
 		EA06A60718C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+ImageItem.m"; path = "Helper/UIBarButtonItem+ImageItem.m"; sourceTree = "<group>"; };
 		EA06A61118C2384800EDBDEA /* love_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = love_selected.png; path = Image/love_selected.png; sourceTree = "<group>"; };
@@ -1270,6 +1273,8 @@
 				EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */,
 				EAC202E01C4FD2050050994E /* HPViewHTMLController.h */,
 				EAC202E11C4FD2050050994E /* HPViewHTMLController.m */,
+				EA00C5121D04412B002E2301 /* HPViewSignatureViewController.h */,
+				EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -2395,6 +2400,7 @@
 				EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */,
 				EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */,
 				EAA1E68618D03A4100E1CFE1 /* UIImageView+Additions.m in Sources */,
+				EA00C5141D04412B002E2301 /* HPViewSignatureViewController.m in Sources */,
 				EA499F311830C02200172989 /* HPUser.m in Sources */,
 				EA8186BD18E1E1F10092BDD7 /* IBActionSheet.m in Sources */,
 				EA6249D51CA94844001946B1 /* HPSetImageSizeFilterViewController.m in Sources */,

@@ -24,4 +24,11 @@
 + (void)getUserSpaceDetailsWithUid:(NSInteger)uid orUsername:(NSString *)username block:(void (^)(NSDictionary* dict, NSError *error))block;
 - (NSString *)usernameForUrl;
 
+
+
++ (void)getUserUidWithUserName:(NSString *)username
+                         block:(void (^)(NSString *uid, NSError *error))block;
++ (void)getUserSignatureWithUid:(NSString *)uid
+                          block:(void (^)(NSString *signature, NSError *error))block;
+
 @end

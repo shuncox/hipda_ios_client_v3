@@ -10,6 +10,8 @@
 #import "HPHttpClient.h"
 #import "NSString+HTML.h"
 #import "HPSetting.h"
+#import "HPSearch.h"
+#import "HPNewPost.h"
 
 @implementation HPUser {
 @private
@@ -196,4 +198,53 @@
     return escapedURLString;
 }
 
+
++ (void)getUserUidWithUserName:(NSString *)username
+                         block:(void (^)(NSString *uid, NSError *error))block
+{
+    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    username = [username stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
+    [self.class getUserSpaceDetailsWithUid:0 orUsername:username block:^(NSDictionary *dict, NSError *error) {
+        if (error) {
+            block(nil, error);
+            return;
+        }
+        if ([dict objectForKey:@"uid"]) {
+            block([dict objectForKey:@"uid"], nil);
+        } else {
+            block(nil, [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:@"没找到uid"}]);
+        }
+    }];
+}
++ (void)getUserSignatureWithUid:(NSString *)uid
+                          block:(void (^)(NSString *signature, NSError *error))block
+{
+    [HPSearch searchWithParameters:@{@"key": uid}
+                              type:HPSearchTypeUserTopic
+                              page:1
+                             block:^(NSArray *results, NSInteger pageCount, NSError *error) {
+                                 
+                                 if (error) {
+                                     block(nil, error);
+                                     return;
+                                 }
+                                 if (!results.count) {
+                                     block(nil, [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:@"没找到帖子"}]);
+                                     return;
+                                 }
+                                 
+                                 NSString *tid = [results[0] objectForKey:@"tidString"];
+                                 [HPNewPost loadThreadWithTid:[tid integerValue] page:1 forceRefresh:YES printable:NO authorid:0 redirectFromPid:0 block:^(NSArray *posts, NSDictionary *parameters, NSError *error) {
+                                     if (error) {
+                                         block(nil, error);
+                                     }
+                                     if (!posts.count) {
+                                         block(nil, [NSError errorWithDomain:@".hi-pda.com" code:-1 userInfo:@{NSLocalizedDescriptionKey:@"没找到帖子"}]);
+                                         return;
+                                     }
+                                     HPNewPost *p = posts[0];
+                                     block(p.signature, nil);
+                                 }];
+                             }];
+}
 @end

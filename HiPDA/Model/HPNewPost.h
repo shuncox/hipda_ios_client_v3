@@ -17,6 +17,7 @@
 @property (nonatomic, strong) HPUser *user;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, assign) NSInteger floor;
+@property (nonatomic, strong) NSString *signature;
 
 @property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *body_html;
