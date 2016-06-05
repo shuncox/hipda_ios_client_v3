@@ -229,6 +229,29 @@
     [self showAlert];
 }
 
+//http://stackoverflow.com/questions/17276898/mpmovieplayerviewcontroller-allow-landscape-mode
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    UIViewController *vc = [self hp_topViewController];
+    if ([vc isKindOfClass:NSClassFromString(@"SFSafariViewController")] ||
+        [vc isKindOfClass:NSClassFromString(@"MPMoviePlayerViewController")] ||
+        [vc isKindOfClass:NSClassFromString(@"MPInlineVideoFullscreenViewController")])
+    {
+        if (vc.isBeingDismissed)
+        {
+            return UIInterfaceOrientationMaskPortrait;
+        }
+        else
+        {
+            return UIInterfaceOrientationMaskAllButUpsideDown;
+        }
+    }
+    else
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
 - (void)showAlert {
     
     //clear
