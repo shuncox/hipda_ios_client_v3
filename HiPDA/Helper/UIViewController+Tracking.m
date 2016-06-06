@@ -9,6 +9,7 @@
 #import "UIViewController+Tracking.h"
 #import <objc/runtime.h>
 #import <Crashlytics/Crashlytics.h>
+#import "HPSetting.h"
 
 //http://nshipster.com/method-swizzling/
 @implementation UIViewController (Tracking)
@@ -51,9 +52,15 @@
 
 - (void)xxx_viewWillAppear:(BOOL)animated {
     [self xxx_viewWillAppear:animated];
-    // 给 Crashlytics 的报告提供上下文
-    // CLS_LOG 会带有当前的function和line, 都是viewWillAppear, 木有必要, 直接用CLSNSLog
-    CLSNSLog(@"-> %@", NSStringFromClass(self.class));
+    
+    BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
+    if (bugTrackingEnable) {
+        // 给 Crashlytics 的报告提供上下文
+        // CLS_LOG 会带有当前的function和line, 都是viewWillAppear, 木有必要, 直接用CLSNSLog
+        CLSNSLog(@"-> %@", NSStringFromClass(self.class));
+    } else {
+        NSLog(@"-> %@", NSStringFromClass(self.class));
+    }
 }
 
 @end
