@@ -9,17 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "HPViewController.h"
 
-typedef void (^BgFetchBlock)(UIBackgroundFetchResult result);
-
 @interface HPThreadViewController : HPTableViewController
-
-
 
 - (id)initDefaultForum:(NSInteger)fid title:(NSString *)title;
 - (void)refresh:(in)sender;
 - (void)loadForum:(NSInteger)fid title:(NSString *)title;
 - (void)revealToggle:(id)sender;
-
-@property (nonatomic, copy) BgFetchBlock bgFetchBlock;
 
 @end

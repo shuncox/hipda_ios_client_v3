@@ -179,7 +179,6 @@
                                       [[HPAccount sharedHPAccount] askLocalNotificationPermission];
                                   } else {
                                       [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
-                                      [Setting saveBool:NO forKey:HPSettingBgFetchThread];
                                   }
                               }];
                           }

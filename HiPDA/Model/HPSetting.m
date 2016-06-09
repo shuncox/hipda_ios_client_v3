@@ -109,7 +109,6 @@
                                HPNoticeCount:@0,
                                HPSettingBGLastMinite:@20.f,
                                HPSettingBgFetchNotice:@YES,
-                               HPSettingBgFetchThread:@NO,
                                HPSettingIsPullReply:@NO,
                                HPSettingStupidBarDisable:@NO,
                                HPSettingStupidBarHide:@YES,

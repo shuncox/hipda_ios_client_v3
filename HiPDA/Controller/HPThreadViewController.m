@@ -59,7 +59,7 @@ typedef enum{
 @property (nonatomic, assign) BOOL loadingMore;
 @property (nonatomic, strong) EGORefreshTableFooterView *loadingMoreView;
 
-@property (nonatomic, strong) NSDate *lastBgFetchDate;
+@property (nonatomic, strong) NSDate *lastEnterBackgroundDate;
 
 @property (nonatomic, assign) NSInteger currentFontSize;
 
@@ -121,22 +121,17 @@ typedef enum{
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    /*
-    static BOOL firstTime = YES;
-    if (firstTime) {
-        ;
-    }
-    firstTime = NO;
-     */
-    
     SWRevealViewController *revealController = [self revealViewController];
     [self.navigationController.view addGestureRecognizer:revealController.panGestureRecognizer];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(applicationDidBecomeActiveNotification:)
-     name:UIApplicationDidBecomeActiveNotification
-     object:[UIApplication sharedApplication]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActiveNotification:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:[UIApplication sharedApplication]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(UIApplicationDidEnterBackgroundNotification:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:[UIApplication sharedApplication]];
     
     if (_currentFontSize &&
         _currentFontSize != [Setting integerForKey:HPSettingFontSizeAdjust]) {
@@ -153,10 +148,13 @@ typedef enum{
      SWRevealViewController *revealController = [self revealViewController];
     [self.navigationController.view removeGestureRecognizer:revealController.panGestureRecognizer];
     
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:UIApplicationDidBecomeActiveNotification
-     object:[UIApplication sharedApplication]];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidBecomeActiveNotification
+                                                  object:[UIApplication sharedApplication]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:[UIApplication sharedApplication]];
 }
 
 
@@ -222,13 +220,8 @@ typedef enum{
                     forceRefresh:refresh
                            block:^(NSArray *threads, NSError *error)
      {
-         // 防止无限登陆
-         static int error_count = 0;
-         
          [weakSelf.refreshControl endRefreshing];
          if (!error) {
-             
-             error_count = 0;
             
              if (type != LoadMore) {
                  
@@ -241,8 +234,6 @@ typedef enum{
                  }
                  
              } else { // loadMore
-                 
-                 NSUInteger statingIndex = [_threads count];
                  
                  // 去重, O(50^2)
                  NSArray *oldThreads = [NSArray arrayWithArray:_threads];
@@ -257,29 +248,11 @@ typedef enum{
                      }
                      if (!isSame) [_threads addObject:thread];
                  }
-                 /*
-                 NSUInteger endingIndex = [_threads count];
-                 
-                 NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:endingIndex - statingIndex];
-                 for (NSUInteger index = statingIndex; index < endingIndex; index++) {
-                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                     [indexPaths addObject:indexPath];
-                 }
-                 
-                 [weakSelf.tableView beginUpdates];
-                 [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationBottom];
-                 [weakSelf.tableView endUpdates];
-                  */
-                 // 直接reloadData比insertRows动画效果好
+                
                  [weakSelf.tableView reloadData];
              }
              
              [weakSelf.tableView flashScrollIndicators];
-             if (weakSelf.bgFetchBlock) {
-                 weakSelf.bgFetchBlock(UIBackgroundFetchResultNewData);
-                 weakSelf.bgFetchBlock = nil;
-                 weakSelf.lastBgFetchDate = [NSDate new];
-             }
              
          } else {
              
@@ -288,28 +261,12 @@ typedef enum{
                  if ([HPAccount isSetAccount]) {
                      [SVProgressHUD showWithStatus:@"重新登陆中..."];
                  }
-                 
-                 
-                 error_count++;
-                 if (error_count == 1) {
-                     ;
-                 } else {
-                     if (weakSelf.bgFetchBlock) {
-                         weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
-                         weakSelf.bgFetchBlock = nil;
-                     }
-                 }
              } else  if (error.code == HPERROR_NOT_DEFAULT_THREAD_SETTING_CODE) {
                  [UIAlertView showWithTitle:@"加载失败"
                                     message:@"返回结果为空, 可能是由于您设置了每页帖子15条, 而置顶帖超过15个, 前往个人中心修改为默认?"
                                     handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:S(@"http://%@/forum/memcp.php?action=profile&typeid=5", HPBaseURL)]];
                                     }];
-                 
-                 if (weakSelf.bgFetchBlock) {
-                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
-                     weakSelf.bgFetchBlock = nil;
-                 }
              } else if (error.code == HPERROR_CRAWLER_CODE) {
                  HPCrawlerErrorContext *context = error.userInfo[@"context"];
                  [Flurry logEvent:@"Crawler_Error" withParameters:@{@"info":[NSString stringWithFormat:@"url:%@, html:%@", context.url, context.html], @"js": [[context.html hp_jsLinks] componentsJoinedByString:@", "]}];
@@ -320,18 +277,8 @@ typedef enum{
                                         dvc.context = context;
                                         [self presentViewController:[HPCommon swipeableNVCWithRootVC:dvc] animated:YES completion:nil];
                                     }];
-                 
-                 if (weakSelf.bgFetchBlock) {
-                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
-                     weakSelf.bgFetchBlock = nil;
-                 }
              } else {
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-                 
-                 if (weakSelf.bgFetchBlock) {
-                     weakSelf.bgFetchBlock(UIBackgroundFetchResultFailed);
-                     weakSelf.bgFetchBlock = nil;
-                 }
              }
          }
         
@@ -664,34 +611,26 @@ typedef enum{
     [Flurry logEvent:@"ThreadVC AutoLogin" withParameters:@{@"error":@""}];
 }
 
-#pragma mark - 
-- (void)applicationDidBecomeActiveNotification:(NSNotification *)notification {
-    
-    // bgfetch
-    if (_lastBgFetchDate) {
-        
-        NSDate *now = [NSDate new];
-        NSTimeInterval interval = [now timeIntervalSinceDate:_lastBgFetchDate];
-        NSString *tip = nil;
-        if (interval < 60) {
-            tip = S(@"已在%ds前更新", (int)interval);
-        } else {
-            tip = S(@"已于%d分钟前更新", (int)(interval/60));
-        }
-        [ZAActivityBar showSuccessWithStatus:tip];
-        //[SVProgressHUD showSuccessWithStatus:S(@"now : %@\nlast : %@\ninterval : %d", now, _lastBgFetchDate, (int)ceil(interval/60.f))];
-        
-        _lastBgFetchDate = nil;
+#pragma mark - 自动刷新
+- (void)UIApplicationDidEnterBackgroundNotification:(NSNotification *)notification
+{
+    self.lastEnterBackgroundDate = [NSDate new];
+}
+
+- (void)applicationDidBecomeActiveNotification:(NSNotification *)notification
+{
+    if (!self.lastEnterBackgroundDate) {
+        return;
     }
+    
+    // 离开超过10分钟, 回来时自动刷新
+    NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.lastEnterBackgroundDate];
+    if (interval > 10 * 60) {
+        [self refresh:[UIButton new]];
+    }
+    
+    self.lastEnterBackgroundDate = nil;
 }
-
-#pragma mark - test
-// test
-- (void)logout:(id)sender {
-    NSLog(@"logout");
-    [[HPAccount sharedHPAccount] logout];
-}
-
 
 #pragma mark - theme
 - (void)themeDidChanged {

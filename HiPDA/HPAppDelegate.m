@@ -334,8 +334,7 @@
 }
 
 - (void)setupBgFetch {
-    BOOL enableBgFetch = IOS7_OR_LATER &&
-    ([Setting boolForKey:HPSettingBgFetchThread] || [Setting boolForKey:HPSettingBgFetchNotice]);
+    BOOL enableBgFetch = [Setting boolForKey:HPSettingBgFetchNotice];
     if (enableBgFetch) {
         
         NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
@@ -358,7 +357,6 @@
                     [[HPAccount sharedHPAccount] askLocalNotificationPermission];
                 } else {
                     [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
-                    [Setting saveBool:NO forKey:HPSettingBgFetchThread];
                 }
             }];
         }
@@ -367,102 +365,32 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    /*
-    UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
-    
-    id fetchViewController = navigationController.topViewController;
-    if ([fetchViewController respondsToSelector:@selector(fetchDataResult:)]) {
-        [fetchViewController fetchDataResult:^(NSError *error, NSArray *results){
-            if (!error) {
-                if (results.count != 0) {
-                    //Update UI with results.
-                    //Tell system all done.
-                    completionHandler(UIBackgroundFetchResultNewData);
-                } else {
-                    completionHandler(UIBackgroundFetchResultNoData);
-                }
-            } else {
-                completionHandler(UIBackgroundFetchResultFailed);
-            }
-        }];
-    } else {
-        completionHandler(UIBackgroundFetchResultFailed);
+    if (![Setting boolForKey:HPSettingBgFetchNotice]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
     }
-    */
-    __block int count = 0;
     
-    UINavigationController *navigationController = (UINavigationController*)self.viewController.frontViewController;
-    id topVC = navigationController.topViewController;
-    //NSLog(@"self.viewController.frontViewPosition %d\nFrontViewPositionLeft %d", self.viewController.frontViewPosition, FrontViewPositionLeft);
-    
-    if ([Setting boolForKey:HPSettingBgFetchThread] &&
-        [topVC isKindOfClass:[HPThreadViewController class]] &&
-        self.viewController.frontViewPosition == FrontViewPositionLeft) {
+    [[HPAccount sharedHPAccount] setNoticeRetrieveBlock:^(UIBackgroundFetchResult result) {
+        // log
+        //
+        NSMutableArray *log = [NSMutableArray arrayWithArray:[NSStandardUserDefaults objectForKey:@"HPBgFetchLog"]];
         
-        HPThreadViewController *tvc = (HPThreadViewController *)topVC;
-        [tvc setBgFetchBlock:^(UIBackgroundFetchResult result) {
-            count++;
-            NSLog(@"count %d bgFetchBlock result %d",count, result);
-            if (count == 2) {
-                NSLog(@"complated!");
-                completionHandler(result);
-            }
-        }];
-        [HPRearViewController threadVCRefresh];
-        
-    } else {
-        count++;
-        if (count == 2) {
-            NSLog(@"pass !");
-            completionHandler(UIBackgroundFetchResultNoData);
+        if (log.count > 233) {
+            [log removeLastObject];
         }
-    }
-    
-    if ([Setting boolForKey:HPSettingBgFetchNotice]) {
-        [[HPAccount sharedHPAccount] setNoticeRetrieveBlock:^(UIBackgroundFetchResult result) {
-            count++;
-            NSLog(@"count %d noticeRetrieveBlock result %d",count, result);
-            if (count == 2) {
-                NSLog(@"complated!");
-                
-                // log
-                //
-                NSMutableArray *log = [NSMutableArray arrayWithArray:[NSStandardUserDefaults objectForKey:@"HPBgFetchLog"]];
-                
-                if (log.count > 233) {
-                    [log removeLastObject];
-                }
-                
-                NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
-                [log insertObject:@{@"interval":@(interval),
-                                 @"date":[NSDate date],
-                                 @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
-                          atIndex:0];
-                [NSStandardUserDefaults saveObject:log forKey:@"HPBgFetchLog"];
-                //NSLog(@"%@", log);
-                //
-                //
-                completionHandler(result);
-            }
-        }];
-        [[HPAccount sharedHPAccount] startCheckWithDelay:0.f];
         
-    } else {
-        count++;
-        if (count == 2) {
-            NSLog(@"pass !");
-            completionHandler(UIBackgroundFetchResultNoData);
-        }
-    }
-
-    /*
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [[NSDate date] dateByAddingTimeInterval:.5];
-    localNotification.alertBody = @"new check";
-    localNotification.repeatInterval = 0;
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-     */
+        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
+        [log insertObject:@{@"interval":@(interval),
+                            @"date":[NSDate date],
+                            @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
+                  atIndex:0];
+        [NSStandardUserDefaults saveObject:log forKey:@"HPBgFetchLog"];
+        //NSLog(@"%@", log);
+        //
+        //
+        completionHandler(result);
+    }];
+    [[HPAccount sharedHPAccount] startCheckWithDelay:0.f];
 }
 
 - (void)clean {

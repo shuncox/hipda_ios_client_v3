@@ -52,21 +52,12 @@
     
     
     BOOL enableBgFetchNotice = [Setting boolForKey:HPSettingBgFetchNotice];
-    REBoolItem *enableBgFetchNoticeItem = [REBoolItem itemWithTitle:@"新消息" value:enableBgFetchNotice switchValueChangeHandler:^(REBoolItem *item) {
+    REBoolItem *enableBgFetchNoticeItem = [REBoolItem itemWithTitle:@"新消息提醒" value:enableBgFetchNotice switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"enableBgFetchNotice Value: %@", item.value ? @"YES" : @"NO");
         [Setting saveBool:item.value forKey:HPSettingBgFetchNotice];
         
         [Flurry logEvent:@"Setting ToggleBgFetchNotice" withParameters:@{@"flag":@(item.value)}];
-    }];
-    
-    BOOL enableBgFetchThread = [Setting boolForKey:HPSettingBgFetchThread];
-    REBoolItem *enableBgFetchThreadItem = [REBoolItem itemWithTitle:@"帖子列表" value:enableBgFetchThread switchValueChangeHandler:^(REBoolItem *item) {
-        
-        NSLog(@"enableBgFetchThread Value: %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingBgFetchThread];
-        
-        [Flurry logEvent:@"Setting ToggleBgFetchThread" withParameters:@{@"flag":@(item.value)}];
     }];
     
     NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
@@ -90,7 +81,6 @@
     
     self.manager[@"MultilineTextItem"] = @"MultilineTextCell";
     [section addItem:enableBgFetchNoticeItem];
-    [section addItem:enableBgFetchThreadItem];
     [section addItem:intervalItem];
     [section addItem:[MultilineTextItem itemWithTitle:
         @"你的 iOS 设备可以根据你使用 HiPDA 的频率和时间智能安排来更新未读提醒并提示您。\n\n"

@@ -149,7 +149,6 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingImageWWAN @"HPSettingImageWWAN"
 #define kHPNetworkStatus @"HPNetworkStatus"
 
-#define HPSettingBgFetchThread @"HPSettingBgFetchThread"
 #define HPSettingBgFetchNotice @"HPSettingBgFetchNotice"
 
 #define HPSettingBGLastMinite @"HPSettingBGLastMinite"
