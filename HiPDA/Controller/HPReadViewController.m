@@ -38,6 +38,7 @@
 #import "DZWebBrowser.h"
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
+#import "NSString+CDN.h"
 
 #import "UIViewController+KNSemiModal.h"
 #import "UIAlertView+Blocks.h"
@@ -1108,6 +1109,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     src = [src stringByReplacingOccurrencesOfString:@"???s" withString:@", "];
     RxMatch *m = [RX(@"___(.*?)___") firstMatchWithDetails:src];
     src = [src replace:RX(@"___(.*?)___") with:@""];
+    
+    // cdn -> 原图url
+    // 现在的交互形式是 用户点击小图(CDN压缩图片), 然后加载大图, 加载好大图来替换小图
+    if ([src indexOf:HP_CDN_BASE_URL] != -1) {
+        src = [src hp_originalURL];
+    }
 
     if (m.groups.count == 2) {
         CGRect r = CGRectFromString([(RxMatchGroup *)(m.groups[1]) value]);

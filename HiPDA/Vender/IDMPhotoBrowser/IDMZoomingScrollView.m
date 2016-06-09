@@ -136,9 +136,11 @@
 		if (img) {
             // Hide ProgressView
             //_progressView.alpha = 0.0f;
-            // 感觉可能渐进式加载不需要progressView了
-            // 是不是有些图片不能渐进式加载
-            [_progressView removeFromSuperview];
+            
+            // 先小图后大图, 加载大图时保留进度条
+            if (!_photo.loadingOriginalImage) {
+                [_progressView removeFromSuperview];
+            }
             
             // Set image
 			_photoImageView.image = img;

@@ -22,6 +22,7 @@
 #import <AFHTTPRequestOperation.h>
 #import <SDWebImage/SDWebImageManager.h>
 #import "SDImageCache+URLCache.h"
+#import "NSString+CDN.h"
 
 #define debugParameters 0
 #define debugContent 0
@@ -915,8 +916,12 @@
                         if (match.groups.count != 2) {
                             return match.value;
                         }
+                        
                         NSString *src = [(RxMatchGroup *)match.groups[1] value];
-                        return [NSString stringWithFormat:@"src=\"http://%@/forum/%@-w600\"", HP_CDN_BASE_URL, src];
+                        src = [NSString stringWithFormat:@"http://%@/forum/%@", HP_IMG_BASE_URL, src];
+                        src = [src hp_thumbnailURL];
+                        
+                        return [NSString stringWithFormat:@"src=\"%@\"", src];
                     }];
                 }
                 NSString *sizeDisplayString = [sizeString imageSizeString];

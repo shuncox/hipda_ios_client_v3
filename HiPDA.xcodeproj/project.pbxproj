@@ -366,6 +366,7 @@
 		EAD7F617183CC84600A750D9 /* hp_smile_grapeman_23.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DA183CC84600A750D9 /* hp_smile_grapeman_23.gif */; };
 		EAD7F618183CC84600A750D9 /* hp_smile_grapeman_24.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */; };
 		EADF46721CA76CDC00D71C25 /* NSString+HPImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */; };
+		EAE0FE441D09527F00F0D76E /* NSString+CDN.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE431D09527F00F0D76E /* NSString+CDN.m */; };
 		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; };
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
@@ -902,6 +903,8 @@
 		EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_grapeman_24.gif; path = Image/DZSmile/hp_smile_grapeman_24.gif; sourceTree = "<group>"; };
 		EADF46701CA76CDC00D71C25 /* NSString+HPImageSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HPImageSize.h"; path = "Helper/NSString+HPImageSize.h"; sourceTree = "<group>"; };
 		EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HPImageSize.m"; path = "Helper/NSString+HPImageSize.m"; sourceTree = "<group>"; };
+		EAE0FE421D09527F00F0D76E /* NSString+CDN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+CDN.h"; path = "Helper/NSString+CDN.h"; sourceTree = "<group>"; };
+		EAE0FE431D09527F00F0D76E /* NSString+CDN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CDN.m"; path = "Helper/NSString+CDN.m"; sourceTree = "<group>"; };
 		EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSearchUserCell.h; path = View/HPSearchUserCell.h; sourceTree = "<group>"; };
 		EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchUserCell.m; path = View/HPSearchUserCell.m; sourceTree = "<group>"; };
 		EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+Capture.h"; path = "Helper/UIWebView+Capture.h"; sourceTree = "<group>"; };
@@ -1874,6 +1877,8 @@
 				EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */,
 				EAF18F241B01037300B50E19 /* HPURLProtocol.h */,
 				EAF18F251B01037300B50E19 /* HPURLProtocol.m */,
+				EAE0FE421D09527F00F0D76E /* NSString+CDN.h */,
+				EAE0FE431D09527F00F0D76E /* NSString+CDN.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -2487,6 +2492,7 @@
 				EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */,
 				EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */,
 				EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */,
+				EAE0FE441D09527F00F0D76E /* NSString+CDN.m in Sources */,
 				EA075F5B18E4079900A07C08 /* BBBadgeBarButtonItem.m in Sources */,
 				EA9A39AC1A5BE92E0028BE7D /* UIColor+JSMessagesView.m in Sources */,
 				EAFDB8521829EFA900C1718B /* main.m in Sources */,

@@ -8,6 +8,8 @@
 
 #import "IDMPhoto.h"
 #import "IDMPhotoBrowser.h"
+#import "SDImageCache+URLCache.h"
+#import "NSString+CDN.h"
 
 // Private
 @interface IDMPhoto () {
@@ -140,9 +142,27 @@ caption = _caption;
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
             
+            
+            // 加载小图
+            NSString *src = [_photoURL absoluteString];
+            if ([src rangeOfString:HP_IMG_BASE_URL].location != NSNotFound) {
+                NSString *thumbnaiUrl = [src hp_thumbnailURL];
+                NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:thumbnaiUrl]];
+                if ([[SDImageCache sharedImageCache] hp_imageExistsWithKey:key]) {
+                    UIImage *thumbnail = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
+                    NSParameterAssert(thumbnail);
+                    self.loadingOriginalImage = YES;
+                    self.underlyingImage = thumbnail;
+                    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
+                }
+            }
+        
+            // 加载大图
             BOOL enableProgressiveDownload = [UMOnlineConfig getBoolConfigWithKey:@"EnableProgressiveDownload" defaultYES:YES];
             // gif时 不开启渐进加载, 也许应该在sd内部直接判断gif格式, 不过通过suffix简单一些
-            enableProgressiveDownload = enableProgressiveDownload && ![_photoURL.absoluteString hasSuffix:@".gif"];
+            enableProgressiveDownload = enableProgressiveDownload
+                                        && ![_photoURL.absoluteString hasSuffix:@".gif"] /*gif 不开启渐进模式*/
+                                        && !self.loadingOriginalImage; /*先小图后大图 不开启渐进模式*/
             
             SDWebImageOptions options = SDWebImageRetryFailed;
             if (enableProgressiveDownload) {
@@ -167,6 +187,7 @@ caption = _caption;
                                 }
                             }
                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                               self.loadingOriginalImage = NO;
                                if (error) {
                                    // todo reload
                                    self.underlyingImage = nil;
