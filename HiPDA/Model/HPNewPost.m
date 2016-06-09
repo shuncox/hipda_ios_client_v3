@@ -916,7 +916,7 @@
                             return match.value;
                         }
                         NSString *src = [(RxMatchGroup *)match.groups[1] value];
-                        return [NSString stringWithFormat:@"src=\"http://7xq2vp.com1.z0.glb.clouddn.com/forum/%@-w600\"", src];
+                        return [NSString stringWithFormat:@"src=\"http://%@/forum/%@-w600\"", HP_CDN_BASE_URL, src];
                     }];
                 }
                 NSString *sizeDisplayString = [sizeString imageSizeString];
