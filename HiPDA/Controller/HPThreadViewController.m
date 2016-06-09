@@ -441,7 +441,6 @@ typedef enum{
     // mark read
     HPThreadCell *cell = (HPThreadCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
-    [[HPCache sharedCache] readThread:thread];
     
     HPReadViewController *readVC =
     [[HPReadViewController alloc] initWithThread:thread];

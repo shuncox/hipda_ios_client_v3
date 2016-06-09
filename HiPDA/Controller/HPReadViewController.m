@@ -478,6 +478,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [weakSelf refreshThreadInfo:parameters
                            find_pid:weakSelf.find_pid];
             
+            [[HPCache sharedCache] readThread:weakSelf.thread];
+            
             // update title
             [string replaceOccurrencesOfString:@"##title##" withString:weakSelf.thread.title options:0 range:NSMakeRange(0, string.length)];
             
