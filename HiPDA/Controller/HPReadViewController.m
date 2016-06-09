@@ -39,6 +39,7 @@
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
 #import "NSString+CDN.h"
+#import "UIWebView+HPSafeLoadString.h"
 
 #import "UIViewController+KNSemiModal.h"
 #import "UIAlertView+Blocks.h"
@@ -450,17 +451,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [string replaceOccurrencesOfString:key withString:value options:0 range:NSMakeRange(0, string.length)];
     }];
     
-    // allowLossyConversion : YES OR NO
-    // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/5487f43e65f8dfea154bb6ff
-    // [__NSCFString dataUsingEncoding:allowLossyConversion:]: didn't convert all characters
-    // webview使用loadHTMLString:baseURL:也是用了dataUsingEncoding:allowLossyConversion方法
-    // 但是有时会crash(didn't convert all characters)
-    // 它的allowLossyConversion是NO
     
     self.htmlString = string;
-    NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:S(@"http://%@/forum/", HPBaseURL)]];
-    //[self.webView loadHTMLString:string baseURL:[NSURL URLWithString:@"http://www.hi-pda.com/forum/"]];
+    [self.webView hp_safeLoadHTMLString:string baseURL:[NSURL URLWithString:S(@"http://%@/forum/", HPBaseURL)]];
     
     BOOL printable = !_forceFullPage && (_current_page == 1 && _current_author_uid == 0);
     
@@ -523,7 +516,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             NSString *final = [HPNewPost preProcessHTML:string];
             
             //NSLog(@"%@", final);
-            [weakSelf.webView loadHTMLString:final baseURL:[NSURL URLWithString:S(@"http://%@/forum/", HPBaseURL)]];
+            [weakSelf.webView hp_safeLoadHTMLString:final baseURL:[NSURL URLWithString:S(@"http://%@/forum/", HPBaseURL)]];
             
             [weakSelf endLoad:YES];
             
