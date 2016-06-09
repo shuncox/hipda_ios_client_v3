@@ -625,7 +625,7 @@
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             //NSLog(@"%@", m1.value);
-            NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
+            NSString *src = m1.value;
             // 正则提取是倒序
             [imgsArray insertObject:src atIndex:0];
             NSString *aid = m2.value;
@@ -649,7 +649,7 @@
 
                 //NSLog(@"src %@, aid %@", g1.value, g2.value);
                 
-                NSString *src = [NSString stringWithFormat:@"http://%@/forum/%@", HPBaseURL, m1.value];
+                NSString *src = m1.value;
                 NSString *aid = m2.value;
                 
                 if ([imgsArray indexOfObject:src] == NSNotFound) {
