@@ -368,6 +368,9 @@
 		EADF46721CA76CDC00D71C25 /* NSString+HPImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */; };
 		EAE0FE441D09527F00F0D76E /* NSString+CDN.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE431D09527F00F0D76E /* NSString+CDN.m */; };
 		EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */; };
+		EAE0FE4A1D09BC2D00F0D76E /* HPThreadFilterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */; };
+		EAE0FE5B1D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */; };
+		EAE0FE5C1D09BFF700F0D76E /* HPNavigationDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */; };
 		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; };
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
@@ -908,6 +911,11 @@
 		EAE0FE431D09527F00F0D76E /* NSString+CDN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CDN.m"; path = "Helper/NSString+CDN.m"; sourceTree = "<group>"; };
 		EAE0FE451D095EC900F0D76E /* UIWebView+HPSafeLoadString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+HPSafeLoadString.h"; path = "Helper/UIWebView+HPSafeLoadString.h"; sourceTree = "<group>"; };
 		EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+HPSafeLoadString.m"; path = "Helper/UIWebView+HPSafeLoadString.m"; sourceTree = "<group>"; };
+		EAE0FE481D09BC2D00F0D76E /* HPThreadFilterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPThreadFilterMenu.h; path = View/HPThreadFilterMenu.h; sourceTree = "<group>"; };
+		EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadFilterMenu.m; path = View/HPThreadFilterMenu.m; sourceTree = "<group>"; };
+		EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = HPNavigationDropdownMenu.bundle; path = View/HPNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
+		EAE0FE591D09BFF700F0D76E /* HPNavigationDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNavigationDropdownMenu.h; path = View/HPNavigationDropdownMenu.h; sourceTree = "<group>"; };
+		EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNavigationDropdownMenu.m; path = View/HPNavigationDropdownMenu.m; sourceTree = "<group>"; };
 		EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSearchUserCell.h; path = View/HPSearchUserCell.h; sourceTree = "<group>"; };
 		EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchUserCell.m; path = View/HPSearchUserCell.m; sourceTree = "<group>"; };
 		EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+Capture.h"; path = "Helper/UIWebView+Capture.h"; sourceTree = "<group>"; };
@@ -1162,6 +1170,11 @@
 				EA13B911194B53D900E01AF5 /* HPStupidBar.m */,
 				EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */,
 				EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */,
+				EAE0FE481D09BC2D00F0D76E /* HPThreadFilterMenu.h */,
+				EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */,
+				EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */,
+				EAE0FE591D09BFF700F0D76E /* HPNavigationDropdownMenu.h */,
+				EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2097,6 +2110,7 @@
 				EA74459118CA1E62002467EE /* compose_at@2x.png in Resources */,
 				EAD7F614183CC84600A750D9 /* hp_smile_grapeman_20.gif in Resources */,
 				EA9A39BD1A5BE92E0028BE7D /* bubble-classic-gray.png in Resources */,
+				EAE0FE5B1D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle in Resources */,
 				EAD7F5E5183CC84600A750D9 /* hp_smile_coolmonkey_09.gif in Resources */,
 				EA0FF7BB1837B06400B0EBA6 /* default-controls.psd in Resources */,
 				EAD7F5FE183CC84600A750D9 /* hp_smile_default_titter.gif in Resources */,
@@ -2406,6 +2420,7 @@
 				EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */,
 				EA9A39AE1A5BE92E0028BE7D /* JSAvatarImageFactory.m in Sources */,
 				EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */,
+				EAE0FE4A1D09BC2D00F0D76E /* HPThreadFilterMenu.m in Sources */,
 				EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */,
 				EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */,
 				EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */,
@@ -2417,6 +2432,7 @@
 				EA13CD991C11B8AD0023041F /* HPActivity.m in Sources */,
 				EA3A7C7C1C95637A00FD4B44 /* NSRegularExpression+HP.m in Sources */,
 				EA9A39B71A5BE92E0028BE7D /* JSMessageTableView.m in Sources */,
+				EAE0FE5C1D09BFF700F0D76E /* HPNavigationDropdownMenu.m in Sources */,
 				EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */,
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
 				EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */,

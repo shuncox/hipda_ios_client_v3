@@ -37,6 +37,8 @@
 #import "BBBadgeBarButtonItem.h"
 #import "HPIndecator.h"
 #import "NSString+Additions.h"
+#import "HPNavigationDropdownMenu.h"
+#import "HPThreadFilterMenu.h"
 
 typedef enum{
 	PullToRefresh = 0,
@@ -115,6 +117,13 @@ typedef enum{
     
     //
     [self refresh:[UIButton new]];
+    
+    
+    HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    filterMenu.backgroundColor = [UIColor redColor];
+    HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:@"Discovery" customView:filterMenu containerView:self.view];
+    
+    self.navigationItem.titleView = menuView;
 }
 
 
