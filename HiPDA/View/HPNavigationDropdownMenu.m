@@ -162,6 +162,7 @@
 - (void)setMenuTitleText:(NSString *)title
 {
     self.menuTitle.text = title;
+    [self setNeedsLayout];
 }
 
 - (void)menuButtonTapped:(UIButton *)sender

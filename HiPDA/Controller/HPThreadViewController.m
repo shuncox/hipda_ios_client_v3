@@ -65,6 +65,8 @@ typedef enum{
 
 @property (nonatomic, assign) NSInteger currentFontSize;
 
+@property (nonatomic, strong) HPNavigationDropdownMenu *dropMenu;
+
 @end
 
 @implementation HPThreadViewController {
@@ -121,7 +123,8 @@ typedef enum{
     
     HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     filterMenu.backgroundColor = [UIColor redColor];
-    HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:@"Discovery" customView:filterMenu containerView:self.view];
+    HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:self.title customView:filterMenu containerView:self.view];
+    self.dropMenu = menuView;
     
     self.navigationItem.titleView = menuView;
 }
@@ -216,6 +219,8 @@ typedef enum{
     self.title = title;
     _current_fid = fid;
     [self refresh:[UIButton new]];
+    
+    [self.dropMenu setMenuTitleText:self.title];
 }
 
 - (void)load:(LoadType)type
