@@ -168,6 +168,11 @@
 - (void)menuButtonTapped:(UIButton *)sender
 {
     self.isShown = !self.isShown;
+    
+    if ([self.containerView isKindOfClass:UIScrollView.class]) {
+        ((UIScrollView *)self.containerView).scrollEnabled = !self.isShown;
+    }
+    
     if (self.isShown) {
         [self showMenu];
     } else {
