@@ -148,6 +148,14 @@ typedef enum{
         [self refresh:[UIButton new]];
     };
     [filterMenu updateWithFid:self.current_fid];
+    
+    // 用户改变了参数, 但是不点击确定就关掉了面板, 就重置页面
+    [RACObserve(menuView, isShown) subscribeNext:^(NSNumber *value) {
+        @strongify(self);
+        if ([value boolValue] == NO) {
+            [self.filterMenu updateWithFid:self.current_fid];
+        }
+    }];
 }
 
 

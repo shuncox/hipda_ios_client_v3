@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface HPNavigationDropdownMenu : UIView
+
+@property (nonatomic, readonly, assign) BOOL isShown;
+
 - (instancetype)initWithTitle:(NSString *)title
                    customView:(UIView *)customView
                 containerView:(UIView *)containerView;
 - (void)setMenuTitleText:(NSString *)title;
 - (void)dismiss;
+
 @end
