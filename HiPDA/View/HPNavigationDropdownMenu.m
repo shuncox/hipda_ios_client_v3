@@ -44,6 +44,7 @@
 @property (nonatomic, strong) UIImageView *menuArrow;
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, assign) BOOL isShown;
+@property (nonatomic, assign) BOOL busy;
 @property (nonatomic, assign) CGFloat navigationBarHeight;
 @end
 
@@ -96,6 +97,8 @@
 
 - (void)showMenu
 {
+    self.busy = YES;
+    
     // Init background view (under table view)
     self.backgroundView = [[UIButton alloc] initWithFrame:self.mainScreenBounds];
     [(UIButton *)self.backgroundView addTarget:self action:@selector(menuButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,11 +137,15 @@
                          self.customView.frame = customViewFrame;
                          
                          self.backgroundView.alpha = self.configuration.maskBackgroundOpacity;
+                     } completion:^(BOOL finished) {
+                         self.busy = NO;
                      }];
 }
 
 - (void)hideMenu
 {
+    self.busy = YES;
+    
     // Rotate arrow
     [self rotateArrow];
     
@@ -156,6 +163,7 @@
                      } completion:^(BOOL finished) {
                          [self.customView removeFromSuperview];
                          [self.backgroundView removeFromSuperview];
+                         self.busy = NO;
                      }];
     
 }
@@ -178,6 +186,19 @@
 
 - (void)menuButtonTapped:(UIButton *)sender
 {
+    self.isShown = !self.isShown;
+}
+
+- (void)dismiss
+{
+    self.isShown = NO;
+}
+
+- (void)setIsShown:(BOOL)isShown
+{
+    if (self.busy) {
+        return;
+    }
     if ([self.containerView isKindOfClass:UIScrollView.class]) {
         UIScrollView *v = (UIScrollView *)self.containerView;
         if (v.decelerating) {
@@ -185,24 +206,13 @@
         }
     }
     
-    self.isShown = !self.isShown;
+    _isShown = isShown;
     
-    if (self.isShown) {
+    if (isShown) {
         [self showMenu];
     } else {
         [self hideMenu];
     }
-}
-
-- (void)dismiss
-{
-    self.isShown = NO;
-    [self hideMenu];
-}
-
-- (void)setIsShown:(BOOL)isShown
-{
-    _isShown = isShown;
     
     if ([self.containerView isKindOfClass:UIScrollView.class]) {
         ((UIScrollView *)self.containerView).scrollEnabled = !isShown;
