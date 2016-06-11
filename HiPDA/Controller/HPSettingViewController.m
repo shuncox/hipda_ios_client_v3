@@ -208,17 +208,6 @@
         [Flurry logEvent:@"Setting ToggleShowAvatar" withParameters:@{@"flag":@(item.value)}];
     }];
     
-    
-    // isOrderByDateline
-    //
-    BOOL isOrderByDateline = [Setting boolForKey:HPSettingOrderByDate];
-    REBoolItem *isOrderByDatelineItem = [REBoolItem itemWithTitle:@"按发帖时间排序" value:isOrderByDateline switchValueChangeHandler:^(REBoolItem *item) {
-        NSLog(@"isOrderByDateline Value: %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingOrderByDate];
-        
-        [Flurry logEvent:@"Setting ToggleOrderByDateline" withParameters:@{@"flag":@(item.value)}];
-    }];
-    
     //
     //
     NSString *postTail = [Setting objectForKey:HPSettingTail];
@@ -249,16 +238,6 @@
         [item deselectRowAnimated:YES];
         
         [Flurry logEvent:@"Setting EnterSetForum"];
-    }];
-    
-    // B&S版新帖在前
-    //
-    BOOL isBSForumOrderByDateline = [Setting boolForKey:HPSettingBSForumOrderByDate];
-    REBoolItem *isBSForumOrderByDatelineItem = [REBoolItem itemWithTitle:@"B&S版新帖在前" value:isBSForumOrderByDateline switchValueChangeHandler:^(REBoolItem *item) {
-        NSLog(@"isBSForumOrderByDateline Value: %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingBSForumOrderByDate];
-        
-        [Flurry logEvent:@"Setting ToggleBSOrderByDateline" withParameters:@{@"flag":@(item.value)}];
     }];
     
     //
@@ -410,10 +389,8 @@
     
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];
-    [section addItem:isOrderByDatelineItem];
     [section addItem:postTailText];
     [section addItem:setForumItem];
-    [section addItem:isBSForumOrderByDatelineItem];
     [section addItem:blockListItem];
     [section addItem:isPreferNoticeItem];
     [section addItem:afterSendConfirmItem];

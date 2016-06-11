@@ -136,7 +136,6 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingFavForumsTitle @"HPSettingFavForumsTitle"
 
 #define HPSettingShowAvatar @"HPSettingShowAvatar"
-#define HPSettingOrderByDate @"HPSettingOrderByDate"
 #define HPSettingBSForumOrderByDate @"HPSettingBSForumOrderByDate"
 
 #define HPSettingNightMode @"HPSettingNightMode"

@@ -96,7 +96,6 @@
                                HPSettingFavForums:@[@2, @6, @59],
                                HPSettingFavForumsTitle:@[@"Discovery", @"Buy & Sell", @"E-INK"],
                                HPSettingShowAvatar:@YES,
-                               HPSettingOrderByDate:@NO,
                                HPSettingNightMode:@NO,
                                HPSettingFontSize:@16.f,
                                HPSettingFontSizeAdjust:IS_IPAD?@130:@100,
