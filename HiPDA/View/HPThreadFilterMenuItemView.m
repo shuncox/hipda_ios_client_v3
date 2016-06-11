@@ -101,6 +101,16 @@
     [self setNeedsLayout];
 }
 
+
+- (void)tryToSetSelectedValue:(NSString *)selectedValue
+{
+    NSInteger index = [self.values indexOfObject:selectedValue];
+    if (index == NSNotFound) {
+        index = UISegmentedControlNoSegment;
+    }
+    self.segmentedControl.selectedSegmentIndex = index;
+}
+
 - (void)setSelectedValue:(NSString *)selectedValue
 {
     NSInteger index = [self.values indexOfObject:selectedValue];

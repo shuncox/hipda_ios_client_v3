@@ -10,6 +10,9 @@
 #import "HPThreadFilterMenu.h"
 #import "HPForum.h"
 #import "HPThreadFilterMenuItemView.h"
+#import "HPSetting.h"
+
+#define HP_FILTER_SETTING_KEY (@"HP_FILTER_SETTING_KEY")
 
 @interface HPThreadFilterMenu()
 
@@ -19,6 +22,7 @@
 @property (nonatomic, strong) HPThreadFilterMenuItemView *orderSelectView;
 
 @property (nonatomic, strong) NSMutableDictionary *draftFilter;
+@property (nonatomic, assign) NSInteger fid;
 
 @end
 
@@ -159,6 +163,10 @@
 
 - (void)updateWithFid:(NSInteger)fid
 {
+    self.fid = fid;
+    
+    // types
+    //
     NSArray *types = [HPForum forumTypeWithFid:fid];
     
     if (types) {
@@ -177,17 +185,64 @@
     
     self.typeSelectView.items = [items copy];
     self.typeSelectView.values = [values copy];
+    
+    // load config
+    //
+    [self loadConfig];
+}
+
+- (void)setCurrentFilter:(NSDictionary *)currentFilter
+{
+    _currentFilter = currentFilter;
+    self.draftFilter = [currentFilter mutableCopy];
+    
+    NSString *filter = currentFilter[@"filter"];
+    NSString *orderby = currentFilter[@"orderby"];
+    
+    NSArray *filterViews = @[self.typeSelectView, self.filterSelectView, self.scopeSelectView];
+    for (HPThreadFilterMenuItemView *v in filterViews) {
+        [v tryToSetSelectedValue:filter];
+    }
+    [self.orderSelectView tryToSetSelectedValue:orderby];
 }
 
 - (void)didTapResetButton:(UIButton *)button
 {
-    
+    self.currentFilter = @{@"orderby": @"lastpost", @"filter": @""};
+    [self saveConfig];
 }
 
 - (void)didTapSubmitButton:(UIButton *)button
 {
     self.currentFilter = [self.draftFilter copy];
+    [self saveConfig];
     self.submitBlock();
+}
+
+#pragma mark - persistence
+- (void)loadConfig
+{
+    NSDictionary *settings = [NSStandardUserDefaults objectForKey:HP_FILTER_SETTING_KEY];
+    if (!settings) {
+        [NSStandardUserDefaults setObject:@{} forKey:HP_FILTER_SETTING_KEY];
+    }
+    NSDictionary *config = [settings objectForKey:@(self.fid).stringValue];
+    if (!config) {
+        config = @{@"orderby": @"lastpost", @"filter": @""};
+        if (self.fid == 6 && [Setting boolForKey:HPSettingBSForumOrderByDate]) {
+            config = @{@"orderby": @"dateline", @"filter": @""}; //兼容旧版
+        }
+    }
+    
+    self.currentFilter = config;
+}
+
+- (void)saveConfig
+{
+    NSDictionary *settings = [NSStandardUserDefaults objectForKey:HP_FILTER_SETTING_KEY];
+    NSMutableDictionary *update = [settings mutableCopy];
+    [update setObject:self.currentFilter forKey:@(self.fid).stringValue];
+    [NSStandardUserDefaults saveObject:[update copy] forKey:HP_FILTER_SETTING_KEY];
 }
 
 @end

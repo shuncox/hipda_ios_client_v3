@@ -18,6 +18,7 @@
 @property (nonatomic, readonly, strong) UISegmentedControl *segmentedControl;
 @property (nonatomic, copy) void(^didSelect)(HPThreadFilterMenuItemView *view, NSString *value);
 
+- (void)tryToSetSelectedValue:(NSString *)selectedValue;
 - (void)deselect;
 
 @end
