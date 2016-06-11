@@ -39,6 +39,7 @@
 #import "NSString+Additions.h"
 #import "HPNavigationDropdownMenu.h"
 #import "HPThreadFilterMenu.h"
+#import <ReactiveCocoa.h>
 
 typedef enum{
 	PullToRefresh = 0,
@@ -132,6 +133,15 @@ typedef enum{
     self.navigationItem.titleView = menuView;
     
     @weakify(self);
+    [RACObserve(filterMenu, currentFilter) subscribeNext:^(NSDictionary *filter) {
+        @strongify(self);
+        if ([filter[@"filter"] isEqualToString:@""] &&
+            [filter[@"orderby"] isEqualToString:@"lastpost"]) {
+            [self.dropMenu setMenuTitleText:self.title];
+        } else {
+            [self.dropMenu setMenuTitleText:[self.title stringByAppendingString:@"*"]];
+        }
+    }];
     filterMenu.submitBlock = ^{
         @strongify(self);
         [self.dropMenu dismiss];
@@ -231,7 +241,6 @@ typedef enum{
     _current_fid = fid;
     [self refresh:[UIButton new]];
     
-    [self.dropMenu setMenuTitleText:self.title];
     [self.filterMenu updateWithFid:self.current_fid];
 }
 
