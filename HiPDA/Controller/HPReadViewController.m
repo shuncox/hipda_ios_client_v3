@@ -906,9 +906,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                   [self canEdit:_current_action_post] ?
                                     @"编辑" : @"举报"
                                   otherButtonTitles:
-                                  @"查看签名",
                                   @"回复",
                                   @"引用",
+                                  @"查看签名",
                                   @"发送短消息",
                                   _current_author_uid != 0 ? @"查看全部" : @"只看该作者", nil];
     self.currentActionSheet = actionSheet;
@@ -1003,20 +1003,19 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                         [self report];
                     }
                     break;
-                case 1://查看签名
-                {
-                    [self viewSignature:_current_action_post];
-                    break;
-                }
-                case 2://回复
+                case 1://回复
                 {
                     [self replySomeone:nil];
                     break;
                 }
-                case 3://引用
+                case 2://引用
                 {
                     [self quoteSomeone:nil];
-
+                    break;
+                }
+                case 3://查看签名
+                {
+                    [self viewSignature:_current_action_post];
                     break;
                 }
                 case 4://发送短消息
