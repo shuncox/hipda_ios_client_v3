@@ -41,7 +41,7 @@
     webView.delegate = self;
     [self.view addSubview:webView];
     
-    NSString *html = [NSString stringWithFormat:@"<!DOCTYPE html> <html> <head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,maximum-scale=1\" /></head> <body>%@</body> </html>", self.signature];
+    NSString *html = [NSString stringWithFormat:@"<!DOCTYPE html> <html> <head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,maximum-scale=1\" /></head> <body style=\"background-color:#f1f1ef;\">%@</body> </html>", self.signature];
     [webView loadHTMLString:html baseURL:nil];
 }
 
