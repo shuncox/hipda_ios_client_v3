@@ -119,10 +119,6 @@ typedef enum{
                   forControlEvents:UIControlEventValueChanged];
     self.refreshControl.backgroundColor = [UIColor clearColor];
     
-    //
-    [self refresh:[UIButton new]];
-    
-    
     HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 230)];//暂时写死高度, 折腾了一下autolayout自动算, 但是要求filterMenu的superview使用autolayout布局filterview
     HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:self.title
                                                                               customView:filterMenu
@@ -156,6 +152,10 @@ typedef enum{
             [self.filterMenu updateWithFid:self.current_fid];
         }
     }];
+    
+    
+    //
+    [self refresh:[UIButton new]];
 }
 
 
@@ -247,9 +247,9 @@ typedef enum{
     [Flurry logEvent:@"ThreadVC LoadForum" withParameters:@{@"fid":@(fid),@"title":title}];
     self.title = title;
     _current_fid = fid;
-    [self refresh:[UIButton new]];
     
     [self.filterMenu updateWithFid:self.current_fid];
+    [self refresh:[UIButton new]];
 }
 
 - (void)load:(LoadType)type
