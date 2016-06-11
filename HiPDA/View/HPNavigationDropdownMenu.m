@@ -111,15 +111,26 @@
     // Change background alpha
     self.backgroundView.alpha = 0;
     
+    CGFloat offset = 0;
+    if ([self.containerView isKindOfClass:UIScrollView.class]) {
+        UIScrollView *v = (UIScrollView *)self.containerView;
+        offset = v.contentOffset.y + v.contentInset.top;
+    }
+    
+    CGRect backgroundViewFrame = self.backgroundView.frame;
+    backgroundViewFrame.origin.y = offset;
+    self.backgroundView.frame = backgroundViewFrame;
+    
     // Animation
     CGRect customViewFrame = self.customView.frame;
-    customViewFrame.origin.y = -customViewFrame.size.height;
+    customViewFrame.origin.y = offset;
+    customViewFrame.origin.y -= customViewFrame.size.height;
     self.customView.frame = customViewFrame;
     
     [UIView animateWithDuration:self.configuration.animationDuration
                      animations:^{
                          CGRect customViewFrame = self.customView.frame;
-                         customViewFrame.origin.y = 0;
+                         customViewFrame.origin.y += customViewFrame.size.height;
                          self.customView.frame = customViewFrame;
                          
                          self.backgroundView.alpha = self.configuration.maskBackgroundOpacity;
@@ -138,7 +149,7 @@
     [UIView animateWithDuration:self.configuration.animationDuration
                      animations:^{
                          CGRect customViewFrame = self.customView.frame;
-                         customViewFrame.origin.y = -customViewFrame.size.height;
+                         customViewFrame.origin.y -= customViewFrame.size.height;
                          self.customView.frame = customViewFrame;
                          
                          self.backgroundView.alpha = 0;
@@ -167,16 +178,34 @@
 
 - (void)menuButtonTapped:(UIButton *)sender
 {
-    self.isShown = !self.isShown;
-    
     if ([self.containerView isKindOfClass:UIScrollView.class]) {
-        ((UIScrollView *)self.containerView).scrollEnabled = !self.isShown;
+        UIScrollView *v = (UIScrollView *)self.containerView;
+        if (v.decelerating) {
+            return;
+        }
     }
+    
+    self.isShown = !self.isShown;
     
     if (self.isShown) {
         [self showMenu];
     } else {
         [self hideMenu];
+    }
+}
+
+- (void)dismiss
+{
+    self.isShown = NO;
+    [self hideMenu];
+}
+
+- (void)setIsShown:(BOOL)isShown
+{
+    _isShown = isShown;
+    
+    if ([self.containerView isKindOfClass:UIScrollView.class]) {
+        ((UIScrollView *)self.containerView).scrollEnabled = !isShown;
     }
 }
 

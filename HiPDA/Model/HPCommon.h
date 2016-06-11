@@ -24,6 +24,7 @@
 #define HP_CONVERT_WIDTH(a) (ceilf((a)*kScreenWidth/320.f))
 #define HP_CONVERT_HEIGHT(a) (ceilf((a)*kScreenHeight/568.f))
 
+#define HP_1PX (1.0f / [UIScreen mainScreen].scale)
 
 // Copy from Tweet4China
 // Created by Jason Hsu

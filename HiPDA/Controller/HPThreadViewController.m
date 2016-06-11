@@ -66,6 +66,7 @@ typedef enum{
 @property (nonatomic, assign) NSInteger currentFontSize;
 
 @property (nonatomic, strong) HPNavigationDropdownMenu *dropMenu;
+@property (nonatomic, strong) HPThreadFilterMenu *filterMenu;
 
 @end
 
@@ -121,12 +122,22 @@ typedef enum{
     [self refresh:[UIButton new]];
     
     
-    HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
-    filterMenu.backgroundColor = [UIColor redColor];
-    HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:self.title customView:filterMenu containerView:self.view];
+    HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 230)];//暂时写死高度, 折腾了一下autolayout自动算, 但是要求filterMenu的superview使用autolayout布局filterview
+    HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:self.title
+                                                                              customView:filterMenu
+                                                                           containerView:self.view];
     self.dropMenu = menuView;
+    self.filterMenu = filterMenu;
     
     self.navigationItem.titleView = menuView;
+    
+    @weakify(self);
+    filterMenu.submitBlock = ^{
+        @strongify(self);
+        [self.dropMenu dismiss];
+        [self refresh:[UIButton new]];
+    };
+    [filterMenu updateWithFid:self.current_fid];
 }
 
 
@@ -221,6 +232,7 @@ typedef enum{
     [self refresh:[UIButton new]];
     
     [self.dropMenu setMenuTitleText:self.title];
+    [self.filterMenu updateWithFid:self.current_fid];
 }
 
 - (void)load:(LoadType)type
@@ -228,9 +240,12 @@ typedef enum{
 
     [Flurry logEvent:@"ThreadVC Refresh" withParameters:@{@"type":@(type),@"forceRefresh":@(refresh)}];
     
+    NSDictionary *filterParams = self.filterMenu.currentFilter;
+    
     __weak typeof(self) weakSelf = self;
     [HPThread loadThreadsWithFid:_current_fid
                             page:_current_page
+                    filterParams:filterParams
                     forceRefresh:refresh
                            block:^(NSArray *threads, NSError *error)
      {

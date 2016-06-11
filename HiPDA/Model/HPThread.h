@@ -37,6 +37,7 @@
 
 + (void)loadThreadsWithFid:(NSInteger)fid
                       page:(NSInteger)page
+              filterParams:(NSDictionary *)filterParams
               forceRefresh:(BOOL)forceRefresh
                      block:(void (^)(NSArray *posts, NSError *error))block;
 

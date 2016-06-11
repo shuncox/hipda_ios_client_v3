@@ -78,40 +78,16 @@
 
 + (void)loadThreadsWithFid:(NSInteger)fid
                       page:(NSInteger)page
+              filterParams:(NSDictionary *)filterParams
               forceRefresh:(BOOL)forceRefresh
                      block:(void (^)(NSArray *posts, NSError *error))block
 {
-    /*
-    BOOL isStop = NO;
-    NSTimeInterval interval = 86400 * 45;
-
-    NSDate *ago = [NSDate dateWithTimeIntervalSince1970:[HPCommon timeIntervalSince1970WithString:@"2014/10/13"]];
-    NSDate *stop = [NSDate dateWithTimeInterval:interval sinceDate:ago];
-    NSDate *today = [NSDate date];
-    if ([stop compare:today] == NSOrderedAscending) {
-        isStop = YES;
-        NSLog(@"STOP today%@ stop%@",today,stop);
-    } else {
-        NSLog(@"NOT STOP today%@ stop%@",today,stop);
-    }
-    if (isStop && block) {
-        NSDictionary *details = [NSDictionary dictionaryWithObject:@"此版本内测结束, 请更新" forKey:NSLocalizedDescriptionKey];
-        block([NSArray array], [NSError errorWithDomain:@"world" code:200 userInfo:details]);
-        return;
-    }
-    */
-    BOOL isOrderByDateline = [Setting boolForKey:HPSettingOrderByDate];
-    if (fid == 6 && [Setting boolForKey:HPSettingBSForumOrderByDate]) {
-        isOrderByDateline = YES;
-        NSLog(@"HPSettingBSForumOrderByDate YES");
-    }
-    
-    NSString *path;
-    if (!isOrderByDateline) {
-        path = [NSString stringWithFormat:@"forum/forumdisplay.php?fid=%ld&page=%ld", fid, page];
-        //path = @"http://localhost/forumdisplay.html";
-    } else {
-        path = [NSString stringWithFormat:@"forum/forumdisplay.php?fid=%ld&orderby=dateline&page=%ld", fid, page];
+    NSString *path = [NSString stringWithFormat:@"forum/forumdisplay.php?fid=%ld&page=%ld", fid, page];
+    for (NSString *k in filterParams) {
+        NSString *v = filterParams[k];
+        if (v.length) {
+            path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", k, v]];
+        }
     }
 
     NSLog(@"load thread path : %@ forceRefresh:%@",path,forceRefresh?@"YES":@"NO");

@@ -10,4 +10,8 @@
 
 @interface HPThreadFilterMenu : UIView
 
+@property (nonatomic, copy) void(^submitBlock)();
+@property (nonatomic, strong) NSDictionary *currentFilter;
+- (void)updateWithFid:(NSInteger)fid;
+
 @end

@@ -154,6 +154,7 @@
 		EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760901AF8704F00BA0EF3 /* clip@2x.png */; };
 		EA6760941AF8704F00BA0EF3 /* clip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760911AF8704F00BA0EF3 /* clip@3x.png */; };
 		EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */; };
+		EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
 		EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C22183E21000067F62B /* HPLoginViewController.m */; };
@@ -627,6 +628,8 @@
 		EA6760911AF8704F00BA0EF3 /* clip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@3x.png"; sourceTree = "<group>"; };
 		EA689B651BF04102005C402C /* SSWDirectionalPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSWDirectionalPanGestureRecognizer.h; path = Controller/SSWDirectionalPanGestureRecognizer.h; sourceTree = "<group>"; };
 		EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSWDirectionalPanGestureRecognizer.m; path = Controller/SSWDirectionalPanGestureRecognizer.m; sourceTree = "<group>"; };
+		EA68C45D1D0AE463009E635F /* HPThreadFilterMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPThreadFilterMenuItemView.h; path = View/HPThreadFilterMenuItemView.h; sourceTree = "<group>"; };
+		EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadFilterMenuItemView.m; path = View/HPThreadFilterMenuItemView.m; sourceTree = "<group>"; };
 		EA7111D918B10C44007AD5D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EA7111DB18B10C5D007AD5D1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Blocks.h"; path = "Helper/UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1172,6 +1175,8 @@
 				EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */,
 				EAE0FE481D09BC2D00F0D76E /* HPThreadFilterMenu.h */,
 				EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */,
+				EA68C45D1D0AE463009E635F /* HPThreadFilterMenuItemView.h */,
+				EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */,
 				EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */,
 				EAE0FE591D09BFF700F0D76E /* HPNavigationDropdownMenu.h */,
 				EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */,
@@ -2446,6 +2451,7 @@
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
+				EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */,
 				EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */,
 				EA499F481830C2D800172989 /* XPathQuery.m in Sources */,
 				EA368A8018C75E9900C5C5BD /* HPBaseCompostionViewController.m in Sources */,
