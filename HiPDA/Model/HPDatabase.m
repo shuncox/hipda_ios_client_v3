@@ -30,6 +30,8 @@
 
 @interface HPDatabase ()
 
+@property (nonatomic, strong) FMDatabase *db;
+@property (nonatomic, strong) FMDatabaseQueue *queue;
 @property (nonatomic, assign) NSInteger current;
 @property (nonatomic, strong) NSTimer *countTimer;
 
@@ -49,6 +51,7 @@
         NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
         NSString *dbPath = [docsPath stringByAppendingPathComponent:@"uid_v2.db"];
         _sharedDb.db = [FMDatabase databaseWithPath:dbPath];
+        _sharedDb.queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
     });
     
     return _sharedDb;

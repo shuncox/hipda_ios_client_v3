@@ -9,18 +9,15 @@
 #import <Foundation/Foundation.h>
 
 #import <FMDB/FMDatabase.h>
+#import <FMDB/FMDatabaseQueue.h>
 #import <FMDB/FMDatabaseAdditions.h>
 
 @interface HPDatabase : NSObject
 
-@property (nonatomic, strong) FMDatabase *db;
+@property (nonatomic, readonly, strong) FMDatabaseQueue *queue;
 
 + (HPDatabase *)sharedDb;
 + (BOOL)prepareDb;
-
-- (void)open;
-- (void)close;
-
 
 
 

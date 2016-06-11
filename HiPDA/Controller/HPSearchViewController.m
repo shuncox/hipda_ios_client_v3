@@ -504,21 +504,19 @@
         [op addExecutionBlock:^{
             
             NSMutableArray *results = [NSMutableArray array];
-            [[HPDatabase sharedDb] open];
-            
-            FMResultSet *resultSet = [[[HPDatabase sharedDb] db] executeQuery:@"SELECT * FROM user WHERE username LIKE ?", [NSString stringWithFormat:@"%%%@%%", key]];
-            while ([resultSet next]) {
-                
-                NSString *username = [resultSet stringForColumnIndex:0];
-                NSString *uid = [resultSet stringForColumnIndex:1];
-                
-                HPUser *user = [HPUser new];
-                user.username = username;
-                user.uid = [uid integerValue];
-                [results addObject:@{@"user": user}];
-            }
-            
-            [[HPDatabase sharedDb] close];
+            [[HPDatabase sharedDb].queue inDatabase:^(FMDatabase *db) {
+                FMResultSet *resultSet = [db executeQuery:@"SELECT * FROM user WHERE username LIKE ?", [NSString stringWithFormat:@"%%%@%%", key]];
+                while ([resultSet next]) {
+                    
+                    NSString *username = [resultSet stringForColumnIndex:0];
+                    NSString *uid = [resultSet stringForColumnIndex:1];
+                    
+                    HPUser *user = [HPUser new];
+                    user.username = username;
+                    user.uid = [uid integerValue];
+                    [results addObject:@{@"user": user}];
+                }
+            }];
             
             [subscriber sendNext:[results copy]];
             [subscriber sendCompleted];

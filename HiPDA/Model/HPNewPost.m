@@ -316,25 +316,23 @@
     
     
     // get avator & floor
-    [[HPDatabase sharedDb] open];
-    
-    [postsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        
-        HPNewPost *post = (HPNewPost *)obj;
-        
-        post.floor = idx+1;
-        
-        NSInteger uid = [[[HPDatabase sharedDb] db] intForQuery:@"SELECT uid FROM user WHERE username = ?", post.user.username];
-        post.user.uid = uid;
-        post.user.avatarImageURL = [HPUser avatarStringWithUid:uid];
-        
-        
-        // process content
-        [post processContentHTML];
-    
+    [[HPDatabase sharedDb].queue inDatabase:^(FMDatabase *db) {
+        [postsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            HPNewPost *post = (HPNewPost *)obj;
+            
+            post.floor = idx+1;
+            
+            NSInteger uid = [db intForQuery:@"SELECT uid FROM user WHERE username = ?", post.user.username];
+            post.user.uid = uid;
+            post.user.avatarImageURL = [HPUser avatarStringWithUid:uid];
+            
+            
+            // process content
+            [post processContentHTML];
+            
+        }];
     }];
-    
-    [[HPDatabase sharedDb] close];
     
     // fix
     HPNewPost *last = [postsArray lastObject];

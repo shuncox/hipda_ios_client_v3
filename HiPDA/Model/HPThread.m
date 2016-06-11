@@ -12,6 +12,7 @@
 #import "HPCache.h"
 #import "HPMessage.h"
 #import "HPSetting.h"
+#import "HPDatabase.h"
 
 #import "HPHttpClient.h"
 #import "TFHpple.h"
@@ -186,8 +187,11 @@
         // cache
         [[HPCache sharedCache] cacheForum:[NSArray arrayWithArray:threads] fid:fid page:page];
         
+        // update uid database
+        [self.class updateUidDatabase:threads];
+        
         if (block) {
-            block([NSArray arrayWithArray:threads], nil);
+            block([threads copy], nil);
         }
         
     
@@ -197,6 +201,24 @@
         }
     }];
 }
+
++ (void)updateUidDatabase:(NSArray *)threads
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSMutableArray *users = [@[] mutableCopy];
+        for (HPThread *t in threads) {
+            [users addObject:t.user];
+        }
+        
+        [[HPDatabase sharedDb].queue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+            for (HPUser *user in users) {
+                [db executeUpdate:@"insert OR IGNORE into user (username, uid) values (?, ?)",
+                 user.username, @(user.uid)];
+            }
+        }];
+    });
+}
+
 //
 //+ (NSArray *)parserHTML:(NSString *)HTML {
 //    
