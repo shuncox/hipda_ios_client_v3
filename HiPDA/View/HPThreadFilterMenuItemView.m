@@ -75,6 +75,7 @@
         self.segmentedControlContainer.frame = frame;
         self.segmentedControlContainer.scrollEnabled = YES;
         self.segmentedControlContainer.contentSize = CGSizeMake(width, height);
+        [self scrollSeletedValueToVisible];
     }
 }
 
@@ -141,4 +142,29 @@
         self.didSelect(self, [self selectedValue]);
     }
 }
+
+- (void)scrollSeletedValueToVisible
+{
+    if (!self.segmentedControlContainer.scrollEnabled ||
+        CGRectGetWidth(self.segmentedControl.frame) == 0.f ||
+        self.segmentedControl.selectedSegmentIndex == UISegmentedControlNoSegment) {
+        return;
+    }
+    
+    // 等待segment布局完成
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSArray *views = self.segmentedControl.subviews;
+        views = [views sortedArrayUsingComparator:^NSComparisonResult(UIView *v1, UIView *v2) {
+            return v1.frame.origin.x - v2.frame.origin.x;
+        }];
+        
+        NSParameterAssert(self.segmentedControl.selectedSegmentIndex < views.count);
+        UIView *view = views[self.segmentedControl.selectedSegmentIndex];
+        CGFloat x = view.frame.origin.x + view.frame.size.width;
+        if (x > self.segmentedControlContainer.frame.size.width) {
+            self.segmentedControlContainer.contentOffset = CGPointMake(x - self.segmentedControlContainer.frame.size.width, 0);
+        };
+    });
+}
+
 @end
