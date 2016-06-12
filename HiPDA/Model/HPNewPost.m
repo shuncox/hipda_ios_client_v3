@@ -899,7 +899,7 @@
             BOOL filter = imageSizeFilterEnable && imageSize >= imageSizeFilterMinValue;
             filter = filter || style == HPImageDisplayStyleNone;
             filter = filter || (style == HPImageDisplayStyleOne && i != matches.count/*正则是倒序*/);
-            BOOL useCDN = filter && imageCDNEnable && imageSize >= imageCDNMinValue;
+            BOOL useCDN = filter && imageCDNEnable && imageSize >= imageCDNMinValue && ![src hasSuffix:@".gif"];
             
             if (filter) {
                 NSString *imageNode = match.value;
