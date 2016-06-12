@@ -526,7 +526,7 @@ typedef enum{
 
 - (float)tableViewHeight {
     // return height of table view
-    return [self.tableView contentSize].height;
+    return MAX(CGRectGetHeight(self.tableView.frame) - 64.f, [self.tableView contentSize].height);
 }
 
 - (float)endOfTableView:(UIScrollView *)scrollView {

@@ -84,9 +84,13 @@
                      block:(void (^)(NSArray *posts, NSError *error))block
 {
     NSString *path = [NSString stringWithFormat:@"forum/forumdisplay.php?fid=%ld&page=%ld", fid, page];
+    BOOL stickthread = NO;
     for (NSString *k in filterParams) {
         NSString *v = filterParams[k];
-        if (v.length) {
+        if ([v isEqualToString:@"stickthread"]) {
+            stickthread = YES;
+        }
+        else if (v.length) {
             path = [path stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", k, v]];
         }
     }
@@ -165,7 +169,7 @@
         
         
         //NSArray *threadsInfo = [HPThread parserHTML:html];
-        NSArray *threadsInfo = [HPThread extractThreads:html];
+        NSArray *threadsInfo = [HPThread extractThreads:html stickthread:stickthread];
         
         NSMutableArray *threads = [NSMutableArray arrayWithCapacity:[threadsInfo count]];
         for (NSDictionary *attributes in threadsInfo) {
@@ -179,7 +183,7 @@
             }
         }
         
-        if (threads.count == 0) {
+        if (threads.count == 0 && !stickthread) {
             block([NSArray array], [NSError crawlerErrorWithContext:context]);
             return;
         }
@@ -309,13 +313,25 @@
 //    return threads;
 //}
 
-+ (NSArray *)extractThreads:(NSString *)string {
++ (NSArray *)extractThreads:(NSString *)string
+                stickthread:(BOOL)stickthread {
     
     //NSLog(@"html : \n%@", string);
     
     string = [string stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-    NSRange range = [string rangeOfString:@"normalthread_"];
-    string = [string substringFromIndex:range.location];
+    
+    if (stickthread) {
+        NSRange range1 = [string rangeOfString:@"stickthread_"];
+        NSRange range2 = [string rangeOfString:@"normalthread_"];
+        if (range1.location != NSNotFound && range2.location != NSNotFound) {
+            string = [string substringWithRange:NSMakeRange(range1.location, range2.location-range1.location)];
+        } else {
+            string = @"";
+        }
+    } else {
+        NSRange range = [string rangeOfString:@"normalthread_"];
+        string = [string substringFromIndex:range.location];
+    }
     
     NSError *error;
     NSRegularExpression *regex = [NSRegularExpression

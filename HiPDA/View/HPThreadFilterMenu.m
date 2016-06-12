@@ -51,8 +51,8 @@
             v.title = titles[idx];
         }];
         
-        self.filterSelectView.items = @[@"全部", @"精华"];
-        self.filterSelectView.values = @[@"", @"digest"];
+        self.filterSelectView.items = @[@"全部", @"精华", @"置顶"];
+        self.filterSelectView.values = @[@"", @"digest", @"stickthread"];
         
         self.scopeSelectView.items = @[@"一天", @"两天", @"周", @"月", @"季"];
         self.scopeSelectView.values = @[@"86400", @"172800", @"604800", @"2592000", @"7948800"];
