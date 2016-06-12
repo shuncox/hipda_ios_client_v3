@@ -20,6 +20,7 @@
 #import <ReactiveCocoa.h>
 
 #import "SWRevealViewController.h"
+#import "UITableView+ScrollToTop.h"
 
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
@@ -124,11 +125,8 @@
          _page_count = 1;
          
          [self.tableView reloadData];
-         if (_results.count > 0) {
-             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-             [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
-             [self.tableView flashScrollIndicators];
-         }
+         [self.tableView hp_scrollToTop];
+         [self.tableView flashScrollIndicators];
      }];
 }
 
@@ -233,9 +231,7 @@
                                      _page_count = pageCount;
                                      
                                      [weakSelf.tableView reloadData];
-                                     
-                                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                                     [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                                     [weakSelf.tableView hp_scrollToTop];
                                      [weakSelf.tableView flashScrollIndicators];
                                      
                                      // update ui
@@ -279,9 +275,7 @@
                                      _page_count = pageCount;
                                      
                                      [weakSelf.tableView reloadData];
-                                     
-                                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                                     [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                                     [weakSelf.tableView hp_scrollToTop];
                                      [weakSelf.tableView flashScrollIndicators];
                                      
                                      // update ui

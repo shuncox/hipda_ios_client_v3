@@ -277,6 +277,7 @@
 		EAA3A3241A9F29F700927278 /* activity_copy_link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A3211A9F29F700927278 /* activity_copy_link@2x.png */; };
 		EAA9ABA118EBDCFE00B2232B /* pull_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA9AB9F18EBDCFE00B2232B /* pull_refresh.png */; };
 		EAA9ABA218EBDCFE00B2232B /* pull_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA9ABA018EBDCFE00B2232B /* pull_refresh@2x.png */; };
+		EAACE5441D0DA42300EDD096 /* UITableView+ScrollToTop.m in Sources */ = {isa = PBXBuildFile; fileRef = EAACE5431D0DA42300EDD096 /* UITableView+ScrollToTop.m */; };
 		EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAAD5B89188CEFCC0084EC2D /* IDMCaptionView.m */; };
 		EAAD5B99188CEFCC0084EC2D /* IDMPBLocalizations.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAD5B8B188CEFCC0084EC2D /* IDMPBLocalizations.bundle */; };
 		EAAD5B9A188CEFCC0084EC2D /* IDMPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAD5B8C188CEFCC0084EC2D /* IDMPhotoBrowser.bundle */; };
@@ -797,6 +798,8 @@
 		EAA3A3211A9F29F700927278 /* activity_copy_link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_copy_link@2x.png"; path = "Image/activity/activity_copy_link@2x.png"; sourceTree = "<group>"; };
 		EAA9AB9F18EBDCFE00B2232B /* pull_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pull_refresh.png; path = Image/pull_refresh.png; sourceTree = "<group>"; };
 		EAA9ABA018EBDCFE00B2232B /* pull_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pull_refresh@2x.png"; path = "Image/pull_refresh@2x.png"; sourceTree = "<group>"; };
+		EAACE5421D0DA42300EDD096 /* UITableView+ScrollToTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+ScrollToTop.h"; path = "Helper/UITableView+ScrollToTop.h"; sourceTree = "<group>"; };
+		EAACE5431D0DA42300EDD096 /* UITableView+ScrollToTop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+ScrollToTop.m"; path = "Helper/UITableView+ScrollToTop.m"; sourceTree = "<group>"; };
 		EAAD5B88188CEFCC0084EC2D /* IDMCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMCaptionView.h; path = Vender/IDMPhotoBrowser/IDMCaptionView.h; sourceTree = "<group>"; };
 		EAAD5B89188CEFCC0084EC2D /* IDMCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IDMCaptionView.m; path = Vender/IDMPhotoBrowser/IDMCaptionView.m; sourceTree = "<group>"; };
 		EAAD5B8A188CEFCC0084EC2D /* IDMPBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IDMPBConstants.h; path = Vender/IDMPhotoBrowser/IDMPBConstants.h; sourceTree = "<group>"; };
@@ -1417,6 +1420,8 @@
 				EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */,
 				EAE0FE451D095EC900F0D76E /* UIWebView+HPSafeLoadString.h */,
 				EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */,
+				EAACE5421D0DA42300EDD096 /* UITableView+ScrollToTop.h */,
+				EAACE5431D0DA42300EDD096 /* UITableView+ScrollToTop.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2444,6 +2449,7 @@
 				EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */,
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,
 				EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */,
+				EAACE5441D0DA42300EDD096 /* UITableView+ScrollToTop.m in Sources */,
 				EA9A39B51A5BE92E0028BE7D /* JSMessageSoundEffect.m in Sources */,
 				EAA1E68E18D03A6700E1CFE1 /* MultilineTextItem.m in Sources */,
 				EAA1E68D18D03A6700E1CFE1 /* MultilineTextCell.m in Sources */,

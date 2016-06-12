@@ -40,6 +40,7 @@
 #import "HPNavigationDropdownMenu.h"
 #import "HPThreadFilterMenu.h"
 #import <ReactiveCocoa.h>
+#import "UITableView+ScrollToTop.h"
 
 typedef enum{
 	PullToRefresh = 0,
@@ -275,8 +276,7 @@ typedef enum{
                  [weakSelf.tableView reloadData];
                  
                  if (type == ClickToRefresh) {
-                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                     [self.tableView hp_scrollToTop];
                  }
                  
              } else { // loadMore

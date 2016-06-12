@@ -17,6 +17,7 @@
 
 #import "SWRevealViewController.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "UITableView+ScrollToTop.h"
 
 @interface HPFavoriteViewController ()
 
@@ -129,9 +130,7 @@
              
              [[HPFavorite sharedFavorite] favoriteThreads:threads];
              [self.tableView reloadData];
-             
-             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-             [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+             [self.tableView hp_scrollToTop];
              [self.tableView flashScrollIndicators];
              
          } else {

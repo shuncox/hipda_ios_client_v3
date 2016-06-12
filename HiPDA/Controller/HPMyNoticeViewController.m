@@ -22,6 +22,7 @@
 
 #import "SWRevealViewController.h"
 #import "HPRearViewController.h"
+#import "UITableView+ScrollToTop.h"
 
 
 
@@ -129,9 +130,7 @@
             [weakSelf.tableView reloadData];
             
             if (![weakSelf.refreshControl isRefreshing]) {
-                [weakSelf.tableView setContentOffset:CGPointZero animated:NO];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                [weakSelf.tableView hp_scrollToTop];
                 [weakSelf.tableView flashScrollIndicators];
             }
             
