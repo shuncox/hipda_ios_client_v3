@@ -163,6 +163,9 @@ typedef enum{
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    // dropMenu有bug, 非常偶现, 先dirty fix
+    self.tableView.scrollEnabled = YES;
+    
     SWRevealViewController *revealController = [self revealViewController];
     [self.navigationController.view addGestureRecognizer:revealController.panGestureRecognizer];
     
