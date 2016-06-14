@@ -578,7 +578,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                                                                                       action:@selector(gotoNextPage)]];
     
     // Counter Label
-    _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 95, 40)];
+    _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 95, 30)];
     _counterLabel.textAlignment = NSTextAlignmentCenter;
     _counterLabel.backgroundColor = [UIColor clearColor];
     _counterLabel.font = [UIFont fontWithName:@"Helvetica" size:17];
@@ -811,6 +811,23 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _performingLayout = NO;
     
     [self.view addGestureRecognizer:_panGesture];
+    
+    // button backgroundColor
+    for (UIView *v in _toolbar.subviews) {
+        if ([v isKindOfClass:NSClassFromString([@"UITool" stringByAppendingString:@"barButton"])]) {
+            for (UIView *vv in v.subviews) {
+                if ([vv isKindOfClass:NSClassFromString([@"_UITool" stringByAppendingString:@"barNavigationButton"])]) {
+                    vv.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+                    vv.layer.cornerRadius = 4;
+                    vv.layer.masksToBounds = YES;
+                }
+            }
+        }
+    }
+    _counterLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+    _counterLabel.layer.cornerRadius = 4;
+    _counterLabel.layer.masksToBounds = YES;
+
 }
 
 #pragma mark - Interface Orientation
