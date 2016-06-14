@@ -1357,6 +1357,10 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                 [self.activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
                     [selfBlock hideControlsAfterDelay];
                     selfBlock.activityViewController = nil;
+                    
+                    if (completed && [activityType hasSuffix:@"SaveToCameraRoll"]) {
+                        [selfBlock showProgressHUDCompleteMessage:@"保存成功"];
+                    }
                 }];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
