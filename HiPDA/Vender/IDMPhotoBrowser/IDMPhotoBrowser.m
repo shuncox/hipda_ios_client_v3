@@ -1193,8 +1193,10 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     // Counter
 	if ([self numberOfPhotos] > 1) {
 		_counterLabel.text = [NSString stringWithFormat:@"%i %@ %i", _currentPageIndex+1, IDMPhotoBrowserLocalizedStrings(@"of"), [self numberOfPhotos]];
+        _counterLabel.hidden = NO;
 	} else {
 		_counterLabel.text = nil;
+        _counterLabel.hidden = YES;
 	}
     
 	// Buttons
