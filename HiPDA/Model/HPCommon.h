@@ -179,10 +179,21 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingSwipeBack @"HPSettingSwipeBack"
 
 // image
-#define HPSettingImageSizeFilterEnable @"HPSettingImageSizeFilterEnable"
-#define HPSettingImageSizeFilterMinValue @"HPSettingImageSizeFilterMinValue"
-#define HPSettingImageCDNEnable @"HPSettingImageCDNEnable"
-#define HPSettingImageCDNMinValue @"HPSettingImageCDNMinValue"
+#define HPSettingImageAutoLoadEnableWWAN @"HPSettingImageAutoLoadEnableWWAN"
+#define HPSettingImageSizeFilterEnableWWAN @"HPSettingImageSizeFilterEnableWWAN"
+#define HPSettingImageSizeFilterMinValueWWAN @"HPSettingImageSizeFilterMinValueWWAN"
+#define HPSettingImageCDNEnableWWAN @"HPSettingImageCDNEnableWWAN"
+#define HPSettingImageCDNMinValueWWAN @"HPSettingImageCDNMinValueWWAN"
+#define HPOnlineImageCDNEnableWWAN @"imageCDNEnableWWAN"
+#define HPOnlineImageCDNMinValueWWAN @"imageCDNMinValueWWAN"
+
+#define HPSettingImageAutoLoadEnableWifi @"HPSettingImageAutoLoadEnableWifi"
+#define HPSettingImageSizeFilterEnableWifi @"HPSettingImageSizeFilterEnableWifi"
+#define HPSettingImageSizeFilterMinValueWifi @"HPSettingImageSizeFilterMinValueWifi"
+#define HPSettingImageCDNEnableWifi @"HPSettingImageCDNEnableWifi"
+#define HPSettingImageCDNMinValueWifi @"HPSettingImageCDNMinValueWifi"
+#define HPOnlineImageCDNEnableWifi @"imageCDNEnableWifi"
+#define HPOnlineImageCDNMinValueWifi @"imageCDNMinValueWifi"
 
 #define HPDraft @"HPDraft"
 

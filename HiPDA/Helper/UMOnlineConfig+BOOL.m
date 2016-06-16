@@ -39,6 +39,6 @@
 // for debug
 //+ (NSString *)getConfigParams:(NSString *)key
 //{
-//    return [@{@"imageCDNEnable-3.6.1": @"0", @"imageCDNMinValue-3.6.1":@"1400"} objectForKey:key];
+//    return [@{@"imageCDNEnableWifi-3.6.2": @"0", @"imageCDNMinValueWifi-3.6.2":@"1400"} objectForKey:key];
 //}
 @end

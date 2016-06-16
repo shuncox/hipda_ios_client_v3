@@ -412,7 +412,7 @@
     RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
     
     
-    RETableViewItem *setImageSizeFilterItem = [RETableViewItem itemWithTitle:@"大图预警 & 图片CDN压缩加速" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+    RETableViewItem *setImageSizeFilterItem = [RETableViewItem itemWithTitle:@"图片加载设置" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         
         HPSetImageSizeFilterViewController *svc = [HPSetImageSizeFilterViewController new];
         [self.navigationController pushViewController:svc animated:YES];
@@ -422,71 +422,7 @@
     }];
     [section addItem:setImageSizeFilterItem];
     
-    HPImageDisplayStyle styleViaWWAN = [Setting integerForKey:HPSettingImageWWAN];
-    HPImageDisplayStyle styleViaWifi = [Setting integerForKey:HPSettingImageWifi];
-    
-    NSArray *options = @[@"显示全部图片", @"仅显示一张图片", @"不显示图片"];
-    
-    RERadioItem *imageStyleWWANItem = [RERadioItem itemWithTitle:@"移动网络" value:[options objectAtIndex:styleViaWWAN] selectionHandler:^(RERadioItem *item) {
         
-        [item deselectRowAnimated:YES];
-        
-        // Present options controller
-        //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:options multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            
-            [item reloadRowWithAnimation:UITableViewRowAnimationNone];
-            
-            HPImageDisplayStyle styleViaWWAN
-                = [options indexOfObjectIdenticalTo:item.value];
-            [Setting saveInteger:styleViaWWAN forKey:HPSettingImageWWAN];
-            
-            [Flurry logEvent:@"Setting SetImageStyleWWAN" withParameters:@{@"option":@(styleViaWWAN)}];
-        }];
-        
-        optionsController.delegate = weakSelf;
-        optionsController.style = section.style;
-        if (weakSelf.tableView.backgroundView == nil) {
-            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
-            optionsController.tableView.backgroundView = nil;
-        }
-        
-        [weakSelf.navigationController pushViewController:optionsController animated:YES];
-    }];
-    RERadioItem *imageStyleWifiItem = [RERadioItem itemWithTitle:@"Wi-Fi" value:[options objectAtIndex:styleViaWifi] selectionHandler:^(RERadioItem *item) {
-        
-        [item deselectRowAnimated:YES];
-        
-        // Present options controller
-        //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:options multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            
-            [item reloadRowWithAnimation:UITableViewRowAnimationNone];
-            
-            HPImageDisplayStyle styleViaWifi
-                = [options indexOfObjectIdenticalTo:item.value];
-            //NSLog(@"styleViaWifi %d", styleViaWifi);
-            [Setting saveInteger:styleViaWifi forKey:HPSettingImageWifi];
-            
-            [Flurry logEvent:@"Setting SetImageStyleWifi" withParameters:@{@"option":@(styleViaWifi)}];
-        }];
-        
-        optionsController.delegate = weakSelf;
-        optionsController.style = section.style;
-        if (weakSelf.tableView.backgroundView == nil) {
-            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
-            optionsController.tableView.backgroundView = nil;
-        }
-        
-        [weakSelf.navigationController pushViewController:optionsController animated:YES];
-    }];
-    
-    [section addItem:imageStyleWWANItem];
-    [section addItem:imageStyleWifiItem];
-    
-    
     RETableViewItem *cleanItem = [RETableViewItem itemWithTitle:@"清理缓存" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         [item deselectRowAnimated:YES];
         

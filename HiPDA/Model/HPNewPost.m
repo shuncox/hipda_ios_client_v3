@@ -856,35 +856,41 @@
     
     NSString *final = (NSString *)string;
     
-    AFNetworkReachabilityStatus status = [NSStandardUserDefaults integerForKey:kHPNetworkStatus];
-    HPImageDisplayStyle style = HPImageDisplayStyleFull;
+    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)[NSStandardUserDefaults integerForKey:kHPNetworkStatus];
     
-    if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
-        style = [Setting integerForKey:HPSettingImageWWAN];
-    } else if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-        style = [Setting integerForKey:HPSettingImageWifi];
-    } else {
-        NSLog(@"other status %d", status);
-    }
-    //NSLog(@"style %d", style);
+    BOOL imageAutoLoadEnable = NO;
+    BOOL imageSizeFilterEnable = NO;
+    NSInteger imageSizeFilterMinValue = 0;
+    BOOL imageCDNEnable = NO;
+    NSInteger imageCDNMinValue = 0;
     
-    BOOL imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnable];
-    NSInteger imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValue];
-    
-    BOOL imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnable];
-    imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:@"imageCDNEnable" defaultYES:imageCDNEnable];
-    NSInteger imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValue];
-    imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
-    
-    if (style != HPImageDisplayStyleFull || imageSizeFilterEnable) {
+    if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
+        imageAutoLoadEnable = [Setting boolForKey:HPSettingImageAutoLoadEnableWifi];
         
-        __block int i = 0;
+        imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnableWifi];
+        imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValueWifi];
+        
+        imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnableWifi];
+        imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:HPOnlineImageCDNEnableWifi defaultYES:imageCDNEnable];
+        imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValueWifi];
+        imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:HPOnlineImageCDNMinValueWifi defaultValue:imageCDNMinValue]);
+    } else {
+        imageAutoLoadEnable = [Setting boolForKey:HPSettingImageAutoLoadEnableWWAN];
+        
+        imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnableWWAN];
+        imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValueWWAN];
+        
+        imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnableWWAN];
+        imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:HPOnlineImageCDNEnableWWAN defaultYES:imageCDNEnable];
+        imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValueWWAN];
+        imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:HPOnlineImageCDNMinValueWWAN defaultValue:imageCDNMinValue]);
+    }
+    
+    if (!imageAutoLoadEnable || imageSizeFilterEnable) {
+        
         NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
-        NSArray *matches = [rx matches:string];
 
         final = [rx replace:string withDetailsBlock:^NSString *(RxMatch *match) {
-            
-            i++;
             
             // 缓存里有就不过滤
             NSString *src = [(RxMatchGroup *)match.groups[1] value];
@@ -897,8 +903,8 @@
             double imageSize = sizeString.length ? [sizeString doubleValue] : 0.f;
             
             BOOL filter = imageSizeFilterEnable && imageSize >= imageSizeFilterMinValue;
-            filter = filter || style == HPImageDisplayStyleNone;
-            filter = filter || (style == HPImageDisplayStyleOne && i != matches.count/*正则是倒序*/);
+            filter = filter || !imageAutoLoadEnable;
+            
             BOOL useCDN = filter && imageCDNEnable && imageSize >= imageCDNMinValue && ![src hasSuffix:@".gif"];
             
             if (filter) {

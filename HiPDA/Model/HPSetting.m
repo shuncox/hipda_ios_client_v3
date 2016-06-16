@@ -124,10 +124,18 @@
                                HPSettingSwipeBack:@YES,
                                HPBgFetchInterval:@(60),
                                HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO),
-                               HPSettingImageSizeFilterEnable:@YES,
-                               HPSettingImageSizeFilterMinValue:@1024,
-                               HPSettingImageCDNEnable:@NO,
-                               HPSettingImageCDNMinValue:@1024,
+                               
+                               HPSettingImageAutoLoadEnableWWAN:@YES,
+                               HPSettingImageSizeFilterEnableWWAN:@YES,
+                               HPSettingImageSizeFilterMinValueWWAN:@1024,
+                               HPSettingImageCDNEnableWWAN:@NO,
+                               HPSettingImageCDNMinValueWWAN:@1024,
+                               
+                               HPSettingImageAutoLoadEnableWifi:@YES,
+                               HPSettingImageSizeFilterEnableWifi:@NO,
+                               HPSettingImageSizeFilterMinValueWifi:@1024,
+                               HPSettingImageCDNEnableWifi:@NO,
+                               HPSettingImageCDNMinValueWifi:@1024,
                                };
     return defaults;
 }
