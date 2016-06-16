@@ -697,6 +697,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     } else if ([request.URL.scheme isEqualToString:@"image"]) {
         
         NSString *src = [request.URL.absoluteString stringByReplacingOccurrencesOfString:@"image://http//" withString:@"http://"];
+        src = [src stringByReplacingOccurrencesOfString:@"image://https//" withString:@"https://"];
         [self openImage:src];
         NSLog(@"here");
         return NO;
