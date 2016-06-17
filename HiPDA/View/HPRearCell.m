@@ -63,11 +63,8 @@
 
 - (void)configure:(NSString *)title {
     _label.text = title;
-    [_label sizeToFit];
-    CGRect f = _label.frame;
-    f.origin.x = 12.f;
-    f.origin.y = 14.f;
-    _label.frame = f;
+    
+    [self setNeedsLayout];
 }
 
 - (void)showNumber:(NSInteger)num {
@@ -76,17 +73,8 @@
     
     _numLabel.text = S(@"%ld", num);
     _numLabel.textAlignment = NSTextAlignmentCenter;
-    [_numLabel sizeToFit];
-    CGRect f = _numLabel.frame;
-    f.origin.x = _label.frame.origin.x + _label.frame.size.width + 3.f;
-    f.origin.y = _label.frame.origin.y + 1.f;
-    f.size.width += 2.f;
-    f.size.height -= 2.f;
-    _numLabel.frame = f;
-    
-    [self setNeedsDisplay];
-    
-    //NSLog(@"%@", NSStringFromCGRect(f));
+   
+    [self setNeedsLayout];
 }
 
 - (void)hideNumber {
@@ -108,6 +96,21 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    [_label sizeToFit];
+    CGRect f = _label.frame;
+    f.origin.x = 12.f;
+    f.origin.y = (self.frame.size.height - f.size.height) / 2.f;
+    _label.frame = f;
+    
+    
+    [_numLabel sizeToFit];
+    f = _numLabel.frame;
+    f.origin.x = _label.frame.origin.x + _label.frame.size.width + 3.f;
+    f.origin.y = _label.frame.origin.y + 1.f;
+    f.size.width += 2.f;
+    f.size.height -= 2.f;
+    _numLabel.frame = f;
 }
 
 - (void)prepareForReuse {
