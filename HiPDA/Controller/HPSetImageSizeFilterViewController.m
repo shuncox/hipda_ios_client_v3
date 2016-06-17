@@ -50,8 +50,8 @@
     // views
     //
     UILabel *titleLabel = [UILabel new];
-    titleLabel.font = [UIFont systemFontOfSize:20.f];
-    titleLabel.text = [title stringByAppendingString:@"下"];
+    titleLabel.font = [UIFont systemFontOfSize:22.f];
+    titleLabel.text = [title stringByAppendingString:@"下 "];
     [self addSubview:titleLabel];
     
     UILabel *subTitleLabel = [UILabel new];
@@ -180,7 +180,7 @@
     UILabel *descLabel = [UILabel new];
     descLabel.text = @"通过CDN对图片进行压缩加速, 由于流量费用的缘故, 目前只对超大图片启用.\n"
     @"这个功能属于试验功能, 未来可能由于流量费用超标而下线.\n"
-    @"Powered by Qiniu\n";
+    @"此功能由七牛CDN强力驱动\n";
     descLabel.numberOfLines = 0;
     descLabel.font = [UIFont systemFontOfSize:12.f];
     descLabel.textColor = [UIColor grayColor];
@@ -294,7 +294,7 @@
         HPOnlineImageCDNEnableWWAN,
     ]];
     
-    self.wifiSettingView = [[HPSetImageSizeFilterView alloc] initWithTitle:@"WIfi网络" keys:@[
+    self.wifiSettingView = [[HPSetImageSizeFilterView alloc] initWithTitle:@"Wifi网络" keys:@[
         HPSettingImageAutoLoadEnableWifi,
         HPSettingImageSizeFilterEnableWifi,
         HPSettingImageSizeFilterMinValueWifi,
@@ -320,8 +320,42 @@
     }];
     [self.wifiSettingView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(separator.mas_bottom).offset(10);
+        make.top.equalTo(separator.mas_bottom).offset(15);
     }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    
+    BOOL autoLoadEnable = [Setting boolForKey:HPSettingImageAutoLoadEnableWWAN];
+    BOOL imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnableWWAN];
+    NSInteger imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValueWWAN];
+    BOOL imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnableWWAN];
+    NSInteger imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValueWWAN];
+   
+    BOOL autoLoadEnable_wifi = [Setting boolForKey:HPSettingImageAutoLoadEnableWifi];
+    BOOL imageSizeFilterEnable_wifi = [Setting boolForKey:HPSettingImageSizeFilterEnableWifi];
+    NSInteger imageSizeFilterMinValue_wifi = [Setting integerForKey:HPSettingImageSizeFilterMinValueWifi];
+    BOOL imageCDNEnable_wifi = [Setting boolForKey:HPSettingImageCDNEnableWifi];
+    NSInteger imageCDNMinValue_wifi = [Setting integerForKey:HPSettingImageCDNMinValueWifi];
+    
+    NSDictionary *p = @{
+        @"autoLoadEnable_wwan": @(autoLoadEnable),
+        @"imageSizeFilterEnable_wwan": @(imageSizeFilterEnable),
+        @"imageSizeFilterMinValue_wwan": @(imageSizeFilterMinValue),
+        @"imageCDNEnable_wwan": @(imageCDNEnable),
+        @"imageCDNMinValue_wwan": @(imageCDNMinValue),
+        
+        @"autoLoadEnable_wifi": @(autoLoadEnable_wifi),
+        @"imageSizeFilterEnable_wifi": @(imageSizeFilterEnable_wifi),
+        @"imageSizeFilterMinValue_wifi": @(imageSizeFilterMinValue_wifi),
+        @"imageCDNEnable_wifi": @(imageCDNEnable_wifi),
+        @"imageCDNMinValue_wifi": @(imageCDNMinValue_wifi),
+    };
+    
+    [Flurry logEvent:@"Setting_ImageLoad" withParameters:p];
 }
 
 @end
