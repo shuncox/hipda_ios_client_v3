@@ -203,7 +203,7 @@
     }];
     
     [filterTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(titleLabel.mas_bottom).offset(30);
+        make.top.equalTo(titleLabel.mas_bottom).offset(20);
         make.left.equalTo(self).offset(20);
     }];
     
@@ -213,7 +213,7 @@
     }];
     
     [self.filterValueSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.sizeFilterSwitch.mas_bottom).offset(10);
+        make.top.equalTo(self.sizeFilterSwitch.mas_bottom).offset(5);
         make.left.equalTo(self).offset(20);
         make.right.equalTo(self).offset(-20);
     }];
@@ -229,7 +229,7 @@
     }];
     
     [self.CDNfilterValueSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.CDNSwitch.mas_bottom).offset(10);
+        make.top.equalTo(self.CDNSwitch.mas_bottom).offset(5);
         make.left.equalTo(self).offset(20);
         make.right.equalTo(self).offset(-20);
     }];
