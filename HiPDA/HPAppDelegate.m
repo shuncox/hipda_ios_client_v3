@@ -92,18 +92,9 @@
     //
     HPHttpClient *client = [HPHttpClient sharedClient];
     [client setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        
-        [NSStandardUserDefaults saveInteger:status forKey:kHPNetworkStatus];
-        
-        if (status == AFNetworkReachabilityStatusNotReachable) {
-            NSLog(@"Not reachable");
-        } else {
-            if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-                NSLog(@"wifi");
-            } else if (status == AFNetworkReachabilityStatusReachableViaWWAN) {
-                NSLog(@"2g3g");
-            }
-        }
+        NSArray *names = @[@"Unknown ", @"NotReachable", @"WWAN", @"Wifi"];
+        NSString *s = [names objectAtIndex:(status+1) % names.count];
+        NSLog(@"ReachabilityStatusChange %@", s);
     }];
     
     

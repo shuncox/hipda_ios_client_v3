@@ -155,7 +155,6 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingTextFont @"HPSettingTextFont"
 #define HPSettingImageWifi @"HPSettingImageWifi"
 #define HPSettingImageWWAN @"HPSettingImageWWAN"
-#define kHPNetworkStatus @"HPNetworkStatus"
 
 #define HPSettingBgFetchNotice @"HPSettingBgFetchNotice"
 

@@ -856,7 +856,7 @@
     
     NSString *final = (NSString *)string;
     
-    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)[NSStandardUserDefaults integerForKey:kHPNetworkStatus];
+    AFNetworkReachabilityStatus status = [[HPHttpClient sharedClient] networkReachabilityStatus];
     
     BOOL imageAutoLoadEnable = NO;
     BOOL imageSizeFilterEnable = NO;
