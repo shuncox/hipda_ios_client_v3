@@ -54,7 +54,7 @@
     [nlayer setMasksToBounds:YES];
     [nlayer setCornerRadius:2.0];
     [self.contentView addSubview:_numLabel];
-    
+    [self hideNumber];
     
     //[self.contentView addSubview:_container];
     //self.separatorInset =  UIEdgeInsetsMake(0, 0, 0, 1000);
