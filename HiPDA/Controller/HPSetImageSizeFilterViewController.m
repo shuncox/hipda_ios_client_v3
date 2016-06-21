@@ -344,15 +344,15 @@
     NSDictionary *p = @{
         @"autoLoadEnable_wwan": @(autoLoadEnable),
         @"imageSizeFilterEnable_wwan": @(imageSizeFilterEnable),
-        @"imageSizeFilterMinValue_wwan": @(imageSizeFilterMinValue),
+        @"imageSizeFilterMinValue_wwan": @(imageSizeFilterMinValue/100*100),//按百分段
         @"imageCDNEnable_wwan": @(imageCDNEnable),
-        @"imageCDNMinValue_wwan": @(imageCDNMinValue),
+        @"imageCDNMinValue_wwan": @(imageCDNMinValue/100*100),
         
         @"autoLoadEnable_wifi": @(autoLoadEnable_wifi),
         @"imageSizeFilterEnable_wifi": @(imageSizeFilterEnable_wifi),
-        @"imageSizeFilterMinValue_wifi": @(imageSizeFilterMinValue_wifi),
+        @"imageSizeFilterMinValue_wifi": @(imageSizeFilterMinValue_wifi/100*100),
         @"imageCDNEnable_wifi": @(imageCDNEnable_wifi),
-        @"imageCDNMinValue_wifi": @(imageCDNMinValue_wifi),
+        @"imageCDNMinValue_wifi": @(imageCDNMinValue_wifi/100*100),
     };
     
     [Flurry logEvent:@"Setting_ImageLoad" withParameters:p];
