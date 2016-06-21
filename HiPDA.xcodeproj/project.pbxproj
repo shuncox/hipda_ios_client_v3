@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F8262B6F95041CD9E0011B6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A47E8E7D8524543A37BADE9 /* libPods.a */; };
+		557E3B5762785198CF23CAC9 /* libPods-HiPDA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56690B022569B05CD81DF8E5 /* libPods-HiPDA.a */; };
 		D772D4C0192283D100994743 /* HPAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = D772D4BF192283D100994743 /* HPAttention.m */; };
 		EA00C5141D04412B002E2301 /* HPViewSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */; };
 		EA06A60818C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06A60718C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m */; };
@@ -410,9 +410,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		05435F496C15E4DD219BEC85 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		6660F2E138EF1D594E1F84C1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		7A47E8E7D8524543A37BADE9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		56690B022569B05CD81DF8E5 /* libPods-HiPDA.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HiPDA.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60C502AE66C5EA43DA1B985F /* Pods-HiPDA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HiPDA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA.debug.xcconfig"; sourceTree = "<group>"; };
+		C427876486EDFFE9FA7B15B7 /* Pods-HiPDA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HiPDA.release.xcconfig"; path = "Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA.release.xcconfig"; sourceTree = "<group>"; };
 		D772D4BE192283D100994743 /* HPAttention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPAttention.h; path = Model/HPAttention.h; sourceTree = "<group>"; };
 		D772D4BF192283D100994743 /* HPAttention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPAttention.m; path = Model/HPAttention.m; sourceTree = "<group>"; };
 		EA00C5121D04412B002E2301 /* HPViewSignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewSignatureViewController.h; path = Controller/HPViewSignatureViewController.h; sourceTree = "<group>"; };
@@ -986,7 +986,7 @@
 				EAFDB8481829EFA900C1718B /* CoreGraphics.framework in Frameworks */,
 				EAFDB84A1829EFA900C1718B /* UIKit.framework in Frameworks */,
 				EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */,
-				5F8262B6F95041CD9E0011B6 /* libPods.a in Frameworks */,
+				557E3B5762785198CF23CAC9 /* libPods-HiPDA.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,11 +1003,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08814994A3F650BBF4CD76A0 /* Pods */ = {
+		CB8DC43C8A1318F055DA179B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				05435F496C15E4DD219BEC85 /* Pods.debug.xcconfig */,
-				6660F2E138EF1D594E1F84C1 /* Pods.release.xcconfig */,
+				60C502AE66C5EA43DA1B985F /* Pods-HiPDA.debug.xcconfig */,
+				C427876486EDFFE9FA7B15B7 /* Pods-HiPDA.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1918,7 +1918,7 @@
 				EAFDB8641829EFA900C1718B /* HiPDATests */,
 				EAFDB8441829EFA900C1718B /* Frameworks */,
 				EAFDB8431829EFA900C1718B /* Products */,
-				08814994A3F650BBF4CD76A0 /* Pods */,
+				CB8DC43C8A1318F055DA179B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1949,7 +1949,7 @@
 				EAFDB8471829EFA900C1718B /* CoreGraphics.framework */,
 				EAFDB8491829EFA900C1718B /* UIKit.framework */,
 				EAFDB85E1829EFA900C1718B /* XCTest.framework */,
-				7A47E8E7D8524543A37BADE9 /* libPods.a */,
+				56690B022569B05CD81DF8E5 /* libPods-HiPDA.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2013,13 +2013,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAFDB86E1829EFA900C1718B /* Build configuration list for PBXNativeTarget "HiPDA" */;
 			buildPhases = (
-				2775C6B469664820A5184DD0 /* Check Pods Manifest.lock */,
+				664C25AA92A450457E349941 /* 📦 Check Pods Manifest.lock */,
 				EAFDB83E1829EFA900C1718B /* Sources */,
 				EAFDB83F1829EFA900C1718B /* Frameworks */,
 				EAFDB8401829EFA900C1718B /* Resources */,
-				3A05A5BF406445FD994BAE22 /* Copy Pods Resources */,
 				EA19F96D1A14FC7800333503 /* Run Script For Crashlytics */,
-				F385D80DC235F9CA19709998 /* Embed Pods Frameworks */,
+				90B5B4AC41C4A22AAB477951 /* 📦 Embed Pods Frameworks */,
+				D6A25B0FB9B404A8B3C9BBC7 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2326,14 +2326,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2775C6B469664820A5184DD0 /* Check Pods Manifest.lock */ = {
+		664C25AA92A450457E349941 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2341,19 +2341,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		3A05A5BF406445FD994BAE22 /* Copy Pods Resources */ = {
+		90B5B4AC41C4A22AAB477951 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D6A25B0FB9B404A8B3C9BBC7 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EA19F96D1A14FC7800333503 /* Run Script For Crashlytics */ = {
@@ -2369,21 +2384,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run 336a8682811030a9c9e624b36e32131ea1d5a8fd 14526b38f2ae365f4eeb049dc5f8f2422ddc4c4a2dca10dcb3b46b08fdc0f4f6";
-		};
-		F385D80DC235F9CA19709998 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2667,7 +2667,7 @@
 		};
 		EAFDB86F1829EFA900C1718B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05435F496C15E4DD219BEC85 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 60C502AE66C5EA43DA1B985F /* Pods-HiPDA.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2723,7 +2723,7 @@
 		};
 		EAFDB8701829EFA900C1718B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6660F2E138EF1D594E1F84C1 /* Pods.release.xcconfig */;
+			baseConfigurationReference = C427876486EDFFE9FA7B15B7 /* Pods-HiPDA.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

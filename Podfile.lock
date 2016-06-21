@@ -18,6 +18,7 @@ PODS:
   - Mantle/extobjc (1.5.4)
   - Masonry (0.6.3)
   - MCSwipeTableViewCell (2.1.4)
+  - MLeaksFinder (0.1.1)
   - MTLog (0.6.1)
   - NSString+Emoji (0.2.0)
   - Objective-LevelDB (2.1.4):
@@ -57,6 +58,7 @@ DEPENDENCIES:
   - Mantle (= 1.5.4)
   - Masonry
   - MCSwipeTableViewCell
+  - MLeaksFinder
   - MTLog
   - NSString+Emoji
   - Objective-LevelDB
@@ -102,6 +104,7 @@ SPEC CHECKSUMS:
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
+  MLeaksFinder: 25e38f8ca9438354aa4184f65148e671f5d18620
   MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
@@ -117,4 +120,6 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 2e1270bc02148467f7d28c685b9c1b7b552ad81c
+
+COCOAPODS: 1.0.0
