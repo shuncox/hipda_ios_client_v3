@@ -100,8 +100,9 @@
     
     if (IOS7_OR_LATER) {
         RETableViewSection *bgFetchSection = [RETableViewSection sectionWithHeaderTitle:@" " footerTitle:nil];
+        @weakify(self);
         RETableViewItem *bgFetchItem = [RETableViewItem itemWithTitle:@"后台应用程序刷新" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
-            
+            @strongify(self);
             HPBgFetchViewController *vc = [[HPBgFetchViewController alloc] initWithStyle:UITableViewStylePlain];
             [self.navigationController pushViewController:vc animated:YES];
             
@@ -112,10 +113,11 @@
         [bgFetchSection addItem:bgFetchItem];
         [self.manager addSection:bgFetchSection];
     }
-    
+
     self.dataTrackingSection = [self addDataTrackingControls];
     self.aboutSection = [self addAboutControls];
     
+    @weakify(self);
     RETableViewSection *logoutSection = [RETableViewSection sectionWithHeaderTitle:@"  " footerTitle:@" "];
     RETableViewItem *logoutItem = [RETableViewItem itemWithTitle:@"登出" accessoryType:UITableViewCellAccessoryNone selectionHandler:^(RETableViewItem *item) {
         
@@ -123,7 +125,7 @@
                                              message:@"您确定要登出当前账号吗?\n该账号的设置不会丢失"
                                              handler:^(UIAlertView *alertView, NSInteger buttonIndex)
          {
-             
+             @strongify(self);
              if (buttonIndex == [alertView cancelButtonIndex]) {
                  ;
              } else {
@@ -232,7 +234,7 @@
     //
     //
     RETableViewItem *setForumItem = [RETableViewItem itemWithTitle:@"板块设定" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
-        
+        @strongify(self);
         HPSetForumsViewController *setForumsViewController = [[HPSetForumsViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:setForumsViewController animated:YES];
         [item deselectRowAnimated:YES];
@@ -243,7 +245,7 @@
     //
     //
     RETableViewItem *blockListItem = [RETableViewItem itemWithTitle:@"屏蔽列表" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
-        
+        @strongify(self);
         [self.navigationController pushViewController:[[HPBlockListViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
         [item deselectRowAnimated:YES];
         
@@ -332,7 +334,7 @@
     //
     //
     RETableViewItem *setStupidBarItem = [RETableViewItem itemWithTitle:@"StupidBar" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
-        
+        @strongify(self);
         HPSetStupidBarController *svc = [HPSetStupidBarController new];
         [self.navigationController pushViewController:svc animated:YES];
         [item deselectRowAnimated:YES];
@@ -415,7 +417,7 @@
     RETableViewItem *setImageSizeFilterItem = [RETableViewItem itemWithTitle:@"图片加载设置" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         
         HPSetImageSizeFilterViewController *svc = [HPSetImageSizeFilterViewController new];
-        [self.navigationController pushViewController:svc animated:YES];
+        [weakSelf.navigationController pushViewController:svc animated:YES];
         [item deselectRowAnimated:YES];
         
         [Flurry logEvent:@"Setting ImageSizeFilter"];
@@ -603,9 +605,10 @@
     
     // 致谢
     //
+    @weakify(self);
     RETableViewItem *aboutItem = [RETableViewItem itemWithTitle:@"致谢" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         [item deselectRowAnimated:YES];
-        
+        @strongify(self);
         UIWebView *webView=[[UIWebView alloc]initWithFrame:self.view.frame];
         webView.delegate = self;
         NSURL *url = [[NSBundle mainBundle] URLForResource:@"acknowledgement" withExtension:@"html"];
@@ -626,7 +629,7 @@
     //
     RETableViewItem *reportItem = [RETableViewItem itemWithTitle:@"联系作者" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         [item deselectRowAnimated:YES];
-        
+        @strongify(self);
         // 获得设备信息
         //
         /*!
@@ -661,6 +664,7 @@
     //
     //
     RETableViewItem *replyItem = [RETableViewItem itemWithTitle:@"回帖建议" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        @strongify(self);
         
         HPThread *thread = [HPThread new];
         thread.fid = 2;
@@ -721,12 +725,14 @@
 }
 
 
-- (void)reset:(id)sender {
-    
+- (void)reset:(id)sender
+{
+    @weakify(self);
     [UIAlertView showConfirmationDialogWithTitle:@"重置设置"
                                          message:@"您确定要重置所有设置吗?"
                                          handler:^(UIAlertView *alertView, NSInteger buttonIndex)
      {
+         @strongify(self);
          BOOL confirm = (buttonIndex != [alertView cancelButtonIndex]);
          if (confirm) {
              [Setting loadDefaults];
