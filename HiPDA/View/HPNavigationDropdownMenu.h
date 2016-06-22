@@ -16,6 +16,7 @@
                    customView:(UIView *)customView
                 containerView:(UIView *)containerView;
 - (void)setMenuTitleText:(NSString *)title;
+- (void)setMenuTitleColor:(UIColor *)color;
 - (void)dismiss;
 
 @end

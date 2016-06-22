@@ -686,6 +686,7 @@ typedef enum{
     [self setActionButton];
     [self.tableView reloadData];
     [self.tableView setBackgroundColor:[HPTheme backgroundColor]];
+    [self.dropMenu setMenuTitleColor:[HPTheme textColor]];
 }
 
 #pragma mark - 

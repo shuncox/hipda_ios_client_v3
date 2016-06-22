@@ -184,6 +184,11 @@
     [self setNeedsLayout];
 }
 
+- (void)setMenuTitleColor:(UIColor *)color
+{
+    self.menuTitle.textColor = color;
+}
+
 - (void)menuButtonTapped:(UIButton *)sender
 {
     self.isShown = !self.isShown;
