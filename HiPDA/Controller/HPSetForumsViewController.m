@@ -72,24 +72,26 @@
 
 
 - (RERadioItem *)radioItemWithTitle:(NSString *)atitle style:(RETableViewCellStyle *)style {
-    __typeof (&*self) __weak weakSelf = self;
 
     __block NSString *title = atitle;
-    
+
+    @weakify(self);
     RERadioItem *radioItem = [RERadioItem itemWithTitle:nil value:title selectionHandler:^(RERadioItem *item) {
+        @strongify(self);
         [item deselectRowAnimated:YES];
         
         // Present options controller
         //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:_allForums multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
-            //[weakSelf.navigationController popViewControllerAnimated:YES];
+        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:self.allForums multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
+            @strongify(self);
+            //[self.navigationController popViewControllerAnimated:YES];
             
             if ([title isEqualToString:item.value]) {
-                [weakSelf.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
                 return;
             }
             
-            NSUInteger i = [_titles indexOfObject:title];
+            NSUInteger i = [self.titles indexOfObject:title];
             if (i == NSNotFound) return;
             //NSLog(@"%@ %d", title, i);
             
@@ -98,41 +100,41 @@
                 if (i == 0) {
                     [SVProgressHUD showErrorWithStatus:@"首页不可删哦"];
                     item.value = title;
-                } else if (_titles.count <= 1) {
+                } else if (self.titles.count <= 1) {
                     [SVProgressHUD showErrorWithStatus:@"至少选择一个版块"];
                     item.value = title;
                 } else {
-                    [_titles removeObjectAtIndex:i];
+                    [self.titles removeObjectAtIndex:i];
                     [item deleteRowWithAnimation:UITableViewRowAnimationFade];
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
 
             } else {
                 
-                if ([_titles indexOfObject:item.value] == NSNotFound) {
-                    [_titles replaceObjectAtIndex:i withObject:item.value];
+                if ([self.titles indexOfObject:item.value] == NSNotFound) {
+                    [self.titles replaceObjectAtIndex:i withObject:item.value];
                     title = item.value;
                     [item reloadRowWithAnimation:UITableViewRowAnimationNone];
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                    [self.navigationController popViewControllerAnimated:YES];
                 } else {
                     [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"已有版块%@", item.value]];
                     item.value = title;
                 }
             }
         }];
-        
+
         // Adjust styles
         //
-        optionsController.delegate = weakSelf;
+        optionsController.delegate = self;
         optionsController.style = style;
-        if (weakSelf.tableView.backgroundView == nil) {
-            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
+        if (self.tableView.backgroundView == nil) {
+            optionsController.tableView.backgroundColor = self.tableView.backgroundColor;
             optionsController.tableView.backgroundView = nil;
         }
         
         // Push the options controller
         //
-        [weakSelf.navigationController pushViewController:optionsController animated:YES];
+        [self.navigationController pushViewController:optionsController animated:YES];
     }];
 
     
