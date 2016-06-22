@@ -28,20 +28,17 @@
 @interface HPSearchViewController ()
 
 @property (nonatomic, strong) NSArray *results;
-@property (nonatomic, strong) UISearchBar *searchBar;
-
 @property (nonatomic, strong) HPUser *user;
+@property (nonatomic, assign) NSInteger current_page;
+@property (nonatomic, assign) NSInteger page_count;
+
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UIBarButtonItem *searchButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *nextPageButtonItem;
 
 @end
 
-@implementation HPSearchViewController {
-@private
-    NSInteger _current_page;
-    NSInteger _page_count;
-    
-    UIBarButtonItem *_searchButtonItem;
-    UIBarButtonItem *_nextPageButtonItem;
-}
+@implementation HPSearchViewController
 
 - (instancetype)initWithUser:(HPUser *)user {
     self = [super init];
@@ -52,6 +49,10 @@
     _user = user;
     
     return self;
+}
+- (void)dealloc
+{
+    
 }
 
 - (void)viewDidLoad
@@ -121,8 +122,8 @@
      subscribeNext:^(NSArray *results) {
          @strongify(self);
          
-         _results = results;
-         _page_count = 1;
+         self.results = results;
+         self.page_count = 1;
          
          [self.tableView reloadData];
          [self.tableView hp_scrollToTop];
