@@ -99,5 +99,8 @@ static const CGFloat labelPadding = 10;
     fadeView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight; //UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     [self addSubview:fadeView];
 }
-
+- (void)dealloc
+{
+    
+}
 @end

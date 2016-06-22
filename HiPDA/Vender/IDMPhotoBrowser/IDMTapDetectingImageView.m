@@ -66,5 +66,8 @@
 	if ([tapDelegate respondsToSelector:@selector(imageView:tripleTapDetected:)])
 		[tapDelegate imageView:self tripleTapDetected:touch];
 }
-
+- (void)dealloc
+{
+    
+}
 @end

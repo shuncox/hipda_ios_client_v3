@@ -10,9 +10,8 @@
 
 @protocol IDMTapDetectingViewDelegate;
 
-@interface IDMTapDetectingView : UIView {
-	id <IDMTapDetectingViewDelegate> __weak tapDelegate;
-}
+@interface IDMTapDetectingView : UIView
+
 @property (nonatomic, weak) id <IDMTapDetectingViewDelegate> tapDelegate;
 - (void)handleSingleTap:(UITouch *)touch;
 - (void)handleDoubleTap:(UITouch *)touch;

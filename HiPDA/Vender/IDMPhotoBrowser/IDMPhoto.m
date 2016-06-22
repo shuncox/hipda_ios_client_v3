@@ -333,5 +333,8 @@ caption = _caption;
     [[NSNotificationCenter defaultCenter] postNotificationName:IDMPhoto_LOADING_DID_END_NOTIFICATION
                                                         object:self];
 }
-
+- (void)dealloc
+{
+    
+}
 @end

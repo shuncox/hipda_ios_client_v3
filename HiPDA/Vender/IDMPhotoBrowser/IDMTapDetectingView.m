@@ -10,8 +10,6 @@
 
 @implementation IDMTapDetectingView
 
-@synthesize tapDelegate;
-
 - (id)init {
 	if ((self = [super init])) {
 		self.userInteractionEnabled = YES;
@@ -46,18 +44,21 @@
 }
 
 - (void)handleSingleTap:(UITouch *)touch {
-	if ([tapDelegate respondsToSelector:@selector(view:singleTapDetected:)])
-		[tapDelegate view:self singleTapDetected:touch];
+	if ([self.tapDelegate respondsToSelector:@selector(view:singleTapDetected:)])
+		[self.tapDelegate view:self singleTapDetected:touch];
 }
 
 - (void)handleDoubleTap:(UITouch *)touch {
-	if ([tapDelegate respondsToSelector:@selector(view:doubleTapDetected:)])
-		[tapDelegate view:self doubleTapDetected:touch];
+	if ([self.tapDelegate respondsToSelector:@selector(view:doubleTapDetected:)])
+		[self.tapDelegate view:self doubleTapDetected:touch];
 }
 
 - (void)handleTripleTap:(UITouch *)touch {
-	if ([tapDelegate respondsToSelector:@selector(view:tripleTapDetected:)])
-		[tapDelegate view:self tripleTapDetected:touch];
+	if ([self.tapDelegate respondsToSelector:@selector(view:tripleTapDetected:)])
+		[self.tapDelegate view:self tripleTapDetected:touch];
 }
-
+- (void)dealloc
+{
+    
+}
 @end

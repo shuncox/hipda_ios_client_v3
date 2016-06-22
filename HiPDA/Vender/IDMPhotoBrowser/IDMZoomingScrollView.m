@@ -325,4 +325,9 @@
     [self handleDoubleTap:[touch locationInView:view]];
 }
 
+- (void)dealloc
+{
+    
+}
+
 @end
