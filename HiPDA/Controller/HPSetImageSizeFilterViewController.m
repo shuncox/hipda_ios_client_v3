@@ -46,6 +46,7 @@
     NSString *CDNEnableKey = keys[3];
     NSString *CDNMinValueKey = keys[4];
     NSString *CDNOnlineEnableKey = keys[5];
+    NSString *CDNOnlineMinValueKey = keys[6];
     
     // views
     //
@@ -167,7 +168,7 @@
     self.CDNfilterValueSlider.continuous = YES;
     [self.CDNfilterValueSlider handleControlEvents:UIControlEventValueChanged withBlock:^(UISlider *weakSender) {
         @strongify(self);
-        NSInteger minValue = [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:1024];
+        NSInteger minValue = [UMOnlineConfig getIntegerConfigWithKey:CDNOnlineMinValueKey defaultValue:1024];
         minValue = MAX(self.filterValueSlider.value, minValue);
         if (weakSender.value < minValue) {
             [weakSender setValue:minValue animated:YES];
@@ -251,7 +252,7 @@
     BOOL imageCDNEnable = [Setting boolForKey:CDNEnableKey];
     imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:CDNOnlineEnableKey defaultYES:imageCDNEnable];
     NSInteger imageCDNMinValue = [Setting integerForKey:CDNMinValueKey];
-    imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:@"imageCDNMinValue" defaultValue:imageCDNMinValue]);
+    imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:CDNOnlineMinValueKey defaultValue:imageCDNMinValue]);
     
     self.autoLoadSwitch.on = autoLoadEnable;
     
@@ -292,6 +293,7 @@
         HPSettingImageCDNEnableWWAN,
         HPSettingImageCDNMinValueWWAN,
         HPOnlineImageCDNEnableWWAN,
+        HPOnlineImageCDNMinValueWWAN,
     ]];
     
     self.wifiSettingView = [[HPSetImageSizeFilterView alloc] initWithTitle:@"Wifi网络" keys:@[
@@ -301,6 +303,7 @@
         HPSettingImageCDNEnableWifi,
         HPSettingImageCDNMinValueWifi,
         HPOnlineImageCDNEnableWifi,
+        HPOnlineImageCDNMinValueWifi,
     ]];
     
     [self.view addSubview:self.wwanSettingView];
