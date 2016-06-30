@@ -258,6 +258,8 @@ typedef enum{
 
 - (void)load:(LoadType)type
      refresh:(BOOL)refresh {
+    
+    [self.dropMenu dismissIfNeeded];
 
     [Flurry logEvent:@"ThreadVC Refresh" withParameters:@{@"type":@(type),@"forceRefresh":@(refresh)}];
     
@@ -633,6 +635,8 @@ typedef enum{
 }
 
 - (void)newThread:(id)sender {
+    [self.dropMenu dismissIfNeeded];
+    
     HPNewThreadViewController *tvc = [[HPNewThreadViewController alloc] initWithFourm:_current_fid delegate:self];
     
     [self presentViewController:[HPCommon swipeableNVCWithRootVC:tvc] animated:YES completion:nil];

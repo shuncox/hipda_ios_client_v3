@@ -18,5 +18,6 @@
 - (void)setMenuTitleText:(NSString *)title;
 - (void)setMenuTitleColor:(UIColor *)color;
 - (void)dismiss;
+- (void)dismissIfNeeded;
 
 @end

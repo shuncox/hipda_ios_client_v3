@@ -199,6 +199,13 @@
     self.isShown = NO;
 }
 
+- (void)dismissIfNeeded
+{
+    if (self.isShown) {
+        self.isShown = NO;
+    }
+}
+
 - (void)setIsShown:(BOOL)isShown
 {
     if (self.busy) {
