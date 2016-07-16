@@ -624,12 +624,13 @@
     if (!text) return nil;
     
     // url
-    NSString *urlRegEx =
-    @"((http|https)://)?((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
-    urlRegEx =  @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
+    NSString *urlRegEx = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
     NSString *r = [RX(urlRegEx) replace:text withBlock:^NSString *(NSString *match) {
         return [NSString stringWithFormat:@"[url]%@[/url]", match];
     }];
+    
+    // 不知为啥\u00a0造成文字截断...
+    r = [r stringByReplacingOccurrencesOfString:@"\u00a0" withString:@" "];
     
     // other
     // ...
