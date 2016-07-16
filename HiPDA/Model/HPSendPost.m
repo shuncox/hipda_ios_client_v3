@@ -630,7 +630,13 @@
     }];
     
     // 不知为啥\u00a0造成文字截断...
-    r = [r stringByReplacingOccurrencesOfString:@"\u00a0" withString:@" "];
+    // White space characters
+    // https://msdn.microsoft.com/en-us/library/t809ektx.aspx
+    // \u00a0 \u2007 \u202f \u1680 \u2000 \u2001 \u2002 \u2003 \u2004
+    // \u2005 \u2006 \u2007 \u2008 \u2009 \u200a \u202f \u205f \u3000
+    // http://stackoverflow.com/questions/7628470/remove-all-whitespaces-from-nsstring
+    NSArray *words = [r componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    r = [words componentsJoinedByString:@" "];
     
     // other
     // ...
