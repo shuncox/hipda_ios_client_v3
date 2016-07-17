@@ -12,6 +12,7 @@
 #import "HPSetting.h"
 #import "HPHttpClient.h"
 #import "HPThread.h"
+#import "NSString+Additions.h"
 
 @interface HPDebugCrawlerViewController ()<MFMailComposeViewControllerDelegate>
 
@@ -131,9 +132,13 @@
         [[HPHttpClient sharedClient] getPathContent:self.context.url parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
             @strongify(self);
             NSArray *threadsInfo = [HPThread extractThreads:html stickthread:NO];
-            [Flurry logEvent:@"Test_XHR" withParameters:@{@"url":self.context.url,
-                                                          @"count":@(threadsInfo.count),
-                                                          @"yes": @(threadsInfo.count > 0)}];
+            
+            [Flurry logEvent:@"Test_XHR" withParameters:@{
+                @"url":self.context.url,
+                @"count":@(threadsInfo.count),
+                @"yes": @(threadsInfo.count > 0),
+                @"js": [[@[@(threadsInfo.count)] arrayByAddingObjectsFromArray:[self.context.html hp_jsLinks]] componentsJoinedByString:@", "]
+            }];
             
             if (!self.flag1) [Setting saveBool:NO forKey:HPSettingEnableXHR];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
