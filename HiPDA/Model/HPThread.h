@@ -41,6 +41,9 @@
               forceRefresh:(BOOL)forceRefresh
                      block:(void (^)(NSArray *posts, NSError *error))block;
 
+// 临时放出来
++ (NSArray *)extractThreads:(NSString *)string
+                stickthread:(BOOL)stickthread;
 
 - (NSString *)shortDate;
 

@@ -321,13 +321,21 @@ typedef enum{
              } else if (error.code == HPERROR_CRAWLER_CODE) {
                  HPCrawlerErrorContext *context = error.userInfo[@"context"];
                  [Flurry logEvent:@"Crawler_Error" withParameters:@{@"info":[NSString stringWithFormat:@"url:%@, html:%@", context.url, context.html], @"js": [[context.html hp_jsLinks] componentsJoinedByString:@", "]}];
-                 [UIAlertView showWithTitle:@"加载失败"
-                                    message:@"看看是不是论坛挂了或者是被运营商劫持了"
-                                    handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                        HPDebugCrawlerViewController *dvc = [HPDebugCrawlerViewController new];
-                                        dvc.context = context;
-                                        [self presentViewController:[HPCommon swipeableNVCWithRootVC:dvc] animated:YES completion:nil];
-                                    }];
+                 
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"加载失败"
+                                                                 message:@"看看是不是论坛挂了或者是被运营商劫持了"
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"算了"
+                                                       otherButtonTitles:@"好的", nil];
+                 @weakify(self);
+                 [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                     @strongify(self);
+                     if (buttonIndex != alertView.cancelButtonIndex) {
+                         HPDebugCrawlerViewController *dvc = [HPDebugCrawlerViewController new];
+                         dvc.context = context;
+                         [self presentViewController:[HPCommon swipeableNVCWithRootVC:dvc] animated:YES completion:nil];
+                     }
+                 }];
              } else {
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
              }
