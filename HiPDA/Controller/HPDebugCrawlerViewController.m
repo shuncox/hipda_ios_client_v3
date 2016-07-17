@@ -8,6 +8,8 @@
 
 #import "HPDebugCrawlerViewController.h"
 #import <MessageUI/MFMailComposeViewController.h>
+#import "UIAlertView+Blocks.h"
+#import "HPSetting.h"
 
 @interface HPDebugCrawlerViewController ()<MFMailComposeViewControllerDelegate>
 
@@ -86,10 +88,31 @@
                                                            target:self
                                                            action:@selector(viewHTML:)];
     self.navigationItem.rightBarButtonItem = bbi;
+    
+    
+    [self checkKnownIssues];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)checkKnownIssues
+{
+    // xhr
+    if ([self.context.html rangeOfString:@"XMLHttpRequest"].location != NSNotFound
+        && ![Setting boolForKey:HPSettingEnableXHR]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"检测到已知劫持"
+                                                        message:@"是否开启强力绕过模式"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"算了"
+                                              otherButtonTitles:@"好的", nil];
+        @weakify(self);
+        [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            @strongify(self);
+            if (buttonIndex != alertView.cancelButtonIndex) {
+                [Setting saveBool:YES forKey:HPSettingEnableXHR];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }
 }
 
 - (void)report

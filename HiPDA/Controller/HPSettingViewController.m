@@ -589,9 +589,20 @@
         [Flurry logEvent:@"Setting ToggleForceLogin" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    // 模拟XHR强力绕过广告
+    //
+    BOOL isEnableXHR = [Setting boolForKey:HPSettingEnableXHR];
+    REBoolItem *isEnableXHRItem = [REBoolItem itemWithTitle:@"强力绕过运营商劫持" value:isEnableXHR switchValueChangeHandler:^(REBoolItem *item) {
+        NSLog(@"isEnableXHRItem Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingEnableXHR];
+        
+        [Flurry logEvent:@"Setting ToggleEnableXHR" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
     [section addItem:dataTrackingEnableItem];
     [section addItem:bugTrackingEnableItem];
     [section addItem:isForceLoginItem];
+    [section addItem:isEnableXHRItem];
     
     [_manager addSection:section];
     return section;
