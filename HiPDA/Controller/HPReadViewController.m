@@ -498,11 +498,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     : @"";
                 
                 if ([Setting boolForKey:HPSettingShowAvatar]) {
-                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' %@ onerror=\"this.onerror=null;this.src='http://%@/forum/uc_server/images/noavatar_middle.gif'\" ></span><span class=\"author\" data-id='user://%@'>%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor,  [post.user usernameForUrl], avatarURLSrc, HPBaseURL, [post.user usernameForUrl], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
+                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' %@ onerror=\"this.onerror=null;this.src='http://%@/forum/uc_server/images/noavatar_middle.gif'\" ></span><span class=\"author\" data-id='user://%@'>%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor,  [post.user.username URLEncode], avatarURLSrc, HPBaseURL, [post.user.username URLEncode], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
                     
                 } else {
                     
-                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"author\" data-id='user://%@' style=\"left: 0;\">%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor, [post.user usernameForUrl], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
+                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"author\" data-id='user://%@' style=\"left: 0;\">%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor, [post.user.username URLEncode], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
                 }
                 
                 // 解决由于一些tag未闭合造成的影响
@@ -705,7 +705,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     } else if ([request.URL.scheme isEqualToString:@"user"]) {
         
         HPUserViewController *uvc = [HPUserViewController new];
-        uvc.username = [urlString stringByReplacingOccurrencesOfString:@"user://" withString:@""];
+        uvc.username = [[urlString stringByReplacingOccurrencesOfString:@"user://" withString:@""] URLDecode];
         
         [self.navigationController pushViewController:uvc animated:YES];
         return NO;

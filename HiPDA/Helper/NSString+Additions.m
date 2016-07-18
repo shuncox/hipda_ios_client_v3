@@ -420,17 +420,30 @@ NSString *substr(NSString *str, int start, int length)
     return size.height;
 }
 
-- (NSString *)URLEncodedString
-{
-    NSString *string = self;
-    CFStringRef stringRef = CFBridgingRetain(string);
-    CFStringRef encoded = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                  stringRef,
-                                                                  NULL,
-                                                                  CFSTR("!*'\"();:@&=+$,/?%#[]% "),
-                                                                  kCFStringEncodingUTF8);
-    CFRelease(stringRef);
-    return CFBridgingRelease(encoded);
+
+- (NSString *)URLEncode {
+    return [self URLEncodeUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)URLEncodeUsingEncoding:(NSStringEncoding)encoding {
+    return (__bridge_transfer NSString *)
+    CFURLCreateStringByAddingPercentEscapes(NULL,
+                                            (__bridge CFStringRef)self,
+                                            NULL,
+                                            (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+                                            CFStringConvertNSStringEncodingToEncoding(encoding));
+}
+
+- (NSString *)URLDecode {
+    return [self URLDecodeUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)URLDecodeUsingEncoding:(NSStringEncoding)encoding {
+    return (__bridge_transfer NSString *)
+    CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL,
+                                                            (__bridge CFStringRef)self,
+                                                            CFSTR(""),
+                                                            CFStringConvertNSStringEncodingToEncoding(encoding));
 }
 
 - (NSString *)hp_urlFriendlyFileName {

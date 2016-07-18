@@ -53,13 +53,7 @@
             NSLog(@"error HPSearchType %ld", type);
             break;
     }
-    
-    NSLog(@"%@",path);
 
-    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    path = [path stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
-    
-    
     [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html)
      {         
          if(DEBUG_Search) NSLog(@"html %@", html);

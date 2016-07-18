@@ -83,6 +83,9 @@
     [d addEntriesFromDictionary:[s onlineParamaters]];
     parameters = [d copy];
     
+    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    path = [path stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
+    
     [super getPath:path
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject){

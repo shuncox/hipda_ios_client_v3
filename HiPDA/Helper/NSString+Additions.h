@@ -46,13 +46,17 @@ NSString *substr(NSString *str, int start);
 __attribute__((overloadable))
 NSString *substr(NSString *str, int start, int length);
 
-
-- (NSString *)URLEncodedString;
 - (NSString *)hp_urlFriendlyFileName;
 
 - (BOOL)hasSuffixes:(NSArray *)suffixes;
 
 - (NSArray *)hp_jsLinks;
+
+// url encode, decode
+- (NSString *)URLEncode;
+- (NSString *)URLEncodeUsingEncoding:(NSStringEncoding)encoding;
+- (NSString *)URLDecode;
+- (NSString *)URLDecodeUsingEncoding:(NSStringEncoding)encoding ;
 
 @end
 

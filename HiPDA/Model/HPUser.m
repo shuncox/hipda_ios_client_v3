@@ -190,20 +190,9 @@
     
 }
 
-
-- (NSString *)usernameForUrl {
-    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString* escapedURLString = [self.username
-                                  stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
-    return escapedURLString;
-}
-
-
 + (void)getUserUidWithUserName:(NSString *)username
                          block:(void (^)(NSString *uid, NSError *error))block
 {
-    NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    username = [username stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
     [self.class getUserSpaceDetailsWithUid:0 orUsername:username block:^(NSDictionary *dict, NSError *error) {
         if (error) {
             block(nil, error);
