@@ -60,6 +60,7 @@
             [self rebuildWithList:record[@"list"] ?: @[]];
             [self saveAll];
         }
+        completionHandler(error);
     }];
 }
 
