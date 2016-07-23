@@ -376,6 +376,7 @@
 		EAE0FE5B1D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */; };
 		EAE0FE5C1D09BFF700F0D76E /* HPNavigationDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */; };
 		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; };
+		EAE8C0311D43B89500C315AA /* NSError+BlockService.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE8C0301D43B89500C315AA /* NSError+BlockService.m */; };
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
@@ -930,6 +931,8 @@
 		EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNavigationDropdownMenu.m; path = View/HPNavigationDropdownMenu.m; sourceTree = "<group>"; };
 		EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSearchUserCell.h; path = View/HPSearchUserCell.h; sourceTree = "<group>"; };
 		EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchUserCell.m; path = View/HPSearchUserCell.m; sourceTree = "<group>"; };
+		EAE8C02F1D43B89500C315AA /* NSError+BlockService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+BlockService.h"; path = "Helper/NSError+BlockService.h"; sourceTree = "<group>"; };
+		EAE8C0301D43B89500C315AA /* NSError+BlockService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+BlockService.m"; path = "Helper/NSError+BlockService.m"; sourceTree = "<group>"; };
 		EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+Capture.h"; path = "Helper/UIWebView+Capture.h"; sourceTree = "<group>"; };
 		EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+Capture.m"; path = "Helper/UIWebView+Capture.m"; sourceTree = "<group>"; };
 		EAEC58CA1948465000F5931A /* UIImage+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Save.h"; path = "Helper/UIImage+Save.h"; sourceTree = "<group>"; };
@@ -1371,6 +1374,8 @@
 		EA499F3E1830C1F400172989 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				EAE8C02F1D43B89500C315AA /* NSError+BlockService.h */,
+				EAE8C0301D43B89500C315AA /* NSError+BlockService.m */,
 				EA13CD971C11B8AD0023041F /* HPActivity.h */,
 				EA13CD981C11B8AD0023041F /* HPActivity.m */,
 				EA4C5A0918E5658700B12442 /* UIImage+Resize.h */,
@@ -2469,6 +2474,7 @@
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
 				EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */,
 				EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */,
+				EAE8C0311D43B89500C315AA /* NSError+BlockService.m in Sources */,
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,
 				EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */,
 				EAACE5441D0DA42300EDD096 /* UITableView+ScrollToTop.m in Sources */,

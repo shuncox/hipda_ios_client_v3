@@ -81,6 +81,13 @@
         }
         
         // handle errors here
+        // error 定义在 CKError.h 中,
+        // 这里准备只打log, 界面的提醒放在黑名单列表里的手动同步中
+        // error.code = CKErrorNotAuthenticated 需要登录iCloud
+        if (error) {
+            [Flurry logEvent:@"BlockList_Fetch_Error"
+              withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription]}];
+        }
        
         dispatch_async(dispatch_get_main_queue(), ^{
             completionHandler(record, error);
@@ -93,10 +100,16 @@
 {
     CKDatabase *privateDB = [[CKContainer defaultContainer] privateCloudDatabase];
     [privateDB saveRecord:record completionHandler:^(CKRecord *savedRecord, NSError *error) {
+        
         // handle errors here
+        // error 定义在 CKError.h 中,
+        // 这里准备只打log, 界面的提醒放在黑名单列表里的手动同步中
+        // error.code = CKErrorNotAuthenticated 需要登录iCloud
+        if (error) {
+            [Flurry logEvent:@"BlockList_Save_Error"
+              withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription]}];
+        }
         
-        
-        // error.code == 9  CKErrorNotAuthenticated need log icloud
         dispatch_async(dispatch_get_main_queue(), ^{
             completionHandler(savedRecord, error);
         });

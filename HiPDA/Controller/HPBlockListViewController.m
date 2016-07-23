@@ -10,6 +10,7 @@
 #import "HPBlockService.h"
 #import <SVProgressHUD.h>
 #import "UIAlertView+Blocks.h"
+#import "NSError+BlockService.h"
 
 @interface NSString (BlockList)
 - (NSArray *)hp_toList;
@@ -164,7 +165,7 @@
         //已经通过通知监听然后刷新tableview了
         if (error) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步失败"
-                                                            message:error.localizedDescription
+                                                            message:error.hp_localizedDescription
                                                            delegate:nil
                                                   cancelButtonTitle:@"好吧"
                                                   otherButtonTitles:nil];
@@ -227,8 +228,9 @@
         if (!error) {
             [SVProgressHUD showSuccessWithStatus:@"同步成功"];
         } else {
+            [SVProgressHUD dismiss];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步失败"
-                                                            message:error.localizedDescription
+                                                            message:error.hp_localizedDescription
                                                            delegate:nil
                                                   cancelButtonTitle:@"好吧"
                                                   otherButtonTitles:nil];
