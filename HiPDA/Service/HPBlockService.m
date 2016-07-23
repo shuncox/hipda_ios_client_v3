@@ -55,6 +55,8 @@
 #pragma mark - update
 - (void)updateWithBlock:(void (^)(NSError *error))completionHandler
 {
+    if (!IOS8_OR_LATER) return;
+    
     [self.class fetchRecord:^(CKRecord *record, NSError *error) {
         if (!error) {
             [self rebuildWithList:record[@"list"] ?: @[]];
@@ -123,6 +125,8 @@
     [self saveAll];
     
     // fetch latest data
+    if (!IOS8_OR_LATER) return;
+    
     [self.class fetchRecord:^(CKRecord *record, NSError *error) {
         if (!error) {
             // rebuild

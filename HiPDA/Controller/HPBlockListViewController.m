@@ -98,24 +98,39 @@
             button;
         });
         
-        [self addSubview:_syncButton];
-        [self addSubview:_exportButton];
-        [self addSubview:_importButton];
-        [_syncButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(15.f);
-            make.centerY.equalTo(self);
-        }];
-        [_exportButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_syncButton.mas_right).offset(15.f);
-            make.centerY.equalTo(self);
-        }];
-        [_importButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_exportButton.mas_right).offset(15.f);
-            make.centerY.equalTo(self);
-            make.right.equalTo(self).offset(-15);
-            make.width.equalTo(_syncButton);
-            make.width.equalTo(_exportButton);
-        }];
+        if (IOS8_OR_LATER) {
+            [self addSubview:_syncButton];
+            [self addSubview:_exportButton];
+            [self addSubview:_importButton];
+            [_syncButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self).offset(15.f);
+                make.centerY.equalTo(self);
+            }];
+            [_exportButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_syncButton.mas_right).offset(15.f);
+                make.centerY.equalTo(self);
+            }];
+            [_importButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_exportButton.mas_right).offset(15.f);
+                make.centerY.equalTo(self);
+                make.right.equalTo(self).offset(-15);
+                make.width.equalTo(_syncButton);
+                make.width.equalTo(_exportButton);
+            }];
+        } else {
+            [self addSubview:_exportButton];
+            [self addSubview:_importButton];
+            [_exportButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self).offset(15.f);
+                make.centerY.equalTo(self);
+            }];
+            [_importButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_exportButton.mas_right).offset(15.f);
+                make.centerY.equalTo(self);
+                make.right.equalTo(self).offset(-15);
+                make.width.equalTo(_exportButton);
+            }];
+        }
     }
     return self;
 }
