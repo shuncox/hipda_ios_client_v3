@@ -14,6 +14,7 @@
 #import "HPSearchViewController.h"
 #import "UIAlertView+Blocks.h"
 #import "HPMessage.h"
+#import "HPBlockService.h"
 #import "HPSetting.h"
 
 @interface HPUserViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -31,6 +32,11 @@
 @end
 
 @implementation HPUserViewController
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)loadView {
     [super loadView];
@@ -51,6 +57,8 @@
     self.title = @"个人资料";
     
     [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(blockListDidChange:) name:kHPBlockListDidChange object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,7 +136,7 @@
         }
         
         _cell3.textLabel.text =
-            ([Setting isBlocked:_user.username]?@"取消屏蔽":@"屏蔽此人");
+            ([[HPBlockService shared] isUserInBlockList:self.user.username] ? @"取消屏蔽":@"屏蔽此人");
         
         return _cell3;
         
@@ -198,10 +206,10 @@
         
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         
-        if ([Setting isBlocked:_user.username]) {
-            [Setting removeBlockWithUsername:_user.username];
+        if ([[HPBlockService shared] isUserInBlockList:self.user.username]) {
+            [[HPBlockService shared] removeUser:self.user.username];
         } else {
-            [Setting addBlockWithUsername:_user.username];
+            [[HPBlockService shared] addUser:self.user.username];
         }
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         
@@ -212,6 +220,10 @@
     }
 }
 
+- (void)blockListDidChange:(NSNotification *)note
+{
+    [self.tableView reloadData];
+}
 
 #pragma mark - send message
 

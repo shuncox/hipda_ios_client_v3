@@ -200,6 +200,7 @@
 		EA831B901840EAEB00616E94 /* acknowledgement.html in Resources */ = {isa = PBXBuildFile; fileRef = EA831B8F1840EAEB00616E94 /* acknowledgement.html */; };
 		EA831B931841092600616E94 /* HPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA831B921841092600616E94 /* HPMessage.m */; };
 		EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */; };
+		EA8947291D3BB62A009261DD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8947281D3BB62A009261DD /* CloudKit.framework */; };
 		EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */ = {isa = PBXBuildFile; fileRef = EA91EE131BF75A60009271EF /* debug_crawler_html.html */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
@@ -275,6 +276,7 @@
 		EAA3A3221A9F29F700927278 /* activity_capture_post@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A31F1A9F29F700927278 /* activity_capture_post@2x.png */; };
 		EAA3A3231A9F29F700927278 /* activity_copy_content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A3201A9F29F700927278 /* activity_copy_content@2x.png */; };
 		EAA3A3241A9F29F700927278 /* activity_copy_link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA3A3211A9F29F700927278 /* activity_copy_link@2x.png */; };
+		EAA727F41D3D266100566999 /* HPBlockService.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA727F31D3D266100566999 /* HPBlockService.m */; };
 		EAA9ABA118EBDCFE00B2232B /* pull_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA9AB9F18EBDCFE00B2232B /* pull_refresh.png */; };
 		EAA9ABA218EBDCFE00B2232B /* pull_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA9ABA018EBDCFE00B2232B /* pull_refresh@2x.png */; };
 		EAACE5441D0DA42300EDD096 /* UITableView+ScrollToTop.m in Sources */ = {isa = PBXBuildFile; fileRef = EAACE5431D0DA42300EDD096 /* UITableView+ScrollToTop.m */; };
@@ -695,6 +697,8 @@
 		EA831B921841092600616E94 /* HPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessage.m; path = Model/HPMessage.m; sourceTree = "<group>"; };
 		EA87A6821A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageMultipleUploadViewController.h; path = Controller/HPImageMultipleUploadViewController.h; sourceTree = "<group>"; };
 		EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageMultipleUploadViewController.m; path = Controller/HPImageMultipleUploadViewController.m; sourceTree = "<group>"; };
+		EA8947271D3BB554009261DD /* HiPDA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HiPDA.entitlements; sourceTree = "<group>"; };
+		EA8947281D3BB62A009261DD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		EA91EE131BF75A60009271EF /* debug_crawler_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = debug_crawler_html.html; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
@@ -796,6 +800,8 @@
 		EAA3A31F1A9F29F700927278 /* activity_capture_post@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_capture_post@2x.png"; path = "Image/activity/activity_capture_post@2x.png"; sourceTree = "<group>"; };
 		EAA3A3201A9F29F700927278 /* activity_copy_content@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_copy_content@2x.png"; path = "Image/activity/activity_copy_content@2x.png"; sourceTree = "<group>"; };
 		EAA3A3211A9F29F700927278 /* activity_copy_link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activity_copy_link@2x.png"; path = "Image/activity/activity_copy_link@2x.png"; sourceTree = "<group>"; };
+		EAA727F21D3D266100566999 /* HPBlockService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBlockService.h; path = Service/HPBlockService.h; sourceTree = "<group>"; };
+		EAA727F31D3D266100566999 /* HPBlockService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBlockService.m; path = Service/HPBlockService.m; sourceTree = "<group>"; };
 		EAA9AB9F18EBDCFE00B2232B /* pull_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pull_refresh.png; path = Image/pull_refresh.png; sourceTree = "<group>"; };
 		EAA9ABA018EBDCFE00B2232B /* pull_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pull_refresh@2x.png"; path = "Image/pull_refresh@2x.png"; sourceTree = "<group>"; };
 		EAACE5421D0DA42300EDD096 /* UITableView+ScrollToTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+ScrollToTop.h"; path = "Helper/UITableView+ScrollToTop.h"; sourceTree = "<group>"; };
@@ -973,6 +979,7 @@
 				EA499F631830C3EA00172989 /* CoreLocation.framework in Frameworks */,
 				EA499F611830C3E100172989 /* Security.framework in Frameworks */,
 				EA499F5F1830C3D800172989 /* SystemConfiguration.framework in Frameworks */,
+				EA8947291D3BB62A009261DD /* CloudKit.framework in Frameworks */,
 				EA499F5D1830C3CA00172989 /* MobileCoreServices.framework in Frameworks */,
 				EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */,
 				EA499F5B1830C3BD00172989 /* ImageIO.framework in Frameworks */,
@@ -1763,6 +1770,15 @@
 			name = activity;
 			sourceTree = "<group>";
 		};
+		EAA727F11D3D263900566999 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				EAA727F21D3D266100566999 /* HPBlockService.h */,
+				EAA727F31D3D266100566999 /* HPBlockService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		EAAD5B87188CEFB70084EC2D /* IDMPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1934,6 +1950,7 @@
 		EAFDB8441829EFA900C1718B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA8947281D3BB62A009261DD /* CloudKit.framework */,
 				EAB04C0619EC1F18006F5C92 /* libz.dylib */,
 				EA499F621830C3EA00172989 /* CoreLocation.framework */,
 				EA499F601830C3E100172989 /* Security.framework */,
@@ -1957,10 +1974,12 @@
 		EAFDB84B1829EFA900C1718B /* HiPDA */ = {
 			isa = PBXGroup;
 			children = (
+				EA8947271D3BB554009261DD /* HiPDA.entitlements */,
 				EAFDB8541829EFA900C1718B /* HPAppDelegate.h */,
 				EAFDB8551829EFA900C1718B /* HPAppDelegate.m */,
 				EA499F261830BDE900172989 /* Model */,
 				EAF18F231B01031400B50E19 /* Network */,
+				EAA727F11D3D263900566999 /* Service */,
 				EA127381183101DF00DE9851 /* View */,
 				EA499F101830B8C700172989 /* Controller */,
 				EA5DF0D718311EC9008E4248 /* Image */,
@@ -2062,6 +2081,9 @@
 						DevelopmentTeam = 74Z7WT84EE;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -2540,6 +2562,7 @@
 				EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */,
 				EA78407E1BE203D400139141 /* NSError+HPError.m in Sources */,
 				EADF46721CA76CDC00D71C25 /* NSString+HPImageSize.m in Sources */,
+				EAA727F41D3D266100566999 /* HPBlockService.m in Sources */,
 				EA075F5E18E447FD00A07C08 /* HPNewThreadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2672,6 +2695,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = HiPDA/HiPDA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -2728,6 +2752,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = HiPDA/HiPDA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;

@@ -7,24 +7,31 @@
 //
 
 #import "HPBlockListViewController.h"
-#import "HPSetting.h"
+#import "HPBlockService.h"
 
 @interface HPBlockListViewController ()
-
-@property (nonatomic, strong)NSArray *list;
 
 @end
 
 @implementation HPBlockListViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
-        _list = [Setting objectForKey:HPSettingBlockList];
+        
     }
     return self;
+}
+
+- (NSArray *)list
+{
+    return [[HPBlockService shared] blockList];
 }
 
 - (void)viewDidLoad
@@ -36,9 +43,11 @@
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    if (_list.count <= 0) {
+    if (self.list.count <= 0) {
         [[[UIAlertView alloc] initWithTitle:@"您没有屏蔽过任何人" message:@"您可在查看某个用户资料时屏蔽该用户" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"知道了", nil] show];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(blockListDidChange:) name:kHPBlockListDidChange object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,14 +65,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _list.count;
+    return self.list.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HPBlockListCell" forIndexPath:indexPath];
-    cell.textLabel.text = [_list objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self.list objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -77,12 +86,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        [Setting removeBlockWithUsername:[_list objectAtIndex:indexPath.row]];
-        _list = [Setting objectForKey:HPSettingBlockList];
-        
+        [[HPBlockService shared] removeUser:[self.list objectAtIndex:indexPath.row]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (void)blockListDidChange:(NSNotification *)note
+{
+    [self.tableView reloadData];
 }
 
 @end

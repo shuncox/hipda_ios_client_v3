@@ -11,7 +11,7 @@
 #import "HPAccount.h"
 #import "HPCache.h"
 #import "HPMessage.h"
-#import "HPSetting.h"
+#import "HPBlockService.h"
 #import "HPDatabase.h"
 
 #import "HPHttpClient.h"
@@ -176,7 +176,7 @@
             HPThread *thread = [[HPThread alloc] initWithAttributes:attributes];
             thread.fid = fid;
             
-            if ([Setting isBlocked:thread.user.username]) {
+            if ([[HPBlockService shared] isUserInBlockList:thread.user.username]) {
                 NSLog(@"block %@, remove it from thread list", thread.user.username);
             } else {
                 [threads addObject:thread];

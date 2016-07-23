@@ -169,7 +169,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingStupidBarLeftAction @"HPSettingStupidBarLeftAction"
 #define HPSettingStupidBarCenterAction @"HPSettingStupidBarCenterAction"
 #define HPSettingStupidBarRightAction @"HPSettingStupidBarRightAction"
-#define HPSettingBlockList @"HPSettingBlockList"
+#define HPSettingBlockList @"HPSettingBlockList" //to remove
 #define HPSettingAfterSendShowConfirm @"HPSettingAfterSendShowConfirm"
 #define HPSettingAfterSendJump @"HPSettingAfterSendJump"
 #define HPSettingDataTrackEnable @"HPSettingDataTrackEnable"
@@ -212,6 +212,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define kHPUserLoginSuccess @"HPUserLoginSuccess"
 #define kHPUserLoginError @"HPUserLoginError"
 #define kHPThemeDidChanged @"HPThemeDidChanged"
+#define kHPBlockListDidChange @"kHPBlockListDidChange"
 
 
 

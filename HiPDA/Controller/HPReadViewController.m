@@ -54,6 +54,7 @@
 #import <UIImageView+WebCache.h>
 
 #import "HPActivity.h"
+#import "HPBlockService.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -492,7 +493,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 NSString *liClass = (post.floor == weakSelf.gotoFloor) ? @"gotoFloor" : @"";
                 
                 NSString *list = nil;
-                BOOL isBlocked = [Setting isBlocked:post.user.username];
+                BOOL isBlocked = [[HPBlockService shared] isUserInBlockList:post.user.username];
                 NSString *avatarURLSrc = post.user.avatarImageURL ?
                     [NSString stringWithFormat:@"src=\"%@\"", [post.user.avatarImageURL absoluteString]]
                     : @"";
