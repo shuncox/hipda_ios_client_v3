@@ -24,6 +24,6 @@ pod 'Masonry'
 pod 'ReactiveCocoa', '~>2.0'
 pod 'AnimatedGIFImageSerialization'
 pod 'SVPullToRefresh'
-pod 'MLeaksFinder'
+pod 'MLeaksFinder', '~>0.2.0'
 
 end

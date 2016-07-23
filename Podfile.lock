@@ -3,6 +3,7 @@ PODS:
   - ALActionBlocks (1.0.3)
   - AnimatedGIFImageSerialization (0.2.0)
   - CTAssetsPickerController (2.9.2)
+  - FBRetainCycleDetector (0.1.2)
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
   - FMDB/common (2.5)
@@ -18,7 +19,8 @@ PODS:
   - Mantle/extobjc (1.5.4)
   - Masonry (0.6.3)
   - MCSwipeTableViewCell (2.1.4)
-  - MLeaksFinder (0.1.1)
+  - MLeaksFinder (0.2.0):
+    - FBRetainCycleDetector
   - MTLog (0.6.1)
   - NSString+Emoji (0.2.0)
   - Objective-LevelDB (2.1.4):
@@ -58,7 +60,7 @@ DEPENDENCIES:
   - Mantle (= 1.5.4)
   - Masonry
   - MCSwipeTableViewCell
-  - MLeaksFinder
+  - MLeaksFinder (~> 0.2.0)
   - MTLog
   - NSString+Emoji
   - Objective-LevelDB
@@ -83,7 +85,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CTAssetsPickerController:
-    :commit: 9bfd227d1b81659f286cd9fbc51c5f6e53f1e369
+    :commit: fe0faefc9b735bd51ac4202e98d4b3a0be933b4f
     :git: https://github.com/wujichao/CTAssetsPickerController.git
   Qiniu:
     :commit: 637cdc555b4f0c6227ae785964c717f950359af4
@@ -96,7 +98,8 @@ SPEC CHECKSUMS:
   AFNetworking: 127629aef6e631d57291c25154defc678c8a7337
   ALActionBlocks: ac91b1a37b60a8004fb687ddade0600446f3d3fa
   AnimatedGIFImageSerialization: b0f0cfe71eac1ee45a3d57ae533c23b8e6f29501
-  CTAssetsPickerController: 817e7570fc84bf48fab9b56ccfa80d16b7bffa41
+  CTAssetsPickerController: 84c5034b1c124c43d7a2e6021ca229f16b0275cd
+  FBRetainCycleDetector: 45462f9ed1af0cd77224a4cc4e6dacaca47371b4
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   JSPatch: d667f53dd37bffe640e056198d26c5f0f1219e55
   JSQSystemSoundPlayer: 443466bd5f4537d0b7f15a0184244169ae65f8e5
@@ -104,7 +107,7 @@ SPEC CHECKSUMS:
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
-  MLeaksFinder: 25e38f8ca9438354aa4184f65148e671f5d18620
+  MLeaksFinder: 07ab450d72d3bf5ef4201b74047d74ceae66d605
   MTLog: a1cb28f66e65172849918a356883558ff176d19c
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
@@ -120,6 +123,6 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 2e1270bc02148467f7d28c685b9c1b7b552ad81c
+PODFILE CHECKSUM: 2192d4df0a38ca1476d62d0250e4d400faff831d
 
 COCOAPODS: 1.0.0
