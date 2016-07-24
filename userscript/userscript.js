@@ -29,6 +29,7 @@ catch(e){}
 
 // ================= UI ==================
 
+// hi-pda-tools-by-2200
 function addConfigDiv() {
     // GM_addStyle('\
     //   #hp_blacklist_config_div {position:fixed;align:center;width: 303px;padding: 15px;bottom:20px;right:20px;z-index:99;color:#fff;background:#9287AE;border:2px solid #bfbfbf;-moz-border-radius:5px;opacity:0.95;text-align:left;font-size:14px !important;}\
@@ -40,47 +41,61 @@ function addConfigDiv() {
     // ');
     var hp_cfg = document.createElement("div");
     hp_cfg.id = "hp_blacklist_config_div";
+    hp_cfg.style = "position:fixed;align:center;width: 303px;padding: 15px;top:20px;right:20px;z-index:99;color:#fff;background:#9287AE;border:2px solid #bfbfbf;-moz-border-radius:5px;opacity:0.95;text-align:left;font-size:14px !important;"
     //hp_cfg.style.display = "none";
     hp_cfg.innerHTML = '\
+    	<a href="javascript:void(0)" id="hp_blacklist_close_button" style="position:fixed; top:25px; right:25px; color:white">关闭</a>\
         <div id="hp_blacklist_blacklist"></div><br /><br />\
+        先登录iCloud才能同步\
         <div id="apple-sign-in-button"></div>\
         <div id="apple-sign-out-button"></div>\
-        <div align="center">\
-            <a href="javascript:void(0)" id="hp_blacklist_sync_button">同步</a>\
-            &nbsp;\
-            <a href="javascript:void(0)" id="hp_blacklist_close_button">关闭</a>\
-            <br />\
-        </div>\
-         <input id="hp_blacklist_username_input" type="text" value="name"/><br />\
-         <button id="add_btn">add user</button>\
-         <button id="remove_btn">remove user</button>\
+        <button id="hp_blacklist_sync_button" style="height: 40px; width: 218px; cursor: pointer; border: 1px solid black; border-radius: 5px; display: block; opacity: 1; background-color: white; font-size:18px">同步</button>\
+        <input id="hp_blacklist_username_input" type="text" value="name"/><br />\
+        <button id="hp_blacklist_add_btn">add user</button>\
+        <button id="hp_blacklist_remove_btn">remove user</button>\
         ';
-    q('#header').appendChild(hp_cfg);
+    q('#header').insertBefore(hp_cfg, q('#header').firstChild);
    
-    document.getElementById('hp_blacklist_sync_button').addEventListener('click', function(){
+    q('#hp_blacklist_sync_button').addEventListener('click', function(){
     	var b = q('#hp_blacklist_sync_button');
-    	b.text = '同步中...';
+    	b.innerHTML = '同步中...';
     	console.log('sync...');
     	update(function(error) {
     		if (!error) {
-				b.text = '同步成功';
+				b.innerHTML = '同步成功';
     		} else {
-    			b.text = '同步失败';
+    			b.innerHTML = '同步失败';
     		}
     		console.log('sync result: ', _list);
     	});
     }, false);
-    document.getElementById('hp_blacklist_close_button').addEventListener('click', function(){
-
+    q('#hp_blacklist_close_button').addEventListener('click', function(){
+    	hp_cfg.style.display = 'none';
     }, false);
 
-    document.getElementById('add_btn').addEventListener('click', function(){
+    q('#hp_blacklist_add_btn').addEventListener('click', function(){
     	addUser(q('#hp_blacklist_username_input').value);
     }, false);
 
-    document.getElementById('remove_btn').addEventListener('click', function(){
+    q('#hp_blacklist_remove_btn').addEventListener('click', function(){
     	removeUser(q('#hp_blacklist_username_input').value);
     }, false);
+
+    if (1) {
+    	q('#hp_blacklist_username_input').style.display = 'none';
+    	q('#hp_blacklist_add_btn').style.display = 'none';
+    	q('#hp_blacklist_remove_btn').style.display = 'none';
+    }
+
+    document.getElementById('umenu').appendChild(document.createTextNode(" | "));
+    menuitem=document.createElement('a');
+    menuitem.innerHTML="黑名单";
+    menuitem.href='javascript:void(0)';
+    document.getElementById('umenu').appendChild(menuitem);
+    menuitem.addEventListener('click', function(){
+    	hp_cfg.style.display = hp_cfg.style.display === 'none' ? '' : 'none';
+    }, false);
+    hp_cfg.style.display = 'none';
 }
 addConfigDiv();
 
@@ -111,7 +126,7 @@ function updateBlockListUI() {
 	var list = [];
 	for (var i = 0; i < _list.length; i++) {
 		var username = _list[i];
-		list.push('<span class="hp_blacklist_username">' + username + '</span><button username="'+username+'">删除</button>');
+		list.push('<span class="hp_blacklist_username">' + username + '</span>&nbsp&nbsp<button username="'+username+'">x</button>');
 	}
 	dom.innerHTML = list.join('\n<br />');
 	var buttons = dom.getElementsByTagName('button');
