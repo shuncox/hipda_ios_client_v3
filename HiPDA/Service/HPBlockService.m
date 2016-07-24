@@ -61,6 +61,7 @@
         if (!error) {
             [self rebuildWithList:record[@"list"] ?: @[]];
             [self saveAll];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kHPBlockListDidChange object:nil];
         }
         completionHandler(error);
     }];
