@@ -6,11 +6,26 @@
 // @match http://tampermonkey.net/empty.html
 // @grand GM_addStyle
 // ==/UserScript==
-
 // ================= helpers ==================
 console.log("running at " + window.location.href);
 
 function q(s){if(document.body){return document.body.querySelector(s);}return null;}
+function xpath(s) {
+	return document.evaluate(s, document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+}
+
+// 外部编辑器木有GM_xxx的支持
+try{
+  if (!this.GM_getValue || this.GM_getValue.toString().indexOf("not supported")>-1) {
+      this.GM_getValue=function (key,def) {
+          return localStorage[key] || def;
+      };
+      this.GM_setValue=function (key,value) {
+          return localStorage[key]=value;
+      };
+  }
+}
+catch(e){}
 
 // ================= UI ==================
 
@@ -43,7 +58,17 @@ function addConfigDiv() {
     q('#header').appendChild(hp_cfg);
    
     document.getElementById('hp_blacklist_sync_button').addEventListener('click', function(){
-
+    	var b = q('#hp_blacklist_sync_button');
+    	b.text = '同步中...';
+    	console.log('sync...');
+    	update(function(error) {
+    		if (!error) {
+				b.text = '同步成功';
+    		} else {
+    			b.text = '同步失败';
+    		}
+    		console.log('sync result: ', _list);
+    	});
     }, false);
     document.getElementById('hp_blacklist_close_button').addEventListener('click', function(){
 
@@ -58,6 +83,80 @@ function addConfigDiv() {
     }, false);
 }
 addConfigDiv();
+
+// hi-pda-tools-by-2200
+function appendControl(){     // 添加[屏蔽]按钮
+  var s = xpath("//div[@class='authorinfo']");
+
+  for (var i = s.snapshotLength - 1; i >= 0; i--) {
+    var t = s.snapshotItem(i);
+      
+    var a1=document.createElement('a');
+    a1.innerHTML = '屏蔽';
+    a1.href = '###';
+ 	a1.addEventListener('click', onBlockUser, false);
+    t.appendChild(document.createTextNode(" | "));
+    t.appendChild(a1);
+  }
+};
+appendControl();
+
+function updateUI() {
+	updateBlockListUI();
+	removeBlockedPost();
+}
+
+function updateBlockListUI() {
+	var dom = q('#hp_blacklist_blacklist');
+	var list = [];
+	for (var i = 0; i < _list.length; i++) {
+		var username = _list[i];
+		list.push('<span class="hp_blacklist_username">' + username + '</span><button username="'+username+'">删除</button>');
+	}
+	dom.innerHTML = list.join('\n<br />');
+	var buttons = dom.getElementsByTagName('button');
+	for (var i = 0; i < buttons.length; i++) {
+		var b = buttons[i];
+		var u = b.getAttribute('username');
+		(function(username){
+			b.addEventListener('click', function(){
+				removeUser(username);
+			}, false);
+		})(u)
+	}
+}
+
+// hi-pda-tools-by-2200
+function removeBlockedPost() {
+    if (location.href.indexOf('viewthread.php') !== -1) {
+        var s = xpath("//div[@class='postinfo']");
+        for (var i = s.snapshotLength - 1; i >= 0; i--) {
+            var t = s.snapshotItem(i);
+            var a = t.getElementsByTagName('a')[0];
+            if( a != undefined){
+            	t.parentNode.parentNode.parentNode.parentNode.style.display = isUserInBlockList(a.text) ? 'none' : '';
+            }
+        }
+    }
+    if (location.href.indexOf('forumdisplay.php') !== -1) {
+        var s = xpath("//td[@class='author']");
+        console.log(s.snapshotLength);
+        for (var i = s.snapshotLength - 1; i >= 0; i--) { // 屏蔽BLACK_LIST的发帖
+            var t = s.snapshotItem(i);
+            var a = t.getElementsByTagName('a')[0];
+            if( a != undefined){
+            	t.parentNode.style.display = isUserInBlockList(a.text) ? 'none' : '';
+            }
+        }
+    }
+}
+
+// hi-pda-tools-by-2200
+function onBlockUser(e){      // [屏蔽] 按钮触发
+    var node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('postinfo')[0].getElementsByTagName('a')[0];
+    var username = node.text;
+    addUser(username);
+};
 
 // ================= icloud auth ==================
 
@@ -84,10 +183,11 @@ window.addEventListener('cloudkitloaded', function() {
 
 	demoSetUpAuth();
 	init();
-	console.log('test update');
-	update(function(error) {
-		console.log('update result: ', _list);
-	});
+	console.log('config', _list);
+	// console.log('test update');
+	// update(function(error) {
+	// 	console.log('update result: ', _list);
+	// });
 	//test();
 });
 
@@ -153,6 +253,7 @@ var _hashTable = {};
 function init() {
 	rebuildWithList(getSavedList());
 	migrateOldData();
+	updateUI();
 }
 function rebuildWithList(list) {
 	//console.log('rebuildWithList_with', list);
@@ -174,6 +275,7 @@ function update(callback) {
 		if (!error) {
 			rebuildWithRecord(record);
 			saveAll();
+			updateUI();
 		}
 		callback(error);
 	});
@@ -227,6 +329,9 @@ function updateList(action) {
 	console.log('update local data');
 	action();
 	saveAll();
+
+	// update ui
+	updateUI();
     
     //fetch latest data
     console.log('fetch latest data');
@@ -237,8 +342,10 @@ function updateList(action) {
 			action();
 			saveAll();
 
-			record.fields['list'] = {value: _list};
+			// update ui
+			updateUI();
 
+			record.fields['list'] = {value: _list};
 			//console.log('fetch latest result', record);
 			saveRecord(record, function(savedRecord, error) {
 				//console.log('saveRecord result', record);
@@ -306,11 +413,12 @@ function saveAll() {
 }
 
 function getSavedList() {
-	return ['test1', 'test2'];
+	var value = GM_getValue('HPSavedList_V2') || '';
+	return value.split(',');
 }
 
 function saveList(list) {
-	console.log(_list);
+	GM_setValue('HPSavedList_V2', list);
 }
 
 // ================= migrate ==================
