@@ -57,6 +57,12 @@ function addConfigDiv() {
     q('#header').insertBefore(hp_cfg, q('#header').firstChild);
    
     q('#hp_blacklist_sync_button').addEventListener('click', function(){
+
+    	if (!isCloudLogin) {
+    		alert('先登录iCloud才能同步');
+    		return;
+    	}
+
     	var b = q('#hp_blacklist_sync_button');
     	b.innerHTML = '同步中...';
     	console.log('sync...');
@@ -175,6 +181,8 @@ function onBlockUser(e){      // [屏蔽] 按钮触发
 
 // ================= icloud auth ==================
 
+var isCloudLogin = false;
+
 window.addEventListener('cloudkitloaded', function() {
 	CloudKit.configure({
 		locale: 'zh-cn',
@@ -226,11 +234,21 @@ function demoSetUpAuth() {
     } else {
       displayUserName('User record name: ' + userIdentity.userRecordName);
     }
+
+    isCloudLogin = true;
+
+	console.log('login then update...');
+	update(function(error) {
+		console.log('update result: ', _list);
+	});
+
     container
       .whenUserSignsOut()
       .then(gotoUnauthenticatedState);
   }
   function gotoUnauthenticatedState(error) {
+
+ 	isCloudLogin = false;
 
     if(error && error.ckErrorCode === 'AUTH_PERSIST_ERROR') {
       showDialogForPersistError();
@@ -286,6 +304,12 @@ function rebuildWithRecord(record) {
 }
 
 function update(callback) {
+
+	if (!isCloudLogin) {
+		console.log('updateList -> not login');
+		return;
+	}
+
 	fetchRecord(function(record, error) {
 		if (!error) {
 			rebuildWithRecord(record);
@@ -347,6 +371,11 @@ function updateList(action) {
 
 	// update ui
 	updateUI();
+
+	if (!isCloudLogin) {
+		console.log('updateList -> not login');
+		return;
+	}
     
     //fetch latest data
     console.log('fetch latest data');
