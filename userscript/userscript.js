@@ -41,7 +41,7 @@ function addConfigDiv() {
     // ');
     var hp_cfg = document.createElement("div");
     hp_cfg.id = "hp_blacklist_config_div";
-    hp_cfg.style = "position:fixed;align:center;width: 303px;padding: 15px;top:20px;right:20px;z-index:99;color:#fff;background:#9287AE;border:2px solid #bfbfbf;-moz-border-radius:5px;opacity:0.95;text-align:left;font-size:14px !important;"
+    hp_cfg.style = "position:fixed;align:center;width: 303px;padding: 15px;top:20px;right:20px;z-index:99;color:#fff;background:#9287AE;border:2px solid #bfbfbf;-moz-border-radius:5px;opacity:0.95;text-align:left;font-size:14px !important; overflow-y: scroll; height:80%;"
     //hp_cfg.style.display = "none";
     hp_cfg.innerHTML = '\
     	<a href="javascript:void(0)" id="hp_blacklist_close_button" style="position:fixed; top:25px; right:25px; color:white">关闭</a>\
@@ -132,10 +132,10 @@ function updateBlockListUI() {
 	var list = [];
 	for (var i = 0; i < _list.length; i++) {
 		var username = _list[i];
-		list.push('<span class="hp_blacklist_username">' + username + '</span>&nbsp&nbsp<button username="'+username+'">x</button>');
+		list.push('<span class="hp_blacklist_username" style="font-size:12px">' + username + '</span>&nbsp&nbsp<a username="'+username+'">x</a>');
 	}
 	dom.innerHTML = list.join('\n<br />');
-	var buttons = dom.getElementsByTagName('button');
+	var buttons = dom.getElementsByTagName('a');
 	for (var i = 0; i < buttons.length; i++) {
 		var b = buttons[i];
 		var u = b.getAttribute('username');
@@ -361,8 +361,16 @@ function saveRecord(record, callback) {
 	});
 }
 
+var working = false;
 function updateList(action) {
 	console.log('updateList');
+	
+	if (working) {
+		console.log('working');
+		alert('操作中, 请稍后再试');
+		return;
+	}
+	working = true;
 
 	// update local data
 	console.log('update local data');
@@ -393,6 +401,7 @@ function updateList(action) {
 			//console.log('fetch latest result', record);
 			saveRecord(record, function(savedRecord, error) {
 				//console.log('saveRecord result', record);
+				working = false;
 			});
 		}
 	});
