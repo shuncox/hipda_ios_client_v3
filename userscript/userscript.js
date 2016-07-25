@@ -237,10 +237,21 @@ function demoSetUpAuth() {
 
     isCloudLogin = true;
 
-	console.log('login then update...');
-	update(function(error) {
-		console.log('update result: ', _list);
-	});
+	console.log('login then check update...');
+	// update(function(error) {
+	// 	console.log('update result: ', _list);
+	// });
+	// 每24h更新一次
+	var ts = getLastUpdateTime();
+	var interval = +new Date() - ts;
+	console.log('interval ' + interval);
+	if (interval > 24 * 60 * 60 * 1000) {
+		console.log('update...');
+		update(function(error) {
+			console.log('update result: ', _list);
+			saveLastUpdateTime(+new Date());
+		});
+	}
 
     container
       .whenUserSignsOut()
@@ -364,7 +375,7 @@ function saveRecord(record, callback) {
 var working = false;
 function updateList(action) {
 	console.log('updateList');
-	
+
 	if (working) {
 		console.log('working');
 		alert('操作中, 请稍后再试');
@@ -472,6 +483,15 @@ function getSavedList() {
 
 function saveList(list) {
 	GM_setValue('HPSavedList_V2', list);
+}
+
+function getLastUpdateTime() {
+	var value = GM_getValue('HPLastUpdateTime') || 0;
+	return value;
+}
+
+function saveLastUpdateTime(ts) {
+	GM_setValue('HPLastUpdateTime', ts);
 }
 
 // ================= migrate ==================
