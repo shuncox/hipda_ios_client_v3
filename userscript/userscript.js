@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name HiPDA BlackList
-// @namespace com.jichaowu.hipda
-// @version 0.0.1
 // @description description
-// @grant		GM_getValue
-// @grant		GM_setValue
+// @version 0.0.1
+// @author Jichao Wu
+// @license MIT
+// @namespace com.jichaowu.hipda
+// @grant GM_getValue
+// @grant GM_setValue
 // @grant GM_addStyle
 // @match http://www.hi-pda.com/forum/*
 // @require https://cdn.apple-cloudkit.com/ck/2/cloudkit.js
-
 // ==/UserScript==
 
 (function() {
