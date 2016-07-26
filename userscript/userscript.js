@@ -1,11 +1,19 @@
 // ==UserScript==
-// @name Test'Em'All
-// @namespace http://tampermonkey.net/empty.html
-// @version 0.1
-// @description this does nothing but giving a good example
-// @match http://tampermonkey.net/empty.html
-// @grand GM_addStyle
+// @name HiPDA BlackList
+// @namespace com.jichaowu.hipda
+// @version 0.0.1
+// @description description
+// @grant		GM_getValue
+// @grant		GM_setValue
+// @grant GM_addStyle
+// @match http://www.hi-pda.com/forum/*
+// @require https://cdn.apple-cloudkit.com/ck/2/cloudkit.js
+
 // ==/UserScript==
+
+(function() {
+    'use strict';
+
 // ================= helpers ==================
 console.log("running at " + window.location.href);
 
@@ -13,20 +21,6 @@ function q(s){if(document.body){return document.body.querySelector(s);}return nu
 function xpath(s) {
 	return document.evaluate(s, document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 }
-
-// 外部编辑器木有GM_xxx的支持
-try{
-  if (!this.GM_getValue || this.GM_getValue.toString().indexOf("not supported")>-1) {
-      this.GM_getValue=function (key,def) {
-          return localStorage[key] || def;
-      };
-      this.GM_setValue=function (key,value) {
-          return localStorage[key]=value;
-      };
-  }
-}
-catch(e){}
-
 // ================= UI ==================
 
 // hi-pda-tools-by-2200
@@ -41,7 +35,7 @@ function addConfigDiv() {
     // ');
     var hp_cfg = document.createElement("div");
     hp_cfg.id = "hp_blacklist_config_div";
-    hp_cfg.style = "position:fixed;align:center;width: 303px;padding: 15px;top:20px;right:20px;z-index:99;color:#fff;background:#9287AE;border:2px solid #bfbfbf;-moz-border-radius:5px;opacity:0.95;text-align:left;font-size:14px !important; overflow-y: scroll; height:80%;"
+    hp_cfg.style = "position:fixed;align:center;width: 303px;padding: 15px;top:20px;right:20px;z-index:99;color:#fff;background:#9287AE;border:2px solid #bfbfbf;-moz-border-radius:5px;opacity:0.95;text-align:left;font-size:14px !important; overflow-y: scroll; height:80%;";
     //hp_cfg.style.display = "none";
     hp_cfg.innerHTML = '\
     	<a href="javascript:void(0)" id="hp_blacklist_close_button" style="position:fixed; top:25px; right:25px; color:white">关闭</a>\
@@ -55,7 +49,7 @@ function addConfigDiv() {
         <button id="hp_blacklist_remove_btn">remove user</button>\
         ';
     q('#header').insertBefore(hp_cfg, q('#header').firstChild);
-   
+
     q('#hp_blacklist_sync_button').addEventListener('click', function(){
 
     	if (!isCloudLogin) {
@@ -94,7 +88,7 @@ function addConfigDiv() {
     }
 
     document.getElementById('umenu').appendChild(document.createTextNode(" | "));
-    menuitem=document.createElement('a');
+    var menuitem=document.createElement('a');
     menuitem.innerHTML="黑名单";
     menuitem.href='javascript:void(0)';
     document.getElementById('umenu').appendChild(menuitem);
@@ -119,7 +113,7 @@ function appendControl(){     // 添加[屏蔽]按钮
     t.appendChild(document.createTextNode(" | "));
     t.appendChild(a1);
   }
-};
+}
 appendControl();
 
 function updateUI() {
@@ -143,7 +137,7 @@ function updateBlockListUI() {
 			b.addEventListener('click', function(){
 				removeUser(username);
 			}, false);
-		})(u)
+		})(u);
 	}
 }
 
@@ -310,7 +304,7 @@ function rebuildWithList(list) {
 }
 
 function rebuildWithRecord(record) {
-	list = record.fields['list'] ? record.fields['list'].value : [];
+	var list = record.fields['list'] ? record.fields['list'].value : [];
 	rebuildWithList(list);
 }
 
@@ -477,8 +471,8 @@ function saveAll() {
 }
 
 function getSavedList() {
-	var value = GM_getValue('HPSavedList_V2') || '';
-	return value.split(',');
+	var value = GM_getValue('HPSavedList_V2') || [];
+	return value;
 }
 
 function saveList(list) {
@@ -547,3 +541,5 @@ function test() {
 	console.log(_list);
 	console.log(_hashTable);
 }
+
+})();
