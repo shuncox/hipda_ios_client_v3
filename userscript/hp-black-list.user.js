@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name HiPDA BlackList
-// @description description
-// @version 0.0.1
+// @description hi-pda.com论坛的黑名单插件, 支持使用iCloud账号同步, 支持与iOS客户端同步
+// @version 0.0.2
 // @author Jichao Wu
 // @license MIT
 // @namespace com.jichaowu.hipda
