@@ -10,6 +10,7 @@
 // @grant GM_addStyle
 // @match http://www.hi-pda.com/forum/*
 // @require https://cdn.apple-cloudkit.com/ck/2/cloudkit.js
+// @updateURL https://raw.githubusercontent.com/wujichao/hipda_ios_client_v3/developer-jichao/userscript/hp-black-list.user.js
 // ==/UserScript==
 
 (function() {
