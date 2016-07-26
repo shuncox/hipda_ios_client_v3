@@ -41,6 +41,7 @@
 - (void)didTapSyncButton:(UIButton *)button;
 - (void)didTapExportButton:(UIButton *)button;
 - (void)didTapImportButton:(UIButton *)button;
+- (void)didTapScriptButton:(UIButton *)button;
 
 @end
 
@@ -49,6 +50,7 @@
 @property (nonatomic, strong) UIButton *syncButton;
 @property (nonatomic, strong) UIButton *exportButton;
 @property (nonatomic, strong) UIButton *importButton;
+@property (nonatomic, strong) UIButton *scriptButton;
 
 @property (nonatomic, weak) id<HPBlockListHeaderViewDelegate> delegate;
 
@@ -98,23 +100,41 @@
             button;
         });
         
+        _scriptButton = ({
+            UIButton *button = [UIButton new];
+            button.layer.cornerRadius = 5;
+            button.layer.borderWidth = 1;
+            button.layer.borderColor = [UIColor blackColor].CGColor;
+            [button setTitle:@"Chrome脚本" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:15];
+            [button addTarget:self.delegate action:@selector(didTapScriptButton:) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+        
         if (IOS8_OR_LATER) {
             [self addSubview:_syncButton];
             [self addSubview:_exportButton];
             [self addSubview:_importButton];
+            [self addSubview:_scriptButton];
             [_syncButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self).offset(15.f);
-                make.centerY.equalTo(self);
+                make.top.equalTo(self).offset(15.f);
+            }];
+            [_scriptButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_syncButton.mas_right).offset(15.f);
+                make.centerY.equalTo(_syncButton);
+                make.right.equalTo(self).offset(-15);
+                make.width.equalTo(_syncButton);
             }];
             [_exportButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_syncButton.mas_right).offset(15.f);
-                make.centerY.equalTo(self);
+                make.left.equalTo(self).offset(15.f);
+                make.top.equalTo(_syncButton.mas_bottom).offset(10.f);
             }];
             [_importButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_exportButton.mas_right).offset(15.f);
-                make.centerY.equalTo(self);
+                make.centerY.equalTo(_exportButton);
                 make.right.equalTo(self).offset(-15);
-                make.width.equalTo(_syncButton);
                 make.width.equalTo(_exportButton);
             }];
         } else {
@@ -168,7 +188,7 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HPBlockListCell"];
     
-    HPBlockListHeaderView *headerView = [[HPBlockListHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)
+    HPBlockListHeaderView *headerView = [[HPBlockListHeaderView alloc] initWithFrame:CGRectMake(0, 0, 0, IOS8_OR_LATER?100:60)
                                                                             delegate:self];
     self.tableView.tableHeaderView = headerView;
     
@@ -280,5 +300,17 @@
             [self.tableView reloadData];
         }
     }];
+}
+
+- (void)didTapScriptButton:(UIButton *)button
+{
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:@"https://raw.githubusercontent.com/wujichao/hipda_ios_client_v3/developer-jichao/userscript/hp-black-list.user.js"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"复制成功"
+                                                    message:@"Chrome脚本安装地址已经复制到粘贴板, 使用Chrome打开该地址即可安装, 黑名单与iOS客户端同步"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"好的"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 @end
