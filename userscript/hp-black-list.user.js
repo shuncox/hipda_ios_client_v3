@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name HiPDA BlackList
 // @description hi-pda.com论坛的黑名单插件, 支持使用iCloud账号同步, 支持与iOS客户端同步
-// @version 0.1
+// @version 0.2
 // @author Jichao Wu
 // @license MIT
 // @namespace com.jichaowu.hipda
@@ -42,6 +42,7 @@ function addConfigDiv() {
     //hp_cfg.style.display = "none";
     hp_cfg.innerHTML = '\
     	<a href="javascript:void(0)" id="hp_blacklist_close_button" style="position:fixed; top:25px; right:25px; color:white">关闭</a>\
+    	<a href="javascript:void(0)" id="hp_blacklist_app_button" style="position:fixed; top:50px; right:25px; color:white">iOS客户端</a>\
         <div id="hp_blacklist_blacklist"></div><br /><br />\
         先登录iCloud才能同步\
         <div id="apple-sign-in-button"></div>\
@@ -74,6 +75,10 @@ function addConfigDiv() {
     }, false);
     q('#hp_blacklist_close_button').addEventListener('click', function(){
     	hp_cfg.style.display = 'none';
+    }, false);
+
+    q('#hp_blacklist_app_button').addEventListener('click', function(){
+    	window.location.href = "http://www.hi-pda.com/forum/viewthread.php?tid=1272557";
     }, false);
 
     q('#hp_blacklist_add_btn').addEventListener('click', function(){
