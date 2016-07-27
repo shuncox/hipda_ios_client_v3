@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name HiPDA BlackList
 // @description hi-pda.com论坛的黑名单插件, 支持使用iCloud账号同步, 支持与iOS客户端同步
-// @version 0.2
+// @version 0.3
 // @author Jichao Wu
 // @license MIT
 // @namespace com.jichaowu.hipda
@@ -191,7 +191,7 @@ window.addEventListener('cloudkitloaded', function() {
 		containers: [{
 			containerIdentifier: 'iCloud.wujichao.HiPDA',
 			apiTokenAuth: {
-				apiToken: 'a85b21e1fe1f4ad1c7f01bdff3b13a71005e410ed64c6471dad9a0512668e731',
+				apiToken: '8f8836b5e9db0c4260ac058cabbb3b4d7a19f723ab78ced6f3fb997e72c08612',
 				persist: true,
 				signInButton: {
 					id: 'apple-sign-in-button',
@@ -202,7 +202,7 @@ window.addEventListener('cloudkitloaded', function() {
 					theme: 'white-with-outline' // 'black', 'white', 'white-with-outline'
 				}
 			},
-			environment: 'development'
+			environment: 'production'
 		}]
 	});
 
@@ -312,8 +312,12 @@ function rebuildWithList(list) {
 }
 
 function rebuildWithRecord(record) {
-	var list = record.fields['list'] ? record.fields['list'].value : [];
-	rebuildWithList(list);
+    if (record && record.fields &&  record.fields['list'] && record.fields['list'].value) {
+        var list = record.fields['list'].value;
+        rebuildWithList(list);
+    } else {
+         rebuildWithList([]);
+    }
 }
 
 function update(callback) {
