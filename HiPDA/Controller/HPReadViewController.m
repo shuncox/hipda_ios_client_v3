@@ -89,6 +89,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 
 @interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
+
+@property (nonatomic, strong) UIWebView *webView;
+
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
 
@@ -269,11 +272,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [wv.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
     
     [self setView:wv];
-}
-
-
-- (UIWebView *)webView {
-    return (UIWebView *)[self view];
+    self.webView = wv;
 }
 
 - (void)didReceiveMemoryWarning
@@ -287,8 +286,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 {
     // deal with web view special needs
     NSLog(@"UIWebViewVC dealloc");
-    [(UIWebView*)self.view stopLoading];
-    [(UIWebView*)self.view setDelegate:nil];
+    [self.webView stopLoading];
+    [self.webView setDelegate:nil];
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
     
