@@ -85,7 +85,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CTAssetsPickerController:
-    :commit: fe0faefc9b735bd51ac4202e98d4b3a0be933b4f
+    :commit: e5edf41a24ec62cf4fe78617198bdd1d175c9488
     :git: https://github.com/wujichao/CTAssetsPickerController.git
   Qiniu:
     :commit: 637cdc555b4f0c6227ae785964c717f950359af4
@@ -98,7 +98,7 @@ SPEC CHECKSUMS:
   AFNetworking: 127629aef6e631d57291c25154defc678c8a7337
   ALActionBlocks: ac91b1a37b60a8004fb687ddade0600446f3d3fa
   AnimatedGIFImageSerialization: b0f0cfe71eac1ee45a3d57ae533c23b8e6f29501
-  CTAssetsPickerController: 84c5034b1c124c43d7a2e6021ca229f16b0275cd
+  CTAssetsPickerController: a743e99465d457a619760a426ec36f53c1fe5555
   FBRetainCycleDetector: 45462f9ed1af0cd77224a4cc4e6dacaca47371b4
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   JSPatch: d667f53dd37bffe640e056198d26c5f0f1219e55
