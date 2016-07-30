@@ -330,7 +330,9 @@
         }
     } else {
         NSRange range = [string rangeOfString:@"normalthread_"];
-        string = [string substringFromIndex:range.location];
+        if (range.location != NSNotFound) {
+            string = [string substringFromIndex:range.location];
+        }
     }
     
     NSError *error;
