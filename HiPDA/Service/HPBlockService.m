@@ -77,6 +77,12 @@
         
         if (error.code == CKErrorUnknownItem) {
             CKRecord *record = [[CKRecord alloc] initWithRecordType:@"BlockList" recordID:recordID];
+            
+            NSArray *list = [self.class getSavedList];
+            if (list && list.count) {
+                record[@"list"] = list;
+            }
+            
             [self.class saveRecord:record completionHandler:^(CKRecord *savedRecord, NSError *error) {
                 completionHandler(savedRecord, error);
             }];
