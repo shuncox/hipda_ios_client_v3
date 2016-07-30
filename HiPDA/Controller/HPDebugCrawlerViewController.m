@@ -128,16 +128,18 @@
     // 临时打开xhr, 然后发一个请求, 上报结果
     if (![Setting boolForKey:HPSettingEnableXHR]) {
         [Setting saveBool:YES forKey:HPSettingEnableXHR];
+        
+        HPCrawlerErrorContext *context = self.context;
         @weakify(self);
         [[HPHttpClient sharedClient] getPathContent:self.context.url parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
             @strongify(self);
             NSArray *threadsInfo = [HPThread extractThreads:html stickthread:NO];
             
             [Flurry logEvent:@"Test_XHR" withParameters:@{
-                @"url":self.context.url,
+                @"url":context.url ?: @"",
                 @"count":@(threadsInfo.count),
                 @"yes": @(threadsInfo.count > 0),
-                @"js": [[@[@(threadsInfo.count)] arrayByAddingObjectsFromArray:[self.context.html hp_jsLinks]] componentsJoinedByString:@", "]
+                @"js": [[@[@(threadsInfo.count)] arrayByAddingObjectsFromArray:[context.html hp_jsLinks]] componentsJoinedByString:@", "]
             }];
             
             if (!self.flag1) [Setting saveBool:NO forKey:HPSettingEnableXHR];
