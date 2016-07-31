@@ -101,6 +101,7 @@
 #define kHPKeychainService @"HPAccount"
 #define kHPAccountUID @"HPAccountUID"
 #define kHPAccountUserName @"HPAccountUserName"
+#define kHPAskNotificationPermission @"kHPAskNotificationPermission"
 
 /*
 #define kHPLittleTail @"HPLittleTail"

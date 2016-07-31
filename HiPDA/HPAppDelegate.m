@@ -329,19 +329,13 @@
     if (enableBgFetch) {
         
         NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
-        
-        // to remove
-        // v3.4.1 设置了 interval 最大为360, 但真机测试, 当interval > 100时, 基本得不到刷新
-        if (interval > 100) {
-            interval = 100;
-            [Setting saveInteger:interval forKey:HPBgFetchInterval];
-        }
-        
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
         
         NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-        if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
-            && [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"]) {
+        BOOL haveAsk = [NSStandardUserDefaults boolForKey:kHPAskNotificationPermission or:NO];
+        BOOL haveLogin = [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"];
+        
+        if (!haveAsk && haveLogin) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
             [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex != alertView.cancelButtonIndex) {

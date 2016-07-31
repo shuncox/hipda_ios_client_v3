@@ -22,6 +22,7 @@
 #import "SWRevealViewController.h"
 #import "UIAlertView+Blocks.h"
 #import "DZWebBrowser.h"
+#import "HPAppDelegate.h"
 
 @interface HPLoginViewController ()
 
@@ -171,18 +172,8 @@
                           [Flurry trackUserIfNeeded];
                           [HPRearViewController threadVCRefresh];
                           
-                          if (![[HPAccount sharedHPAccount] checkLocalNotificationPermission]
-                              && ![username isEqualToString:@"wujichao"]) {
-                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
-                              [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                  if (buttonIndex != alertView.cancelButtonIndex) {
-                                      [[HPAccount sharedHPAccount] askLocalNotificationPermission];
-                                  } else {
-                                      [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
-                                  }
-                              }];
-                          }
-                          
+                          HPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+                          [appDelegate setupBgFetch];
                       }];
                      
                  } else {
