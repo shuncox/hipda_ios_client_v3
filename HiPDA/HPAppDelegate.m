@@ -184,6 +184,10 @@
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
     //NSLog(@"save cookies %@", data);
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"kUserDefaultsCookie"];
+    
+    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
+        CLSNSLog(@"-> applicationWillResignActive");
+    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -193,6 +197,10 @@
     
     // reset applicationIconBadgeNumber
     application.applicationIconBadgeNumber  = [[HPAccount sharedHPAccount] badgeNumber];
+    
+    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
+        CLSNSLog(@"-> applicationDidEnterBackground");
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -200,6 +208,10 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     // 省流量
     //[[BFHotPatch shared] check];
+    
+    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
+        CLSNSLog(@"-> applicationWillEnterForeground");
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -208,6 +220,10 @@
 //    [self routeTo:@{@"tid": @"1831924"}];
     [self checkPasteboard];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
+        CLSNSLog(@"-> applicationDidBecomeActive");
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
