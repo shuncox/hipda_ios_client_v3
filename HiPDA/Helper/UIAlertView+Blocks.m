@@ -23,11 +23,7 @@
 
 #import "UIAlertView+Blocks.h"
 #import <objc/runtime.h>
-
-/*
- * Runtime association key.
- */
-static NSString *kHandlerAssociatedKey = @"kHandlerAssociatedKey";
+#import <UIAlertView+BlocksKit.h>
 
 @implementation UIAlertView (Blocks)
 
@@ -36,40 +32,10 @@ static NSString *kHandlerAssociatedKey = @"kHandlerAssociatedKey";
 /*
  * Shows the receiver alert with the given handler.
  */
-- (void)showWithHandler:(UIAlertViewHandler)handler {
-    
-    objc_setAssociatedObject(self, (__bridge const void *)(kHandlerAssociatedKey), handler, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    [self setDelegate:self];
+- (void)showWithHandler:(UIAlertViewHandler)handler
+{
+    if (handler) self.bk_didDismissBlock = handler;
     [self show];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-/*
- * Sent to the delegate when the user clicks a button on an alert view.
- */
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    UIAlertViewHandler completionHandler = objc_getAssociatedObject(self, (__bridge const void *)(kHandlerAssociatedKey));
-    
-    if (completionHandler != nil) {
-        
-        completionHandler(alertView, buttonIndex);
-    }
-}
-
-- (void)didPresentAlertView:(UIAlertView *)alertView {
-    // crash on iOS9 beta
-    // https://crashlytics.com/solo2/ios/apps/wujichao.hipda/issues/557679d2f505b5ccf0144b1b
-    if (IOS8_OR_LATER && !IOS9_OR_LATER && [alertView textFieldAtIndex:0]) {
-        // http://stackoverflow.com/questions/25563108/uialertviews-textfield-does-not-show-keyboard-in-ios8
-        // hack alert: fix bug in iOS 8 that prevents text field from appearing
-        NSLog(@"%@", [alertView textFieldAtIndex:0]);
-        UITextRange *textRange = [[alertView textFieldAtIndex:0] selectedTextRange];
-        [[alertView textFieldAtIndex:0] selectAll:nil];
-        [[alertView textFieldAtIndex:0] setSelectedTextRange:textRange];
-    }
 }
 
 #pragma mark - Utility methods

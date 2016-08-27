@@ -26,5 +26,6 @@ pod 'ReactiveCocoa', '~>2.0'
 pod 'AnimatedGIFImageSerialization'
 pod 'SVPullToRefresh'
 pod 'MLeaksFinder', '~>0.2.0'
+pod 'BlocksKit'
 
 end
