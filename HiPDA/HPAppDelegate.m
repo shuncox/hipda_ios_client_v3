@@ -170,9 +170,23 @@
     
     [Flurry trackUserIfNeeded];
     
+    // for debug
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(debug_sd_image:) name:@"debug_sd_image_crash" object:nil];
+    
     return YES;
 }
 
+// for debug
+- (void)debug_sd_image:(NSNotification *)notification
+{
+    id object = notification.object;
+    if (object && [object isKindOfClass:[NSError class]]) {
+        NSError *error = (NSError *)object;
+        [Flurry logEvent:@"SDImage_Cache_Error"
+          withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
+                           @"error": [error description]}];
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
