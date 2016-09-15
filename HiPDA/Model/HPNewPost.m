@@ -911,7 +911,7 @@
                 NSString *imageNode = match.value;
                 if (useCDN) {
                     // <img class=\"attach_image\" src=\"http://img.hi-pda.com/forum/attachments/day_160327/1603272216a6c3122910ffe02f.jpeg\" aid=\"2465634\" size=\"719.06\" />
-                    imageNode = [imageNode stringByReplacingOccurrencesOfString:@"http://img.hi-pda.com/forum/" withString:@""];
+                    imageNode = [imageNode stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"http://%@/forum/", HP_IMG_BASE_URL] withString:@""];
                     imageNode = [RX(@"src=\"([^\"]+)\"") replace:imageNode withDetailsBlock:^NSString *(RxMatch *match) {
                         // 只有路径的图片是hi-pda图片
                         if ([match.value indexOf:@"http"] != -1) {
