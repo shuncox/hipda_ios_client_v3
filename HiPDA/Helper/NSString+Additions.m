@@ -8,6 +8,7 @@
 
 #import "NSString+Additions.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <JavaScriptCore/JavaScriptCore.h>
 
 static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static const short _base64DecodingTable[256] = {
@@ -423,6 +424,17 @@ NSString *substr(NSString *str, int start, int length)
 
 - (NSString *)URLEncode {
     return [self URLEncodeUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)js_encodeURI
+{
+//    UIWebView *v = [UIWebView new];
+//    NSString *s  =[NSString stringWithFormat:@"encodeURI('%@');", self];
+//    return [v stringByEvaluatingJavaScriptFromString:s];
+    
+    JSContext *context = [[JSContext alloc] init];
+    JSValue *value = [context evaluateScript:[NSString stringWithFormat:@"encodeURI('%@');", self]];
+    return [value toString];
 }
 
 - (NSString *)URLEncodeUsingEncoding:(NSStringEncoding)encoding {

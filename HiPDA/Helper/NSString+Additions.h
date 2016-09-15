@@ -58,6 +58,8 @@ NSString *substr(NSString *str, int start, int length);
 - (NSString *)URLDecode;
 - (NSString *)URLDecodeUsingEncoding:(NSStringEncoding)encoding ;
 
+- (NSString *)js_encodeURI; // javascript encodeURI
+
 @end
 
 @interface NSObject (isEmpty)

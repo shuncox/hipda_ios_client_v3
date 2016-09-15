@@ -37,7 +37,7 @@
          {
              NSLog(@"%@ %@ %@", i, k, resp);
              dispatch_async(dispatch_get_main_queue(), ^{
-                 NSString *url = [NSString stringWithFormat:@"%@%@", HP_QINIU_PREFIX, resp[@"key"]];
+                 NSString *url = [NSString stringWithFormat:@"%@%@", HP_QINIU_PREFIX, [resp[@"key"] js_encodeURI]];
                  completionBlock(url, i.error);
              });
          } option:opt];
