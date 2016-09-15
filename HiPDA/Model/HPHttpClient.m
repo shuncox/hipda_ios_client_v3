@@ -60,7 +60,8 @@
     [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     
     [self setDefaultHeader:@"Host" value:HPBaseURL];
-    [self setDefaultHeader:@"User-Agent" value:@"Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_3 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B508 Safari/9537.53"];
+    NSString *UA = [NSString stringWithFormat:@"com.jichaowu.hipda %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    [self setDefaultHeader:@"User-Agent" value:UA];
     [self setDefaultHeader:@"Accept" value:@"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"];
     [self setDefaultHeader:@"Accept-Encoding" value:@"gzip, deflate"];
     [self setDefaultHeader:@"Accept-Language" value:@"zh-cn"];
