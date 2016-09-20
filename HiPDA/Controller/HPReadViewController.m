@@ -441,6 +441,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
         @"**[min-height]**" : @((int)(HP_SCREEN_WIDTH * 0.618)).stringValue,
         @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light",
+        @"**[fontsize]**": (IS_IPAD && IOS10_OR_LATER) ?
+                                [NSString stringWithFormat:@"%dpx", (int)(self.currentFontSize/100.f*16)] :
+                                @"16px !Important",
 #if DEBUG && 0
         @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
 #else
@@ -1866,8 +1869,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 */
 - (void)changeFontSize
 {
-    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%i%%'",
-                          _currentFontSize];
+    NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%@%%'", @(self.currentFontSize)];
+    
+    // https://forums.developer.apple.com/thread/51079
+    if (IS_IPAD && IOS10_OR_LATER) {
+        jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.fontSize='%dpx'", (int)(self.currentFontSize/100.f*16)];
+    }
+    
     [self.webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
