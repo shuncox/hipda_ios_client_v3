@@ -29,3 +29,11 @@ pod 'MLeaksFinder', '~>0.2.0'
 pod 'BlocksKit'
 
 end
+
+# https://github.com/zwaldowski/BlocksKit/issues/283
+# https://fabric.io/solo2/ios/apps/wujichao.hipda/issues/57e1d31d0aeb16625b87148a/sessions/20df982d4d524f58a810ddc9a3b15958
+pre_install do
+    system("sed -i '' '/UITextField/d' Pods/BlocksKit/BlocksKit/BlocksKit+UIKit.h")
+    system('rm Pods/BlocksKit/BlocksKit/UIKit/UITextField+BlocksKit.h')
+    system('rm Pods/BlocksKit/BlocksKit/UIKit/UITextField+BlocksKit.m')
+end
