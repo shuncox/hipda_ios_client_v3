@@ -90,6 +90,7 @@
 		EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */; };
 		EA181ED918BB725200EE57F1 /* uid.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EA181ED818BB725200EE57F1 /* uid.sqlite */; };
 		EA2454BC1B60BF3000BCD6C6 /* HPHotPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */; };
+		EA301CE31D97FA0800F32169 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */; };
 		EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6C18C6003E00C5C5BD /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA368A8018C75E9900C5C5BD /* HPBaseCompostionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A7F18C75E9900C5C5BD /* HPBaseCompostionViewController.m */; };
@@ -530,6 +531,7 @@
 		EA181ED818BB725200EE57F1 /* uid.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = uid.sqlite; sourceTree = "<group>"; };
 		EA2454BA1B60BF3000BCD6C6 /* HPHotPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHotPatch.h; path = HotPatch/HPHotPatch.h; sourceTree = "<group>"; };
 		EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHotPatch.m; path = HotPatch/HPHotPatch.m; sourceTree = "<group>"; };
+		EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableFooterView.m; path = Vender/EGORefreshTableHeaderView/EGORefreshTableFooterView.m; sourceTree = "<group>"; };
 		EA368A6C18C6003E00C5C5BD /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableHeaderView.m; path = Vender/EGORefreshTableHeaderView/EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		EA368A6D18C6003E00C5C5BD /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EGORefreshTableHeaderView.h; path = Vender/EGORefreshTableHeaderView/EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -2008,6 +2010,7 @@
 				EAFDB8511829EFA900C1718B /* main.m */,
 				EAFDB8531829EFA900C1718B /* HiPDA-Prefix.pch */,
 				EA7111DA18B10C44007AD5D1 /* Localizable.strings */,
+				EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2212,6 +2215,7 @@
 				EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */,
 				EAD7F5E9183CC84600A750D9 /* hp_smile_coolmonkey_13.gif in Resources */,
 				EA9A39BF1A5BE92E0028BE7D /* bubble-classic-green.png in Resources */,
+				EA301CE31D97FA0800F32169 /* Launch Screen.storyboard in Resources */,
 				EAB7CEC319F00E90003830AC /* down@3x.png in Resources */,
 				EAD7F5DD183CC84600A750D9 /* hp_smile_coolmonkey_01.gif in Resources */,
 				EAD7F5E3183CC84600A750D9 /* hp_smile_coolmonkey_07.gif in Resources */,
