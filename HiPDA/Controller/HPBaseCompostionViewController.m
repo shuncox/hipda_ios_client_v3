@@ -205,7 +205,7 @@
 - (void)send:(id)sender {
     
     NSLog(@"send: need implement");
-    assert(0);
+    NSParameterAssert(0);
 }
 
 - (void)doneWithError:(NSError *)error {

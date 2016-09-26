@@ -24,7 +24,7 @@
     } else if ([self hasSuffix:@" Bytes"]) {
         return [[self stringByReplacingOccurrencesOfString:@" Bytes" withString:@""] doubleValue] / 1024;
     } else {
-        assert(0);
+        NSParameterAssert(0);
         return [self doubleValue];
     }
 }

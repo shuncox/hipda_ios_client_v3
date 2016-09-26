@@ -499,7 +499,7 @@
     
     RxMatch *a = [RX(@"space\\.php\\?uid=(\\d+)\"[^>]+>([^<]+)</a>") firstMatchWithDetails:html];
     
-    if (debugContent) assert(a.groups.count == 3);
+    if (debugContent) NSParameterAssert(a.groups.count == 3);
     if (a && a.groups.count == 3) {
         RxMatchGroup *a1 = [a.groups objectAtIndex:1];
         RxMatchGroup *a2 = [a.groups objectAtIndex:2];
@@ -522,7 +522,7 @@
     //
     NSString *dateString = nil;
     RxMatch *b = [RX(@"<em id=\"authorposton\\d+\">发表于 ([^<]+)</em>") firstMatchWithDetails:html];
-    if (debugContent) assert(b.groups.count == 2);
+    if (debugContent) NSParameterAssert(b.groups.count == 2);
     if (b && b.groups.count == 2) {
         RxMatchGroup *b1 = [b.groups objectAtIndex:1];
         dateString = b1.value;
@@ -543,7 +543,7 @@
     // floor
     //
     RxMatch *c = [RX(@"<em>(\\d+)</em>") firstMatchWithDetails:html];
-    if (debugContent) assert(c.groups.count == 2);
+    if (debugContent) NSParameterAssert(c.groups.count == 2);
     if (c && c.groups.count == 2) {
         RxMatchGroup *c1 = [c.groups objectAtIndex:1];
         self.floor = [c1.value integerValue];
@@ -561,7 +561,7 @@
     //
     Rx *rx = [Rx rx:@"<td class=\"t_msgfont\" id=\"postmessage_\\d+\">(.*?)</td></tr></table>" options:NSRegularExpressionDotMatchesLineSeparators];
     RxMatch *d = [rx firstMatchWithDetails:html];
-    //assert(d.groups.count == 2);
+    //NSParameterAssert(d.groups.count == 2);
     if (d && d.groups.count == 2) {
         
         RxMatchGroup *d1 = [d.groups objectAtIndex:1];

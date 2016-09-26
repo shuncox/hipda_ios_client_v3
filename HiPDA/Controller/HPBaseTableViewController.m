@@ -122,19 +122,19 @@
 }
 
 - (void)setup {
-    assert(0);
+    NSParameterAssert(0);
 }
 
 - (void)ayscn:(id)sender {
-    assert(0);
+    NSParameterAssert(0);
 }
 
 - (void)prevPage:(id)sender {
-    assert(0);
+    NSParameterAssert(0);
 }
 
 - (void)nextPage:(id)sender {
-    assert(0);
+    NSParameterAssert(0);
 }
 
 
