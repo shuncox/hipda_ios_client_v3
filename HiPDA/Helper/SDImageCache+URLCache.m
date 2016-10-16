@@ -9,6 +9,7 @@
 #import "SDImageCache+URLCache.h"
 #import <UIImage+MultiFormat.h>
 #import <SDWebImageDecoder.h>
+#import <SDWebImage/NSData+ImageContentType.h>
 
 @implementation SDImageCache (URLCache)
 
@@ -17,7 +18,11 @@
     NSData *data = [self diskImageDataBySearchingAllPathsForKey:key];
     UIImage *diskImage = nil;
 
-    if (data && (diskImage = [self hp_imageWithData:data key:key])) {
+    // gif不就在mem缓存了
+    NSString *imageContentType = [NSData sd_contentTypeForImageData:data];
+    BOOL isGIF = [imageContentType isEqualToString:@"image/gif"];
+    
+    if (!isGIF && data && (diskImage = [self hp_imageWithData:data key:key])) {
         CGFloat cost = diskImage.size.height * diskImage.size.width * diskImage.scale;
         [self.memCache setObject:diskImage forKey:key cost:cost];
     }
