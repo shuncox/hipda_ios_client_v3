@@ -13,10 +13,10 @@
 #import "HPTheme.h"
 #import "RegExCategories.h"
 #import "HPMessage.h"
+#import "HPAccountPassword.h"
 
 #import "HPRearViewController.h"
 
-#import "SSKeychain.h"
 #import "NSString+Additions.h"
 #import "AFHTTPRequestOperation.h"
 #import "NSHTTPCookieStorage+info.h"
@@ -70,12 +70,9 @@
 
 + (BOOL)isSetAccount {
     NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-    NSString *credential = [SSKeychain passwordForService:kHPKeychainService account:username];
-    NSArray *arr = [credential componentsSeparatedByString:@"\n"];
     
-    return [username length] && [credential length] && [arr count] == 3;
+    return [username length] && [HPAccountPassword isSetAccountFor:username];
 }
-
 
 - (void)loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
     
@@ -125,16 +122,16 @@
 - (void)_loginWithFormhash:(NSString *)formhash block:(void (^)(BOOL isLogin, NSError *error))block {
     
     NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-    NSString *credential = [SSKeychain passwordForService:kHPKeychainService account:username];
-    NSArray *arr = [credential componentsSeparatedByString:@"\n"];
-    if ([arr count] < 3) {
+    
+    HPAccountCredential *credential = [HPAccountPassword credentialFor:username];
+    if (!credential) {
         NSLog(@"login credential does not contain 3 components");
         block(NO, [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:@"Keychain出问题了"}]);
         return;
     }
-    NSString *password = arr[0];
-    NSString *questionid = arr[1];
-    NSString *answer = arr[2];
+    NSString *password = credential.password;
+    NSString *questionid = credential.questionid;
+    NSString *answer = credential.answer;
     
     NSDictionary *parameters = @{
          @"loginfield":@"username",
@@ -262,7 +259,7 @@
     // clear username
     [NSStandardUserDefaults saveObject:@"" forKey:kHPAccountUserName];
     // clear password
-    [SSKeychain deletePasswordForService:kHPKeychainService account:username];
+    [HPAccountPassword clearPasswordFor:username];
 
     //clear userDefaults
     // 有些不清空

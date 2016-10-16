@@ -263,6 +263,7 @@
 		EA9A39E31A5BE92E0028BE7D /* message-received.aiff in Resources */ = {isa = PBXBuildFile; fileRef = EA9A39A91A5BE92E0028BE7D /* message-received.aiff */; };
 		EA9A39E41A5BE92E0028BE7D /* message-sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = EA9A39AA1A5BE92E0028BE7D /* message-sent.aiff */; };
 		EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA168BB19C58B1D00C0F5EE /* HPBlockListViewController.m */; };
+		EAA1BEC41DB3217400F61E1B /* HPAccountPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1BEC31DB3217400F61E1B /* HPAccountPassword.m */; };
 		EAA1E67218D039FE00E1CFE1 /* navigation-classify_right_close-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA1E67018D039FE00E1CFE1 /* navigation-classify_right_close-arrow@2x.png */; };
 		EAA1E67318D039FE00E1CFE1 /* navigation-classify_right_unfold-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAA1E67118D039FE00E1CFE1 /* navigation-classify_right_unfold-arrow@2x.png */; };
 		EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA1E67518D03A4100E1CFE1 /* UIButton+Additions.m */; };
@@ -780,6 +781,8 @@
 		EA9A39AA1A5BE92E0028BE7D /* message-sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-sent.aiff"; sourceTree = "<group>"; };
 		EAA168BA19C58B1D00C0F5EE /* HPBlockListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBlockListViewController.h; path = Controller/HPBlockListViewController.h; sourceTree = "<group>"; };
 		EAA168BB19C58B1D00C0F5EE /* HPBlockListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBlockListViewController.m; path = Controller/HPBlockListViewController.m; sourceTree = "<group>"; };
+		EAA1BEC21DB3217400F61E1B /* HPAccountPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPAccountPassword.h; path = Model/HPAccountPassword.h; sourceTree = "<group>"; };
+		EAA1BEC31DB3217400F61E1B /* HPAccountPassword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPAccountPassword.m; path = Model/HPAccountPassword.m; sourceTree = "<group>"; };
 		EAA1E67018D039FE00E1CFE1 /* navigation-classify_right_close-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navigation-classify_right_close-arrow@2x.png"; path = "Image/toolbar/navigation-classify_right_close-arrow@2x.png"; sourceTree = "<group>"; };
 		EAA1E67118D039FE00E1CFE1 /* navigation-classify_right_unfold-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navigation-classify_right_unfold-arrow@2x.png"; path = "Image/toolbar/navigation-classify_right_unfold-arrow@2x.png"; sourceTree = "<group>"; };
 		EAA1E67418D03A4100E1CFE1 /* UIButton+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+Additions.h"; path = "Helper/UIButton+Additions.h"; sourceTree = "<group>"; };
@@ -1346,6 +1349,8 @@
 				EA8186BF18E29FD10092BDD7 /* HPIndecator.m */,
 				EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */,
 				EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */,
+				EAA1BEC21DB3217400F61E1B /* HPAccountPassword.h */,
+				EAA1BEC31DB3217400F61E1B /* HPAccountPassword.m */,
 				EA06A5F618C0E45F00EDBDEA /* More */,
 			);
 			name = Model;
@@ -2477,6 +2482,7 @@
 				EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */,
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
 				EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */,
+				EAA1BEC41DB3217400F61E1B /* HPAccountPassword.m in Sources */,
 				EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */,
 				EAE8C0311D43B89500C315AA /* NSError+BlockService.m in Sources */,
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,

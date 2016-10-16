@@ -13,7 +13,7 @@ pod 'ALActionBlocks'
 pod 'NSString+Emoji'
 pod 'FMDB'
 pod 'MCSwipeTableViewCell'
-pod 'SSKeychain'
+pod 'SAMKeychain', '~> 1.5.2'
 pod 'RETableViewManager', '1.6'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 #pod 'CTAssetsPickerController', :path => '../CTAssetsPickerController'

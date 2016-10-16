@@ -55,11 +55,11 @@ PODS:
     - REFormattedNumberField (~> 1.1.5)
     - REValidation (~> 0.1.4)
   - REValidation (0.1.4)
+  - SAMKeychain (1.5.2)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SKBounceAnimation (1.0.04)
-  - SSKeychain (1.2.3)
   - SVPullToRefresh (0.4.1)
   - ZAActivityBar (0.1.1):
     - SKBounceAnimation (~> 1.0)
@@ -84,8 +84,8 @@ DEPENDENCIES:
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6)
+  - SAMKeychain (~> 1.5.2)
   - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`, commit `8a468e2`)
-  - SSKeychain
   - SVPullToRefresh
   - ZAActivityBar
 
@@ -134,12 +134,12 @@ SPEC CHECKSUMS:
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
   RETableViewManager: 9667ecb29c005c32df40a1dd1828224840a351a2
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
+  SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   SDWebImage: 119e50946eee9ddf15589227ec2b6b37966ecd04
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
-  SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: b8d28e0c60d6a09237bb9198e5c95b3a1c2be967
+PODFILE CHECKSUM: 23f17c6877cb67c86a27e14ee29780204008166e
 
 COCOAPODS: 1.0.0

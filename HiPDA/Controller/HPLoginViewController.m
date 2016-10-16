@@ -14,7 +14,7 @@
 #import "HPAccount.h"
 #import "HPSetting.h"
 
-#import "SSKeychain.h"
+#import "HPAccountPassword.h"
 #import "NSUserDefaults+Convenience.h"
 #import "RETableViewManager.h"
 #import "RETableViewOptionsController.h"
@@ -143,16 +143,17 @@
         
         if (!answer) answer = @"";
         
-        
+        // 保存用户名
         NSDictionary *profileDict = @{kHPAccountUserName:username};
         NSLog(@"%@", profileDict);
         [NSStandardUserDefaults addObjectsAndKeysFromDictionary:profileDict];
         
-        NSArray *arr = @[password, questionid, answer];
-        NSString *credential = [arr componentsJoinedByString:@"\n"];
+        // 保存密码
+        HPAccountCredential *credential = [[HPAccountCredential alloc] initWithPassword:password questionid:questionid answer:answer];
+        [HPAccountPassword setCredentialFor:username
+                                 credential:credential];
         
-        [SSKeychain setPassword:credential forService:kHPKeychainService account:username];
-        
+        // 登录
         if ([NSStandardUserDefaults hasValueForKey:kHPAccountUserName]) {
             [SVProgressHUD showWithStatus:@"登录..." maskType:SVProgressHUDMaskTypeBlack];
             
