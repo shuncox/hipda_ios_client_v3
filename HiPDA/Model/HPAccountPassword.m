@@ -49,9 +49,22 @@
 
 + (HPAccountCredential *)credentialFor:(NSString *)username
 {
-    NSString *credential = [SAMKeychain passwordForService:kHPKeychainService account:username];
-    NSArray *arr = [credential componentsSeparatedByString:@"\n"];
+    NSError *error = nil;
+    NSString *credential = [SAMKeychain passwordForService:kHPKeychainService account:username error:&error];
     
+    // log
+    if (error) {
+        [Flurry logEvent:@"SAMKeychain_Read_Error"
+          withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
+                           @"error": [error description]}];
+    }
+    
+    // fallback
+    if (error) {
+        credential = [NSStandardUserDefaults stringForKey:kHPAccountUserPassword2 or:@""];
+    }
+    
+    NSArray *arr = [credential componentsSeparatedByString:@"\n"];
     if (arr.count != 3) {
         return nil;
     }
@@ -72,6 +85,18 @@
     NSError *error = nil;
     [SAMKeychain setPassword:str forService:kHPKeychainService account:username error:&error];
     
+    // fallback
+    if (error) {
+        [NSStandardUserDefaults saveObject:str forKey:kHPAccountUserPassword2];
+    }
+    
+    // log
+    if (error) {
+        [Flurry logEvent:@"SAMKeychain_Set_Error"
+          withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
+                           @"error": [error description]}];
+    }
+    
     return error;
 }
 
@@ -79,8 +104,17 @@
 {
     NSError *error = nil;
     [SAMKeychain deletePasswordForService:kHPKeychainService account:username error:&error];
+    [NSStandardUserDefaults saveObject:nil forKey:kHPAccountUserPassword2];
+    
+    // log
+    if (error) {
+        [Flurry logEvent:@"SAMKeychain_Delete_Error"
+          withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
+                           @"error": [error description]}];
+    }
     
     return error;
 }
+
 
 @end
