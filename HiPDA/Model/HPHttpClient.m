@@ -13,6 +13,7 @@
 #import <SVProgressHUD.h>
 #import "NSString+Additions.h"
 #import "HPSettingViewController.h"//¬_¬
+#import "HPLoginViewController.h"//¬_¬
 #import "HPThread.h"
 #import "NSString+HPOnlineParamaters.h"
 
@@ -222,6 +223,13 @@
         // need login
         [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *err) {
             NSLog(@"relogin %@", isLogin?@"success":@"fail");
+            if ([err.localizedDescription hasPrefix:@"登录失败，您还可以尝试"]) {
+                HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
+                
+                [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:[HPCommon NVCWithRootVC:loginvc] animated:YES completion:^{
+                    ;
+                }];
+            }
         }];
         
         if (error) {
