@@ -87,10 +87,27 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
  
 */
 
+@interface ReadWebView : UIWebView
+//@property (nonatomic, weak) UIView *navigationControllerView;
+@end
+
+@implementation ReadWebView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UIView *hitView = [super hitTest:point withEvent:event];
+    // 有些被表格撑宽的页面, 无法滑动返回
+    if (point.x < 20) {
+        return nil;//self.navigationControllerView;
+    }
+    return hitView;
+}
+
+@end
 
 @interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) ReadWebView *webView;
 
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
@@ -255,11 +272,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 - (void)loadView {
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    UIWebView *wv = [[UIWebView alloc] initWithFrame:screenFrame];
+    ReadWebView *wv = [[ReadWebView alloc] initWithFrame:screenFrame];
     [wv setScalesPageToFit:YES];
     wv.dataDetectorTypes = UIDataDetectorTypeNone;
     wv.delegate = self;
     wv.backgroundColor = [HPTheme backgroundColor];
+//    wv.navigationControllerView = self.navigationController.view;
    
     for(UIView *view in [[[wv subviews] objectAtIndex:0] subviews]) {
         if([view isKindOfClass:[UIImageView class]]) {
