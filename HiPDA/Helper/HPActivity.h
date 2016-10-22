@@ -10,11 +10,6 @@
 
 @interface HPActivity : UIActivity
 
-@property (nonatomic, copy) NSString *activityType;
-@property (nonatomic, copy) NSString *activityTitle;
-@property (nonatomic, strong) UIImage *activityImage;
-@property (nonatomic, copy) void((^actionBlock)());
-
 + (instancetype)activityWithType:(NSString *)type
                            title:(NSString *)title
                            image:(UIImage *)image

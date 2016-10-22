@@ -8,7 +8,29 @@
 
 #import "HPActivity.h"
 
+@interface HPActivity()
+
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) void((^actionBlock)());
+
+@end
+
 @implementation HPActivity
+
+- (UIActivityType)activityType
+{
+    return self.type;
+}
+- (NSString *)activityTitle
+{
+    return self.title;
+}
+- (UIImage *)activityImage
+{
+    return self.image;
+}
 
 + (instancetype)activityWithType:(NSString *)type
                            title:(NSString *)title
@@ -18,9 +40,9 @@
     HPActivity *activity = [[self alloc] init];
     
     if (activity) {
-        activity.activityType = type;
-        activity.activityTitle = title;
-        activity.activityImage = image ?: [self imageFromColor:[UIColor blackColor] frame:CGRectMake(0, 0, 0.1f, 0.1f)];
+        activity.type = type;
+        activity.title = title;
+        activity.image = image ?: [self imageFromColor:[UIColor blackColor] frame:CGRectMake(0, 0, 0.1f, 0.1f)];
         activity.actionBlock = actionBlock;
     }
     
