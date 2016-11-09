@@ -408,7 +408,9 @@
     [[EGOCache globalCache] clearCache];
 }
 
-#pragma mark - 
+
+#pragma mark -
+
 - (void)checkPasteboard
 {
     UIPasteboard *appPasteBoard = [UIPasteboard generalPasteboard];
@@ -417,21 +419,32 @@
         return;
     }
     
+    static NSString *PasteboardKey = @"PasteboardHistoryKey";
+
     // 去重
     static NSMutableSet *history = nil;
     if (!history) {
         history = [[NSMutableSet alloc] init];
+        NSArray *a = [NSStandardUserDefaults objectForKey:PasteboardKey];
+        for (NSString *k in a) {
+            [history addObject:k];
+        }
     }
-    if ([history containsObject:content]) {
-        NSLog(@"history hit %@", content);
-        return;
-    } else {
-        [history addObject:content];
-    }
+    
     
     // match
     NSString *tid = [RX(@"hi-pda\\.com/forum/viewthread\\.php\\?tid=(\\d+)") firstMatchValue:content];
     if (tid) {
+        
+        NSString *key = [@"tid_" stringByAppendingString:tid];
+        if ([history containsObject:key]) {
+            NSLog(@"history hit %@", content);
+            return;
+        } else {
+            [history addObject:key];
+            [NSStandardUserDefaults addObjectToArray:key forKey:PasteboardKey];
+        }
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:[NSString stringWithFormat:@"是否进入id为%@的帖子", tid] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"进入", nil];
         [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex != alertView.cancelButtonIndex) {

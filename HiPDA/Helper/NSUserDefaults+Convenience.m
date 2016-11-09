@@ -177,6 +177,21 @@ static void *NSUserDefaultsiCloudHandlerKey;
     [self synchronize];
 }
 
+// Storing Values To Array
+- (void)addObjectToArray:(id)value forKey:(NSString *)key
+{
+    NSParameterAssert(value);
+    NSParameterAssert(key);
+    NSArray *array = [self objectForKey:key];
+    if (!array) {
+        array = @[];
+        [self saveObject:array forKey:key];
+    }
+    NSMutableArray *a = [array mutableCopy];
+    [a addObject:value];
+    [self saveObject:[a copy] forKey:key];
+}
+
 // Resetting User Defaults
 - (void)removeAllValues
 {

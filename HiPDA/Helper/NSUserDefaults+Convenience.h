@@ -37,6 +37,9 @@
 - (void)saveFloat:   (CGFloat)value   forKey:(NSString *)key;
 - (void)saveBool:    (BOOL)value      forKey:(NSString *)key;
 
+// Storing Values To Array
+- (void)addObjectToArray:(id)value forKey:(NSString *)key;
+
 // Resetting and Removing User Defaults
 - (void)resetAllValues;
 - (void)resetValuesForKeys: (NSArray *)keys;
