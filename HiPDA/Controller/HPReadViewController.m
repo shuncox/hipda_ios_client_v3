@@ -451,7 +451,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (_thread.title && !refresh)
         [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
-    
+   
     NSDictionary *replace = @{
         @"**[txtadjust]**": S(@"%@.000001%%",@(self.currentFontSize)),
         @"**[lineHeight]**": S(@"%@%%", @(self.currentLineHeight)),
@@ -462,6 +462,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"**[fontsize]**": (IS_IPAD && IOS10_OR_LATER) ?
                                 [NSString stringWithFormat:@"%dpx", (int)(self.currentFontSize/100.f*16)] :
                                 @"16px !Important",
+        @"**[fontfamily]**": (IOS8_OR_LATER && UIAccessibilityIsBoldTextEnabled()) ?
+                            @"\"STHeitiSC-Medium\",\"HelveticaNeue-Bold\"" :
+                            @"\"STHeitiSC-Light\",\"HelveticaNeue\"",
 #if DEBUG && 0
         @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
 #else
