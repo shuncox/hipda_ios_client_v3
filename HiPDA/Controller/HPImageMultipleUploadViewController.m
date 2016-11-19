@@ -482,6 +482,11 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark -
 
 -(void)segmentedControlValueDidChange:(UISegmentedControl *)segment
