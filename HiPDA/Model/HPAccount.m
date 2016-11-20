@@ -62,7 +62,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedHPAccount = [[HPAccount alloc] init];
-        _sharedHPAccount.checkPmClient = [[HPHttpClient alloc] initWithBaseURL:[NSURL URLWithString:kHPClientBaseURLString]];
+        _sharedHPAccount.checkPmClient = [[HPHttpClient alloc] initWithBaseURL:[NSURL URLWithString:HP_BASE_URL]];
     });
     
     return _sharedHPAccount;
@@ -140,7 +140,7 @@
          @"questionid":questionid,
          @"answer":answer,
          @"cookietime":@"2592000",
-         @"referer":S(@"http://%@/forum/index.php", HPBaseURL),
+         @"referer":S(@"%@/forum/index.php", HP_BASE_URL),
          @"formhash":formhash
     };
     

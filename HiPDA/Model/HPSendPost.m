@@ -75,10 +75,10 @@
                            @"usesig":@"1",
                            @"noticeauthor":[NSString stringWithFormat:@"r|%d|[i]%@[/i]",post.user.uid, post.user.username],
                            /*@"noticeauthor":[NSString stringWithFormat:@"r|%d|[i]%@[/i]",644982, @"geka"],*/
-                           @"noticetrimstr":[NSString stringWithFormat:@"[b]回复 [url=http://%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b]", HPBaseURL, post.pid, tid, post.floor, post.user.username],
+                           @"noticetrimstr":[NSString stringWithFormat:@"[b]回复 [url=%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b]", HP_BASE_URL, post.pid, tid, post.floor, post.user.username],
                            @"noticeauthormsg":@"",
                            @"subject":@"",
-                           @"message":[NSString stringWithFormat:@"[b]回复 [url=http://%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b] \n    %@%@", HPBaseURL, post.pid, tid, post.floor, post.user.username, content, postTail]
+                           @"message":[NSString stringWithFormat:@"[b]回复 [url=%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d]%d#[/url] [i]%@[/i] [/b] \n    %@%@", HP_BASE_URL, post.pid, tid, post.floor, post.user.username, content, postTail]
                            };
             break;
         }
@@ -98,7 +98,7 @@
             
             //NSLog(@"%@", postcontent);
             
-            NSString *noticetrimstr = [NSString stringWithFormat:@"[quote]%@\n[size=2][color=#999999]%@ 发表于 %@[/color][url=http://%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d][img]http://%@/forum/images/common/back.gif[/img][/url][/size][/quote]", postcontent, post.user.username, [HPNewPost dateString:post.date], HPBaseURL, post.pid, tid, HPBaseURL];
+            NSString *noticetrimstr = [NSString stringWithFormat:@"[quote]%@\n[size=2][color=#999999]%@ 发表于 %@[/color][url=%@/forum/redirect.php?goto=findpost&pid=%d&ptid=%d][img]%@/forum/images/common/back.gif[/img][/url][/size][/quote]", postcontent, post.user.username, [HPNewPost dateString:post.date], HP_BASE_URL, post.pid, tid, HP_BASE_URL];
             
             
             parameters = @{

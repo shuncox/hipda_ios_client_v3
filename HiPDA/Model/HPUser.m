@@ -32,7 +32,7 @@
     NSString *avatar = [attributes valueForKeyPath:@"avatar"];
     if (avatar) {
         if (![avatar isEqualToString:@"000/00/00/00"]) {
-            _avatarImageURLString = [NSString stringWithFormat:@"http://%@/forum/uc_server/data/avatar/%@_avatar_small.jpg", HP_IMG_BASE_URL, avatar];
+            _avatarImageURLString = [NSString stringWithFormat:@"%@/forum/uc_server/data/avatar/%@_avatar_small.jpg", HP_IMG_BASE_URL, avatar];
             _avatarImageURL = [NSURL URLWithString:_avatarImageURLString];
             //NSLog(@"avatar url %@", _avatarImageURL);
         } else {
@@ -56,7 +56,7 @@
         //NSLog(@"%02d/%02d/%02d", a, b, c);
         
         //size [small middle big]
-        _avatarImageURLString = [NSString stringWithFormat:@"http://%@/forum/uc_server/data/avatar/000/%02ld/%02ld/%02ld_avatar_small.jpg", HP_IMG_BASE_URL, a, b, c];
+        _avatarImageURLString = [NSString stringWithFormat:@"%@/forum/uc_server/data/avatar/000/%02ld/%02ld/%02ld_avatar_small.jpg", HP_IMG_BASE_URL, a, b, c];
         _avatarImageURL = [NSURL URLWithString:_avatarImageURLString];
     }
     
@@ -94,7 +94,7 @@
     c = _uid % 100;
     //NSLog(@"%02d/%02d/%02d", a, b, c);
     
-    NSString *avatarImageURLString = [NSString stringWithFormat:@"http://%@/forum/uc_server/data/avatar/000/%02ld/%02ld/%02ld_avatar_small.jpg", HP_IMG_BASE_URL, a, b, c];
+    NSString *avatarImageURLString = [NSString stringWithFormat:@"%@/forum/uc_server/data/avatar/000/%02ld/%02ld/%02ld_avatar_small.jpg", HP_IMG_BASE_URL, a, b, c];
     return [NSURL URLWithString:avatarImageURLString];
 }
 

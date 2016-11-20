@@ -477,7 +477,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     
     self.htmlString = string;
-    [self.webView hp_safeLoadHTMLString:string baseURL:[NSURL URLWithString:S(@"http://%@/forum/", HPBaseURL)]];
+    [self.webView hp_safeLoadHTMLString:string baseURL:[NSURL URLWithString:S(@"%@/forum/", HP_BASE_URL)]];
     
     BOOL printable = !_forceFullPage && (_current_page == 1 && _current_author_uid == 0);
     
@@ -522,7 +522,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                     : @"";
                 
                 if ([Setting boolForKey:HPSettingShowAvatar]) {
-                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' %@ onerror=\"this.onerror=null;this.src='http://%@/forum/uc_server/images/noavatar_middle.gif'\" ></span><span class=\"author\" data-id='user://%@'>%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor,  [post.user.username URLEncode], avatarURLSrc, HPBaseURL, [post.user.username URLEncode], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
+                    list = [NSString stringWithFormat:@"<li class=\"%@\" data-id=\"floor://%ld\" ><a name=\"floor_%ld\"></a><div class=\"info\"><span class=\"avatar\"><img data-id='user://%@' %@ onerror=\"this.onerror=null;this.src='%@/forum/uc_server/images/noavatar_middle.gif'\" ></span><span class=\"author\" data-id='user://%@'>%@</span><span class=\"floor\">%ld#</span><span class=\"time-ago\">%@</span></div><div class=\"content%@\">%@</div></li>", liClass, post.floor, post.floor,  [post.user.username URLEncode], avatarURLSrc, HP_BASE_URL, [post.user.username URLEncode], post.user.username, post.floor, [HPNewPost dateString:post.date], isBlocked?@" blocked":@"", isBlocked?@"- <i>blocked</i> - ":post.body_html];
                     
                 } else {
                     
@@ -542,7 +542,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             NSString *final = [HPNewPost preProcessHTML:string];
             
             //NSLog(@"%@", final);
-            [weakSelf.webView hp_safeLoadHTMLString:final baseURL:[NSURL URLWithString:S(@"http://%@/forum/", HPBaseURL)]];
+            // https
+            [weakSelf.webView hp_safeLoadHTMLString:final baseURL:[NSURL URLWithString:S(@"%@/forum/", HP_BASE_URL)]];
             
             [weakSelf endLoad:YES];
             
@@ -719,7 +720,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         return NO;
         
     } else if ([request.URL.scheme isEqualToString:@"image"]) {
-        
         NSString *src = [request.URL.absoluteString stringByReplacingOccurrencesOfString:@"image://http//" withString:@"http://"];
         src = [src stringByReplacingOccurrencesOfString:@"image://https//" withString:@"https://"];
         [self openImage:src];
@@ -767,11 +767,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         return NO;
         
-    } else if ([urlString isEqualToString:S(@"http://%@/forum/", HPBaseURL)]){
+    } else if ([urlString isEqualToString:S(@"%@/forum/", HP_BASE_URL)]){
         
         return YES;
         
-    } else if ([urlString hasPrefix:S(@"http://%@/forum/#floor_", HPBaseURL)]){
+    } else if ([urlString hasPrefix:S(@"%@/forum/#floor_", HP_BASE_URL)]){
     
         return YES;
         
@@ -1090,7 +1090,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 # pragma mark - actions
 
 - (NSURL *)pageUrl {
-    NSString *url = [NSString stringWithFormat:@"http://%@/forum/viewthread.php?tid=%@&extra=&page=%@", HPBaseURL, @(_thread.tid), @(_current_page)];
+    NSString *url = [NSString stringWithFormat:@"%@/forum/viewthread.php?tid=%@&extra=&page=%@", HP_BASE_URL, @(_thread.tid), @(_current_page)];
     return [NSURL URLWithString:url];
 }
 
@@ -1131,7 +1131,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // cdn -> 原图url
     // 现在的交互形式是 用户点击小图(CDN压缩图片), 然后加载大图, 加载好大图来替换小图
-    if ([src indexOf:HP_CDN_BASE_URL] != -1) {
+    if ([src indexOf:HP_CDN_BASE_HOST] != -1) {
         src = [src hp_originalURL];
     }
 
@@ -1192,7 +1192,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (void)copyLink {
-    NSString *url = [NSString stringWithFormat:@"http://%@/forum/viewthread.php?tid=%ld&extra=&page=%ld", HPBaseURL, _thread.tid, _current_page];
+    NSString *url = [NSString stringWithFormat:@"%@/forum/viewthread.php?tid=%ld&extra=&page=%ld", HP_BASE_URL, _thread.tid, _current_page];
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     [pasteBoard setString:url];
     [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
@@ -2133,7 +2133,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 #pragma mark - capture
 - (void)prepareCapture
 {
-    NSString *url = [NSString stringWithFormat:@"http://%@/forum/viewthread.php?tid=%ld&extra=&page=%ld", HPBaseURL, _thread.tid, _current_page];
+    NSString *url = [NSString stringWithFormat:@"%@/forum/viewthread.php?tid=%ld&extra=&page=%ld", HP_BASE_URL, _thread.tid, _current_page];
     NSString *info = [NSString stringWithFormat:@"本页链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
     NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
     [self.webView stringByEvaluatingJavaScriptFromString:js];

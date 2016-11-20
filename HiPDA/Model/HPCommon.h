@@ -125,19 +125,22 @@
 #define HP_QINIU_PREFIX ([NSString stringWithFormat:@"http://hpclient.qiniudn.com/%@", HP_QINIU_SUFFIX])
 #define HP_MESSAGE_CELL_TAP_IMAGE @"HP_MESSAGE_CELL_TAP_IMAGE"
 
-#define HP_WWW_BASE_URL @"www.hi-pda.com"
-#define HP_CNC_BASE_URL @"cnc.hi-pda.com"
-#define HP_DEV_BASE_URL @"dev.hi-pda.com"
-#define HP_IMG_BASE_URL ([UMOnlineConfig getConfigParams:@"image_domain"] ?: @"img.hi-pda.com")
-#define HP_CDN_BASE_URL @"7xq2vp.com1.z0.glb.clouddn.com"
+#define HPSettingBaseURL @"HPSettingBaseURL"
+#define HPSettingForceDNS @"HPSettingForceDNS"
+#define HP_BASE_HOST ([Setting objectForKey:HPSettingBaseURL])
+#define HP_URL_FORMAT ([Setting boolForKey:HPSettingEnableHTTPS] ? @"https://%@" : @"http://%@")
+#define HP_BASE_URL ([NSString stringWithFormat:HP_URL_FORMAT, HP_BASE_HOST])
+#define HP_WWW_BASE_HOST @"www.hi-pda.com"
+#define HP_CNC_BASE_HOST @"cnc.hi-pda.com"
+#define HP_DEV_BASE_HOST @"dev.hi-pda.com"
+#define HP_IMG_BASE_HOST ([UMOnlineConfig getConfigParams:@"image_domain"] ?: @"img.hi-pda.com")
+#define HP_IMG_BASE_URL ([NSString stringWithFormat:HP_URL_FORMAT, HP_IMG_BASE_HOST])
+#define HP_CDN_BASE_HOST @"7xq2vp.com1.z0.glb.clouddn.com"
 #define HP_CDN_URL_SUFFIX (@"-w600")
 #define HP_THUMB_URL_SUFFIX (@".thumb.jpg")
 extern NSString *HP_WWW_BASE_IP;
 extern NSString *HP_CNC_BASE_IP;
 
-#define HPSettingBaseURL @"HPSettingBaseURL"
-#define HPSettingForceDNS @"HPSettingForceDNS"
-#define HPBaseURL ([Setting objectForKey:HPSettingBaseURL])
 
 #define HPSettingDic @"HPSettingDic"
 
@@ -180,6 +183,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingEnableXHR @"HPSettingEnableXHR"
 #define HPSettingSwipeBack @"HPSettingSwipeBack"
 #define HPSettingPrintPagePost @"HPSettingPrintPagePost"
+#define HPSettingEnableHTTPS @"HPSettingEnableHTTPS"
 
 // image
 #define HPSettingImageAutoLoadEnableWWAN @"HPSettingImageAutoLoadEnableWWAN"

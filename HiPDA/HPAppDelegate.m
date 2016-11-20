@@ -180,7 +180,7 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
     //
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:HPBaseURL]];
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:HP_BASE_URL]];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
     //NSLog(@"save cookies %@", data);
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"kUserDefaultsCookie"];

@@ -352,13 +352,13 @@
         [Flurry logEvent:@"Setting EnterStupidBar"];
     }];
     
-    RERadioItem *nodeItem = [RERadioItem itemWithTitle:@"节点" value:HPBaseURL selectionHandler:^(RERadioItem *item) {
+    RERadioItem *nodeItem = [RERadioItem itemWithTitle:@"节点" value:HP_BASE_HOST selectionHandler:^(RERadioItem *item) {
         
         [item deselectRowAnimated:YES];
         
         NSArray *nodeNames = @[
-            [NSString stringWithFormat:@"%@ (电信)", HP_WWW_BASE_URL],
-            [NSString stringWithFormat:@"%@ (联通)", HP_CNC_BASE_URL],
+            [NSString stringWithFormat:@"%@ (电信)", HP_WWW_BASE_HOST],
+            [NSString stringWithFormat:@"%@ (联通)", HP_CNC_BASE_HOST],
             [NSString stringWithFormat:@"%@ (电信, 强制指向)", HP_WWW_BASE_IP],
             [NSString stringWithFormat:@"%@ (联通, 强制指向)", HP_CNC_BASE_IP],
 #ifdef DEBUG
@@ -368,24 +368,24 @@
         
         NSArray *actions = @[
             ^{
-                [Setting saveObject:HP_WWW_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
                 [Setting saveBool:NO forKey:HPSettingForceDNS];
             },
             ^{
-                [Setting saveObject:HP_CNC_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
                 [Setting saveBool:NO forKey:HPSettingForceDNS];
             },
             ^{
-                [Setting saveObject:HP_WWW_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
                 [Setting saveBool:YES forKey:HPSettingForceDNS];
             },
             ^{
-                [Setting saveObject:HP_CNC_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
                 [Setting saveBool:YES forKey:HPSettingForceDNS];
             },
 #ifdef DEBUG
             ^{
-                [Setting saveObject:HP_DEV_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveObject:HP_DEV_BASE_HOST forKey:HPSettingBaseURL];
                 [Setting saveBool:NO forKey:HPSettingForceDNS];
             },
 #endif
@@ -418,6 +418,17 @@
     }];
     
     
+    // https
+    //
+    BOOL enableHttps = [Setting boolForKey:HPSettingEnableHTTPS];
+    REBoolItem *enableHttpsItem = [REBoolItem itemWithTitle:@"HTTPS (杜绝运营商劫持)" value:enableHttps switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"enableHttps Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingEnableHTTPS];
+        
+        [Flurry logEvent:@"Setting Https" withParameters:@{@"flag":@(item.value)}];
+    }];
+    
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];
     [section addItem:postTailText];
@@ -430,6 +441,7 @@
     [section addItem:setStupidBarItem];
     [section addItem:isPrintItem];
     [section addItem:nodeItem];
+    [section addItem:enableHttpsItem];
     
     [_manager addSection:section];
     return section;

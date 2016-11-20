@@ -316,7 +316,7 @@ typedef enum{
                  [UIAlertView showWithTitle:@"加载失败"
                                     message:@"返回结果为空, 可能是由于您设置了每页帖子15条, 而置顶帖超过15个, 前往个人中心修改为默认?"
                                     handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:S(@"http://%@/forum/memcp.php?action=profile&typeid=5", HPBaseURL)]];
+                                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:S(@"%@/forum/memcp.php?action=profile&typeid=5", HP_BASE_URL)]];
                                     }];
              } else if (error.code == HPERROR_CRAWLER_CODE) {
                  HPCrawlerErrorContext *context = error.userInfo[@"context"];

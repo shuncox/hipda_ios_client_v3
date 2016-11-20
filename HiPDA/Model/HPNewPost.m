@@ -348,7 +348,7 @@
 - (void)processContentHTML {
     
     // 回复
-    _body_html = [RX(@"<a href=\"http://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">(\\d+)#</a>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+    _body_html = [RX(@"<a href=\"https?://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">(\\d+)#</a>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
         RxMatchGroup *m2 = [match.groups objectAtIndex:2];
@@ -359,7 +359,7 @@
     }];
     
     // 引用
-    _body_html = [RX(@"<a href=\"http://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+    _body_html = [RX(@"<a href=\"https?://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
         return [NSString stringWithFormat:@"<a href=\"gotofloor://0_%ld\" >", [m1.value integerValue]];
@@ -580,7 +580,7 @@
     
     if (debugContent) NSLog(@"content %@", self.body_html);
     
-    _body_html = [RX(@"<a href=\"http://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">(\\d+)#</a>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+    _body_html = [RX(@"<a href=\"https?://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">(\\d+)#</a>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
         RxMatchGroup *m2 = [match.groups objectAtIndex:2];
@@ -590,7 +590,7 @@
         return [NSString stringWithFormat:@"<a href=\"gotofloor://%ld_%ld\" >%ld#</a>", [m2.value integerValue], [m1.value integerValue], [m2.value integerValue]];
     }];
     
-    _body_html = [RX(@"<a href=\"http://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
+    _body_html = [RX(@"<a href=\"https?://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
         
@@ -923,7 +923,7 @@
                 NSString *imageNode = match.value;
                 if (useCDN) {
                     // <img class=\"attach_image\" src=\"http://img.hi-pda.com/forum/attachments/day_160327/1603272216a6c3122910ffe02f.jpeg\" aid=\"2465634\" size=\"719.06\" />
-                    imageNode = [imageNode stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"http://%@/forum/", HP_IMG_BASE_URL] withString:@""];
+                    imageNode = [imageNode stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/forum/", HP_IMG_BASE_URL] withString:@""];
                     imageNode = [RX(@"src=\"([^\"]+)\"") replace:imageNode withDetailsBlock:^NSString *(RxMatch *match) {
                         // 只有路径的图片是hi-pda图片
                         if ([match.value indexOf:@"http"] != -1) {
@@ -934,7 +934,7 @@
                         }
                         
                         NSString *src = [(RxMatchGroup *)match.groups[1] value];
-                        src = [NSString stringWithFormat:@"http://%@/forum/%@", HP_IMG_BASE_URL, src];
+                        src = [NSString stringWithFormat:@"%@/forum/%@", HP_IMG_BASE_URL, src];
                         src = [src hp_thumbnailURL];
                         
                         return [NSString stringWithFormat:@"src=\"%@\"", src];

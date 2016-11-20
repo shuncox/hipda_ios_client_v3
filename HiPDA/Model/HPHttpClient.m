@@ -29,7 +29,7 @@
     static HPHttpClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[HPHttpClient alloc] initWithBaseURL:[NSURL URLWithString:kHPClientBaseURLString]];
+        _sharedClient = [[HPHttpClient alloc] initWithBaseURL:[NSURL URLWithString:HP_BASE_URL]];
     });
     
     /*
@@ -60,14 +60,14 @@
     
     [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     
-    [self setDefaultHeader:@"Host" value:HPBaseURL];
+    [self setDefaultHeader:@"Host" value:HP_BASE_HOST];
     NSString *UA = [NSString stringWithFormat:@"com.jichaowu.hipda %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
     [self setDefaultHeader:@"User-Agent" value:UA];
     [self setDefaultHeader:@"Accept" value:@"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"];
     [self setDefaultHeader:@"Accept-Encoding" value:@"gzip, deflate"];
     [self setDefaultHeader:@"Accept-Language" value:@"zh-cn"];
     
-    [self setDefaultHeader:@"Referer" value:S(@"http://%@/forum/forumdisplay.php?fid=2", HPBaseURL)];
+    [self setDefaultHeader:@"Referer" value:S(@"%@/forum/forumdisplay.php?fid=2", HP_BASE_URL)];
     
     self.operationQueue.maxConcurrentOperationCount = 4;
     

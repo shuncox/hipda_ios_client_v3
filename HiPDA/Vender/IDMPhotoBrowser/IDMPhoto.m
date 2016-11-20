@@ -148,7 +148,7 @@ caption = _caption;
             
             // CDN模式
             // 传进来原图url, 换成cdn看看有没有缓存, 然后下载原图
-            if ([src rangeOfString:HP_IMG_BASE_URL].location != NSNotFound) {
+            if ([src rangeOfString:HP_IMG_BASE_HOST].location != NSNotFound) {
                 thumbUrl = [src hp_thumbnailURL];
             }
             // 论坛自带压缩模式

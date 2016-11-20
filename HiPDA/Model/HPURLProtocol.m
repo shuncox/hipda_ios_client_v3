@@ -41,8 +41,8 @@ static NSString *const HPHTTPURLProtocolHandledKey = @"HPHTTPURLProtocolHandledK
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         URLMappingDitionary = @{
-                                HP_WWW_BASE_URL : HP_WWW_BASE_IP,
-                                HP_CNC_BASE_URL : HP_CNC_BASE_IP
+                                HP_WWW_BASE_HOST : HP_WWW_BASE_IP,
+                                HP_CNC_BASE_HOST : HP_CNC_BASE_IP
                                 };
     });
     

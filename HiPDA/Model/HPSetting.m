@@ -91,7 +91,7 @@
 
 + (NSDictionary *)defualts {
     NSDictionary *defaults = @{HPSettingTail:@"iOS fly ~",
-                               HPSettingBaseURL:HP_WWW_BASE_URL,
+                               HPSettingBaseURL:HP_WWW_BASE_HOST,
                                HPSettingForceDNS:@NO,
                                HPSettingFavForums:@[@2, @6, @59],
                                HPSettingFavForumsTitle:@[@"Discovery", @"Buy & Sell", @"E-INK"],
@@ -139,6 +139,7 @@
                                HPSettingImageCDNMinValueWifi:@1024,
                                
                                HPSettingPrintPagePost:@YES,
+                               HPSettingEnableHTTPS:@NO,
                                };
     return defaults;
 }
