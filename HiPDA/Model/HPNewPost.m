@@ -109,6 +109,11 @@
 
                     block:(void (^)(NSArray *posts, NSDictionary *parameters, NSError *error))block
 {
+    BOOL enablePrint = [Setting boolForKey:HPSettingPrintPagePost];
+    if (!enablePrint) {
+        printable = NO;
+    }
+    
     // return cache
     //
     NSArray *cachedThread = [[HPCache sharedCache] loadThread:tid page:page];

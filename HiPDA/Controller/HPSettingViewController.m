@@ -330,6 +330,16 @@
         [Flurry logEvent:@"Setting ToggleSwipeBack" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    // 省流量模式
+    //
+    BOOL isPrint = [Setting boolForKey:HPSettingPrintPagePost];
+    REBoolItem *isPrintItem = [REBoolItem itemWithTitle:@"省流量模式(加载打印版网页)" value:isPrint switchValueChangeHandler:^(REBoolItem *item) {
+        
+        NSLog(@"isSwipeBack Value: %@", item.value ? @"YES" : @"NO");
+        [Setting saveBool:item.value forKey:HPSettingPrintPagePost];
+        
+        [Flurry logEvent:@"Setting Print" withParameters:@{@"flag":@(item.value)}];
+    }];
     
     //
     //
@@ -418,6 +428,7 @@
     [section addItem:isPullReplyItem];
     [section addItem:isSwipeBackItem];
     [section addItem:setStupidBarItem];
+    [section addItem:isPrintItem];
     [section addItem:nodeItem];
     
     [_manager addSection:section];

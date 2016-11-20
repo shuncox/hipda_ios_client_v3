@@ -137,6 +137,8 @@
                                HPSettingImageSizeFilterMinValueWifi:@1024,
                                HPSettingImageCDNEnableWifi:@NO,
                                HPSettingImageCDNMinValueWifi:@1024,
+                               
+                               HPSettingPrintPagePost:@YES,
                                };
     return defaults;
 }
