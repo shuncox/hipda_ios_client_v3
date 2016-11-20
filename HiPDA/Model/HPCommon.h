@@ -127,6 +127,7 @@
 
 #define HP_WWW_BASE_URL @"www.hi-pda.com"
 #define HP_CNC_BASE_URL @"cnc.hi-pda.com"
+#define HP_DEV_BASE_URL @"dev.hi-pda.com"
 #define HP_IMG_BASE_URL ([UMOnlineConfig getConfigParams:@"image_domain"] ?: @"img.hi-pda.com")
 #define HP_CDN_BASE_URL @"7xq2vp.com1.z0.glb.clouddn.com"
 #define HP_CDN_URL_SUFFIX (@"-w600")

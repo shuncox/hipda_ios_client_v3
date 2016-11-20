@@ -11,6 +11,7 @@
 #import <AFHTTPClient.h>
 
 #define kHPClientBaseURLString (S(@"http://%@/", HPBaseURL))
+//#define kHPClientBaseURLString (S(@"https://%@/", HPBaseURL))
 
 @class HPThread;
 @interface HPHttpClient : AFHTTPClient

@@ -350,14 +350,35 @@
             [NSString stringWithFormat:@"%@ (电信)", HP_WWW_BASE_URL],
             [NSString stringWithFormat:@"%@ (联通)", HP_CNC_BASE_URL],
             [NSString stringWithFormat:@"%@ (电信, 强制指向)", HP_WWW_BASE_IP],
-            [NSString stringWithFormat:@"%@ (联通, 强制指向)", HP_CNC_BASE_IP]
+            [NSString stringWithFormat:@"%@ (联通, 强制指向)", HP_CNC_BASE_IP],
+#ifdef DEBUG
+            @"Dev",
+#endif
         ];
         
-        NSArray *nodes = @[
-            HP_WWW_BASE_URL,
-            HP_CNC_BASE_URL,
-            HP_WWW_BASE_URL,
-            HP_CNC_BASE_URL
+        NSArray *actions = @[
+            ^{
+                [Setting saveObject:HP_WWW_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveBool:NO forKey:HPSettingForceDNS];
+            },
+            ^{
+                [Setting saveObject:HP_CNC_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveBool:NO forKey:HPSettingForceDNS];
+            },
+            ^{
+                [Setting saveObject:HP_WWW_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveBool:YES forKey:HPSettingForceDNS];
+            },
+            ^{
+                [Setting saveObject:HP_CNC_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveBool:YES forKey:HPSettingForceDNS];
+            },
+#ifdef DEBUG
+            ^{
+                [Setting saveObject:HP_DEV_BASE_URL forKey:HPSettingBaseURL];
+                [Setting saveBool:NO forKey:HPSettingForceDNS];
+            },
+#endif
         ];
         
         // Present options controller
@@ -368,10 +389,8 @@
             [item reloadRowWithAnimation:UITableViewRowAnimationNone];
             
             NSUInteger index = [nodeNames indexOfObject:item.value];
-            NSString *node = [nodes objectAtIndex:index];
-            [Setting saveObject:node forKey:HPSettingBaseURL];
-            [Setting saveBool:index > 1 forKey:HPSettingForceDNS];
-            [HPURLProtocol registerURLProtocolIfNeed];
+            void (^action)() = actions[index];
+            action();
             
             [Flurry logEvent:@"Setting Node" withParameters:@{@"option":item.value}];
             
