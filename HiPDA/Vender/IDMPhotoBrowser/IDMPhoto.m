@@ -142,12 +142,25 @@ caption = _caption;
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
             
-            
             // 加载小图
             NSString *src = [_photoURL absoluteString];
+            NSString *thumbUrl = nil;
+            
+            // CDN模式
+            // 传进来原图url, 换成cdn看看有没有缓存, 然后下载原图
             if ([src rangeOfString:HP_IMG_BASE_URL].location != NSNotFound) {
-                NSString *thumbnaiUrl = [src hp_thumbnailURL];
-                NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:thumbnaiUrl]];
+                thumbUrl = [src hp_thumbnailURL];
+            }
+            // 论坛自带压缩模式
+            // 使用自带thumb图, 传进来是小图, 先看看有没有缓存, 然后换成大图url, 下载
+            if ([src hasSuffix:HP_THUMB_URL_SUFFIX]) {
+                thumbUrl = src;
+                NSString *originalUrl = [src stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
+                _photoURL = [NSURL URLWithString:originalUrl];
+            }
+        
+            if (thumbUrl) {
+                NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:thumbUrl]];
                 if ([[SDImageCache sharedImageCache] hp_imageExistsWithKey:key]) {
                     UIImage *thumbnail = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
                     NSParameterAssert(thumbnail);
@@ -156,7 +169,7 @@ caption = _caption;
                     [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
                 }
             }
-        
+            
             // 加载大图
             BOOL enableProgressiveDownload = [UMOnlineConfig getBoolConfigWithKey:@"EnableProgressiveDownload" defaultYES:YES];
             // gif时 不开启渐进加载, 也许应该在sd内部直接判断gif格式, 不过通过suffix简单一些

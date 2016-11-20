@@ -127,7 +127,6 @@
         NSLog(@"return cache");
         return;
     }
-
     
     if (printable && redirectFromPid == 0) {
         [HPNewPost loadPrintableThreadWithTid:tid refresh:forceRefresh block:block];
@@ -400,8 +399,7 @@
         // 理想的数据结构应该是 {title:xxx, postInfo:{...} content:[html, imageInfo, html, text, imageInfo, videoInfo, otherType...]}
         
         // 帖子内部 image
-        _body_html = [RX(@"<img src=\"[^\"]*images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
-            
+        NSString *(^replacer)(RxMatch *match) = ^NSString *(RxMatch *match) {
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
             NSString *src = m1.value;
@@ -414,7 +412,10 @@
             }
             
             return [NSString stringWithFormat:imageElement, m1.value, aid];
-        }];
+        };
+        
+        _body_html = [RX(@"<img src=\"[^\"]*images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:replacer];
+        _body_html = [RX(@"<a href=\"javascript:;\"><img onclick=.*?src=\"(.*?)\".*?aimg_(\\d+).*?/></a>") replace:_body_html withDetailsBlock:replacer];
 //=============================================
         
         // 帖子底部 image
@@ -623,12 +624,11 @@
         // 最后会是 <img class="attach_image" src="http://domain.com/xxx.jpg" aid="123456" size="123" />
         
         // 帖子内部 image
-        _body_html = [RX(@"<img src=\"[^\"]+images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
-            
+        NSString *(^replacer)(RxMatch *match) = ^NSString *(RxMatch *match) {
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             RxMatchGroup *m2 = [match.groups objectAtIndex:2];
-            //NSLog(@"%@", m1.value);
             NSString *src = m1.value;
+            
             // 正则提取是倒序
             [imgsArray insertObject:src atIndex:0];
             NSString *aid = m2.value;
@@ -637,7 +637,10 @@
             }
             
             return [NSString stringWithFormat:imageElement, m1.value, aid];
-        }];
+        };
+        
+        _body_html = [RX(@"<img src=\"[^\"]*images/common/none\\.gif\" file=\"(.*?)\".*?aimg_(\\d+).*?/>") replace:_body_html withDetailsBlock:replacer];
+        _body_html = [RX(@"<a href=\"javascript:;\"><img onclick=.*?src=\"(.*?)\".*?aimg_(\\d+).*?/></a>") replace:_body_html withDetailsBlock:replacer];
 //======================================================
         // attach
         NSRange range = [html rangeOfString:@"<div class=\"postattachlist\">"];
@@ -910,7 +913,11 @@
             BOOL filter = imageSizeFilterEnable && imageSize >= imageSizeFilterMinValue;
             filter = filter || !imageAutoLoadEnable;
             
-            BOOL useCDN = filter && imageCDNEnable && imageSize >= imageCDNMinValue && ![src hasSuffix:@".gif"];
+            BOOL useCDN = filter &&
+                            imageCDNEnable &&
+                            imageSize >= imageCDNMinValue
+                            && ![src hasSuffix:@".gif"]
+                            && ![src hasSuffix:HP_THUMB_URL_SUFFIX];
             
             if (filter) {
                 NSString *imageNode = match.value;

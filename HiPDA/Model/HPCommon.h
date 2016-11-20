@@ -131,6 +131,7 @@
 #define HP_IMG_BASE_URL ([UMOnlineConfig getConfigParams:@"image_domain"] ?: @"img.hi-pda.com")
 #define HP_CDN_BASE_URL @"7xq2vp.com1.z0.glb.clouddn.com"
 #define HP_CDN_URL_SUFFIX (@"-w600")
+#define HP_THUMB_URL_SUFFIX (@".thumb.jpg")
 extern NSString *HP_WWW_BASE_IP;
 extern NSString *HP_CNC_BASE_IP;
 
