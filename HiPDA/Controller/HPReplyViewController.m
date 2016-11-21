@@ -19,7 +19,6 @@
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
 
-
 @interface HPReplyViewController ()
 
 @property (nonatomic, strong) HPNewPost* post;
@@ -29,10 +28,6 @@
 @property (nonatomic, strong) NSString *formhash;
 @property (nonatomic, strong) HPNewPost* correct_post;
 @property (nonatomic, assign) BOOL waitingForToken;
-
-
-@property (nonatomic, strong) NSTimer *countDownTimer;
-@property (nonatomic, assign) NSTimeInterval secondsCountDown;
 
 @end
 
@@ -160,17 +155,22 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
-    [HPSendPost sendPostWithContent:weakSelf.contentTextFiled.text
-                             action:weakSelf.actionType
-                                fid:_thread.fid
-                                tid:_thread.tid
-                               post:_correct_post
-                        postcontent:postcontent
-                            subject:nil
-                        thread_type:0
-                           formhash:_formhash
-                             images:weakSelf.imagesString
-                              block:^(NSString *msg, NSError *error)
+    
+    HPReplyParams *replyParams = ({
+        HPReplyParams *request = [HPReplyParams new];
+        request.content = self.contentTextFiled.text;
+        request.actionType = self.actionType;
+        request.fid = self.thread.fid;
+        request.tid = self.thread.tid;
+        request.post = self.correct_post;
+        request.postcontent = postcontent;
+        request.formhash = self.formhash;
+        request.images = self.imagesString;
+        request;
+    });
+    
+    [HPSendPost sendReply:replyParams
+                    block:^(NSString *msg, NSError *error)
      {
          weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
          if (error) {
@@ -182,12 +182,16 @@
                                                       handler:^(UIAlertView *alertView, NSInteger buttonIndex)
                   {
                       if (buttonIndex == [alertView cancelButtonIndex]) {
-                          ;
-                      } else {
-                          [weakSelf.contentTextFiled resignFirstResponder];
-                          _secondsCountDown = 31;
-                          _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:weakSelf selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+                          return;
                       }
+                      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                          [HPSendPost sendReply:replyParams
+                                          block:^(NSString *msg, NSError *error) {
+                                              // 有可能还会发送失败(30s内多个请求排队发送), 不管了...
+                                          }];
+                      });
+                      [SVProgressHUD showSuccessWithStatus:@"已在后台排队中, 30s后帮您发送"];
+                      [weakSelf close];
                   }];
              } else {
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
@@ -199,15 +203,5 @@
          }
      }];
 }
-
--(void)timeFireMethod{
-    _secondsCountDown--;
-    [SVProgressHUD showProgress:_secondsCountDown/31.f status:nil maskType:SVProgressHUDMaskTypeBlack];
-    if(_secondsCountDown == 0){
-        [_countDownTimer invalidate];
-        [self send:nil];
-    }
-}
-
 
 @end

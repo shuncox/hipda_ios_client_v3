@@ -221,6 +221,10 @@
     [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
 }
 
+- (void)close {
+    [self close:nil];
+}
+
 - (void)close:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

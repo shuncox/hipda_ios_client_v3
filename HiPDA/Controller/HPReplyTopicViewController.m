@@ -21,9 +21,6 @@
 @property (nonatomic, strong)NSString *formhash;
 @property (nonatomic, assign)BOOL waitingForToken;
 
-@property (nonatomic, strong)NSTimer *countDownTimer;
-@property (nonatomic, assign)NSTimeInterval secondsCountDown;
-
 @end
 
 @implementation HPReplyTopicViewController
@@ -119,13 +116,21 @@
     [self.view endEditing:YES];
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     
+    
+    HPReplyTopicParams *replyParams = ({
+        HPReplyTopicParams *request = [HPReplyTopicParams new];
+        request.content = self.contentTextFiled.text;
+        request.fid = self.thread.fid;
+        request.tid = self.thread.tid;
+        request.formhash = self.formhash;
+        request.images = self.imagesString;
+        request;
+    });
+    
     __weak typeof(self) weakSelf = self;
-    [HPSendPost sendReplyWithThread:_thread
-                            content:weakSelf.contentTextFiled.text
-                       imagesString:weakSelf.imagesString
-                           formhash:_formhash
-                              block:
-     ^(NSString *msg, NSError *error) {
+    [HPSendPost sendReplyTopic:replyParams
+                         block:^(NSString *msg, NSError *error)
+    {
          weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
          if (error) {
              
@@ -136,12 +141,16 @@
                                                       handler:^(UIAlertView *alertView, NSInteger buttonIndex)
                   {
                       if (buttonIndex == [alertView cancelButtonIndex]) {
-                          ;
-                      } else {
-                          [weakSelf.contentTextFiled resignFirstResponder];
-                          _secondsCountDown = 31;
-                          _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:weakSelf selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+                          return;
                       }
+                      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                          [HPSendPost sendReplyTopic:replyParams
+                                               block:^(NSString *msg, NSError *error) {
+                                                   // 有可能还会发送失败(30s内多个请求排队发送), 不管了...
+                                               }];
+                      });
+                      [SVProgressHUD showSuccessWithStatus:@"已在后台排队中, 30s后帮您发送"];
+                      [weakSelf close];
                   }];
              } else {
                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
@@ -152,15 +161,6 @@
              [weakSelf doneWithError:nil];
          }
      }];
-}
-
--(void)timeFireMethod{
-    _secondsCountDown--;
-    [SVProgressHUD showProgress:_secondsCountDown/31.f status:nil maskType:SVProgressHUDMaskTypeBlack];
-    if(_secondsCountDown == 0){
-        [_countDownTimer invalidate];
-        [self send:nil];
-    }
 }
 
 @end

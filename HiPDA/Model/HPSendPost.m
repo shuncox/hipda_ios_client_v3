@@ -18,6 +18,14 @@
 #import "NSString+Additions.h"
 #import <NSString+Emoji/NSString+Emoji.h>
 
+@implementation HPReplyParams
+
+@end
+
+@implementation HPReplyTopicParams
+
+@end
+
 @implementation HPSendPost
 
 
@@ -254,29 +262,6 @@
                         thread_type:type
                            formhash:formhash
                              images:images block:block];
-}
-
-
-/*
- fid tid
- */
-+ (void)sendReplyWithThread:(HPThread *)thread
-                    content:(NSString *)content
-               imagesString:(NSArray *)imagesString
-                   formhash:(NSString *)formhash
-                      block:(void (^)(NSString *msg, NSError *error))block
-{
-    [HPSendPost sendPostWithContent:content
-                             action:ActionTypeNewPost
-                                fid:thread.fid
-                                tid:thread.tid
-                               post:nil
-                        postcontent:nil
-                            subject:nil
-                        thread_type:0
-                           formhash:formhash
-                             images:imagesString
-                              block:block];
 }
 
 + (void)uploadImage:(NSData *)imageData
@@ -642,6 +627,40 @@
     // ...
     
     return r;
+}
+
++ (void)sendReply:(HPReplyParams *)replyParams
+            block:(void (^)(NSString *msg, NSError *error))block
+{
+    return
+    [HPSendPost sendPostWithContent:replyParams.content
+                             action:replyParams.actionType
+                                fid:replyParams.fid
+                                tid:replyParams.tid
+                               post:replyParams.post
+                        postcontent:replyParams.postcontent
+                            subject:nil
+                        thread_type:0
+                           formhash:replyParams.formhash
+                             images:replyParams.images
+                              block:block];
+}
+
++ (void)sendReplyTopic:(HPReplyTopicParams *)replyParams
+                 block:(void (^)(NSString *msg, NSError *error))block
+{
+    return
+    [HPSendPost sendPostWithContent:replyParams.content
+                             action:ActionTypeNewPost
+                                fid:replyParams.fid
+                                tid:replyParams.tid
+                               post:nil
+                        postcontent:nil
+                            subject:nil
+                        thread_type:0
+                           formhash:replyParams.formhash
+                             images:replyParams.images
+                              block:block];
 }
 
 @end

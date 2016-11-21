@@ -22,6 +22,30 @@ enum {
 typedef NSUInteger ActionType;
 
 
+@interface HPReplyParams : NSObject
+
+@property (nonatomic, copy) NSString *content;
+@property (nonatomic, assign) ActionType actionType;
+@property (nonatomic, assign) NSInteger fid;
+@property (nonatomic, assign) NSInteger tid;
+@property (nonatomic, strong) HPNewPost *post;
+@property (nonatomic, copy) NSString *postcontent;
+@property (nonatomic, copy) NSString *formhash;
+@property (nonatomic, strong) NSArray *images;
+
+@end
+
+@interface HPReplyTopicParams : NSObject
+
+@property (nonatomic, copy) NSString *content;
+@property (nonatomic, assign) NSInteger fid;
+@property (nonatomic, assign) NSInteger tid;
+@property (nonatomic, copy) NSString *formhash;
+@property (nonatomic, strong) NSArray *images;
+
+@end
+
+
 @interface HPSendPost : NSObject
 
 // send post
@@ -54,12 +78,6 @@ typedef NSUInteger ActionType;
                  block:(void (^)(NSDictionary *parameters, NSError *error))block;
 */
 
-+ (void)sendReplyWithThread:(HPThread *)thread
-                    content:(NSString *)content
-               imagesString:(NSArray *)imagesString
-                   formhash:(NSString *)formhash
-                      block:(void (^)(NSString *msg, NSError *error))block;
-
 + (void)loadFormhashAndPid:(ActionType)type
                       post:(HPNewPost *)target
                        tid:(NSInteger)tid
@@ -88,5 +106,12 @@ typedef NSUInteger ActionType;
 
 + (void)editPost:(NSDictionary *)info
            block:(void (^)(NSError *error))block;
+
+
++ (void)sendReply:(HPReplyParams *)replyParams
+            block:(void (^)(NSString *msg, NSError *error))block;
+
++ (void)sendReplyTopic:(HPReplyTopicParams *)replyParams
+                 block:(void (^)(NSString *msg, NSError *error))block;
 
 @end

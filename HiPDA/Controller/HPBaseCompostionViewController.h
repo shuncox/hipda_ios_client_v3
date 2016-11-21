@@ -27,5 +27,6 @@
 
 
 - (void)doneWithError:(NSError *)error;
+- (void)close;
 
 @end
