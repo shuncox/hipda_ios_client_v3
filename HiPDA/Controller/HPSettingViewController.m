@@ -351,7 +351,16 @@
         
         [Flurry logEvent:@"Setting EnterStupidBar"];
     }];
-    
+//    
+//    NSString *(^nodeName)(NSString *host, NSString *ip, NSString *tip, BOOL forceDNS, BOOL https) =
+//    ^NSString *(NSString *host, NSString *ip, NSString *tip, BOOL forceDNS, BOOL https) {
+//        return [
+//            NSString stringWithFormat:@"%@://%@ (%@)",
+//                https ? @"http" : @"https",
+//                forceDNS ? ip : host,
+//                tip
+//        ];
+//    };
     RERadioItem *nodeItem = [RERadioItem itemWithTitle:@"节点" value:HP_BASE_HOST selectionHandler:^(RERadioItem *item) {
         
         [item deselectRowAnimated:YES];
@@ -403,8 +412,6 @@
             action();
             
             [Flurry logEvent:@"Setting Node" withParameters:@{@"option":item.value}];
-            
-            [UIAlertView showWithTitle:@"注意" message:@"需要重新启动后完全生效" handler:nil];
         }];
         
         optionsController.delegate = weakSelf;
@@ -443,6 +450,9 @@
     [section addItem:nodeItem];
     
     BOOL enableHttpsSetting = [UMOnlineConfig getBoolConfigWithKey:HPOnlineConfigEnableHTTPSSetting defaultYES:NO];
+#ifdef DEBUG
+    enableHttpsSetting = YES;
+#endif
     if (enableHttpsSetting) {
         [section addItem:enableHttpsItem];
     }

@@ -25,6 +25,11 @@
 
 @implementation HPHttpClient
 
+- (NSURL *)baseURL
+{
+    return [NSURL URLWithString:HP_BASE_URL];
+}
+
 + (HPHttpClient *)sharedClient {
     static HPHttpClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
