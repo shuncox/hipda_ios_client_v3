@@ -838,7 +838,8 @@
     }
     
     
-    RxMatch *page_match = [RX(@"<strong>(\\d+)</strong>") firstMatchWithDetails:html];
+    NSString *pageHTML = [html stringBetweenString:@"<div class=\"pages\">" andString:@"</div>"];
+    RxMatch *page_match = [RX(@"<strong>(\\d+)</strong>") firstMatchWithDetails:pageHTML ?: @""];
     if (page_match) {
         
         RxMatchGroup *m = [page_match.groups objectAtIndex:1];
@@ -848,7 +849,7 @@
     } else {
         [parameters setObject:@1 forKey:@"current_page"];
     }
-    
+
     return parameters;
 }
 
