@@ -911,14 +911,18 @@
             NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
             double imageSize = sizeString.length ? [sizeString doubleValue] : 0.f;
             
-            BOOL filter = imageSizeFilterEnable && imageSize >= imageSizeFilterMinValue;
+            // 论坛自带的缩略图, 获取到的图片尺寸是原图尺寸, 因此, 缩略图均不过滤.
+            BOOL isThumbnail = [src hasSuffix:HP_THUMB_URL_SUFFIX];
+            
+            BOOL filter = !isThumbnail &&
+                            imageSizeFilterEnable &&
+                            imageSize >= imageSizeFilterMinValue;
             filter = filter || !imageAutoLoadEnable;
             
             BOOL useCDN = filter &&
                             imageCDNEnable &&
                             imageSize >= imageCDNMinValue
-                            && ![src hasSuffix:@".gif"]
-                            && ![src hasSuffix:HP_THUMB_URL_SUFFIX];
+                            && ![src hasSuffix:@".gif"];
             
             if (filter) {
                 NSString *imageNode = match.value;
