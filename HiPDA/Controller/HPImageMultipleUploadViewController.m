@@ -469,6 +469,10 @@
                               NSLog(@"assetURL %@", assetURL);
                               [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                      if (!asset) {
+                                          [SVProgressHUD showErrorWithStatus:@"保存失败"];
+                                          return;
+                                      }
                                       [self.assets addObject:asset];
                                       [self.tableView reloadData];
                                       [SVProgressHUD dismiss];
