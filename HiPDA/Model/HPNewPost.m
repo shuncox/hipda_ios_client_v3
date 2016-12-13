@@ -963,13 +963,8 @@
 }
 
 
-+ (NSString *)dateString:(NSDate *)date {
-    
-    // todo timeago
-    
-    NSTimeInterval interval = [date timeIntervalSinceNow];
-    float dayInterval = (-interval) / 86400;
-    
++ (NSString *)dateString:(NSDate *)date
+{
     NSString *dateString = nil;
     static NSDateFormatter *formatter_l;
     static NSDateFormatter *formatter_m;
@@ -984,10 +979,18 @@
         [formatter_s setDateFormat:@"HH:mm"];
     });
     
-    if (dayInterval < 1) {
-        dateString = [formatter_s stringFromDate:date];
-    } else if (dayInterval < 365) {
-        dateString = [formatter_m stringFromDate:date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents *today_comp = [calendar components:unitFlags fromDate:[NSDate date]];
+    NSDateComponents *comp = [calendar components:unitFlags fromDate:date];
+    
+    if (today_comp.year == comp.year) {
+        if (today_comp.month == comp.month && today_comp.day == comp.day) {
+            dateString = [formatter_s stringFromDate:date];
+        } else {
+            dateString = [formatter_m stringFromDate:date];
+        }
     } else {
         dateString = [formatter_l stringFromDate:date];
     }
