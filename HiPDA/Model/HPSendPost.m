@@ -101,7 +101,7 @@
                     , fid, tid];
             
             // i don't know why
-            // but it solve the problem
+            // but it solved the problem
             postcontent = [postcontent stringByReplacingOccurrencesOfString:@" " withString:@""];
             
             //NSLog(@"%@", postcontent);

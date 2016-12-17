@@ -51,7 +51,7 @@
      */
     //[_sharedClient setDefaultHeader:@"Cookie" value:[headers objectForKey:@"Cookie"]];
     
-    // not work?
+    // 给个是给 af 序列化post参数用的
     [_sharedClient setStringEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)];
     
     return _sharedClient;
@@ -174,6 +174,20 @@
                if (failure) failure(operation, error);
            }
     ];
+}
+
+- (void)postPath:(NSString *)path
+      parameters:(NSDictionary *)parameters
+         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSMutableDictionary *p = [@{} mutableCopy];
+    [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        id k = SafeEncodeString(key, self.stringEncoding);
+        id v = SafeEncodeString(obj, self.stringEncoding);
+        [p setObject:v forKey:k];
+    }];
+    [super postPath:path parameters:[p copy] success:success failure:failure];
 }
 
 /*
@@ -304,6 +318,34 @@
             ++i;    // 2字节
         }
     }
+    return result;
+}
+
+// 过滤不能被 GBK encode 的字符
+// 防止用户发送的emoji之类的无法转换的字符, 最后发出来为(null)
+id SafeEncodeString(id object, NSStringEncoding encode)
+{
+    if (![object isKindOfClass:[NSString class]]) {
+        return object;
+    }
+    
+    NSString *string = (NSString *)object;
+    NSMutableString *result = [NSMutableString string];
+    
+    [string enumerateSubstringsInRange:NSMakeRange(0, string.length)
+                               options:NSStringEnumerationByComposedCharacterSequences
+                            usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop)
+     {
+         CFStringRef s = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                 (__bridge CFStringRef)substring,
+                                                                 NULL,
+                                                                 NULL,
+                                                                 CFStringConvertNSStringEncodingToEncoding(encode));
+         if (s) {
+             [result appendString:substring];
+             CFRelease(s);
+         }
+     }];
     return result;
 }
 
