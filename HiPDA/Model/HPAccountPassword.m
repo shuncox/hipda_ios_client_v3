@@ -56,7 +56,8 @@
     if (error) {
         [Flurry logEvent:@"SAMKeychain_Read_Error"
           withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
-                           @"error": [error description]}];
+                           @"error": [error description],
+                           @"state": @([[UIApplication sharedApplication] applicationState])}];
     }
     
     // fallback
@@ -68,6 +69,9 @@
     if (arr.count != 3) {
         return nil;
     }
+    
+    // 保存一份到userdefaults, 为了上面的fallback有用
+    [NSStandardUserDefaults saveObject:credential forKey:kHPAccountUserPassword2];
     
     NSString *password = arr[0];
     NSString *questionid = arr[1];
@@ -86,15 +90,20 @@
     [SAMKeychain setPassword:str forService:kHPKeychainService account:username error:&error];
     
     // fallback
-    if (error) {
-        [NSStandardUserDefaults saveObject:str forKey:kHPAccountUserPassword2];
-    }
+//    if (error) {
+//        [NSStandardUserDefaults saveObject:str forKey:kHPAccountUserPassword2];
+//    }
+    
+    // 打点统计到, keychain set从未出错, read每天上千次出错, 那么set没出错过, userdefaults里肯定没有数据
+    // 所以在未查明问题之前, 默认userdefaults保存一份数据
+    [NSStandardUserDefaults saveObject:str forKey:kHPAccountUserPassword2];
     
     // log
     if (error) {
         [Flurry logEvent:@"SAMKeychain_Set_Error"
           withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
-                           @"error": [error description]}];
+                           @"error": [error description],
+                           @"state": @([[UIApplication sharedApplication] applicationState])}];
     }
     
     return error;
@@ -110,7 +119,8 @@
     if (error) {
         [Flurry logEvent:@"SAMKeychain_Delete_Error"
           withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
-                           @"error": [error description]}];
+                           @"error": [error description],
+                           @"state": @([[UIApplication sharedApplication] applicationState])}];
     }
     
     return error;
