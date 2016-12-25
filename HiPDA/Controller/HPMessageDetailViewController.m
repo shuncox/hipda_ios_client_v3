@@ -242,10 +242,11 @@
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
-    __weak typeof(self) weakSelf = self;
     [self.view endEditing:YES];
+    @weakify(self);
     [SVProgressHUD showWithStatus:@"发送中..." maskType:SVProgressHUDMaskTypeBlack];
     [HPMessage sendMessageWithUsername:_user.username message:text block:^(NSError *error) {
+        @strongify(self);
         if (error) {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         } else {
@@ -255,18 +256,19 @@
             NSDictionary *newMessage = @{
                                          @"message":text,
                                          @"date":date,
-                                         @"username":sender
+                                         @"username":sender?:@"" //加个保护, 不知道为什么为nil
                                          };
             
-            [_messages addObject:newMessage];
+            [self.messages addObject:newMessage];
             [JSMessageSoundEffect playMessageSentSound];
             
-            [weakSelf finishSend];
-            [weakSelf scrollToBottomAnimated:YES];
+            [self finishSend];
+            [self scrollToBottomAnimated:YES];
 
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^{
-                [weakSelf refresh:nil];
+                @strongify(self);
+                [self refresh:nil];
             });
         }
     }];
