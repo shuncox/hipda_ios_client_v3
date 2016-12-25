@@ -137,6 +137,13 @@
                    });
                    
                } else {
+                   [Flurry logEvent:@"Error_HTTP_GET"
+                     withParameters:@{
+                        @"desc": [NSString stringWithFormat:@"%@, %@, %@", path, @(error.code), error.localizedDescription],
+                        @"error": [error description] ?: @"",
+                        @"code": @(error.code),
+                        @"url": path ?: @""
+                    }];
                    failure(operation, error);
                }
            }];
@@ -187,7 +194,19 @@
         id v = SafeEncodeString(obj, self.stringEncoding);
         [p setObject:v forKey:k];
     }];
-    [super postPath:path parameters:[p copy] success:success failure:failure];
+    
+    [super postPath:path parameters:[p copy] success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+        [Flurry logEvent:@"Error_HTTP_POST"
+          withParameters:@{
+            @"desc": [NSString stringWithFormat:@"%@, %@, %@", path, @(error.code), error.localizedDescription],
+            @"error": [error description] ?: @"",
+            @"code": @(error.code),
+            @"url": path ?: @""
+        }];
+    }];
 }
 
 /*
