@@ -82,4 +82,20 @@
     NSString *s2 = [NSString stringWithFormat:@"id=\"aid%@\".*?\r\n<em>\\((.*?)\\)</em>", aid];
     return [RX(s2) firstMatchValue:self];
 }
+
+- (NSString *)getAidString:(NSString *)imgNode {
+    
+    NSRange endRange = [self rangeOfString:imgNode];
+    if (endRange.location != NSNotFound) {
+        NSRange startRange = [self rangeOfString:@"id=\"aid" options:NSBackwardsSearch range:NSMakeRange(0, endRange.location)];
+        if (startRange.location != NSNotFound) {
+            endRange = [self rangeOfString:@"_menu" options:0 range:NSMakeRange(startRange.location + startRange.length, endRange.location - startRange.location)];
+            if (endRange.location != NSNotFound) {
+                return [self substringWithRange:NSMakeRange(startRange.location + startRange.length, endRange.location - startRange.location - startRange.length)];
+            }
+        }
+    }
+    return nil;
+}
+
 @end

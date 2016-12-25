@@ -16,4 +16,7 @@
 - (CGFloat)imageSize;
 - (NSString *)imageSizeString;
 
+// 临时加一个...
+- (NSString *)getAidString:(NSString *)imgNode;
+
 @end;

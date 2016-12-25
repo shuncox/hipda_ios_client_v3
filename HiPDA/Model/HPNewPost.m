@@ -646,27 +646,46 @@
         NSRange range = [html rangeOfString:@"<div class=\"postattachlist\">"];
         if (range.length > 0) {
             
-            NSString *listPart = [html substringFromIndex:range.location];
-            NSArray *imageMatchs = [RX(@"file=\"([^\"]+)\".*?id=\"aimg_(\\d+)\"") matchesWithDetails:listPart];
+            // img_html 最后会附加到 body_html 后面
             NSMutableString *img_html = [NSMutableString stringWithCapacity:5];
-            for (RxMatch *i in imageMatchs) {
-                RxMatchGroup *m1 = [i.groups objectAtIndex:1];
-                RxMatchGroup *m2 = [i.groups objectAtIndex:2];
-
-                //NSLog(@"src %@, aid %@", g1.value, g2.value);
-                
-                NSString *src = m1.value;
-                NSString *aid = m2.value;
-                
+            void(^addImageNode)(NSString *src, NSString *aid) = ^(NSString *src, NSString *aid) {
                 if ([imgsArray indexOfObject:src] == NSNotFound) {
                     [imgsArray addObject:src];
                 }
                 // 去重
                 if (aid.length && [aidArray indexOfObject:aid] == NSNotFound) {
                     [aidArray addObject:aid];
-                    [img_html appendFormat:imageElement, m1.value, aid];
+                    [img_html appendFormat:imageElement, src, aid];
                 }
+            };
+            
+            NSString *listPart = [html substringFromIndex:range.location];
+            
+            // 20161225前 兼容
+            NSArray *imageMatchs = [RX(@"file=\"([^\"]+)\".*?id=\"aimg_(\\d+)\"") matchesWithDetails:listPart];
+            for (RxMatch *i in imageMatchs) {
+                RxMatchGroup *m1 = [i.groups objectAtIndex:1];
+                RxMatchGroup *m2 = [i.groups objectAtIndex:2];
+                NSString *src = m1.value;
+                NSString *aid = m2.value;
+                
+                addImageNode(src, aid);
             }
+            
+            // 20161225后
+            //<a href="javascript:;"><img onclick="zoom(this, 'attachments/day_161225/161225103518fdf8f15dc6cb5f.jpg')" src="attachments/day_161225/161225103518fdf8f15dc6cb5f.jpg.thumb.jpg" alt="IMG_20161225_103409.jpg" /></a>
+            NSArray *imageMatchs2 = [RX(@"<img onclick=\"[^\"]+\" src=\"([^\"]+)\"") matchesWithDetails:listPart];
+            for (RxMatch *i in imageMatchs2) {
+                RxMatchGroup *m1 = [i.groups objectAtIndex:1];
+                NSString *src = m1.value;
+                
+                // find aid
+                RxMatchGroup *m0 = [i.groups objectAtIndex:0];
+                NSString *aid = [listPart getAidString:m0.value];
+                
+                addImageNode(src, aid);
+            }
+            
             if (img_html.length) {
                 self.body_html = [self.body_html stringByAppendingString:img_html];
             }
