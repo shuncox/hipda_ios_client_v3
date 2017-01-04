@@ -419,9 +419,6 @@
         return @"";
     }
     
-    NSTimeInterval interval = [self.date timeIntervalSinceNow];
-    float dayInterval = (-interval) / 86400;
-    
     NSString *dateString = nil;
     static NSDateFormatter *formatter;
     static NSDateFormatter *formatter_short;
@@ -433,11 +430,19 @@
         [formatter_short setDateFormat:@"MM-dd"];
     });
     
-    if (dayInterval < 1) {
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay
+                                                        fromDate:self.date
+                                                          toDate:[NSDate date]
+                                                         options:0];
+    
+    NSInteger dayInterval = [components day];
+    
+    if (dayInterval == 0) {
         dateString = @" 今天";
-    } else if (dayInterval < 2) {
+    } else if (dayInterval == 1) {
         dateString = @" 昨天";
-    } else if (dayInterval < 3) {
+    } else if (dayInterval == 2) {
         dateString = @" 前天";
     } else if (dayInterval < 9) {
         dateString = [NSString stringWithFormat:@"%d天前", (int)dayInterval];
