@@ -97,6 +97,12 @@
     
     _fids = [Setting objectForKey:HPSettingFavForums];
     _fids_title = [Setting objectForKey:HPSettingFavForumsTitle];
+    
+    if ([HPAccount isAccountForReviewer]) {
+        _fids = @[@24, @25, @23];
+        _fids_title = @[@"意欲蔓延", @"吃喝玩乐", @"随笔与文集"];
+    }
+    
     _current_fid = [[_fids objectAtIndex:0] integerValue];
     _current_title = [_fids_title objectAtIndex:0];
     
@@ -543,7 +549,17 @@
     _threadNavViewController.navigationBar.barStyle = [UINavigationBar appearance].barStyle;
 }
 
-
+#pragma mark - 过审核
+- (void)updateForReviewer
+{
+    _fids = @[@24, @25, @23];
+    _fids_title = @[@"意欲蔓延", @"吃喝玩乐", @"随笔与文集"];
+    [_tableView reloadData];
+    
+    _current_fid = [_fids[0] integerValue];
+    _current_title = _fids_title[0];
+    [_threadViewController loadForum:_current_fid title:_current_title];
+}
 
 #pragma mark - SWRevealViewControllerDelegate
 /*

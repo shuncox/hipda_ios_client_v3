@@ -74,6 +74,12 @@
     return [username length] && [HPAccountPassword isSetAccountFor:username];
 }
 
++ (BOOL)isAccountForReviewer
+{
+    NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+    return [username isEqualToString:@"wujichao"];
+}
+
 - (void)loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
     
     // acquire account info

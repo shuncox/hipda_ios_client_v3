@@ -171,7 +171,11 @@
                           [Flurry logEvent:@"Account Login" withParameters:@{@"userid":username}];
                           [Setting loadSetting];
                           [Flurry trackUserIfNeeded];
-                          [HPRearViewController threadVCRefresh];
+                          if ([HPAccount isAccountForReviewer]) {
+                              [[HPRearViewController sharedRearVC] updateForReviewer];
+                          } else {
+                              [HPRearViewController threadVCRefresh];
+                          }
                           
                           HPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
                           [appDelegate setupBgFetch];

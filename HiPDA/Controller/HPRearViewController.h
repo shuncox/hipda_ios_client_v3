@@ -29,4 +29,6 @@
 - (void)updateBadgeNumber;
 - (UIBarButtonItem *)sharedRevealActionBI;
 
+- (void)updateForReviewer;
+
 @end
