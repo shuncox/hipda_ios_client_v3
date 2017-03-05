@@ -67,7 +67,7 @@
     
     if(images.count > 1) {
         //join all images together..
-        CGSize sz;
+        CGSize sz = CGSizeZero;
         for(int i=0;i<images.count;i++) {
             
             sz.width = MAX(sz.width, ((UIImage*)[images objectAtIndex:i]).size.width );
