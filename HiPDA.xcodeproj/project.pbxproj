@@ -182,7 +182,6 @@
 		EA7840791BE1F06F00139141 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7840771BE1F06F00139141 /* SVProgressHUD.m */; };
 		EA78407E1BE203D400139141 /* NSError+HPError.m in Sources */ = {isa = PBXBuildFile; fileRef = EA78407D1BE203D400139141 /* NSError+HPError.m */; };
 		EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */; };
-		EA7B5A3E1AFA4F34005657DC /* HPURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */; };
 		EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */; };
 		EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869D18E1D9E30092BDD7 /* home_refresh.png */; };
 		EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */; };
@@ -680,8 +679,6 @@
 		EA78407D1BE203D400139141 /* NSError+HPError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+HPError.m"; path = "Helper/NSError+HPError.m"; sourceTree = "<group>"; };
 		EA78407F1BE20D4C00139141 /* HPDebugCrawlerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDebugCrawlerViewController.h; path = Controller/HPDebugCrawlerViewController.h; sourceTree = "<group>"; };
 		EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPDebugCrawlerViewController.m; path = Controller/HPDebugCrawlerViewController.m; sourceTree = "<group>"; };
-		EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPURLCache.h; path = Model/HPURLCache.h; sourceTree = "<group>"; };
-		EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLCache.m; path = Model/HPURLCache.m; sourceTree = "<group>"; };
 		EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SDImageCache+URLCache.h"; path = "Helper/SDImageCache+URLCache.h"; sourceTree = "<group>"; };
 		EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SDImageCache+URLCache.m"; path = "Helper/SDImageCache+URLCache.m"; sourceTree = "<group>"; };
 		EA81869D18E1D9E30092BDD7 /* home_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_refresh.png; path = Image/Home/home_refresh.png; sourceTree = "<group>"; };
@@ -1937,8 +1934,6 @@
 			children = (
 				EA499F2B1830BFE000172989 /* HPHttpClient.h */,
 				EA499F671830CE6700172989 /* HPHttpClient.m */,
-				EA7B5A3C1AFA4F34005657DC /* HPURLCache.h */,
-				EA7B5A3D1AFA4F34005657DC /* HPURLCache.m */,
 				EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */,
 				EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */,
 				EAF18F241B01037300B50E19 /* HPURLProtocol.h */,
@@ -2465,7 +2460,6 @@
 				EA8186C018E29FD10092BDD7 /* HPIndecator.m in Sources */,
 				EA9A39B31A5BE92E0028BE7D /* JSMessage.m in Sources */,
 				EA499F681830CE6700172989 /* HPHttpClient.m in Sources */,
-				EA7B5A3E1AFA4F34005657DC /* HPURLCache.m in Sources */,
 				EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */,
 				EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */,
 				EA083D7018C8D11A00BD8F07 /* WUEmoticonsKeyboardToolsView.m in Sources */,
