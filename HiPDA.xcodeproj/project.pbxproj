@@ -2050,13 +2050,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAFDB86E1829EFA900C1718B /* Build configuration list for PBXNativeTarget "HiPDA" */;
 			buildPhases = (
-				664C25AA92A450457E349941 /* 📦 Check Pods Manifest.lock */,
+				664C25AA92A450457E349941 /* [CP] Check Pods Manifest.lock */,
 				EAFDB83E1829EFA900C1718B /* Sources */,
 				EAFDB83F1829EFA900C1718B /* Frameworks */,
 				EAFDB8401829EFA900C1718B /* Resources */,
 				EA19F96D1A14FC7800333503 /* Run Script For Crashlytics */,
-				90B5B4AC41C4A22AAB477951 /* 📦 Embed Pods Frameworks */,
-				D6A25B0FB9B404A8B3C9BBC7 /* 📦 Copy Pods Resources */,
+				90B5B4AC41C4A22AAB477951 /* [CP] Embed Pods Frameworks */,
+				D6A25B0FB9B404A8B3C9BBC7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2367,29 +2367,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		664C25AA92A450457E349941 /* 📦 Check Pods Manifest.lock */ = {
+		664C25AA92A450457E349941 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		90B5B4AC41C4A22AAB477951 /* 📦 Embed Pods Frameworks */ = {
+		90B5B4AC41C4A22AAB477951 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2397,14 +2397,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D6A25B0FB9B404A8B3C9BBC7 /* 📦 Copy Pods Resources */ = {
+		D6A25B0FB9B404A8B3C9BBC7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2728,29 +2728,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HiPDA/HiPDA-Prefix.pch";
-				"HEADER_SEARCH_PATHS[arch=*]" = (
-					"\"$(SDKROOT)/usr/include/libxml2\"",
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/DACircularProgress\"",
-					"\"${PODS_ROOT}/Headers/FoundationExtension\"",
-					"\"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\"",
-					"\"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\"",
-					"\"${PODS_ROOT}/Headers/HMSegmentedControl\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/MCSwipeTableViewCell\"",
-					"\"${PODS_ROOT}/Headers/MTLog\"",
-					"\"${PODS_ROOT}/Headers/MWPhotoBrowser\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/SVProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
-					"\"${PODS_ROOT}/Headers/SevenSwitch\"",
-					"\"${PODS_ROOT}/Headers/UI7Kit\"",
-					"\"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\"",
-					"\"${PODS_ROOT}/Headers/UIKitResources\"",
-					"\"${PODS_ROOT}/Headers/cdebug\"",
-					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
-				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SDKROOT)/usr/include/libxml2\" \"${PODS_ROOT}/Headers\" \"${PODS_ROOT}/Headers/AFNetworking\" \"${PODS_ROOT}/Headers/DACircularProgress\" \"${PODS_ROOT}/Headers/FoundationExtension\" \"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\" \"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\" \"${PODS_ROOT}/Headers/HMSegmentedControl\" \"${PODS_ROOT}/Headers/MBProgressHUD\" \"${PODS_ROOT}/Headers/MCSwipeTableViewCell\" \"${PODS_ROOT}/Headers/MTLog\" \"${PODS_ROOT}/Headers/MWPhotoBrowser\" \"${PODS_ROOT}/Headers/SDWebImage\" \"${PODS_ROOT}/Headers/SVProgressHUD\" \"${PODS_ROOT}/Headers/SWRevealViewController\" \"${PODS_ROOT}/Headers/SevenSwitch\" \"${PODS_ROOT}/Headers/UI7Kit\" \"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\" \"${PODS_ROOT}/Headers/UIKitResources\" \"${PODS_ROOT}/Headers/cdebug\" $(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD";
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2786,29 +2764,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HiPDA/HiPDA-Prefix.pch";
-				"HEADER_SEARCH_PATHS[arch=*]" = (
-					"\"$(SDKROOT)/usr/include/libxml2\"",
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/DACircularProgress\"",
-					"\"${PODS_ROOT}/Headers/FoundationExtension\"",
-					"\"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\"",
-					"\"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\"",
-					"\"${PODS_ROOT}/Headers/HMSegmentedControl\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/MCSwipeTableViewCell\"",
-					"\"${PODS_ROOT}/Headers/MTLog\"",
-					"\"${PODS_ROOT}/Headers/MWPhotoBrowser\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/SVProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
-					"\"${PODS_ROOT}/Headers/SevenSwitch\"",
-					"\"${PODS_ROOT}/Headers/UI7Kit\"",
-					"\"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\"",
-					"\"${PODS_ROOT}/Headers/UIKitResources\"",
-					"\"${PODS_ROOT}/Headers/cdebug\"",
-					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
-				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SDKROOT)/usr/include/libxml2\" \"${PODS_ROOT}/Headers\" \"${PODS_ROOT}/Headers/AFNetworking\" \"${PODS_ROOT}/Headers/DACircularProgress\" \"${PODS_ROOT}/Headers/FoundationExtension\" \"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\" \"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\" \"${PODS_ROOT}/Headers/HMSegmentedControl\" \"${PODS_ROOT}/Headers/MBProgressHUD\" \"${PODS_ROOT}/Headers/MCSwipeTableViewCell\" \"${PODS_ROOT}/Headers/MTLog\" \"${PODS_ROOT}/Headers/MWPhotoBrowser\" \"${PODS_ROOT}/Headers/SDWebImage\" \"${PODS_ROOT}/Headers/SVProgressHUD\" \"${PODS_ROOT}/Headers/SWRevealViewController\" \"${PODS_ROOT}/Headers/SevenSwitch\" \"${PODS_ROOT}/Headers/UI7Kit\" \"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\" \"${PODS_ROOT}/Headers/UIKitResources\" \"${PODS_ROOT}/Headers/cdebug\" $(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD";
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
