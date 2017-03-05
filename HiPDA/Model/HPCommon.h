@@ -202,7 +202,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPOnlineImageCDNEnableWifi @"imageCDNEnableWifi"
 #define HPOnlineImageCDNMinValueWifi @"imageCDNMinValueWifi"
 
-#define HPOnlineConfigEnableHTTPSSetting @"enableHTTPSSetting"
+//#define HPOnlineConfigEnableHTTPSSetting @"enableHTTPSSetting"
 
 #define HPDraft @"HPDraft"
 

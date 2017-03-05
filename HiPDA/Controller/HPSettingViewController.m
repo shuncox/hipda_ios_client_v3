@@ -448,14 +448,7 @@
     [section addItem:setStupidBarItem];
     [section addItem:isPrintItem];
     [section addItem:nodeItem];
-    
-    BOOL enableHttpsSetting = [UMOnlineConfig getBoolConfigWithKey:HPOnlineConfigEnableHTTPSSetting defaultYES:NO];
-#ifdef DEBUG
-    enableHttpsSetting = YES;
-#endif
-    if (enableHttpsSetting) {
-        [section addItem:enableHttpsItem];
-    }
+    [section addItem:enableHttpsItem];
     
     [_manager addSection:section];
     return section;
