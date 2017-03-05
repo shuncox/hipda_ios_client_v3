@@ -77,9 +77,13 @@
         [self loadDefaults];
     }
     
-    // 之前默认的https设置是NO, 现在改成默认YES, 老版本ye
     [HPOnceRunService onceName:@"enableHTTPS" runBlcok:^{
+        // 之前默认的https设置是NO, 现在改成默认YES, 老版本ye
         [self saveBool:YES forKey:HPSettingEnableHTTPS];
+        
+        // 由于上了https, 所以不再允许设置httpdns
+        [self saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
+        [self saveBool:NO forKey:HPSettingForceDNS];
     } skipBlock:nil];
     
     if (DEBUG_SETTING) NSLog(@"load  _globalSettings %@", _globalSettings);
@@ -128,7 +132,6 @@
                                HPSettingBSForumOrderByDate:@NO,
                                HPSettingForceLogin:@NO,
                                HPSettingEnableXHR:@NO,
-                               HPSettingSwipeBack:@YES,
                                HPBgFetchInterval:@(60),
                                HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO),
                                

@@ -20,13 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
-    //
-    if (IOS7_OR_LATER) [self showEnableSwipeBackConfirmationIfNeeded];
-    if (IOS7_OR_LATER && [Setting boolForKey:HPSettingSwipeBack]) {
-        [self fuckPopGestureRecognizer];
-    }
+    [self fuckPopGestureRecognizer];
 }
 
 //https://github.com/zys456465111/CustomPopAnimation/
@@ -62,32 +56,6 @@
      * 创建一个与系统一模一样的手势，我们只把它的类改为UIPanGestureRecognizer
      */
     [popRecognizer addTarget:navigationInteractiveTransition action:handleTransition];
-}
-
-- (void)showEnableSwipeBackConfirmationIfNeeded {
-    NSString *popTipKey = @"popTipKey";
-    if (![Setting boolForKey:HPSettingSwipeBack]
-        && ![NSStandardUserDefaults objectForKey:popTipKey]
-        && ![[NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""] isEqualToString:@"wujichao"]) {
-
-        [NSStandardUserDefaults saveObject:@"xxoo" forKey:popTipKey];
-        [UIAlertView showConfirmationDialogWithTitle:@"全屏拖动返回"
-                                             message:
-         @"你好, 我更新了全屏拖动返回的机制\n试用请按Yes.\n"
-         @"注意事项: "
-         @"1. 重启 App 后生效\n"
-         @"2. 开启全局返回需要hack系统的右边缘返回手势, 所以有可能会有工作不正常\n"
-         @"经过我近一个月的测试, 只出现过几次不正常的情况\n你可以在设置中随时关闭这个功能\n"
-         @"3. 如果你遇到不正常的情况且可以重现, 请联系我, 我们一起把它优化好 ~"
-                                             handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-        {
-            if (buttonIndex == alertView.cancelButtonIndex) {
-                ;
-            } else {
-                [Setting saveBool:YES forKey:HPSettingSwipeBack];
-            }
-        }];
-    }
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {

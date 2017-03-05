@@ -40,6 +40,12 @@
 #define VERSION ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"])
 #define BUILD ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"])
 
+#ifdef DEBUG
+    #define DEBUG_MODE 1
+#else
+    #define DEBUG_MODE 0
+#endif
+
 @interface HPSettingViewController () <UIWebViewDelegate>
 
 @property (strong, nonatomic) RETableViewManager *manager;
@@ -319,17 +325,6 @@
         [Flurry logEvent:@"Setting TogglePullReply" withParameters:@{@"flag":@(item.value)}];
     }];
     
-    // 拖动返回
-    //
-    BOOL isSwipeBack = [Setting boolForKey:HPSettingSwipeBack];
-    REBoolItem *isSwipeBackItem = [REBoolItem itemWithTitle:@"看帖全屏拖动返回(谨慎开启)" value:isSwipeBack switchValueChangeHandler:^(REBoolItem *item) {
-        
-        NSLog(@"isSwipeBack Value: %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingSwipeBack];
-        
-        [Flurry logEvent:@"Setting ToggleSwipeBack" withParameters:@{@"flag":@(item.value)}];
-    }];
-    
     // 省流量模式
     //
     BOOL isPrint = [Setting boolForKey:HPSettingPrintPagePost];
@@ -361,6 +356,7 @@
 //                tip
 //        ];
 //    };
+    
     RERadioItem *nodeItem = [RERadioItem itemWithTitle:@"节点" value:HP_BASE_HOST selectionHandler:^(RERadioItem *item) {
         
         [item deselectRowAnimated:YES];
@@ -444,11 +440,12 @@
     [section addItem:isPreferNoticeItem];
     [section addItem:afterSendConfirmItem];
     [section addItem:isPullReplyItem];
-    [section addItem:isSwipeBackItem];
     [section addItem:setStupidBarItem];
     [section addItem:isPrintItem];
+#if DEBUG_MODE // 由于上了https, 所以不再允许设置httpdns
     [section addItem:nodeItem];
     [section addItem:enableHttpsItem];
+#endif
     
     [_manager addSection:section];
     return section;
@@ -651,7 +648,9 @@
     [section addItem:dataTrackingEnableItem];
     [section addItem:bugTrackingEnableItem];
     [section addItem:isForceLoginItem];
+#if DEBUG_MODE // 由于上了https, 这个选项没有用了
     [section addItem:isEnableXHRItem];
+#endif
     
     [_manager addSection:section];
     return section;

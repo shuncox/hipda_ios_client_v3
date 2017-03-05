@@ -180,7 +180,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingDataTrackEnable @"HPSettingDataTrackEnable"
 #define HPSettingForceLogin @"HPSettingForceLogin"
 #define HPSettingEnableXHR @"HPSettingEnableXHR"
-#define HPSettingSwipeBack @"HPSettingSwipeBack"
+//#define HPSettingSwipeBack @"HPSettingSwipeBack"
 #define HPSettingPrintPagePost @"HPSettingPrintPagePost"
 #define HPSettingEnableHTTPS @"HPSettingEnableHTTPS"
 
