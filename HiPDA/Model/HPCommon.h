@@ -152,6 +152,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingBSForumOrderByDate @"HPSettingBSForumOrderByDate"
 
 #define HPSettingNightMode @"HPSettingNightMode"
+#define HPSettingRegularFontMode @"HPSettingRegularFontMode"
 
 #define HPSettingFontSize @"HPSettingFontSize"
 #define HPSettingFontSizeAdjust @"HPSettingFontSizeAdjust"

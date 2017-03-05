@@ -452,6 +452,19 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     if (_thread.title && !refresh)
         [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
    
+    /* iOS9之后才有苹方字体
+        PingFangSC-Ultralight,
+        PingFangSC-Regular,
+        PingFangSC-Semibold,
+        PingFangSC-Thin,
+        PingFangSC-Light,
+        PingFangSC-Medium
+     */
+    NSString *boldFont = IOS9_OR_LATER ? @"PingFangSC-Medium" : @"STHeitiSC-Medium";
+    BOOL regularMode = [Setting boolForKey:HPSettingRegularFontMode];
+    NSString *regularFont = IOS9_OR_LATER ? (regularMode ? @"PingFangSC-Regular" : @"PingFangSC-Light") :
+                                            @"STHeitiSC-Light"; //没有STHeitiSC-Regular这种字体
+    
     NSDictionary *replace = @{
         @"**[txtadjust]**": S(@"%@.000001%%",@(self.currentFontSize)),
         @"**[lineHeight]**": S(@"%@%%", @(self.currentLineHeight)),
@@ -463,8 +476,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                 [NSString stringWithFormat:@"%dpx", (int)(self.currentFontSize/100.f*16)] :
                                 @"16px !Important",
         @"**[fontfamily]**": (IOS8_OR_LATER && UIAccessibilityIsBoldTextEnabled()) ?
-                            @"\"STHeitiSC-Medium\",\"HelveticaNeue-Bold\"" :
-                            @"\"STHeitiSC-Light\",\"HelveticaNeue\"",
+            [NSString stringWithFormat:@"\"%@\",\"HelveticaNeue-Bold\"", boldFont] :
+            [NSString stringWithFormat:@"\"%@\",\"HelveticaNeue\"", regularFont]
+        ,
 #if DEBUG && 0
         @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
 #else
@@ -1750,8 +1764,26 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         nightSwitch.center = CGPointMake(nightLabel.frame.origin.x + nightLabel.frame.size.width +  nightSwitch.frame.size.width/2 + 10.f, f.size.height/5*1);
         nightSwitch.backgroundColor = [UIColor clearColor];
 		[nightSwitch setAccessibilityLabel:@"夜间模式"];
-		nightSwitch.tag = 10242014;
         nightSwitch.on = [Setting boolForKey:HPSettingNightMode];
+        
+        UILabel *boldLabel = [UILabel new];
+        [_adjustView addSubview:boldLabel];
+        boldLabel.text = @"关闭细体";
+        [boldLabel sizeToFit];
+        boldLabel.textColor = [HPTheme  blackOrWhiteColor];
+        boldLabel.backgroundColor = [UIColor clearColor];
+        boldLabel.center = CGPointMake(nightSwitch.frame.origin.x +
+                                       nightSwitch.frame.size.width +
+                                       boldLabel.frame.size.width/2.f +
+                                       + 40.f, f.size.height/5*1);
+        
+        UISwitch *boldSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        [_adjustView addSubview:boldSwitch];
+        [boldSwitch addTarget:self action:@selector(regularFontSwitchAction:) forControlEvents:UIControlEventValueChanged];
+        boldSwitch.center = CGPointMake(boldLabel.frame.origin.x + boldLabel.frame.size.width +  boldSwitch.frame.size.width/2 + 10.f, f.size.height/5*1);
+        boldSwitch.backgroundColor = [UIColor clearColor];
+        [boldSwitch setAccessibilityLabel:@"关闭细体"];
+        boldSwitch.on = [Setting boolForKey:HPSettingRegularFontMode];
         
         /*
         UILabel *brightnessLabel = [UILabel new];
@@ -1879,6 +1911,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self themeDidChanged];
     
     [Flurry logEvent:@"Read ToggleDarkTheme" withParameters:@{@"is_dark":@([sender isOn])}];
+}
+
+- (void)regularFontSwitchAction:(id)sender
+{
+    NSLog(@"switchAction: value = %d", [sender isOn]);
+    
+    [Setting saveBool:[sender isOn] forKey:HPSettingRegularFontMode];
+    [self themeDidChanged];
 }
 
 /*

@@ -149,6 +149,8 @@
                                
                                HPSettingPrintPagePost:@YES,
                                HPSettingEnableHTTPS:@YES,
+                               
+                               HPSettingRegularFontMode:@YES,
                                };
     return defaults;
 }
