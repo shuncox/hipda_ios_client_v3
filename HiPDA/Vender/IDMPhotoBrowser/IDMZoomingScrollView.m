@@ -211,7 +211,9 @@
     CGFloat xScale = boundsSize.width / imageSize.width;    // the scale needed to perfectly fit the image width-wise
     CGFloat yScale = boundsSize.height / imageSize.height;  // the scale needed to perfectly fit the image height-wise
     CGFloat minScale = MIN(xScale, yScale);                 // use minimum of these to allow the image to become fully visible
-    if (imageSize.height / imageSize.width > 3.f/*长图*/) {
+    
+    BOOL isChangTu/*长图*/ = imageSize.height / imageSize.width > 3.f;
+    if (isChangTu) {
         minScale = xScale;
     }
     // max.target.w = max(image.w * 2, screen.w * 2)
@@ -221,6 +223,10 @@
     self.maximumZoomScale = maxScale;
     self.minimumZoomScale = minScale;
 	self.zoomScale = minScale;
+
+    if (isChangTu) {
+        self.contentOffset = CGPointMake(0, 0);
+    }
     
 	// Reset position
 	_photoImageView.frame = CGRectMake(0, 0, _photoImageView.frame.size.width, _photoImageView.frame.size.height);
