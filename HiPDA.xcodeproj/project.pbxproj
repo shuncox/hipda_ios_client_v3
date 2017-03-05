@@ -98,6 +98,8 @@
 		EA368A8818C77A1D00C5C5BD /* HPReplyTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A8718C77A1D00C5C5BD /* HPReplyTopicViewController.m */; };
 		EA39A0EE183CEC740068233F /* HPSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA39A0ED183CEC740068233F /* HPSettingViewController.m */; };
 		EA3A7C7C1C95637A00FD4B44 /* NSRegularExpression+HP.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A7C7B1C95637A00FD4B44 /* NSRegularExpression+HP.m */; };
+		EA3B91BE1E6C09B500D742EF /* HPOnceRunService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B91BD1E6C09B500D742EF /* HPOnceRunService.m */; };
+		EA3B91C71E6C11AF00D742EF /* HPCrashReport.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */; };
 		EA3B991F18F9812900F726E1 /* HPBgFetchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B991E18F9812900F726E1 /* HPBgFetchViewController.m */; };
 		EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C12184AD81700B86C92 /* HPMessageViewController.m */; };
 		EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C15184B5C7500B86C92 /* HPMessageDetailViewController.m */; };
@@ -547,6 +549,10 @@
 		EA39A0ED183CEC740068233F /* HPSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSettingViewController.m; path = Controller/HPSettingViewController.m; sourceTree = "<group>"; };
 		EA3A7C7A1C95637A00FD4B44 /* NSRegularExpression+HP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRegularExpression+HP.h"; path = "Helper/NSRegularExpression+HP.h"; sourceTree = "<group>"; };
 		EA3A7C7B1C95637A00FD4B44 /* NSRegularExpression+HP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRegularExpression+HP.m"; path = "Helper/NSRegularExpression+HP.m"; sourceTree = "<group>"; };
+		EA3B91BC1E6C09B500D742EF /* HPOnceRunService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPOnceRunService.h; path = Helper/HPOnceRunService.h; sourceTree = "<group>"; };
+		EA3B91BD1E6C09B500D742EF /* HPOnceRunService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPOnceRunService.m; path = Helper/HPOnceRunService.m; sourceTree = "<group>"; };
+		EA3B91C51E6C11AF00D742EF /* HPCrashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCrashReport.h; path = Service/HPCrashReport.h; sourceTree = "<group>"; };
+		EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCrashReport.m; path = Service/HPCrashReport.m; sourceTree = "<group>"; };
 		EA3B991D18F9812900F726E1 /* HPBgFetchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBgFetchViewController.h; path = Controller/HPBgFetchViewController.h; sourceTree = "<group>"; };
 		EA3B991E18F9812900F726E1 /* HPBgFetchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBgFetchViewController.m; path = Controller/HPBgFetchViewController.m; sourceTree = "<group>"; };
 		EA3F4C11184AD81700B86C92 /* HPMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPMessageViewController.h; path = Controller/HPMessageViewController.h; sourceTree = "<group>"; };
@@ -1381,6 +1387,8 @@
 		EA499F3E1830C1F400172989 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				EA3B91BC1E6C09B500D742EF /* HPOnceRunService.h */,
+				EA3B91BD1E6C09B500D742EF /* HPOnceRunService.m */,
 				EAE8C02F1D43B89500C315AA /* NSError+BlockService.h */,
 				EAE8C0301D43B89500C315AA /* NSError+BlockService.m */,
 				EA13CD971C11B8AD0023041F /* HPActivity.h */,
@@ -1787,6 +1795,8 @@
 			children = (
 				EAA727F21D3D266100566999 /* HPBlockService.h */,
 				EAA727F31D3D266100566999 /* HPBlockService.m */,
+				EA3B91C51E6C11AF00D742EF /* HPCrashReport.h */,
+				EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2463,6 +2473,7 @@
 				EA5F163F18D1D65100F6AAB3 /* HPSetting.m in Sources */,
 				EA743C38183FADF70067F62B /* HPSearch.m in Sources */,
 				EAFDB8561829EFA900C1718B /* HPAppDelegate.m in Sources */,
+				EA3B91C71E6C11AF00D742EF /* HPCrashReport.m in Sources */,
 				EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */,
 				EA9A39AE1A5BE92E0028BE7D /* JSAvatarImageFactory.m in Sources */,
 				EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */,
@@ -2549,6 +2560,7 @@
 				EA743C26183EE6DE0067F62B /* HPFavoriteViewController.m in Sources */,
 				EAAD5B9D188CEFCC0084EC2D /* IDMZoomingScrollView.m in Sources */,
 				EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */,
+				EA3B91BE1E6C09B500D742EF /* HPOnceRunService.m in Sources */,
 				EA9A39B41A5BE92E0028BE7D /* JSMessageInputView.m in Sources */,
 				EA13B912194B53D900E01AF5 /* HPStupidBar.m in Sources */,
 				EA083D6B18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyCell.m in Sources */,
@@ -2753,6 +2765,7 @@
 					"$(PROJECT_DIR)/HiPDA",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2809,6 +2822,7 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
 					"$(PROJECT_DIR)/HiPDA",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -27,12 +27,11 @@
 #import "HPHotPatch.h"
 #import "NSRegularExpression+HP.h"
 #import "HPReadViewController.h"
+#import "HPCrashReport.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 
 #define UM_APP_KEY (@"543b7fe7fd98c59dcb0418ef")
 #define UM_APP_KEY_DEV (UM_APP_KEY)
@@ -47,6 +46,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [HPCrashReport setUp];
+    
     [[HPHotPatch shared] check];
     
     //
@@ -132,44 +133,6 @@
         [self FinishLaunchingWithReciveLocalNotification:localNotification];
     }
 
-    [self setupBgFetch];
-    
-    BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
-    BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
-    if (bugTrackingEnable) {
-        [Fabric with:@[[Crashlytics class]]];
-    }
-
-    if (dataTrackingEnable) {
-        
-        //[Flurry setCrashReportingEnabled:NO];
-        //[Flurry startSession:@"PM72Q4WCN9DCMMSFDJC6"];
-        //[Flurry setDebugLogEnabled:YES];
-        //note
-        [MobClick setCrashReportEnabled:NO];
-        [MobClick setLogEnabled:NO];
-        [MobClick setBackgroundTaskEnabled:NO];
-        [MobClick setLatency:30];
-        
-#if DEBUG
-        [MobClick startWithAppkey:UM_APP_KEY_DEV reportPolicy:BATCH channelId:@"debug"];
-        //[MobClick setLogEnabled:YES];
-#else
-        [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
-#endif
-        
-    }
-    
-    // 友盟在线参数, 配置后十分钟生效
-#if DEBUG
-    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
-    [UMOnlineConfig setLogEnabled:YES];
-#else
-    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
-#endif
-    
-    [Flurry trackUserIfNeeded];
-    
     return YES;
 }
 
@@ -185,9 +148,7 @@
     //NSLog(@"save cookies %@", data);
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"kUserDefaultsCookie"];
     
-    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
-        CLSNSLog(@"-> applicationWillResignActive");
-    }
+    HPCrashLog(@"-> applicationWillResignActive");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -198,9 +159,7 @@
     // reset applicationIconBadgeNumber
     application.applicationIconBadgeNumber  = [[HPAccount sharedHPAccount] badgeNumber];
     
-    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
-        CLSNSLog(@"-> applicationDidEnterBackground");
-    }
+    HPCrashLog(@"-> applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -209,21 +168,45 @@
     // 省流量
     //[[BFHotPatch shared] check];
     
-    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
-        CLSNSLog(@"-> applicationWillEnterForeground");
-    }
+    HPCrashLog(@"-> applicationWillEnterForeground");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // 启动时执行的任务, 延迟到启动后
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self setupBgFetch];
+        
+        // 友盟
+        BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
+        if (dataTrackingEnable) {
+            [MobClick setLogEnabled:NO];
+            [MobClick setBackgroundTaskEnabled:NO];
+            [MobClick setLatency:30];
+#if DEBUG
+            [MobClick startWithAppkey:UM_APP_KEY_DEV reportPolicy:BATCH channelId:@"debug"];
+            //[MobClick setLogEnabled:YES];
+#else
+            [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
+#endif
+        }
+        [Flurry trackUserIfNeeded];
+        
+        // 友盟在线参数, 配置后十分钟生效
+#if DEBUG
+        [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
+        [UMOnlineConfig setLogEnabled:YES];
+#else
+        [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
+#endif
+    });
     
 //    [self routeTo:@{@"tid": @"1831924"}];
     [self checkPasteboard];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-    if ([Setting boolForKey:HPSettingBugTrackEnable]) {
-        CLSNSLog(@"-> applicationDidBecomeActive");
-    }
+    HPCrashLog(@"-> applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -30,7 +30,7 @@
 #import "UIAlertView+Blocks.h"
 #import "DZWebBrowser.h"
 #import <SDWebImage/SDImageCache.h>
-
+#import "HPCrashReport.h"
 #import "HPURLProtocol.h"
 
 // mail
@@ -600,7 +600,7 @@
     }];
     
     //
-    BOOL bugTrackingEnable = [Setting boolForKey:HPSettingBugTrackEnable];
+    BOOL bugTrackingEnable = [HPCrashReport isCrashReportEnable];
     REBoolItem *bugTrackingEnableItem = [REBoolItem itemWithTitle:@"错误信息收集" value:bugTrackingEnable switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"bugTrackingEnable %@", item.value ? @"YES" : @"NO");
@@ -618,12 +618,12 @@
                     [item reloadRowWithAnimation:UITableViewRowAnimationNone];
                     [Flurry logEvent:@"Setting BugTracking" withParameters:@{@"action":@"StopClose"}];
                 } else {
-                    [Setting saveBool:item.value forKey:HPSettingBugTrackEnable];
+                    [HPCrashReport setCrashReportEnable:NO];
                     [Flurry logEvent:@"Setting BugTracking" withParameters:@{@"action":@"StillClose"}];
                 }
             }];
         } else {
-            [Setting saveBool:item.value forKey:HPSettingBugTrackEnable];
+            [HPCrashReport setCrashReportEnable:YES];
             [Flurry logEvent:@"Setting BugTracking" withParameters:@{@"action":@"Open"}];
         }
     }];

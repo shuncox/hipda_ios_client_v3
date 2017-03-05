@@ -125,7 +125,6 @@
                                HPSettingAfterSendShowConfirm:@NO,
                                HPSettingAfterSendJump:@YES,
                                HPSettingDataTrackEnable:@YES,
-                               HPSettingBugTrackEnable:@YES,
                                HPSettingBSForumOrderByDate:@NO,
                                HPSettingForceLogin:@NO,
                                HPSettingEnableXHR:@NO,
