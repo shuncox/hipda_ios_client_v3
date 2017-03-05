@@ -11,6 +11,7 @@
 
 #import "NSString+Additions.h"
 #import "NSUserDefaults+Convenience.h"
+#import "HPOnceRunService.h"
 
 #define DEBUG_SETTING 0
 
@@ -75,6 +76,12 @@
     if (!savedSettings) {
         [self loadDefaults];
     }
+    
+    // 之前默认的https设置是NO, 现在改成默认YES, 老版本ye
+    [HPOnceRunService onceName:@"enableHTTPS" runBlcok:^{
+        [self saveBool:YES forKey:HPSettingEnableHTTPS];
+    } skipBlock:nil];
+    
     if (DEBUG_SETTING) NSLog(@"load  _globalSettings %@", _globalSettings);
 }
 
@@ -139,7 +146,7 @@
                                HPSettingImageCDNMinValueWifi:@1024,
                                
                                HPSettingPrintPagePost:@YES,
-                               HPSettingEnableHTTPS:@NO,
+                               HPSettingEnableHTTPS:@YES,
                                };
     return defaults;
 }
