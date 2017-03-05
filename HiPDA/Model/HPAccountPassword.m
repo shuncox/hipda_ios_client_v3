@@ -44,20 +44,39 @@
 
 + (BOOL)isSetAccountFor:(NSString *)username
 {
-    return !![self.class credentialFor:username];
+    return !![self.class credentialFor:username checkExist:YES];
 }
 
 + (HPAccountCredential *)credentialFor:(NSString *)username
 {
+    return [self.class credentialFor:username checkExist:NO];
+}
+
++ (HPAccountCredential *)credentialFor:(NSString *)username
+                           checkExist:(BOOL)checkExist
+{
+    // 将后台读keychain的请求直接过滤
+    // TODO: 上线之后看看下面的读取错误的打点还有么?
+    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+        NSCAssert(NO, @"app在后台, 没有读keychain的权限");
+        return nil;
+    }
+    
     NSError *error = nil;
     NSString *credential = [SAMKeychain passwordForService:kHPKeychainService account:username error:&error];
     
     // log
     if (error) {
-        [Flurry logEvent:@"SAMKeychain_Read_Error"
-          withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
-                           @"error": [error description],
-                           @"state": @([[UIApplication sharedApplication] applicationState])}];
+        // 检查是否设置过密码(isSetAccountFor:)也调用这个方法, 但是checkExist为YES
+        // 从这个路径调进来的 不报error
+        if (error.code == -25300 && checkExist) {
+            // do nothing
+        } else {
+            [Flurry logEvent:@"SAMKeychain_Read_Error"
+              withParameters:@{@"desc": [NSString stringWithFormat:@"%@, %@", @(error.code), error.localizedDescription],
+                               @"error": [error description],
+                               @"state": @([[UIApplication sharedApplication] applicationState])}];
+        }
     }
     
     // fallback
