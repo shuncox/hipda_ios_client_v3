@@ -476,15 +476,14 @@
         
         [SVProgressHUD showWithStatus:@"清理中" maskType:SVProgressHUDMaskTypeBlack];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
             [[SDImageCache sharedImageCache] clearMemory];
-            [[SDImageCache sharedImageCache] clearDisk];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD showSuccessWithStatus:@"清理完成"];
-            });
+            [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SVProgressHUD showSuccessWithStatus:@"清理完成"];
+                });
+            }];
         });
-    
         
         item.title = @"清理缓存";
         [item reloadRowWithAnimation:UITableViewRowAnimationAutomatic];

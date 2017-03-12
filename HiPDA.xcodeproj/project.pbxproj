@@ -309,6 +309,7 @@
 		EAB7CEC619F00E90003830AC /* up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAB7CEC019F00E90003830AC /* up@3x.png */; };
 		EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC0E42918BCE89700F064B6 /* HPNewPost.m */; };
 		EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC202E11C4FD2050050994E /* HPViewHTMLController.m */; };
+		EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */; };
 		EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */; };
 		EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */; };
 		EAD7F5DC183CC84600A750D9 /* hp_smile_default_cool.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F59F183CC84600A750D9 /* hp_smile_default_cool.gif */; };
@@ -861,6 +862,8 @@
 		EAC202E11C4FD2050050994E /* HPViewHTMLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewHTMLController.m; path = Controller/HPViewHTMLController.m; sourceTree = "<group>"; };
 		EACA0B561892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EACA0B571892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		EAD214801E75A07700C6ECC1 /* HPNSURLCacheCleaner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNSURLCacheCleaner.h; path = Helper/HPNSURLCacheCleaner.h; sourceTree = "<group>"; };
+		EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNSURLCacheCleaner.m; path = Helper/HPNSURLCacheCleaner.m; sourceTree = "<group>"; };
 		EAD2AECB18365F8A00E0A6C3 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EGOCache.h; path = Vender/EGOCache/EGOCache.h; sourceTree = "<group>"; };
 		EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGOCache.m; path = Vender/EGOCache/EGOCache.m; sourceTree = "<group>"; };
 		EAD2AECE1836718100E0A6C3 /* HPBackgroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBackgroundViewController.h; path = Controller/HPBackgroundViewController.h; sourceTree = "<group>"; };
@@ -1940,6 +1943,8 @@
 				EAF18F251B01037300B50E19 /* HPURLProtocol.m */,
 				EAE0FE421D09527F00F0D76E /* NSString+CDN.h */,
 				EAE0FE431D09527F00F0D76E /* NSString+CDN.m */,
+				EAD214801E75A07700C6ECC1 /* HPNSURLCacheCleaner.h */,
+				EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -2583,6 +2588,7 @@
 				EA5708241AA09C5200AD2247 /* HPHistoryViewController.m in Sources */,
 				EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */,
 				EA78407E1BE203D400139141 /* NSError+HPError.m in Sources */,
+				EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */,
 				EADF46721CA76CDC00D71C25 /* NSString+HPImageSize.m in Sources */,
 				EAA727F41D3D266100566999 /* HPBlockService.m in Sources */,
 				EA075F5E18E447FD00A07C08 /* HPNewThreadViewController.m in Sources */,
@@ -2728,7 +2734,29 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HiPDA/HiPDA-Prefix.pch";
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SDKROOT)/usr/include/libxml2\" \"${PODS_ROOT}/Headers\" \"${PODS_ROOT}/Headers/AFNetworking\" \"${PODS_ROOT}/Headers/DACircularProgress\" \"${PODS_ROOT}/Headers/FoundationExtension\" \"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\" \"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\" \"${PODS_ROOT}/Headers/HMSegmentedControl\" \"${PODS_ROOT}/Headers/MBProgressHUD\" \"${PODS_ROOT}/Headers/MCSwipeTableViewCell\" \"${PODS_ROOT}/Headers/MTLog\" \"${PODS_ROOT}/Headers/MWPhotoBrowser\" \"${PODS_ROOT}/Headers/SDWebImage\" \"${PODS_ROOT}/Headers/SVProgressHUD\" \"${PODS_ROOT}/Headers/SWRevealViewController\" \"${PODS_ROOT}/Headers/SevenSwitch\" \"${PODS_ROOT}/Headers/UI7Kit\" \"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\" \"${PODS_ROOT}/Headers/UIKitResources\" \"${PODS_ROOT}/Headers/cdebug\" $(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD";
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/DACircularProgress\"",
+					"\"${PODS_ROOT}/Headers/FoundationExtension\"",
+					"\"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\"",
+					"\"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\"",
+					"\"${PODS_ROOT}/Headers/HMSegmentedControl\"",
+					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/MCSwipeTableViewCell\"",
+					"\"${PODS_ROOT}/Headers/MTLog\"",
+					"\"${PODS_ROOT}/Headers/MWPhotoBrowser\"",
+					"\"${PODS_ROOT}/Headers/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/SVProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
+					"\"${PODS_ROOT}/Headers/SevenSwitch\"",
+					"\"${PODS_ROOT}/Headers/UI7Kit\"",
+					"\"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\"",
+					"\"${PODS_ROOT}/Headers/UIKitResources\"",
+					"\"${PODS_ROOT}/Headers/cdebug\"",
+					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
+				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2764,7 +2792,29 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HiPDA/HiPDA-Prefix.pch";
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"$(SDKROOT)/usr/include/libxml2\" \"${PODS_ROOT}/Headers\" \"${PODS_ROOT}/Headers/AFNetworking\" \"${PODS_ROOT}/Headers/DACircularProgress\" \"${PODS_ROOT}/Headers/FoundationExtension\" \"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\" \"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\" \"${PODS_ROOT}/Headers/HMSegmentedControl\" \"${PODS_ROOT}/Headers/MBProgressHUD\" \"${PODS_ROOT}/Headers/MCSwipeTableViewCell\" \"${PODS_ROOT}/Headers/MTLog\" \"${PODS_ROOT}/Headers/MWPhotoBrowser\" \"${PODS_ROOT}/Headers/SDWebImage\" \"${PODS_ROOT}/Headers/SVProgressHUD\" \"${PODS_ROOT}/Headers/SWRevealViewController\" \"${PODS_ROOT}/Headers/SevenSwitch\" \"${PODS_ROOT}/Headers/UI7Kit\" \"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\" \"${PODS_ROOT}/Headers/UIKitResources\" \"${PODS_ROOT}/Headers/cdebug\" $(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD";
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/DACircularProgress\"",
+					"\"${PODS_ROOT}/Headers/FoundationExtension\"",
+					"\"${PODS_ROOT}/Headers/FoundationExtension/UIKitExtension\"",
+					"\"${PODS_ROOT}/Headers/GIKPopoverBackgroundView\"",
+					"\"${PODS_ROOT}/Headers/HMSegmentedControl\"",
+					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/MCSwipeTableViewCell\"",
+					"\"${PODS_ROOT}/Headers/MTLog\"",
+					"\"${PODS_ROOT}/Headers/MWPhotoBrowser\"",
+					"\"${PODS_ROOT}/Headers/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/SVProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/SWRevealViewController\"",
+					"\"${PODS_ROOT}/Headers/SevenSwitch\"",
+					"\"${PODS_ROOT}/Headers/UI7Kit\"",
+					"\"${PODS_ROOT}/Headers/UI7Kit/UI7Kit\"",
+					"\"${PODS_ROOT}/Headers/UIKitResources\"",
+					"\"${PODS_ROOT}/Headers/cdebug\"",
+					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
+				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
