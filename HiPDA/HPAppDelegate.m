@@ -28,6 +28,7 @@
 #import "NSRegularExpression+HP.h"
 #import "HPReadViewController.h"
 #import "HPCrashReport.h"
+#import <SDWebImage/SDImageCache.h>
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -177,6 +178,11 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self setupBgFetch];
+        
+        // SDWebImage 缓存时长 默认一周, 改成三天
+        [[SDImageCache sharedImageCache] setMaxCacheAge:60 * 60 * 24 * 3];
+        // SDWebImage 最大缓存大小, 默认不限, 改成500m
+        [[SDImageCache sharedImageCache] setMaxCacheSize:500 * 1024 * 1024];
         
         // 友盟
         BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
