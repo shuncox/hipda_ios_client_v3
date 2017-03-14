@@ -11,6 +11,7 @@
 #import "IDMZoomingScrollView.h"
 #import "SVProgressHUD.h"
 #import <AnimatedGIFImageSerialization.h>
+#import "HPActivityItem.h"
 
 #define kUSE_CURRENT_CONTEXT_PRESENTATION_STYLE 1
 
@@ -1346,7 +1347,8 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                 }
                 
                 if ([photo underlyingImageURL]) {
-                    [activityItems addObject:[photo underlyingImageURL]];
+                    HPActivityItem *item = [[HPActivityItem alloc] initWithItem:[photo underlyingImageURL]];
+                    [activityItems addObject:item];
                 }
                 
                 if (photo.caption) {
