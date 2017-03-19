@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#if __has_include(<JSPatch/RenamePrefix.h>)
+#import <JSPatch/RenamePrefix.h>
+#endif
 #import <JSPatch/JPEngine.h>
 
 @interface HPHotPatch : NSObject

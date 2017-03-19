@@ -1,4 +1,14 @@
 platform :ios, '7.0'
+
+def smart_pod(name, options = nil)
+    dir = name.split('/', 2).first;
+    if File.directory?('../'+dir)
+        pod name, :path=> '../'+dir
+    else
+        pod name, options
+    end
+end
+
 target 'HiPDA' do
 
 pod 'AFNetworking', '1.3.3'
@@ -18,7 +28,6 @@ pod 'RETableViewManager', '1.6'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 #pod 'CTAssetsPickerController', :path => '../CTAssetsPickerController'
 pod 'Qiniu', :git => 'https://github.com/qiniu/objc-sdk.git', :branch => 'AFNetworking-1.x'
-pod 'JSPatch'
 pod 'Mantle', '1.5.4'
 pod 'Objective-LevelDB'
 pod 'Masonry'
@@ -27,6 +36,13 @@ pod 'AnimatedGIFImageSerialization'
 pod 'SVPullToRefresh'
 pod 'MLeaksFinder', '~>0.2.0'
 pod 'BlocksKit'
+
+# JSPatch
+smart_pod 'JSPatch', '~> 1.1.3'
+smart_pod 'JSPatch/Extensions'
+smart_pod 'JSPatch/JPCFunction'
+smart_pod 'JSPatch/JPBlock'
+smart_pod 'JSPatch/JPCFunctionBinder'
 
 end
 
