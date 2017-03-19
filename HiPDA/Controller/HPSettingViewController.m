@@ -762,9 +762,7 @@
 #pragma mark -
 
 - (void)close:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [[HPRearViewController sharedRearVC] forumDidChanged];
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)closeAndShowLoginVC {

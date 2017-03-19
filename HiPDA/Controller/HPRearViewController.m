@@ -172,6 +172,8 @@
     [self.tableView setSeparatorColor:[UIColor clearColor]];
     
     NSLog(@"rear did load done");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forumDidChanged) name:kHPThreadListDidChange object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -518,9 +520,6 @@
 
 #pragma mark - 
 - (void)forumDidChanged {
-    
-    
-    
     _fids = [Setting objectForKey:HPSettingFavForums];
     _fids_title = [Setting objectForKey:HPSettingFavForumsTitle];
     [_tableView reloadData];

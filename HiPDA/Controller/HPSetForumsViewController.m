@@ -154,9 +154,10 @@
     [Setting saveObject:new_fids forKey:HPSettingFavForums];
     [Setting saveObject:_titles forKey:HPSettingFavForumsTitle];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kHPThreadListDidChange object:nil];
+    
     [Flurry logEvent:@"Setting SetForums" withParameters:@{@"fids":new_fids,@"titles":_titles}];
 }
-
 
 
 - (void)viewWillDisappear:(BOOL)animated {

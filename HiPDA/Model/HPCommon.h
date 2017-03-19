@@ -222,6 +222,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define kHPUserLoginError @"HPUserLoginError"
 #define kHPThemeDidChanged @"HPThemeDidChanged"
 #define kHPBlockListDidChange @"kHPBlockListDidChange"
+#define kHPThreadListDidChange @"kHPThreadListDidChange"
 
 
 
