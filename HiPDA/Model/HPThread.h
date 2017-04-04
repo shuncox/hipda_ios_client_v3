@@ -31,6 +31,9 @@
 
 // for HPMyReply & HPMyNotice
 @property (nonatomic, strong) NSString *replyDetail;
+// for HPMyThread
+@property (nonatomic, strong) NSString *threadLastReplyUsername;
+@property (nonatomic, strong) NSString *threadLastReplyDateString;
 
 
 - (id)initWithAttributes:(NSDictionary *)attributes;

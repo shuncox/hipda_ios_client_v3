@@ -476,6 +476,8 @@
     [aCoder encodeInteger:_pid forKey:@"pid"];
     
     [aCoder encodeObject:_replyDetail forKey:@"replyDetail"];
+    [aCoder encodeObject:_threadLastReplyUsername forKey:@"threadLastReplyUsername"];
+    [aCoder encodeObject:_threadLastReplyDateString forKey:@"threadLastReplyDateString"];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -499,6 +501,8 @@
         _pid = [aDecoder decodeIntegerForKey:@"pid"];
         
         _replyDetail = [aDecoder decodeObjectForKey:@"replyDetail"];
+        _threadLastReplyUsername = [aDecoder decodeObjectForKey:@"threadLastReplyUsername"];
+        _threadLastReplyDateString = [aDecoder decodeObjectForKey:@"threadLastReplyDateString"];
     }
     return self;
 }

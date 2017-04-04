@@ -182,12 +182,13 @@
     
     // Configure the cell...
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     HPThread *thread = [_myThreads objectAtIndex:indexPath.row];
     cell.textLabel.text = thread.title;
-    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"最后回复: %@ - %@",
+                                 thread.threadLastReplyUsername, thread.threadLastReplyDateString];
     return cell;
 }
 

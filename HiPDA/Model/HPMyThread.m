@@ -13,6 +13,7 @@
 #import "HPHttpClient.h"
 #import <AFHTTPRequestOperation.h>
 #import "NSString+Additions.h"
+#import "NSRegularExpression+HP.h"
 
 #define kHPMyThread @"myThreads"
 #define DEBUG_ayscn_myThread 0
@@ -84,6 +85,13 @@
                  thread.tid = tid;
                  thread.title = title;
                  thread.fid = fid;
+                 
+                 NSString *searchArea = [html substringFromIndex:fidRange.location];
+                 
+                 NSString *username = [RX(@"<a[^>]+>([^<]+)</a></cite>") firstMatchValue:searchArea];
+                 NSString *dateString = [RX(@"<a[^>]+>([^<]+)</a></em>") firstMatchValue:searchArea];
+                 thread.threadLastReplyUsername = username;
+                 thread.threadLastReplyDateString = dateString;
                  
                  if(DEBUG_ayscn_myThread) NSLog(@"tid %@ title %@ fid %@ ", tidString, title, fidString);
                  
