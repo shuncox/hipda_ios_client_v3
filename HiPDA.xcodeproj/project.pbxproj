@@ -310,6 +310,7 @@
 		EAB7CEC619F00E90003830AC /* up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAB7CEC019F00E90003830AC /* up@3x.png */; };
 		EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC0E42918BCE89700F064B6 /* HPNewPost.m */; };
 		EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC202E11C4FD2050050994E /* HPViewHTMLController.m */; };
+		EAC5C33D1E93D36E0054A66E /* HPPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */; };
 		EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */; };
 		EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */; };
 		EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */; };
@@ -863,6 +864,8 @@
 		EAC0E42918BCE89700F064B6 /* HPNewPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNewPost.m; path = Model/HPNewPost.m; sourceTree = "<group>"; };
 		EAC202E01C4FD2050050994E /* HPViewHTMLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewHTMLController.h; path = Controller/HPViewHTMLController.h; sourceTree = "<group>"; };
 		EAC202E11C4FD2050050994E /* HPViewHTMLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewHTMLController.m; path = Controller/HPViewHTMLController.m; sourceTree = "<group>"; };
+		EAC5C33B1E93D36E0054A66E /* HPPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPostViewController.h; path = Controller/HPPostViewController.h; sourceTree = "<group>"; };
+		EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPPostViewController.m; path = Controller/HPPostViewController.m; sourceTree = "<group>"; };
 		EACA0B561892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EACA0B571892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EAD214801E75A07700C6ECC1 /* HPNSURLCacheCleaner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNSURLCacheCleaner.h; path = Helper/HPNSURLCacheCleaner.h; sourceTree = "<group>"; };
@@ -1311,6 +1314,8 @@
 				EA1273791830F40700DE9851 /* HPThreadViewController.m */,
 				EA1427DC18BF78E200A7E9B1 /* HPReadViewController.h */,
 				EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */,
+				EAC5C33B1E93D36E0054A66E /* HPPostViewController.h */,
+				EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */,
 				EA39A0EC183CEC740068233F /* HPSettingViewController.h */,
 				EA39A0ED183CEC740068233F /* HPSettingViewController.m */,
 				EAD2AECE1836718100E0A6C3 /* HPBackgroundViewController.h */,
@@ -2577,6 +2582,7 @@
 				EAA1E68818D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m in Sources */,
 				EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */,
 				EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */,
+				EAC5C33D1E93D36E0054A66E /* HPPostViewController.m in Sources */,
 				EA499F461830C2D800172989 /* TFHpple.m in Sources */,
 				EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */,
 				EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */,
