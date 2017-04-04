@@ -151,6 +151,8 @@
                                HPSettingEnableHTTPS:@YES,
                                
                                HPSettingRegularFontMode:@YES,
+                               
+                               HPSettingEnableWKWebview:@NO,
                                };
     return defaults;
 }

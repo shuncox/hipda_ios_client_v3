@@ -336,6 +336,13 @@
         [Flurry logEvent:@"Setting Print" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    // WKWebview
+    //
+    BOOL enableWKWebview = [Setting boolForKey:HPSettingEnableWKWebview];
+    REBoolItem *enableWKWebviewItem = [REBoolItem itemWithTitle:@"Enable WKWebview" value:isPrint switchValueChangeHandler:^(REBoolItem *item) {
+        [Setting saveBool:item.value forKey:HPSettingEnableWKWebview];
+    }];
+    
     //
     //
     RETableViewItem *setStupidBarItem = [RETableViewItem itemWithTitle:@"StupidBar" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
@@ -445,6 +452,9 @@
 #if DEBUG_MODE // 由于上了https, 所以不再允许设置httpdns
     [section addItem:nodeItem];
     [section addItem:enableHttpsItem];
+#endif
+#if DEBUG_MODE
+    [section addItem:enableWKWebviewItem];
 #endif
     
     [_manager addSection:section];

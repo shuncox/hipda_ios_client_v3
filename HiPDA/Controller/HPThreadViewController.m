@@ -41,6 +41,7 @@
 #import "HPThreadFilterMenu.h"
 #import <ReactiveCocoa.h>
 #import "UITableView+ScrollToTop.h"
+#import "HPPostViewController.h"
 
 typedef enum{
 	PullToRefresh = 0,
@@ -448,9 +449,15 @@ typedef enum{
     HPThreadCell *cell = (HPThreadCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
     
-    HPReadViewController *readVC =
-    [[HPReadViewController alloc] initWithThread:thread];
-    [self.navigationController pushViewController:readVC animated:YES];
+  
+    if (![Setting boolForKey:HPSettingEnableWKWebview]) {
+        HPReadViewController *readVC =
+        [[HPReadViewController alloc] initWithThread:thread];
+        [self.navigationController pushViewController:readVC animated:YES];
+    } else {
+        HPPostViewController *readVC = [[HPPostViewController alloc] initWithThread:thread];
+        [self.navigationController pushViewController:readVC animated:YES];
+    }
 }
 
 #pragma mark - NSKeyValueObserving

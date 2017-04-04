@@ -184,6 +184,7 @@ extern NSString *HP_CNC_BASE_IP;
 //#define HPSettingSwipeBack @"HPSettingSwipeBack"
 #define HPSettingPrintPagePost @"HPSettingPrintPagePost"
 #define HPSettingEnableHTTPS @"HPSettingEnableHTTPS"
+#define HPSettingEnableWKWebview @"HPSettingEnableWKWebview"
 
 // image
 #define HPSettingImageAutoLoadEnableWWAN @"HPSettingImageAutoLoadEnableWWAN"
