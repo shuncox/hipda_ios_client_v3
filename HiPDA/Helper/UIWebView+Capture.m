@@ -27,6 +27,10 @@
     while (currentWebViewHeight > 0)
     {
         imageName ++;
+        // 最多十屏, 再大了内存扛不住
+        if (imageName > 10) {
+            break;
+        }
         
         //UIGraphicsBeginImageContext(screenRect.size);
         UIGraphicsBeginImageContextWithOptions(screenRect.size, NO, 0.0);
