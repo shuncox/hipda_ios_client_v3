@@ -914,6 +914,15 @@
         imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:HPOnlineImageCDNMinValueWWAN defaultValue:imageCDNMinValue]);
     }
     
+    if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
+        NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
+        final = [rx replace:string withDetailsBlock:^NSString *(RxMatch *match) {
+            NSString *imageNode = match.value;
+            imageNode = [imageNode stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
+            return imageNode;
+        }];
+    }
+    
     if (!imageAutoLoadEnable || imageSizeFilterEnable) {
         
         NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
