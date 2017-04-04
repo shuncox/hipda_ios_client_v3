@@ -7,15 +7,26 @@
 //
 
 #import <SDImageCache.h>
+#import <BlocksKit/NSObject+BKAssociatedObjects.h>
+
+typedef void (^HPImageCacheCompletionBlock)(NSData *data, SDImageCacheType cacheType);
 
 @interface SDImageCache (URLCache)
-//
+
+// public
 - (UIImage *)scaledImageForKey:(NSString *)key image:(UIImage *)image;
 @property (strong, readonly, nonatomic) NSCache *memCache;
 - (NSData *)diskImageDataBySearchingAllPathsForKey:(NSString *)key;
+@property (SDDispatchQueueSetterSementics, readonly, nonatomic) dispatch_queue_t ioQueue;
 
-//
-- (UIImage *)hp_imageWithData:(NSData *)data key:(NSString *)key;
-- (NSData *)hp_imageDataFromDiskCacheForKey:(NSString *)key;
+// additions
 - (BOOL)hp_imageExistsWithKey:(NSString *)key;
+
+- (void)hp_queryImageDataFromCacheForKey:(NSString *)key
+                              scheduleOn:(NSThread *)thread
+                              completion:(HPImageCacheCompletionBlock)block;
+
+- (void)hp_storeImageData:(NSData *)data
+                   forKey:(NSString *)key;
+
 @end

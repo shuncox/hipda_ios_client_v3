@@ -160,62 +160,59 @@ static id<HPURLMapping> s_URLMapping;
     return request;
 }
 
-- (void)startLoading {
-    
-    // 如果缓存命中, 直接返回缓存
-    if ([self.class shouldCache:self.request]) {
-        
-        NSString *cacheKey = [[self class] cacheKeyForURL:self.request.URL];
-        UIImage *memCachedImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:cacheKey];
-        NSData *data = nil;
-        if (memCachedImage) {
-            NSLog(@"get memcache %@", self.request);
-            // 无法从uiimage 判断jpeg png gif, 所以俺jpeg处理
-            if (!memCachedImage.images) {
-                data = UIImageJPEGRepresentation(memCachedImage, 1.f);
-            } else {
-                data = nil;
-                //效率太差, fallback到从disk cache中读
-                //data = [AnimatedGIFImageSerialization animatedGIFDataWithImage:memCachedImage duration:1.0 loopCount:1 error:nil];
-            }
-        } else {
-            data = [[SDImageCache sharedImageCache] hp_imageDataFromDiskCacheForKey:cacheKey];
-            if (data) { NSLog(@"get disk cache %@", self.request); }
-        }
-        
-        if (data) {
-            
-            // 直接用缓存完成请求
-            //
-            //https://github.com/evermeer/EVURLCache/blob/master/EVURLCache.m:87
-            NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:@"cache" expectedContentLength:[data length] textEncodingName:nil] ;
-            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
-            //https://github.com/buzzfeed/mattress/blob/master/Source/URLProtocol.swift#L195
-            [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
-            //另一种实现
-            /*
-             [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-             [self.client URLProtocol:self didLoadData:data];
-             [self.client URLProtocolDidFinishLoading:self];
-             */
-            
-            // 结束
-            //
-            return;
-        } else {
-            NSLog(@"not get cachedImage");
-        }
+- (void)startLoading
+{
+    if (![self.class shouldCache:self.request]) {
+        [self sendRequest];
+        return;
     }
     
-    // 置换请求(域名->ip)
-    self.URLConnection = [NSURLConnection connectionWithRequest:[self modifiedRequestWithOriginalRequest:self.request] delegate:self];
-    
-    NSLog(@"startLoading %@", self.URLConnection);
+    @weakify(self);
+    NSString *cacheKey = [[self class] cacheKeyForURL:self.request.URL];
+    [[SDImageCache sharedImageCache] hp_queryImageDataFromCacheForKey:cacheKey
+                                                           scheduleOn:[NSThread currentThread]
+                                                           completion:^(NSData *data, SDImageCacheType cacheType)
+    {
+        @strongify(self);
+        if (!data) {
+            NSLog(@"not get cachedImage");
+            [self sendRequest];
+            return;
+        }
+        
+        if (cacheType == SDImageCacheTypeMemory) {
+            NSLog(@"get memcache %@", self.request);
+        } else {
+            NSLog(@"get disk cache %@", self.request);
+        }
+        
+        // 直接用缓存完成请求
+        //
+        //https://github.com/evermeer/EVURLCache/blob/master/EVURLCache.m:87
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:@"cache" expectedContentLength:[data length] textEncodingName:nil] ;
+        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
+        //https://github.com/buzzfeed/mattress/blob/master/Source/URLProtocol.swift#L195
+        [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
+        
+        //另一种实现
+        /*
+         [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+         [self.client URLProtocol:self didLoadData:data];
+         [self.client URLProtocolDidFinishLoading:self];
+         */
+    }];
 }
 
 - (void)stopLoading {
     [self.URLConnection cancel];
     self.URLConnection = nil;
+}
+
+#pragma mark -
+- (void)sendRequest
+{
+    self.URLConnection = [NSURLConnection connectionWithRequest:[self modifiedRequestWithOriginalRequest:self.request] delegate:self];
+    NSLog(@"startLoading %@", self.URLConnection);
 }
 
 #pragma mark - NSURLConnectionDelegate
@@ -256,17 +253,9 @@ static id<HPURLMapping> s_URLMapping;
             NSLog(@"self.data.length = 0");
             return;
         }
-        /*
-         UIImage *image = [[UIImage alloc] initWithData:cachedResponse.data];
-         [[SDWebImageManager sharedManager] saveImageToCache:image forURL:request.URL];
-         */
+        
         NSString *cacheKey = [self.class cacheKeyForURL:self.request.URL];
-        UIImage *image = [[[SDWebImageManager sharedManager] imageCache] hp_imageWithData:self.data key:cacheKey];
-        if (image) {
-            [[[SDWebImageManager sharedManager] imageCache] storeImage:image recalculateFromImage:NO imageData:self.data forKey:cacheKey toDisk:YES];
-        } else {
-            //404, ...
-        }
+        [[[SDWebImageManager sharedManager] imageCache] hp_storeImageData:self.data forKey:cacheKey];
     }
 }
 

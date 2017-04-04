@@ -12,6 +12,7 @@
 #import "SVProgressHUD.h"
 #import <AnimatedGIFImageSerialization.h>
 #import "HPActivityItem.h"
+#import "SDImageCache+URLCache.h"
 
 #define kUSE_CURRENT_CONTEXT_PRESENTATION_STYLE 1
 
@@ -1322,29 +1323,23 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     if ([self numberOfPhotos] > 0 && [photo underlyingImage]) {
         if(!_actionButtonTitles)
         {
-            // Activity view
+            NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[photo underlyingImageURL]];
             
             @weakify(self);
-            SDWebImageDownloaderCompletedBlock complation = ^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                [self hideProgressHUD:YES];
-                
+            [[[SDWebImageManager sharedManager] imageCache] hp_queryImageDataFromCacheForKey:key scheduleOn:[NSThread mainThread] completion:^(NSData *data, SDImageCacheType cacheType) {
                 @strongify(self);
+                
                 if (!self) {
                     return;
                 }
                 
-                if (error) {
-                    [self showProgressHUDCompleteMessage:[NSString stringWithFormat:@"下载失败\n%@", error.localizedDescription]];
+                if (!data) {
+                    [SVProgressHUD showErrorWithStatus:@"请等待图片载入完成"];
                     return;
                 }
                 
                 NSMutableArray *activityItems = [NSMutableArray array];
-                
-                if (image.images && data) {
-                    [activityItems addObject:data];
-                } else if (image) {
-                    [activityItems addObject:image];
-                }
+                [activityItems addObject:data];
                 
                 if ([photo underlyingImageURL]) {
                     HPActivityItem *item = [[HPActivityItem alloc] initWithItem:[photo underlyingImageURL]];
@@ -1368,33 +1363,13 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                     }
                 }];
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:self.activityViewController animated:YES completion:nil];
-                });
-            };
-            
-            UIImage *image = [photo underlyingImage];
-            if (image.images) {
-                [self showProgressHUDWithMessage:@"转换中..."];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    NSError *e = nil;
-                    NSData *data = [AnimatedGIFImageSerialization animatedGIFDataWithImage:image
-                                                                                     error:&e];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        complation(image, data, e, YES);
-                    });
-                });
-            } else if (!image) {
-                [self showProgressHUDWithMessage:@"下载图片中..."];
-                [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[photo underlyingImageURL] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                    [self showProgressHUD: receivedSize * 1.f / expectedSize];
-                } completed:complation];
-            } else {
-                complation(image, nil, nil, YES);
-            }
+                [self presentViewController:self.activityViewController animated:YES completion:nil];
+            }];
         }
         else
         {
+            // 这个路径没用了 应该
+            
             // Action sheet
             self.actionsSheet = [UIActionSheet new];
             self.actionsSheet.delegate = self;
