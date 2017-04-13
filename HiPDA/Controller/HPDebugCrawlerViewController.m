@@ -38,7 +38,7 @@
     [self.view addSubview:self.actionsView];
     [self.actionsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
-        make.height.equalTo(self.view).multipliedBy(0.25);
+        make.height.equalTo(self.view).multipliedBy(0.35);
     }];
     
     UILabel *tip = [UILabel new];
@@ -53,8 +53,8 @@
     }];
     //「」和『』）的使用对于中文字
     tip.text = @"若页面上有「流量工具栏」或「广告」, 请尝试找到「设置」按钮, 选择本月关闭\n"
-               @"「联通用户」请关注页面最右下角的一个极小的按钮"
-               @"若仍然无法解决问题, 请点击「报告问题」";
+               "「联通用户」请关注页面最右下角的一个极小的按钮\n"
+               "若仍然无法解决问题, 请点击「报告问题」";
     
     UIButton *button = [UIButton new];
     button.layer.borderWidth = 1.f;

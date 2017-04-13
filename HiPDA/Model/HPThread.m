@@ -13,6 +13,7 @@
 #import "HPMessage.h"
 #import "HPBlockService.h"
 #import "HPDatabase.h"
+#import "HPSetting.h"
 
 #import "HPHttpClient.h"
 #import "TFHpple.h"
@@ -124,7 +125,7 @@
         */
         
         HPCrawlerErrorContext *context = [HPCrawlerErrorContext new];
-        context.url = [NSString stringWithFormat:@"%@%@", [[HPHttpClient sharedClient] baseURL], path];
+        context.url = [NSString stringWithFormat:@"%@/%@", HP_BASE_URL, path];
         context.html = html;
         context.requestHeaders = ({
             NSURLRequest *request = [operation request];
