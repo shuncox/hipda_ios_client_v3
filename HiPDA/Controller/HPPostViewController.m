@@ -468,10 +468,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     _reloadingFooter = YES;
     
 #if DEBUG && 0 /*直接下拉刷新即可刷新模板 cd /HiPDA/View/; python -m SimpleHTTPServer*/
-    NSData *___d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:8000/post_view.html"]];
+    NSData *___d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:8000/post_view_wk.html"]];
     NSMutableString *string = [[[NSString alloc] initWithData:___d encoding:NSUTF8StringEncoding] mutableCopy];
 #else
-    NSMutableString *string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
+    NSMutableString *string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view_wk" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
 #endif
     
     if (IS_IPAD) {

@@ -107,6 +107,7 @@
 		EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D61842F5D100ADA47D /* HPNotice.m */; };
 		EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */; };
 		EA42B9B01EA4FDCB008FC2AA /* WKWebView+Synchronize.m in Sources */ = {isa = PBXBuildFile; fileRef = EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */; };
+		EA42B9B21EA50805008FC2AA /* post_view_wk.html in Resources */ = {isa = PBXBuildFile; fileRef = EA42B9B11EA50805008FC2AA /* post_view_wk.html */; };
 		EA43E6EE1831F4C200968B94 /* NSUserDefaults+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E6EC1831F4C200968B94 /* NSUserDefaults+Convenience.m */; };
 		EA43E6F1183201C700968B94 /* HPCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E6F0183201C700968B94 /* HPCommon.m */; };
 		EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E70018328AED00968B94 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -573,6 +574,7 @@
 		EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMyNoticeViewController.m; path = Controller/HPMyNoticeViewController.m; sourceTree = "<group>"; };
 		EA42B9AE1EA4FDCB008FC2AA /* WKWebView+Synchronize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WKWebView+Synchronize.h"; path = "Helper/WKWebView+Synchronize.h"; sourceTree = "<group>"; };
 		EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WKWebView+Synchronize.m"; path = "Helper/WKWebView+Synchronize.m"; sourceTree = "<group>"; };
+		EA42B9B11EA50805008FC2AA /* post_view_wk.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view_wk.html; path = View/post_view_wk.html; sourceTree = "<group>"; };
 		EA43E6EC1831F4C200968B94 /* NSUserDefaults+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+Convenience.m"; path = "Helper/NSUserDefaults+Convenience.m"; sourceTree = "<group>"; };
 		EA43E6ED1831F4C200968B94 /* NSUserDefaults+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSUserDefaults+Convenience.h"; path = "Helper/NSUserDefaults+Convenience.h"; sourceTree = "<group>"; };
 		EA43E6EF183201C700968B94 /* HPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCommon.h; path = Model/HPCommon.h; sourceTree = "<group>"; };
@@ -1206,6 +1208,7 @@
 				EA5F164C18D71FC000F6AAB3 /* HPThreadCell.h */,
 				EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */,
 				EA1427DA18BF05AA00A7E9B1 /* post_view.html */,
+				EA42B9B11EA50805008FC2AA /* post_view_wk.html */,
 				EAAE256B18E135870059EEB7 /* HPRearCell.h */,
 				EAAE256C18E135870059EEB7 /* HPRearCell.m */,
 				EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */,
@@ -2295,6 +2298,7 @@
 				EA9A39CA1A5BE92E0028BE7D /* bubble-classic-square-selected@2x.png in Resources */,
 				EAD7F60C183CC84600A750D9 /* hp_smile_grapeman_12.gif in Resources */,
 				EA9A39C51A5BE92E0028BE7D /* bubble-classic-square-blue.png in Resources */,
+				EA42B9B21EA50805008FC2AA /* post_view_wk.html in Resources */,
 				EA06A61A18C2384800EDBDEA /* love_selected@2x.png in Resources */,
 				EA9A39E01A5BE92E0028BE7D /* button-photo@2x.png in Resources */,
 				EA9A39BB1A5BE92E0028BE7D /* bubble-classic-blue.png in Resources */,
