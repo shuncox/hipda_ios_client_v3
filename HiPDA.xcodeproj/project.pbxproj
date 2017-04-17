@@ -106,6 +106,7 @@
 		EA4138C9188D5530001F9542 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4138C8188D5530001F9542 /* SWRevealViewController.m */; };
 		EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D61842F5D100ADA47D /* HPNotice.m */; };
 		EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */; };
+		EA42B9B01EA4FDCB008FC2AA /* WKWebView+Synchronize.m in Sources */ = {isa = PBXBuildFile; fileRef = EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */; };
 		EA43E6EE1831F4C200968B94 /* NSUserDefaults+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E6EC1831F4C200968B94 /* NSUserDefaults+Convenience.m */; };
 		EA43E6F1183201C700968B94 /* HPCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E6F0183201C700968B94 /* HPCommon.m */; };
 		EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E70018328AED00968B94 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -570,6 +571,8 @@
 		EA4266D61842F5D100ADA47D /* HPNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNotice.m; path = Model/HPNotice.m; sourceTree = "<group>"; };
 		EA4266D818430A8D00ADA47D /* HPMyNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPMyNoticeViewController.h; path = Controller/HPMyNoticeViewController.h; sourceTree = "<group>"; };
 		EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMyNoticeViewController.m; path = Controller/HPMyNoticeViewController.m; sourceTree = "<group>"; };
+		EA42B9AE1EA4FDCB008FC2AA /* WKWebView+Synchronize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WKWebView+Synchronize.h"; path = "Helper/WKWebView+Synchronize.h"; sourceTree = "<group>"; };
+		EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WKWebView+Synchronize.m"; path = "Helper/WKWebView+Synchronize.m"; sourceTree = "<group>"; };
 		EA43E6EC1831F4C200968B94 /* NSUserDefaults+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+Convenience.m"; path = "Helper/NSUserDefaults+Convenience.m"; sourceTree = "<group>"; };
 		EA43E6ED1831F4C200968B94 /* NSUserDefaults+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSUserDefaults+Convenience.h"; path = "Helper/NSUserDefaults+Convenience.h"; sourceTree = "<group>"; };
 		EA43E6EF183201C700968B94 /* HPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCommon.h; path = Model/HPCommon.h; sourceTree = "<group>"; };
@@ -1470,6 +1473,8 @@
 				EAC5C33F1E93DD300054A66E /* WKWebView+HPSafeLoadString.m */,
 				EAACE5421D0DA42300EDD096 /* UITableView+ScrollToTop.h */,
 				EAACE5431D0DA42300EDD096 /* UITableView+ScrollToTop.m */,
+				EA42B9AE1EA4FDCB008FC2AA /* WKWebView+Synchronize.h */,
+				EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2565,6 +2570,7 @@
 				EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
 				EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */,
+				EA42B9B01EA4FDCB008FC2AA /* WKWebView+Synchronize.m in Sources */,
 				EA0880191C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m in Sources */,
 				EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */,
 				EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */,

@@ -39,7 +39,7 @@
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
 #import "NSString+CDN.h"
-#import "UIWebView+HPSafeLoadString.h"
+#import "WKWebView+HPSafeLoadString.h"
 
 #import "UIViewController+KNSemiModal.h"
 #import "UIAlertView+Blocks.h"
@@ -55,6 +55,10 @@
 
 #import "HPActivity.h"
 #import "HPBlockService.h"
+
+#import <BlocksKit/NSObject+BKBlockObservation.h>
+#import "NJKWebViewProgressView.h"
+#import "WKWebView+Synchronize.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -87,11 +91,40 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
  
 */
 
-@interface PostWebView : UIWebView
+@interface PostWebView : WKWebView
 //@property (nonatomic, weak) UIView *navigationControllerView;
 @end
 
 @implementation PostWebView
+
++ (void)load
+{
+    
+    // https://mp.weixin.qq.com/s/rhYKLIbXOsUJC_n6dt9UfA
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class cls = NSClassFromString(@"WKBrowsingContextController");
+        SEL sel = NSSelectorFromString(@"registerSchemeForCustomProtocol:");
+        if ([(id)cls respondsToSelector:sel]) {
+            // 注册http(s) scheme, 把 http和https请求交给 NSURLProtocol处理
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Warc-performSelector-leaks"
+            [(id)cls performSelector:sel withObject:@"http"];
+            [(id)cls performSelector:sel withObject:@"https"];
+#pragma clang diagnostic pop
+        }
+    });
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        //不要改, 改成和tableview一样的UIScrollViewDecelerationRateNormal, 反而奇怪
+        //self.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
+    }
+    return self;
+}
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
@@ -108,6 +141,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @interface HPPostViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 
 @property (nonatomic, strong) PostWebView *webView;
+@property (nonatomic, strong) NJKWebViewProgressView *progressView;
 
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
@@ -273,9 +307,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)loadView {
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
     PostWebView *wv = [[PostWebView alloc] initWithFrame:screenFrame];
-    [wv setScalesPageToFit:YES];
-    wv.dataDetectorTypes = UIDataDetectorTypeNone;
-    wv.delegate = self;
+//    [wv setScalesPageToFit:YES];
+//    wv.dataDetectorTypes = UIDataDetectorTypeNone;
+//    wv.delegate = self;
     wv.backgroundColor = [HPTheme backgroundColor];
 //    wv.navigationControllerView = self.navigationController.view;
    
@@ -305,7 +339,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // deal with web view special needs
     NSLog(@"UIWebViewVC dealloc");
     [self.webView stopLoading];
-    [self.webView setDelegate:nil];
+//    [self.webView setDelegate:nil];
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
     
@@ -433,9 +467,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     _reloadingHeader = YES;
     _reloadingFooter = YES;
     
-    // clear
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.open();document.close();"];
-    
 #if DEBUG && 0 /*直接下拉刷新即可刷新模板 cd /HiPDA/View/; python -m SimpleHTTPServer*/
     NSData *___d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:8000/post_view.html"]];
     NSMutableString *string = [[[NSString alloc] initWithData:___d encoding:NSUTF8StringEncoding] mutableCopy];
@@ -558,7 +589,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             //NSLog(@"%@", final);
             // https
             [weakSelf.webView hp_safeLoadHTMLString:final baseURL:[NSURL URLWithString:S(@"%@/forum/", HP_BASE_URL)]];
-            
+            [weakSelf setupProgressObserver];
             [weakSelf endLoad:YES];
             
         } else {
@@ -582,6 +613,18 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
              block(error);
          }*/
         
+    }];
+}
+
+- (void)setupProgressObserver
+{
+    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:CGRectMake(0, self.webView.scrollView.contentInset.top, self.webView.frame.size.width, 1.f)];
+    [self.webView addSubview:self.progressView];
+    
+    @weakify(self);
+    [self.webView bk_addObserverForKeyPath:@"estimatedProgress" task:^(id target) {
+        @strongify(self);
+        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
     }];
 }
 
@@ -848,7 +891,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSInteger floor = [(HPNewPost *)_posts[0] floor] + _posts.count - 1;
 
     NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",floor];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    [self.webView evaluateJavaScript:js completionHandler:nil];
 }
 
 
@@ -917,6 +960,12 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)actionForFloor:(NSInteger)floor {
     
     NSString *selectedText = [self.webView stringByEvaluatingJavaScriptFromString:@"getSelectedText()"];
+    
+    if (![selectedText isKindOfClass:NSString.class]) {
+        NSAssert(0, @"");
+        return;
+    }
+    
     if (selectedText.length) {
         NSLog(@"selectedText %@", selectedText);
         return;
@@ -1014,7 +1063,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                                       delegate:self cancelButtonTitle:@"取消"
                                                       destructiveButtonTitle:nil
                                                       otherButtonTitles:
-                                                      @"复制链接", @"复制全文", @"保存此页截图",nil];
+                                                      @"复制链接", @"复制全文",nil];
                         self.currentActionSheet = actionSheet;
                         
                         [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
@@ -1081,11 +1130,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                 case 1://copy text
                 {
                     [self copyContent];
-                    break;
-                }
-                case 2://capture & save
-                {
-                    [self capturePost];
                     break;
                 }
                 default:
@@ -1221,19 +1265,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [SVProgressHUD showSuccessWithStatus:@"拷贝成功"];
     
     [Flurry logEvent:@"Read CopyContent"];
-}
-
-- (void)capturePost {
-    [UIAlertView showConfirmationDialogWithTitle:@"保存此页截图"
-                                         message:@"请确认此页已完全载入"
-                                         handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-     {
-         if (buttonIndex != [alertView cancelButtonIndex]) {
-             [self prepareCapture];
-         }
-     }];
-    
-    [Flurry logEvent:@"Read CapturePost"];
 }
 
 #pragma mark -
@@ -1439,7 +1470,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
    
     
     NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",floor];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    [self.webView evaluateJavaScript:js completionHandler:nil];
     
     _gotoFloor = 0;
 }
@@ -1937,7 +1968,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.fontSize='%dpx'", (int)(self.currentFontSize/100.f*16)];
     }
     
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    [self.webView evaluateJavaScript:jsString completionHandler:nil];
 }
 
 - (void)changeLineHeight
@@ -1945,7 +1976,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSString *jsString = [[NSString alloc] initWithFormat:@"addNewStyle('body {line-height:%i%% !Important;}')",
                           _currentLineHeight];
     
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    [self.webView evaluateJavaScript:jsString completionHandler:nil];
 }
 
 
@@ -2168,43 +2199,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
 }
 
-
-
-#pragma mark - capture
-- (void)prepareCapture
-{
-    NSString *url = [NSString stringWithFormat:@"%@/forum/viewthread.php?tid=%ld&extra=&page=%ld", HP_BASE_URL, _thread.tid, _current_page];
-    NSString *info = [NSString stringWithFormat:@"本页链接: <br />%@<br />由 HiPDA iOS 客户端生成", url];
-    NSString *js = [NSString stringWithFormat:@"var list = document.getElementById('list');var li = document.createElement('li');li.id='_info_';li.innerHTML='%@';list.appendChild(li);", info];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
-    UIView *stupidbar = [self.view viewWithTag:2020202];
-    [stupidbar removeFromSuperview];
-    
-    [SVProgressHUD showWithStatus:@"处理中..." maskType:SVProgressHUDMaskTypeBlack];
-    
-    [self performSelector:@selector(captureAndSave) withObject:nil afterDelay:0];
-}
-
-- (void)captureAndSave {
-    
-    UIImage *viewImage = [self.webView capture];
-    
-    [self.webView stringByEvaluatingJavaScriptFromString:@"var list = document.getElementById('list');var li = document.getElementById('_info_');list.removeChild(li);"];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library writeImageToSavedPhotosAlbum:[viewImage CGImage]
-                              orientation:(ALAssetOrientation)[viewImage imageOrientation]
-                          completionBlock:^(NSURL *assetURL, NSError *error){
-                              if (error) {
-                                  NSLog(@"captureScreen %@", [error localizedDescription]);
-                                  [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-                              } else {
-                                  NSLog(@"captureScreen %@", assetURL);
-                                  [SVProgressHUD showSuccessWithStatus:@"已保存至相机胶卷"];
-                              }
-                          }];
-}
-
 #pragma mark - HPStupidBarDelegate
 
 - (void)leftBtnTap {
@@ -2299,10 +2293,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
           @"var r;"
           @"for (var i=0, len=list.length; i < len; i++) { if (list[i].offsetTop >= y) { r = list[i]; break;}}"
           @"var p = r.parentNode.getAttribute('data-id'); p;", p.y]];
-    
-    NSInteger f = [[floorString stringByReplacingOccurrencesOfString:@"floor://" withString:@""] integerValue];
-    _current_floor = f;
-    
+    if ([floorString isKindOfClass:NSString.class] && floorString.length) {
+        NSInteger f = [[floorString stringByReplacingOccurrencesOfString:@"floor://" withString:@""] integerValue];
+        _current_floor = f;
+    }
 }
 
 - (void)j {
@@ -2335,7 +2329,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     }
         
     NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",_current_floor];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    [self.webView evaluateJavaScript:js completionHandler:nil];
 }
 
 #pragma mark -
@@ -2367,13 +2361,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                               [weakSelf copyContent];
                                           }];
     
-    UIActivity *capturePost = [HPActivity activityWithType:@"HPCapturePost"
-                                                title:@"保存截图"
-                                                image:[UIImage imageNamed:@"activity_capture_post"]
-                                          actionBlock:^{
-                                              [weakSelf capturePost];
-                                          }];
-    
     UIActivity *viewHTML = [HPActivity activityWithType:@"HPViewHTML"
                                                   title:@"查看源代码"
                                                   image:[UIImage imageNamed:@"activity_copy_content"]
@@ -2383,7 +2370,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                                 [weakSelf.navigationController pushViewController:vc animated:YES];
                                             }];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, capturePost, viewHTML]];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, viewHTML]];
     
     activityViewController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     
