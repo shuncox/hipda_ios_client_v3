@@ -60,6 +60,7 @@
 #import "NJKWebViewProgressView.h"
 #import "WKWebView+Synchronize.h"
 #import "HPJSMessage.h"
+#import "FLWeakProxy.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -315,7 +316,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // Add a script handler for the "observe" call. This is added to every frame
     // in the document (window.webkit.messageHandlers.NAME).
-    [controller addScriptMessageHandler:self name:@"observe"];
+    FLWeakProxy<WKScriptMessageHandler> *weakProxy = [FLWeakProxy weakProxyForObject:self];
+    [controller addScriptMessageHandler:weakProxy name:@"observe"];
     configuration.userContentController = controller;
     
     // Initialize the WKWebView with the current frame and the configuration
