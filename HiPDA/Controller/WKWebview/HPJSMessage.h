@@ -11,6 +11,6 @@
 @interface HPJSMessage : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic, copy) NSString *method;
-@property (nonatomic, strong) NSDictionary *object;
+@property (nonatomic, strong) id object;
 
 @end

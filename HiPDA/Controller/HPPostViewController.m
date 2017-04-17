@@ -775,7 +775,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 
-#pragma mark - webView delegte
+#pragma mark - WKScriptMessageHandler
 
 - (void)userContentController:(WKUserContentController *)userContentController
       didReceiveScriptMessage:(WKScriptMessage *)message
@@ -789,54 +789,41 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         return;
     }
     
-    if ([m.method isEqualToString:@"image"]) {
+    if ([m.method isEqualToString:@"floor"]) {
+        // 在帖子中 打开小尾巴, 特别是iOS客户端的小尾巴, 不知为何会触发floor
+        // 暂时在未加载好是禁用
+        if (_reloadingFooter) return;
+        
+        [self actionForFloor:[m.object integerValue]];
+        
+    } else if ([m.method isEqualToString:@"image"]) {
         [self openImage:m.object];
+    } else if ([m.method isEqualToString:@"user"]) {
+        
+        HPUserViewController *uvc = [HPUserViewController new];
+        uvc.username = [m.object URLDecode];
+        
+        [self.navigationController pushViewController:uvc animated:YES];
+        
+    } else if ([m.method isEqualToString:@"gotofloor"]) {
+        
+        [self gotoFloorWithUrl:m.object];
+        
+    } else if ([m.method isEqualToString:@"video"]) {
+        // TODO: 对video不做特殊处理
     }
 }
+
+#pragma mark - todo
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     NSString *urlString = [[request URL] absoluteString];
     NSLog(@"url %@, type %ld, scheme %@",urlString, navigationType, request.URL.scheme);
     
-    
-    if ([request.URL.scheme isEqualToString:@"floor"]) {
-        // 在帖子中 打开小尾巴, 特别是iOS客户端的小尾巴, 不知为何会触发floor
-        // 暂时在未加载好是禁用
-        if (_reloadingFooter) return NO;
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         
-        [self actionForFloor:[[urlString substringFromIndex:8] integerValue]];
-        return NO;
-        
-    } else if ([request.URL.scheme isEqualToString:@"image"]) {
-        NSString *src = [request.URL.absoluteString stringByReplacingOccurrencesOfString:@"image://http//" withString:@"http://"];
-        src = [src stringByReplacingOccurrencesOfString:@"image://https//" withString:@"https://"];
-        [self openImage:src];
-        NSLog(@"here");
-        return NO;
-        
-    } else if ([request.URL.scheme isEqualToString:@"user"]) {
-        
-        HPUserViewController *uvc = [HPUserViewController new];
-        uvc.username = [[urlString stringByReplacingOccurrencesOfString:@"user://" withString:@""] URLDecode];
-        
-        [self.navigationController pushViewController:uvc animated:YES];
-        return NO;
-        
-    } else if ([request.URL.scheme isEqualToString:@"gotofloor"]) {
-        
-        [self gotoFloorWithUrl:urlString];
-        return NO;
-        
-    } else if ([request.URL.scheme isEqualToString:@"video"]) {
-        
-        //NSLog(@"%@ %@", urlString, request.URL);
-        NSString *url = [urlString stringByReplacingOccurrencesOfString:@"video://" withString:@"http://"];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-        return NO;
-        
-    } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-        
+        // TODO
         RxMatch* match = [urlString firstMatchWithDetails:RX(@"hi-pda\\.com/forum/viewthread\\.php\\?tid=(\\d+)")];
         
         if (match) {
@@ -1486,7 +1473,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (void)gotoFloorWithUrl:(NSString *)url {
-    NSArray *arr = [[url substringFromIndex:12] componentsSeparatedByString:@"_"];
+    NSArray *arr = [url componentsSeparatedByString:@"_"];
     if (arr.count != 2) {
         return;
     }

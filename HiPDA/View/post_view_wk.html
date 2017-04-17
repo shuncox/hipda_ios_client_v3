@@ -293,6 +293,11 @@ function call_native(method, object) {
     window.webkit.messageHandlers.observe.postMessage({method:method, object:object});
 }
 
+function call_native____adapter(data) {
+    var r = data.split('://');
+    call_native(r[0], r[1]);
+}
+
 var screen = {width: **[screen_width]**, height: **[screen_height]**};
 
 
@@ -326,21 +331,23 @@ list.addEventListener("click", function(event) {
             return;
         }
         if (el.getAttribute('data-id')) {
-            location.href = el.getAttribute('data-id');
+            call_native____adapter(el.getAttribute('data-id'));
         } else {
             img_click_el(el);
         }
 
     } else if (el.nodeName == 'SPAN' && el.getAttribute('data-id')) {
             
-        location.href = el.getAttribute('data-id');
+        call_native____adapter(el.getAttribute('data-id'));
     
     } else {
         while (el && !el.getAttribute('data-id') ) {
             el = el.parentNode;
             if (el.nodeName == 'A') return;
         }
-        if (el) location.href = el.getAttribute('data-id');
+        if (el) {
+            call_native____adapter(el.getAttribute('data-id'));
+        }
     }
 });
 
