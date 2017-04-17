@@ -311,6 +311,9 @@
 		EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC0E42918BCE89700F064B6 /* HPNewPost.m */; };
 		EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC202E11C4FD2050050994E /* HPViewHTMLController.m */; };
 		EAC5C33D1E93D36E0054A66E /* HPPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */; };
+		EAC5C3401E93DD300054A66E /* WKWebView+HPSafeLoadString.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C33F1E93DD300054A66E /* WKWebView+HPSafeLoadString.m */; };
+		EAC5C3421E93E2ED0054A66E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC5C3411E93E2ED0054A66E /* WebKit.framework */; };
+		EAC5C3481E93F0940054A66E /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C3471E93F0940054A66E /* NJKWebViewProgressView.m */; };
 		EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */; };
 		EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */; };
 		EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */; };
@@ -866,6 +869,11 @@
 		EAC202E11C4FD2050050994E /* HPViewHTMLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewHTMLController.m; path = Controller/HPViewHTMLController.m; sourceTree = "<group>"; };
 		EAC5C33B1E93D36E0054A66E /* HPPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPostViewController.h; path = Controller/HPPostViewController.h; sourceTree = "<group>"; };
 		EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPPostViewController.m; path = Controller/HPPostViewController.m; sourceTree = "<group>"; };
+		EAC5C33E1E93DD300054A66E /* WKWebView+HPSafeLoadString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WKWebView+HPSafeLoadString.h"; path = "Helper/WKWebView+HPSafeLoadString.h"; sourceTree = "<group>"; };
+		EAC5C33F1E93DD300054A66E /* WKWebView+HPSafeLoadString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WKWebView+HPSafeLoadString.m"; path = "Helper/WKWebView+HPSafeLoadString.m"; sourceTree = "<group>"; };
+		EAC5C3411E93E2ED0054A66E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		EAC5C3461E93F0940054A66E /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJKWebViewProgressView.h; path = View/NJKWebViewProgressView.h; sourceTree = "<group>"; };
+		EAC5C3471E93F0940054A66E /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJKWebViewProgressView.m; path = View/NJKWebViewProgressView.m; sourceTree = "<group>"; };
 		EACA0B561892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EACA0B571892CDED00E100CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EAD214801E75A07700C6ECC1 /* HPNSURLCacheCleaner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNSURLCacheCleaner.h; path = Helper/HPNSURLCacheCleaner.h; sourceTree = "<group>"; };
@@ -994,6 +1002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC5C3421E93E2ED0054A66E /* WebKit.framework in Frameworks */,
 				EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */,
 				EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */,
 				EA499F631830C3EA00172989 /* CoreLocation.framework in Frameworks */,
@@ -1210,6 +1219,8 @@
 				EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */,
 				EAE0FE591D09BFF700F0D76E /* HPNavigationDropdownMenu.h */,
 				EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */,
+				EAC5C3461E93F0940054A66E /* NJKWebViewProgressView.h */,
+				EAC5C3471E93F0940054A66E /* NJKWebViewProgressView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1455,6 +1466,8 @@
 				EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */,
 				EAE0FE451D095EC900F0D76E /* UIWebView+HPSafeLoadString.h */,
 				EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */,
+				EAC5C33E1E93DD300054A66E /* WKWebView+HPSafeLoadString.h */,
+				EAC5C33F1E93DD300054A66E /* WKWebView+HPSafeLoadString.m */,
 				EAACE5421D0DA42300EDD096 /* UITableView+ScrollToTop.h */,
 				EAACE5431D0DA42300EDD096 /* UITableView+ScrollToTop.m */,
 			);
@@ -1982,6 +1995,7 @@
 		EAFDB8441829EFA900C1718B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAC5C3411E93E2ED0054A66E /* WebKit.framework */,
 				EA8947281D3BB62A009261DD /* CloudKit.framework */,
 				EAB04C0619EC1F18006F5C92 /* libz.dylib */,
 				EA499F621830C3EA00172989 /* CoreLocation.framework */,
@@ -2515,6 +2529,7 @@
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
+				EAC5C3481E93F0940054A66E /* NJKWebViewProgressView.m in Sources */,
 				EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */,
 				EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */,
 				EA499F481830C2D800172989 /* XPathQuery.m in Sources */,
@@ -2560,6 +2575,7 @@
 				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,
 				EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */,
 				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
+				EAC5C3401E93DD300054A66E /* WKWebView+HPSafeLoadString.m in Sources */,
 				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,
 				EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */,
 				EA9A39B61A5BE92E0028BE7D /* JSMessagesViewController.m in Sources */,

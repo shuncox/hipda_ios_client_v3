@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "HPThread.h"
 #import "HPViewController.h"
+#import <WebKit/WebKit.h>
 @class HPThread;
 
 @interface HPPostViewController : HPViewController
 
-@property (nonatomic, readonly, strong) UIWebView *webView;
+@property (nonatomic, readonly, strong) WKWebView *webView;
 @property (nonatomic, strong) HPThread *thread;
 
 - (id)initWithThread:(HPThread *)thread;
