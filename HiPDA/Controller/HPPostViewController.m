@@ -316,8 +316,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // Add a script handler for the "observe" call. This is added to every frame
     // in the document (window.webkit.messageHandlers.NAME).
-    FLWeakProxy<WKScriptMessageHandler> *weakProxy = [FLWeakProxy weakProxyForObject:self];
-    [controller addScriptMessageHandler:weakProxy name:@"observe"];
+    FLWeakProxy *weakProxy = [FLWeakProxy weakProxyForObject:self];
+    [controller addScriptMessageHandler:(id<WKScriptMessageHandler>)weakProxy name:@"observe"];
     configuration.userContentController = controller;
     
     // Initialize the WKWebView with the current frame and the configuration
@@ -356,6 +356,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     // deal with web view special needs
     NSLog(@"UIWebViewVC dealloc");
     [self.webView stopLoading];
+    [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"observe"];
 //    [self.webView setDelegate:nil];
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
@@ -606,7 +607,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             //NSLog(@"%@", final);
             // https
             [weakSelf.webView hp_safeLoadHTMLString:final baseURL:[NSURL URLWithString:S(@"%@/forum/", HP_BASE_URL)]];
-            [weakSelf setupProgressObserver];
+            if (!refresh) {
+                [weakSelf setupProgressObserver];
+            }
             [weakSelf endLoad:YES];
             
         } else {
@@ -713,7 +716,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [self updateHeaderView];
     
-    [self performSelector:@selector(indicatorStop) withObject:nil afterDelay:1.f];
+    [self performSelector:@selector(indicatorStop) withObject:nil afterDelay:.3f];
     [self performSelector:@selector(updateFooterView) withObject:nil afterDelay:2.f];
     
     if (_reloadingForReply) {
