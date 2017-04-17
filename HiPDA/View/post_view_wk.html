@@ -289,6 +289,9 @@ window.addEventListener('load', function() {
     FastClick.attach(document.body);
 }, false);
 
+function call_native(method, object) {
+    window.webkit.messageHandlers.observe.postMessage({method:method, object:object});
+}
 
 var screen = {width: **[screen_width]**, height: **[screen_height]**};
 
@@ -343,10 +346,14 @@ list.addEventListener("click", function(event) {
 
 var img_click_el = function(el) {
     var p = getPosition(el);
-    
-    //location.href = 'image://'+el.src+'_'+p.x+'_'+p.y+'_';
-    //location.href = 'image://'+el.src+'_{{'+p.x+', '+p.y+'}, {'+el.clientWidth+', '+el.clientHeight+'}}_';
-    location.href = 'image://'+el.src+'___???a???a'+p.x+'???s'+p.y+'???b???s???a'+el.clientWidth+'???s'+el.clientHeight+'???b???b___';
+   
+    call_native('image', {
+        'src': el.src,
+        'x': p.x,
+        'y': p.y,
+        'width': el.clientWidth,
+        'height': el.clientHeight
+    });
 };
 
 var img_click = function (el) {

@@ -59,6 +59,7 @@
 #import <BlocksKit/NSObject+BKBlockObservation.h>
 #import "NJKWebViewProgressView.h"
 #import "WKWebView+Synchronize.h"
+#import "HPJSMessage.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -138,7 +139,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @end
 
-@interface HPPostViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
+@interface HPPostViewController () <WKScriptMessageHandler, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 
 @property (nonatomic, strong) PostWebView *webView;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
@@ -305,8 +306,22 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 
 - (void)loadView {
+    // First create a WKWebViewConfiguration object so we can add a controller
+    // pointing back to this ViewController.
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]
+                                             init];
+    WKUserContentController *controller = [[WKUserContentController alloc]
+                                           init];
+    
+    // Add a script handler for the "observe" call. This is added to every frame
+    // in the document (window.webkit.messageHandlers.NAME).
+    [controller addScriptMessageHandler:self name:@"observe"];
+    configuration.userContentController = controller;
+    
+    // Initialize the WKWebView with the current frame and the configuration
+    // setup above
     CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    PostWebView *wv = [[PostWebView alloc] initWithFrame:screenFrame];
+    PostWebView *wv = [[PostWebView alloc] initWithFrame:screenFrame configuration:configuration];
 //    [wv setScalesPageToFit:YES];
 //    wv.dataDetectorTypes = UIDataDetectorTypeNone;
 //    wv.delegate = self;
@@ -762,6 +777,23 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 #pragma mark - webView delegte
 
+- (void)userContentController:(WKUserContentController *)userContentController
+      didReceiveScriptMessage:(WKScriptMessage *)message
+{
+    NSError *error = nil;
+    HPJSMessage *m = [MTLJSONAdapter modelOfClass:HPJSMessage.class
+                               fromJSONDictionary:message.body
+                                            error:&error];
+    if (error) {
+        NSLog(@"error: %@", error);
+        return;
+    }
+    
+    if ([m.method isEqualToString:@"image"]) {
+        [self openImage:m.object];
+    }
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     NSString *urlString = [[request URL] absoluteString];
@@ -841,32 +873,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     return YES;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-   
-   NSLog(@"webViewDidFinishLoad isisLoading %@", self.webView.isLoading?@"YES":@"NO");
-    
-}
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    NSLog(@"webView didFailLoadWithError error %@", error);
-    if (error.code == NSURLErrorCancelled) {
-        return;
-    }
-    // 有时图片加载出错, 可能在这里能找到原因
-    [Flurry logEvent:@"Read_WebViewLoadError"
-      withParameters:@{@"code": @(error.code),
-                       @"msg": error.localizedDescription ?: @"",
-                       @"description": [NSString stringWithFormat:@"%@", error]}];
-}
-
-- (void)webViewDidAppear {
-    
-    NSLog(@"webViewDidAppear");
-
-}
+#pragma mark - 滚动到最底部
 
 // call after webViewDidFinishLoad
 - (void)webViewScrollToBottom:(id)sender
@@ -1178,14 +1185,19 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [Flurry logEvent:@"Read OpenUrl" withParameters:@{@"url":url.absoluteString}];
 }
 
-- (void)openImage:(NSString *)src {
-    NSLog(@"openImage %@", src);
-
-    src = [src stringByReplacingOccurrencesOfString:@"???a" withString:@"{"];
-    src = [src stringByReplacingOccurrencesOfString:@"???b" withString:@"}"];
-    src = [src stringByReplacingOccurrencesOfString:@"???s" withString:@", "];
-    RxMatch *m = [RX(@"___(.*?)___") firstMatchWithDetails:src];
-    src = [src replace:RX(@"___(.*?)___") with:@""];
+- (void)openImage:(NSDictionary *)object
+{
+    NSLog(@"openImage %@", object);
+    
+    NSString *src = object[@"src"];
+    CGRect r = ({
+        CGRect rect;
+        rect.origin.x = [object[@"x"] doubleValue];
+        rect.origin.y = [object[@"y"] doubleValue];
+        rect.size.width = [object[@"width"] doubleValue];
+        rect.size.height = [object[@"height"] doubleValue];
+        rect;
+    });
     
     // cdn -> 原图url
     // 现在的交互形式是 用户点击小图(CDN压缩图片), 然后加载大图, 加载好大图来替换小图
@@ -1193,8 +1205,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         src = [src hp_originalURL];
     }
 
-    if (m.groups.count == 2) {
-        CGRect r = CGRectFromString([(RxMatchGroup *)(m.groups[1]) value]);
+    if (1) {
         r.origin.y += 64.f;
 
         if (!self.animatedFromView) {
@@ -1240,7 +1251,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     browser.wantsFullScreenLayout = NO; // iOS 5 & 6 only: Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
     // Present
     [self presentViewController:browser animated:YES completion:nil];
-    
 }
 
 

@@ -108,6 +108,7 @@
 		EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */; };
 		EA42B9B01EA4FDCB008FC2AA /* WKWebView+Synchronize.m in Sources */ = {isa = PBXBuildFile; fileRef = EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */; };
 		EA42B9B21EA50805008FC2AA /* post_view_wk.html in Resources */ = {isa = PBXBuildFile; fileRef = EA42B9B11EA50805008FC2AA /* post_view_wk.html */; };
+		EA42B9B61EA50BFC008FC2AA /* HPJSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA42B9B51EA50BFC008FC2AA /* HPJSMessage.m */; };
 		EA43E6EE1831F4C200968B94 /* NSUserDefaults+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E6EC1831F4C200968B94 /* NSUserDefaults+Convenience.m */; };
 		EA43E6F1183201C700968B94 /* HPCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E6F0183201C700968B94 /* HPCommon.m */; };
 		EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = EA43E70018328AED00968B94 /* NSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -575,6 +576,8 @@
 		EA42B9AE1EA4FDCB008FC2AA /* WKWebView+Synchronize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WKWebView+Synchronize.h"; path = "Helper/WKWebView+Synchronize.h"; sourceTree = "<group>"; };
 		EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "WKWebView+Synchronize.m"; path = "Helper/WKWebView+Synchronize.m"; sourceTree = "<group>"; };
 		EA42B9B11EA50805008FC2AA /* post_view_wk.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view_wk.html; path = View/post_view_wk.html; sourceTree = "<group>"; };
+		EA42B9B41EA50BFC008FC2AA /* HPJSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPJSMessage.h; path = Controller/WKWebview/HPJSMessage.h; sourceTree = "<group>"; };
+		EA42B9B51EA50BFC008FC2AA /* HPJSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPJSMessage.m; path = Controller/WKWebview/HPJSMessage.m; sourceTree = "<group>"; };
 		EA43E6EC1831F4C200968B94 /* NSUserDefaults+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+Convenience.m"; path = "Helper/NSUserDefaults+Convenience.m"; sourceTree = "<group>"; };
 		EA43E6ED1831F4C200968B94 /* NSUserDefaults+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSUserDefaults+Convenience.h"; path = "Helper/NSUserDefaults+Convenience.h"; sourceTree = "<group>"; };
 		EA43E6EF183201C700968B94 /* HPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPCommon.h; path = Model/HPCommon.h; sourceTree = "<group>"; };
@@ -1316,9 +1319,19 @@
 			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
+		EA42B9B31EA50B92008FC2AA /* WKWebview */ = {
+			isa = PBXGroup;
+			children = (
+				EA42B9B41EA50BFC008FC2AA /* HPJSMessage.h */,
+				EA42B9B51EA50BFC008FC2AA /* HPJSMessage.m */,
+			);
+			name = WKWebview;
+			sourceTree = "<group>";
+		};
 		EA499F101830B8C700172989 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA42B9B31EA50B92008FC2AA /* WKWebview */,
 				EA9A060E18DB11F000D5D7D9 /* HPViewController.h */,
 				EA9A060F18DB11F000D5D7D9 /* HPViewController.m */,
 				EAB38C461AF9FE6B00CF1ADC /* HPNavigationController.h */,
@@ -2601,6 +2614,7 @@
 				EA083D6B18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyCell.m in Sources */,
 				EA9A39AD1A5BE92E0028BE7D /* UIImage+JSMessagesView.m in Sources */,
 				EA083D6E18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
+				EA42B9B61EA50BFC008FC2AA /* HPJSMessage.m in Sources */,
 				EA7514B61E7783F1002C7D3B /* HPActivityItem.m in Sources */,
 				EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */,
 				EA4138C9188D5530001F9542 /* SWRevealViewController.m in Sources */,
