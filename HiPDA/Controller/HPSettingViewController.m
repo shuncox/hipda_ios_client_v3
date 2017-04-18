@@ -339,7 +339,7 @@
     // WKWebview
     //
     BOOL enableWKWebview = [Setting boolForKey:HPSettingEnableWKWebview];
-    REBoolItem *enableWKWebviewItem = [REBoolItem itemWithTitle:@"Enable WKWebview" value:isPrint switchValueChangeHandler:^(REBoolItem *item) {
+    REBoolItem *enableWKWebviewItem = [REBoolItem itemWithTitle:@"Enable WKWebview" value:enableWKWebview switchValueChangeHandler:^(REBoolItem *item) {
         [Setting saveBool:item.value forKey:HPSettingEnableWKWebview];
     }];
     
