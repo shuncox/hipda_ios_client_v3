@@ -83,6 +83,10 @@
     __typeof (&*self) __weak weakSelf = self;
     
     self.usernameItem = [RETextItem itemWithTitle:@"用户名" value:nil placeholder:@"username"];
+    self.usernameItem.autocorrectionType = UITextAutocapitalizationTypeNone;
+    self.usernameItem.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.usernameItem.spellCheckingType = UITextSpellCheckingTypeNo;
+ 
     self.passwordItem = [RETextItem itemWithTitle:@"密码" value:nil placeholder:@"******"];
     self.passwordItem.secureTextEntry = YES;
     
@@ -114,6 +118,9 @@
     }];
     
     self.secureAnswerItem = [RETextItem itemWithTitle:@"答案" value:nil placeholder:@"留空"];
+    self.secureAnswerItem.autocorrectionType = UITextAutocapitalizationTypeNone;
+    self.secureAnswerItem.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.secureAnswerItem.spellCheckingType = UITextSpellCheckingTypeNo;
     
     self.LoginBtnItem = [RETableViewItem itemWithTitle:@"确定" accessoryType:UITableViewCellAccessoryNone selectionHandler:^(RETableViewItem *item) {
         
