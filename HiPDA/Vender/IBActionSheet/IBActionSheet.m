@@ -198,11 +198,9 @@
         
         // setup spacing for retina devices
         if (self.hasCancelButton) {
-            height = 59.5;
-        } else if (!self.hasCancelButton && self.titleView) {
-            height = 52.0;
+            height = 59.5 - 44.5;
         } else {
-            height = 104.0;
+            height = 52.0 - 44.5;
         }
         
         if (self.buttons.count) {
