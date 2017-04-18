@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 def smart_pod(name, options = nil)
     dir = name.split('/', 2).first;
@@ -36,6 +36,7 @@ pod 'AnimatedGIFImageSerialization'
 pod 'SVPullToRefresh'
 pod 'MLeaksFinder', '~>0.2.0'
 pod 'BlocksKit'
+pod 'Reveal-SDK', :configurations => ['Debug']
 
 # JSPatch
 smart_pod 'JSPatch', '~> 1.1.3'
