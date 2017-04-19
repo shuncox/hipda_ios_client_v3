@@ -355,14 +355,14 @@
         
         //NSLog(@"%@ %@", m1.value, m2.value);
         
-        return [NSString stringWithFormat:@"<a href=\"gotofloor://%ld_%ld\" >%ld#</a>", [m2.value integerValue], [m1.value integerValue], [m2.value integerValue]];
+        return [NSString stringWithFormat:@"<a onclick='gotofloor(\"%ld_%ld\")' >%ld#</a>", [m2.value integerValue], [m1.value integerValue], [m2.value integerValue]];
     }];
     
     // 引用
     _body_html = [RX(@"<a href=\"https?://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
-        return [NSString stringWithFormat:@"<a href=\"gotofloor://0_%ld\" >", [m1.value integerValue]];
+        return [NSString stringWithFormat:@"<a onclick='gotofloor(\"0_%ld\")' >", [m1.value integerValue]];
     }];
     
     // 视频
@@ -587,14 +587,14 @@
         
         NSLog(@"%@ %@", m1.value, m2.value);
         
-        return [NSString stringWithFormat:@"<a href=\"gotofloor://%ld_%ld\" >%ld#</a>", [m2.value integerValue], [m1.value integerValue], [m2.value integerValue]];
+        return [NSString stringWithFormat:@"<a onclick='gotofloor(\"%ld_%ld\")' >%ld#</a>", [m2.value integerValue], [m1.value integerValue], [m2.value integerValue]];
     }];
     
     _body_html = [RX(@"<a href=\"https?://\\w{3}\\.hi-pda\\.com/forum/redirect\\.php\\?goto=findpost&amp;pid=(\\d+)&amp;ptid=\\d+\" target=\"_blank\">") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
         
         RxMatchGroup *m1 = [match.groups objectAtIndex:1];
         
-        return [NSString stringWithFormat:@"<a href=\"gotofloor://0_%ld\" >", [m1.value integerValue]];
+        return [NSString stringWithFormat:@"<a onclick='gotofloor(\"0_%ld\")' >", [m1.value integerValue]];
     }];
 }
 

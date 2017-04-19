@@ -163,6 +163,7 @@
 		EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */; };
 		EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
+		EA71C0E01EA78F2C005108C6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC5C3411E93E2ED0054A66E /* WebKit.framework */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
 		EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C22183E21000067F62B /* HPLoginViewController.m */; };
 		EA743C26183EE6DE0067F62B /* HPFavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C25183EE6DE0067F62B /* HPFavoriteViewController.m */; };
@@ -316,7 +317,6 @@
 		EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC202E11C4FD2050050994E /* HPViewHTMLController.m */; };
 		EAC5C33D1E93D36E0054A66E /* HPPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */; };
 		EAC5C3401E93DD300054A66E /* WKWebView+HPSafeLoadString.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C33F1E93DD300054A66E /* WKWebView+HPSafeLoadString.m */; };
-		EAC5C3421E93E2ED0054A66E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC5C3411E93E2ED0054A66E /* WebKit.framework */; };
 		EAC5C3481E93F0940054A66E /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C3471E93F0940054A66E /* NJKWebViewProgressView.m */; };
 		EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */; };
 		EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */; };
@@ -1013,7 +1013,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAC5C3421E93E2ED0054A66E /* WebKit.framework in Frameworks */,
+				EA71C0E01EA78F2C005108C6 /* WebKit.framework in Frameworks */,
 				EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */,
 				EAB04C0719EC1F18006F5C92 /* libz.dylib in Frameworks */,
 				EA499F631830C3EA00172989 /* CoreLocation.framework in Frameworks */,

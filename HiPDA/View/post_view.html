@@ -341,6 +341,10 @@ list.addEventListener("click", function(event) {
     }
 });
 
+function gotofloor(target) {
+    location.href = 'gotofloor://' + target;
+}
+
 var img_click_el = function(el) {
     var p = getPosition(el);
     

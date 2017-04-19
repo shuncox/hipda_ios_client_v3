@@ -373,6 +373,10 @@ var img_click = function (el) {
     el.parentNode.removeChild(el);
 };
 
+function gotofloor(target) {
+    call_native('gotofloor', target);
+}
+
 //http://stackoverflow.com/questions/4712310/javascript-how-to-detect-if-a-word-is-highlighted
 function getSelectedText() {
     var text = "";

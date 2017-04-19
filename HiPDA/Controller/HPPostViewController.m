@@ -122,6 +122,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 {
     self = [super initWithFrame:frame];
     if (self) {
+        if (IOS9_OR_LATER) {
+            self.allowsLinkPreview = NO;
+        }
         //不要改, 改成和tableview一样的UIScrollViewDecelerationRateNormal, 反而奇怪
         //self.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
     }
@@ -340,6 +343,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     wv.scrollView.delegate = self;
     [wv.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
     
+    //
+    wv.navigationDelegate = self;
+    
     [self setView:wv];
     self.webView = wv;
 }
@@ -358,6 +364,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     [self.webView stopLoading];
     [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"observe"];
 //    [self.webView setDelegate:nil];
+    self.webView.navigationDelegate = nil;
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
     
@@ -819,20 +826,22 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     }
 }
 
-#pragma mark - todo
+#pragma mark - WKNavigationDelegate
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    NSURL *url = navigationAction.request.URL;
+    NSString *urlString = url.absoluteString;
     
-    NSString *urlString = [[request URL] absoluteString];
-    NSLog(@"url %@, type %ld, scheme %@",urlString, navigationType, request.URL.scheme);
+    NSLog(@"url %@, type %ld",urlString, navigationAction.navigationType);
     
-    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+    WKNavigationActionPolicy policy = WKNavigationActionPolicyAllow;
+    
+    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
+        policy = WKNavigationActionPolicyCancel;
         
-        // TODO
-        RxMatch* match = [urlString firstMatchWithDetails:RX(@"hi-pda\\.com/forum/viewthread\\.php\\?tid=(\\d+)")];
-        
+        RxMatch *match = [urlString firstMatchWithDetails:RX(@"hi-pda\\.com/forum/viewthread\\.php\\?tid=(\\d+)")];
         if (match) {
-            
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
             
             HPThread *t = [HPThread new];
@@ -840,29 +849,18 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             HPPostViewController *readVC = [[HPPostViewController alloc] initWithThread:t];
             NSLog(@"[self.navigationController pushViewController:readVC animated:YES];");
             [self.navigationController pushViewController:readVC animated:YES];
-            
         } else {
-            NSLog(@"here w");
-            [self openUrl:request.URL];
+            [self openUrl:url];
         }
-        
-        return NO;
-        
-    } else if ([urlString isEqualToString:S(@"%@/forum/", HP_BASE_URL)]){
-        
-        return YES;
-        
-    } else if ([urlString hasPrefix:S(@"%@/forum/#floor_", HP_BASE_URL)]){
-    
-        return YES;
-        
+    } else if ([urlString isEqualToString:S(@"%@/forum/", HP_BASE_URL)]) {
+        ;
+    } else if ([urlString rangeOfString:@"#floor_"].location != NSNotFound) {
+        ;
     } else {
-        
-        [SVProgressHUD showErrorWithStatus:urlString];
-        return YES;
+        NSAssert(0, urlString);
     }
     
-    return YES;
+    decisionHandler(policy);
 }
 
 #pragma mark - 滚动到最底部
