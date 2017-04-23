@@ -109,6 +109,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @interface HPReadViewController () <UIWebViewDelegate, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
 
 @property (nonatomic, strong) ReadWebView *webView;
+@property (nonatomic, strong) HPThread *thread;
 
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;

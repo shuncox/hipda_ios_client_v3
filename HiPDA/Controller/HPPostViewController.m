@@ -148,6 +148,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @property (nonatomic, strong) PostWebView *webView;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
 
+@property (nonatomic, strong) HPThread *thread;
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
 

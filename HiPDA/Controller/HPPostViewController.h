@@ -14,9 +14,6 @@
 
 @interface HPPostViewController : HPViewController
 
-@property (nonatomic, readonly, strong) WKWebView *webView;
-@property (nonatomic, strong) HPThread *thread;
-
 - (id)initWithThread:(HPThread *)thread;
 
 - (id)initWithThread:(HPThread *)thread
@@ -25,4 +22,5 @@
 
 - (id)initWithThread:(HPThread *)thread
             find_pid:(NSInteger)find_pid;
+
 @end
