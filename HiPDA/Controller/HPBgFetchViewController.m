@@ -84,7 +84,6 @@
     [section addItem:intervalItem];
     [section addItem:[MultilineTextItem itemWithTitle:
         @"你的 iOS 设备可以根据你使用 HiPDA 的频率和时间智能安排来更新未读提醒并提示您。\n\n"
-        @"开启帖子列表选项后, 你的 iOS 设备在你打开 HiPDA 之前, 通常会提前为您刷新好帖子列表。\n\n"
         @"注意: \n"
         @"1. 谨慎开启, 会额外消耗电量和流量, 刷新的次数和您每天打开 HiPDA 次数大抵相当, iOS 系统会智能安排刷新的频率, 尽可能的减少电量的消耗。\n"
         @"2. 你需要在系统 设置 > 通用 > 应用程序后台刷新中允许 HiPDA 才可以使本页的设置生效。\n"
