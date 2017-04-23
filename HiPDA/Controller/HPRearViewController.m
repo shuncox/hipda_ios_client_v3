@@ -18,7 +18,6 @@
 #import "HPThreadViewController.h"
 #import "HPMessageViewController.h"
 #import "HPMyNoticeViewController.h"
-#import "HPBackgroundViewController.h"
 #import "HPFavoriteViewController.h"
 #import "HPMyThreadViewController.h"
 #import "HPMyReplyViewController.h"
@@ -76,7 +75,6 @@
                     [HPMyThreadViewController class],
                     [HPMyReplyViewController class],
                     [HPFavoriteViewController class],
-                    [HPBackgroundViewController class],
                     [HPHistoryViewController class]
                     ];
     
@@ -84,9 +82,8 @@
                   @"短消息",
                   @"帖子消息",
                   @"我的帖子",
-                  @"我的回帖",
+                  @"我的回复",
                   @"收藏",
-                  @"待读",
                   @"历史"];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];

@@ -117,7 +117,6 @@
                                HPSettingImageWWAN:@0,
                                HPPMCount:@0,
                                HPNoticeCount:@0,
-                               HPSettingBGLastMinite:@20.f,
                                HPSettingBgFetchNotice:@YES,
                                HPSettingIsPullReply:@NO,
                                HPSettingStupidBarDisable:@NO,

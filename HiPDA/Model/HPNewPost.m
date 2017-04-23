@@ -101,7 +101,7 @@
 + (void)loadThreadWithTid:(NSInteger)tid
                      page:(NSInteger)page // page = 0 last
 
-             forceRefresh:(BOOL)forceRefresh // 强制刷新
+             forceRefresh:(BOOL)forceRefresh // 强制刷新, #没有用了#
                 printable:(BOOL)printable // 加载打印版网页
 
                  authorid:(NSInteger)authorid // 只看某人
@@ -112,20 +112,6 @@
     BOOL enablePrint = [Setting boolForKey:HPSettingPrintPagePost];
     if (!enablePrint) {
         printable = NO;
-    }
-    
-    // return cache
-    //
-    NSArray *cachedThread = [[HPCache sharedCache] loadThread:tid page:page];
-    NSDictionary *cachedInfo = [[HPCache sharedCache] loadThreadInfo:tid page:page];
-    
-    if (!forceRefresh && cachedThread && redirectFromPid != 0
-            && redirectFromPid == [[cachedInfo objectForKey:@"find_pid"] intValue]) {
-        if (block) {
-            block(cachedThread, cachedInfo, nil);
-        }
-        NSLog(@"return cache");
-        return;
     }
     
     if (printable && redirectFromPid == 0) {
@@ -169,15 +155,6 @@
         NSLog(@"url %@", url);
         if(1||debugParameters) NSLog(@"parameters %@" , parameters);
         
-        // cache
-        if (tid == 0 || page == 0) {
-            
-            //todo
-            
-        } else {
-            [[HPCache sharedCache] cacheThread:[NSArray arrayWithArray:posts] info:parameters tid:tid page:page];
-        }
-        
         if (block) {
             block(posts, parameters, nil);
         }
@@ -192,7 +169,7 @@
 
 
 + (void)loadPrintableThreadWithTid:(NSInteger)tid
-                           refresh:(BOOL)refresh
+                           refresh:(BOOL)refresh //#没有用了#
                              block:(void (^)(NSArray *posts, NSDictionary *parameters, NSError *error))block
 {
     NSString *urlString = [NSString stringWithFormat:@"forum/viewthread.php?action=printable&tid=%ld", tid];
@@ -248,22 +225,12 @@
         */
         
         if (posts.count > 50) {
-            
             NSMutableArray *a = [NSMutableArray arrayWithArray:posts];
-            NSMutableArray *b = [NSMutableArray arrayWithCapacity:posts.count - 50];
-            for (int i = 50; i < a.count; i++) {
-                HPNewPost *p = a[i];
-                [b addObject:p];
-            }
             [a removeObjectsInRange:NSMakeRange(50, posts.count - 50)];
             
             posts = [NSArray arrayWithArray:a];
-            [[HPCache sharedCache] cacheThread:[NSArray arrayWithArray:b] info:parameters tid:tid page:2];
         }
         
-        
-        
-        [[HPCache sharedCache] cacheThread:[NSArray arrayWithArray:posts] info:parameters tid:tid page:1];
         block(posts, parameters, nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

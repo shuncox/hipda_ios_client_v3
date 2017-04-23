@@ -21,7 +21,6 @@
 + (UIColor *)evenCellColor;
 
 + (UIColor *)threadJumpColor;
-+ (UIColor *)threadPreloadColor;
 
 + (UIActivityIndicatorViewStyle)indicatorViewStyle;
 + (UIKeyboardAppearance)keyboardAppearance;

@@ -320,7 +320,6 @@
 		EAC5C3481E93F0940054A66E /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC5C3471E93F0940054A66E /* NJKWebViewProgressView.m */; };
 		EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */; };
 		EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */; };
-		EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */; };
 		EAD7F5DC183CC84600A750D9 /* hp_smile_default_cool.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F59F183CC84600A750D9 /* hp_smile_default_cool.gif */; };
 		EAD7F5DD183CC84600A750D9 /* hp_smile_coolmonkey_01.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5A0183CC84600A750D9 /* hp_smile_coolmonkey_01.gif */; };
 		EAD7F5DE183CC84600A750D9 /* hp_smile_coolmonkey_02.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5A1183CC84600A750D9 /* hp_smile_coolmonkey_02.gif */; };
@@ -891,8 +890,6 @@
 		EAD214811E75A07700C6ECC1 /* HPNSURLCacheCleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNSURLCacheCleaner.m; path = Helper/HPNSURLCacheCleaner.m; sourceTree = "<group>"; };
 		EAD2AECB18365F8A00E0A6C3 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EGOCache.h; path = Vender/EGOCache/EGOCache.h; sourceTree = "<group>"; };
 		EAD2AECC18365F8A00E0A6C3 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGOCache.m; path = Vender/EGOCache/EGOCache.m; sourceTree = "<group>"; };
-		EAD2AECE1836718100E0A6C3 /* HPBackgroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBackgroundViewController.h; path = Controller/HPBackgroundViewController.h; sourceTree = "<group>"; };
-		EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBackgroundViewController.m; path = Controller/HPBackgroundViewController.m; sourceTree = "<group>"; };
 		EAD7F59F183CC84600A750D9 /* hp_smile_default_cool.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_default_cool.gif; path = Image/DZSmile/hp_smile_default_cool.gif; sourceTree = "<group>"; };
 		EAD7F5A0183CC84600A750D9 /* hp_smile_coolmonkey_01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_coolmonkey_01.gif; path = Image/DZSmile/hp_smile_coolmonkey_01.gif; sourceTree = "<group>"; };
 		EAD7F5A1183CC84600A750D9 /* hp_smile_coolmonkey_02.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = hp_smile_coolmonkey_02.gif; path = Image/DZSmile/hp_smile_coolmonkey_02.gif; sourceTree = "<group>"; };
@@ -1351,8 +1348,6 @@
 				EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */,
 				EA39A0EC183CEC740068233F /* HPSettingViewController.h */,
 				EA39A0ED183CEC740068233F /* HPSettingViewController.m */,
-				EAD2AECE1836718100E0A6C3 /* HPBackgroundViewController.h */,
-				EAD2AECF1836718100E0A6C3 /* HPBackgroundViewController.m */,
 				EA5708221AA09C5200AD2247 /* HPHistoryViewController.h */,
 				EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */,
 				EA368A8518C7758300C5C5BD /* Compostion */,
@@ -2570,7 +2565,6 @@
 				EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */,
 				EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */,
 				EA083D6C18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
-				EAD2AED01836718100E0A6C3 /* HPBackgroundViewController.m in Sources */,
 				EAAD5BA3188CF00F0084EC2D /* DACircularProgressView.m in Sources */,
 				EAD2AECD18365F8A00E0A6C3 /* EGOCache.m in Sources */,
 				EA06A60818C22E8E00EDBDEA /* UIBarButtonItem+ImageItem.m in Sources */,

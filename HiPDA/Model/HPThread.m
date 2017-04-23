@@ -81,7 +81,7 @@
 + (void)loadThreadsWithFid:(NSInteger)fid
                       page:(NSInteger)page
               filterParams:(NSDictionary *)filterParams
-              forceRefresh:(BOOL)forceRefresh
+              forceRefresh:(BOOL)forceRefresh //无用了
                      block:(void (^)(NSArray *posts, NSError *error))block
 {
     NSString *path = [NSString stringWithFormat:@"forum/forumdisplay.php?fid=%ld&page=%ld", fid, page];
@@ -96,15 +96,7 @@
         }
     }
 
-    NSLog(@"load thread path : %@ forceRefresh:%@",path,forceRefresh?@"YES":@"NO");
-    
-    if (!forceRefresh && [[HPCache sharedCache] loadForum:fid page:page]) {
-        if (block) {
-            block([[HPCache sharedCache] loadForum:fid page:page], nil);
-        }
-        return;
-    }
-    
+    NSLog(@"load thread path : %@",path);
     
     [[HPHttpClient sharedClient] getPathContent:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
         
@@ -188,9 +180,6 @@
             block([NSArray array], [NSError crawlerErrorWithContext:context]);
             return;
         }
-        
-        // cache
-        [[HPCache sharedCache] cacheForum:[NSArray arrayWithArray:threads] fid:fid page:page];
         
         // update uid database
         [self.class updateUidDatabase:threads];

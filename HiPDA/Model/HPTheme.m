@@ -151,12 +151,4 @@
     return threadJumpColor;
 }
 
-+ (UIColor *)threadPreloadColor {
-    static UIColor *threadPreloadColor = nil;
-    if (!threadPreloadColor) threadPreloadColor = rgb(206.f, 149.f, 98.f);
-    return threadPreloadColor;
-}
-
-
-
 @end

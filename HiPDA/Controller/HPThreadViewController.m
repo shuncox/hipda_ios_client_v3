@@ -597,40 +597,6 @@ typedef enum{
          
          [Flurry logEvent:@"ThreadVC SwipeToJump"];
      }];
-    
-    [cell setSwipeGestureWithView:[cell viewWithImageName:@"clock.png"]
-                            color:[HPTheme threadPreloadColor]
-                             mode:MCSwipeTableViewCellModeSwitch
-                            state:MCSwipeTableViewCellState4
-                  completionBlock:
-     ^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-         
-         HPThread *thread = [_threads objectAtIndex:[self.tableView indexPathForCell:cell].row];
-         NSLog(@"background open thread %@", thread.title);
-
-         [(HPThreadCell *)cell markRead];
-         [[HPCache sharedCache] readThread:thread];
-         [HPIndecator show];
-         
-         
-         [[HPCache sharedCache] cacheBgThread:thread block:^(NSError *error) {
-             [HPIndecator dismiss];
-         }];
-         
-         [Flurry logEvent:@"ThreadVC SwipeToPreload"];
-         
-         if ([NSStandardUserDefaults boolForKey:kHPHomeTip4Bg or:YES]) {
-             [UIAlertView showConfirmationDialogWithTitle:@"提示"
-                                                  message:@"帖子已预载入\n在「待读」界面查看"
-                                                  handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-              {
-                  if (buttonIndex != [alertView cancelButtonIndex]) {
-                      [NSStandardUserDefaults saveBool:NO forKey:kHPHomeTip4Bg];
-                  }
-              }];
-         }
-     }];
-    
 }
 
 

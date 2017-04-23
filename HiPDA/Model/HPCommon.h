@@ -164,8 +164,6 @@ extern NSString *HP_CNC_BASE_IP;
 
 #define HPSettingBgFetchNotice @"HPSettingBgFetchNotice"
 
-#define HPSettingBGLastMinite @"HPSettingBGLastMinite"
-
 #define HPSettingPreferNotice @"HPSettingPreferNotice"
 
 #define HPSettingIsPullReply @"HPSettingIsPullReply"
@@ -233,7 +231,6 @@ extern NSString *HP_CNC_BASE_IP;
 
 // tip
 #define kHPBgVCTip @"kHPBgVCTip"
-#define kHPHomeTip4Bg @"kHPHomeTip4Bg"
 #define kHPPhotoBrowserTip @"kHPPhotoBrowserTip"
 #define kHPNightModeTip @"HPNightModeTip"
 

@@ -513,60 +513,6 @@
     
     [section addItem:cleanItem];
     
-    
-    CGFloat lastMinite = [Setting floatForKey:HPSettingBGLastMinite];
-    RERadioItem *lastMiniteItem = [RERadioItem itemWithTitle:@"待读内容保存时间" value:[NSString stringWithFormat:@"%d分钟", (int)lastMinite] selectionHandler:^(RERadioItem *item) {
-        [item deselectRowAnimated:YES];
-        
-        NSArray *options = @[@"10分钟", @"20分钟", @"30分钟",
-                             @"1小时",@"3小时",
-                             @"一天", @"三天",
-                             @"永远"];
-        
-        // Present options controller
-        //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:options multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            
-            float lastMinite = 10;
-            NSUInteger i = [options indexOfObject:item.value];
-            
-            switch (i) {
-                case 0:case 1:case 2:
-                    lastMinite = 10 * (i+1); break;
-                case 3: lastMinite = 60; break;
-                case 4: lastMinite = 60 * 3; break;
-                case 5: lastMinite = 60 * 24; break;
-                case 6: lastMinite = 60 * 3 * 24; break;
-                case 7: lastMinite = 24 * 24 * 24; break;
-                default:
-                    lastMinite = 20;
-                    break;
-            }
-            NSLog(@"%f", lastMinite);
-            [Setting saveFloat:lastMinite forKey:HPSettingBGLastMinite];
-            
-            [item reloadRowWithAnimation:UITableViewRowAnimationNone];
-            
-            [Flurry logEvent:@"Setting SetLastMinite" withParameters:@{@"minite":@(lastMinite)}];
-        }];
-        
-        // Adjust styles
-        //
-        optionsController.delegate = weakSelf;
-        optionsController.style = section.style;
-        if (weakSelf.tableView.backgroundView == nil) {
-            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
-            optionsController.tableView.backgroundView = nil;
-        }
-        
-        // Push the options controller
-        //
-        [weakSelf.navigationController pushViewController:optionsController animated:YES];
-    }];
-    
-    [section addItem:lastMiniteItem];
-    
     [_manager addSection:section];
     return section;
 }
