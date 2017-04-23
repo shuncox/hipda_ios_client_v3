@@ -314,7 +314,6 @@
     browser.displayCounterLabel = YES;
     [browser setInitialPageIndex:0];
 
-    browser.wantsFullScreenLayout = NO;
     [self presentViewController:browser animated:YES completion:nil];
 }
 
