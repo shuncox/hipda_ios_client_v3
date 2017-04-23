@@ -449,15 +449,8 @@ typedef enum{
     HPThreadCell *cell = (HPThreadCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell markRead];
     
-  
-    if (![Setting boolForKey:HPSettingEnableWKWebview]) {
-        HPReadViewController *readVC =
-        [[HPReadViewController alloc] initWithThread:thread];
-        [self.navigationController pushViewController:readVC animated:YES];
-    } else {
-        HPPostViewController *readVC = [[HPPostViewController alloc] initWithThread:thread];
-        [self.navigationController pushViewController:readVC animated:YES];
-    }
+    UIViewController *readVC = [[PostViewControllerClass() alloc] initWithThread:thread];
+    [self.navigationController pushViewController:readVC animated:YES];
 }
 
 #pragma mark - NSKeyValueObserving
@@ -596,10 +589,9 @@ typedef enum{
          
          HPThread *thread = [_threads objectAtIndex:[self.tableView indexPathForCell:cell].row];
          
-         HPReadViewController *rvc = [[HPReadViewController alloc]
-                                      initWithThread:thread
-                                      page:NSIntegerMax
-                                      forceFullPage:YES];
+         UIViewController *rvc = [[PostViewControllerClass() alloc] initWithThread:thread
+                                                                              page:NSIntegerMax
+                                                                     forceFullPage:YES];
          
          [self.navigationController pushViewController:rvc animated:YES];
          

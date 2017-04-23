@@ -240,6 +240,8 @@ extern NSString *HP_CNC_BASE_IP;
 //
 #define kHPNoAccountCode 9567
 
+extern inline Class PostViewControllerClass();
+
 // image
 enum {
     HPImageDisplayStyleFull  = 0,

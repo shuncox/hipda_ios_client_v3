@@ -431,7 +431,7 @@
         thread.title = [title string];
         NSInteger find_pid = [[dict objectForKey:@"pidString"] integerValue];
         
-        vc = [[HPReadViewController alloc] initWithThread:thread find_pid:find_pid];
+        vc = [[PostViewControllerClass() alloc] initWithThread:thread find_pid:find_pid];
     }
     
     [self.navigationController pushViewController:vc animated:YES];

@@ -59,7 +59,7 @@
             
             HPThread *t = [HPThread new];
             t.tid = [m1.value integerValue];
-            HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:t];
+            UIViewController *readVC = [[PostViewControllerClass() alloc] initWithThread:t];
             NSLog(@"[self.navigationController pushViewController:readVC animated:YES];");
             [self.navigationController pushViewController:readVC animated:YES];
             

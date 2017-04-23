@@ -219,7 +219,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     HPThread *thread = [self.favoritedThreads objectAtIndex:indexPath.row];
-    HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:thread];
+    UIViewController *readVC = [[PostViewControllerClass() alloc] initWithThread:thread];
     
     [self.navigationController pushViewController:readVC animated:YES];
 }

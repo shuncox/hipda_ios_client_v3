@@ -475,7 +475,7 @@
             
             HPThread *t = [HPThread new];
             t.tid = [path[@"tid"] integerValue];
-            HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:t];
+            UIViewController *readVC = [[PostViewControllerClass() alloc] initWithThread:t];
             [frontNavigationController pushViewController:readVC animated:YES];
             
         } else if ([path objectForKey:@"pid"]) { //回复

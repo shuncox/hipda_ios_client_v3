@@ -195,7 +195,7 @@
     
     HPThread *thread = [_myReplies objectAtIndex:indexPath.row];
     
-    HPReadViewController *rvc = [[HPReadViewController alloc] initWithThread:thread
+    UIViewController *rvc = [[PostViewControllerClass() alloc] initWithThread:thread
                                                                     find_pid:thread.pid];
 
     

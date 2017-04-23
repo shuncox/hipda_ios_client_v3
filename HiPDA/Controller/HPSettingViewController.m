@@ -739,7 +739,7 @@
         thread.tid = 1272557;
         thread.title = @"D版 iOS 客户端";
     
-        HPReadViewController *rvc = [[HPReadViewController alloc] initWithThread:thread];
+        UIViewController *rvc = [[PostViewControllerClass() alloc] initWithThread:thread];
         [self.navigationController pushViewController:rvc animated:YES];
         
         [item deselectRowAnimated:YES];

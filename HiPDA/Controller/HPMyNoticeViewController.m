@@ -257,8 +257,7 @@
     [cell.textLabel setTextColor:[HPTheme readColor]];
     [[HPCache sharedCache] readThread:thread.tid pid:thread.pid];
     
-    HPReadViewController *rvc  = nil;
-    
+    UIViewController *rvc  = nil;
     
     if (thread.pid) {
         
@@ -270,7 +269,7 @@
          thread.replyDetail
          */
         
-        rvc = [[HPReadViewController alloc] initWithThread:thread
+        rvc = [[PostViewControllerClass() alloc] initWithThread:thread
                                                   find_pid:thread.pid];
         
         NSLog(@"redirectFromPid %d", [thread pid]);
@@ -281,7 +280,7 @@
          thread.tid, thread.title = title, thread.replyDetail
          */
         
-        rvc = [[HPReadViewController alloc] initWithThread:thread
+        rvc = [[PostViewControllerClass() alloc] initWithThread:thread
                                                       page:1
                                              forceFullPage:YES];
         

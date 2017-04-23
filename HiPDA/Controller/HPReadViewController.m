@@ -770,7 +770,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             
             HPThread *t = [HPThread new];
             t.tid = [m1.value integerValue];
-            HPReadViewController *readVC = [[HPReadViewController alloc] initWithThread:t];
+            UIViewController *readVC = [[PostViewControllerClass() alloc] initWithThread:t];
             NSLog(@"[self.navigationController pushViewController:readVC animated:YES];");
             [self.navigationController pushViewController:readVC animated:YES];
             
@@ -1464,7 +1464,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [SVProgressHUD showSuccessWithStatus:S(@"跳转到%ld楼", floor)];
         [self jumpToFloor:floor];
     } else {
-        HPReadViewController *rvc = [[HPReadViewController alloc]   initWithThread:_thread
+        UIViewController *rvc = [[PostViewControllerClass() alloc]   initWithThread:_thread
             find_pid:pid];
         
         [self.navigationController pushViewController:rvc animated:YES];

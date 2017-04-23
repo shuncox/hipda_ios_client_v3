@@ -79,4 +79,22 @@
      */
 }
 
+inline Class PostViewControllerClass()
+{
+    BOOL enableWKWebview = [UMOnlineConfig getBoolConfigWithKey:@"enableWKWebview" defaultYES:YES];
+    
+#ifdef DEBUG
+    enableWKWebview = [Setting boolForKey:HPSettingEnableWKWebview];
+#endif
+    
+    if (!IOS8_OR_LATER) {
+        enableWKWebview = NO;
+    }
+    
+    Class clazz = enableWKWebview ?
+        NSClassFromString(@"HPPostViewController") :
+        NSClassFromString(@"HPReadViewController");
+    return clazz;
+}
+
 @end
