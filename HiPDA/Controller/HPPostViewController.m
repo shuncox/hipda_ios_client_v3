@@ -143,7 +143,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @end
 
-@interface HPPostViewController () <WKScriptMessageHandler, IBActionSheetDelegate, IDMPhotoBrowserDelegate, UIScrollViewDelegate, HPCompositionDoneDelegate, HPStupidBarDelegate>
+@interface HPPostViewController () <
+WKScriptMessageHandler, WKNavigationDelegate,
+IBActionSheetDelegate,
+IDMPhotoBrowserDelegate,
+UIScrollViewDelegate,
+HPCompositionDoneDelegate,
+HPStupidBarDelegate
+>
 
 @property (nonatomic, strong) PostWebView *webView;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
@@ -266,6 +273,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 {
     [super viewDidLoad];
     
+    [self setupWebview];
+    
     //
     _currentFontSize = [Setting integerForKey:HPSettingFontSizeAdjust];
     _currentLineHeight = [Setting integerForKey:HPSettingLineHeightAdjust];
@@ -283,7 +292,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // add stupid bar
     if (![Setting boolForKey:HPSettingStupidBarDisable]) {
-        HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-(IOS7_OR_LATER ? 0.f : 64.f)+20-20, self.view.frame.size.width, 20.f)];
+        HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-20.f, self.view.frame.size.width, 20.f)];
         stupidBar.tag = 2020202;
         stupidBar.delegate = self;
         [self.view addSubview:stupidBar];
@@ -308,7 +317,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 
-- (void)loadView {
+- (void)setupWebview
+{
     // First create a WKWebViewConfiguration object so we can add a controller
     // pointing back to this ViewController.
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]
@@ -324,8 +334,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     // Initialize the WKWebView with the current frame and the configuration
     // setup above
-    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
-    PostWebView *wv = [[PostWebView alloc] initWithFrame:screenFrame configuration:configuration];
+    PostWebView *wv = [[PostWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
 //    [wv setScalesPageToFit:YES];
 //    wv.dataDetectorTypes = UIDataDetectorTypeNone;
 //    wv.delegate = self;
@@ -345,7 +354,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     //
     wv.navigationDelegate = self;
     
-    [self setView:wv];
+    [self.view addSubview:wv];
     self.webView = wv;
 }
 
@@ -1759,7 +1768,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         _adjustView = [[UIView alloc] initWithFrame:CGRectMake(0.f, self.view.bounds.size.height - height, self.view.bounds.size.width, height)];
     
         _adjustView.alpha = 0.f;
-        [self.webView addSubview:[self adjustView]];
+        [self.view addSubview:[self adjustView]];
         
         CGRect f = _adjustView.frame;
         
