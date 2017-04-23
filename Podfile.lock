@@ -89,7 +89,7 @@ DEPENDENCIES:
   - Mantle (= 1.5.4)
   - Masonry
   - MCSwipeTableViewCell
-  - MLeaksFinder (~> 0.2.0)
+  - MLeaksFinder (from `../MLeaksFinder`)
   - MTLog
   - NSString+Emoji
   - Objective-LevelDB
@@ -108,6 +108,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/wujichao/CTAssetsPickerController.git
   JSPatch:
     :path: "../JSPatch"
+  MLeaksFinder:
+    :path: "../MLeaksFinder"
   Qiniu:
     :branch: AFNetworking-1.x
     :git: https://github.com/qiniu/objc-sdk.git
@@ -157,6 +159,6 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 942ee738c1cb72614c89cf70c26e4b13085e05a1
+PODFILE CHECKSUM: 3d9a474130dae94b38d78db4a776d618de7fe76e
 
 COCOAPODS: 1.1.1
