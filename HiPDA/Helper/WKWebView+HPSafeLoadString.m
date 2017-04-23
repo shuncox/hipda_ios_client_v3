@@ -19,8 +19,12 @@
     // 但是有时会crash(didn't convert all characters)
     // 它的allowLossyConversion是NO
     
-    NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    [self loadData:htmlData MIMEType:@"text/html" characterEncodingName:@"UTF-8" baseURL:baseURL];
+    if (IOS9_OR_LATER) {
+        NSData *htmlData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        [self loadData:htmlData MIMEType:@"text/html" characterEncodingName:@"UTF-8" baseURL:baseURL];
+    } else {
+        [self loadHTMLString:string baseURL:baseURL];
+    }
 }
 
 @end
