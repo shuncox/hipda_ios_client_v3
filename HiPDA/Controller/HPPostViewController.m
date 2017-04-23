@@ -151,8 +151,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
 
-@property (nonatomic, strong) UIImageView *animatedFromView;
-
 @property (nonatomic, assign) NSInteger current_page;
 @property (nonatomic, assign) BOOL forceFullPage;
 @property (nonatomic, assign) NSInteger gotoFloor;
@@ -1211,9 +1209,11 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         index = 0;
     }
     
-    void (^show)() = ^{
-        IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images animatedFromView:self.animatedFromView];
+    void (^show)(UIImage *scaleImage) = ^(UIImage *scaleImage){
+        IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images
+                                                             animatedFromView:[[UIView alloc] initWithFrame:rect]];
         
+        browser.scaleImage = scaleImage;
         browser.displayActionButton = YES;
         browser.displayArrowButton = NO;
         browser.displayCounterLabel = YES;
@@ -1224,29 +1224,17 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         [self presentViewController:browser animated:YES completion:nil];
     };
     
-    // 给一个动画效果
-    if (!self.animatedFromView) {
-        self.animatedFromView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        self.animatedFromView.backgroundColor = [UIColor clearColor];
-    }
-    self.animatedFromView.frame = rect;
-    [self.view addSubview:self.animatedFromView];
-    
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
     if ([[SDImageCache sharedImageCache] sd_imageExistsForWithKey:key]) {
         [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:src] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            self.animatedFromView.image = image;
-            show();
+            show(image);
         }];
     } else {
-        show();
+        show(nil);
     }
 }
 
-
 - (void)photoBrowser:(IDMPhotoBrowser *)photoBrowser didDismissAtPageIndex:(NSUInteger)index {
-    [self.animatedFromView removeFromSuperview];
-    self.animatedFromView = nil;
 }
 
 - (void)copyLink {
