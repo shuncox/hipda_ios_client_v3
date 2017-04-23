@@ -932,7 +932,7 @@
             // 缓存里有就不过滤
             NSString *src = [(RxMatchGroup *)match.groups[1] value];
             NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
-            if ([[SDImageCache sharedImageCache] hp_imageExistsWithKey:key]) {
+            if ([[SDImageCache sharedImageCache] hp_imageDataExistsWithKey:key]) {
                 return match.value;
             }
             

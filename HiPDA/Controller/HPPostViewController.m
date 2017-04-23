@@ -61,7 +61,7 @@
 #import "WKWebView+Synchronize.h"
 #import "HPJSMessage.h"
 #import "FLWeakProxy.h"
-
+#import "SDImageCache+URLCache.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -1180,7 +1180,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSLog(@"openImage %@", object);
     
     NSString *src = object[@"src"];
-    CGRect r = ({
+    CGRect rect = ({
         CGRect rect;
         rect.origin.x = [object[@"x"] doubleValue];
         rect.origin.y = [object[@"y"] doubleValue];
@@ -1188,6 +1188,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         rect.size.height = [object[@"height"] doubleValue];
         rect;
     });
+    rect.origin.y += 64.f;
     
     // cdn -> 原图url
     // 现在的交互形式是 用户点击小图(CDN压缩图片), 然后加载大图, 加载好大图来替换小图
@@ -1195,32 +1196,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         src = [src hp_originalURL];
     }
 
-    if (1) {
-        r.origin.y += 64.f;
-
-        if (!self.animatedFromView) {
-            self.animatedFromView = [[UIImageView alloc] initWithFrame:CGRectZero];
-            self.animatedFromView.backgroundColor = [UIColor clearColor];
-        }
-        self.animatedFromView.frame = r;
-
-        UIImage *i = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:src];
-        if (i) self.animatedFromView.image = i;
-        //[self.animatedFromView sd_setImageWithURL:[NSURL URLWithString:src] placeholderImage:nil options:SDWebImageLowPriority];
-
-        [self.view addSubview:self.animatedFromView];
-    }
-
     __block NSArray *images = nil;
     __block NSUInteger index = 0;
     [_posts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        
         HPNewPost *post = (HPNewPost *)obj;
         if (post.images && (index = [post.images indexOfObject:src]) != NSNotFound) {
             images = post.images;
             *stop = YES;
         }
-        
     }];
     
     if (!images) {
@@ -1228,19 +1211,36 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         index = 0;
     }
     
+    void (^show)() = ^{
+        IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images animatedFromView:self.animatedFromView];
+        
+        browser.displayActionButton = YES;
+        browser.displayArrowButton = NO;
+        browser.displayCounterLabel = YES;
+        [browser setInitialPageIndex: index];
+        
+        browser.delegate = self;
+        
+        [self presentViewController:browser animated:YES completion:nil];
+    };
     
-    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images animatedFromView:self.animatedFromView];
+    // 给一个动画效果
+    if (!self.animatedFromView) {
+        self.animatedFromView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        self.animatedFromView.backgroundColor = [UIColor clearColor];
+    }
+    self.animatedFromView.frame = rect;
+    [self.view addSubview:self.animatedFromView];
     
-    browser.displayActionButton = YES;
-    browser.displayArrowButton = NO;
-    browser.displayCounterLabel = YES;
-    [browser setInitialPageIndex: index];
-
-    browser.delegate = self;
-    
-    browser.wantsFullScreenLayout = NO; // iOS 5 & 6 only: Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
-    // Present
-    [self presentViewController:browser animated:YES completion:nil];
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
+    if ([[SDImageCache sharedImageCache] sd_imageExistsForWithKey:key]) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:src] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            self.animatedFromView.image = image;
+            show();
+        }];
+    } else {
+        show();
+    }
 }
 
 

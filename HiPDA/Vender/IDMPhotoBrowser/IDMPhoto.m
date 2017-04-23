@@ -161,12 +161,18 @@ caption = _caption;
         
             if (thumbUrl) {
                 NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:thumbUrl]];
-                if ([[SDImageCache sharedImageCache] hp_imageExistsWithKey:key]) {
-                    UIImage *thumbnail = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-                    NSParameterAssert(thumbnail);
+                if ([[SDImageCache sharedImageCache] sd_imageExistsForWithKey:key]) {
+                    
                     self.loadingOriginalImage = YES;
-                    self.underlyingImage = thumbnail;
-                    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
+                    
+                    // 从缓存里取出缩略图展示
+                    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:thumbUrl] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                        if (!image) {
+                            return;
+                        }
+                        self.underlyingImage = image;
+                        [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
+                    }];
                 }
             }
             

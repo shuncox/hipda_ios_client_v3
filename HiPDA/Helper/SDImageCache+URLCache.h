@@ -20,7 +20,8 @@ typedef void (^HPImageCacheCompletionBlock)(NSData *data, SDImageCacheType cache
 @property (SDDispatchQueueSetterSementics, readonly, nonatomic) dispatch_queue_t ioQueue;
 
 // additions
-- (BOOL)hp_imageExistsWithKey:(NSString *)key;
+- (BOOL)hp_imageDataExistsWithKey:(NSString *)key;
+- (BOOL)sd_imageExistsForWithKey:(NSString *)key;
 
 - (void)hp_queryImageDataFromCacheForKey:(NSString *)key
                               scheduleOn:(NSThread *)thread

@@ -42,9 +42,22 @@ static NSString * const MemCacheSuffix = @".nsdata";
 }
 */
 
-- (BOOL)hp_imageExistsWithKey:(NSString *)key
+// 返回YES, 意味着urlprotocol可以拿到缓存
+// 但不代表SDWebImage可以拿到缓存, 有可能memory里只有imageData缓存, 但是disk里没有imageData缓存
+// 供HTML拼接使用
+- (BOOL)hp_imageDataExistsWithKey:(NSString *)key
 {
     if ([self _hp_queryImageDataFromMemoryCache:key]) {
+        return YES;
+    }
+    
+    return [self diskImageExistsWithKey:key];
+}
+
+// 返回YES, 意味着SDWebImage可以拿到缓存
+- (BOOL)sd_imageExistsForWithKey:(NSString *)key
+{
+    if ([self imageFromMemoryCacheForKey:key]) {
         return YES;
     }
     
