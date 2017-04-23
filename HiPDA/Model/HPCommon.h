@@ -240,7 +240,7 @@ extern NSString *HP_CNC_BASE_IP;
 //
 #define kHPNoAccountCode 9567
 
-extern inline Class PostViewControllerClass();
+extern Class PostViewControllerClass();
 
 // image
 enum {
