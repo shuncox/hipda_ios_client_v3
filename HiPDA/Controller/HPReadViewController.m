@@ -55,6 +55,7 @@
 
 #import "HPActivity.h"
 #import "HPBlockService.h"
+#import "SDImageCache+URLCache.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -111,8 +112,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 
 @property (nonatomic, strong) NSArray *posts;
 @property (nonatomic, strong) NSString *htmlString;
-
-@property (nonatomic, strong) UIImageView *animatedFromView;
 
 @property (nonatomic, assign) NSInteger current_page;
 @property (nonatomic, assign) BOOL forceFullPage;
@@ -1149,21 +1148,10 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         src = [src hp_originalURL];
     }
 
+    CGRect rect = CGRectZero;
     if (m.groups.count == 2) {
-        CGRect r = CGRectFromString([(RxMatchGroup *)(m.groups[1]) value]);
-        r.origin.y += 64.f;
-
-        if (!self.animatedFromView) {
-            self.animatedFromView = [[UIImageView alloc] initWithFrame:CGRectZero];
-            self.animatedFromView.backgroundColor = [UIColor clearColor];
-        }
-        self.animatedFromView.frame = r;
-
-        UIImage *i = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:src];
-        if (i) self.animatedFromView.image = i;
-        //[self.animatedFromView sd_setImageWithURL:[NSURL URLWithString:src] placeholderImage:nil options:SDWebImageLowPriority];
-
-        [self.view addSubview:self.animatedFromView];
+        rect = CGRectFromString([(RxMatchGroup *)(m.groups[1]) value]);
+        rect.origin.y += 64.f;
     }
 
     __block NSArray *images = nil;
@@ -1183,26 +1171,33 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         index = 0;
     }
     
+    void (^show)(UIImage *scaleImage) = ^(UIImage *scaleImage){
+        IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images
+                                                             animatedFromView:[[UIView alloc] initWithFrame:rect]];
+        
+        browser.scaleImage = scaleImage;
+        browser.displayActionButton = YES;
+        browser.displayArrowButton = NO;
+        browser.displayCounterLabel = YES;
+        [browser setInitialPageIndex: index];
+        
+        browser.delegate = self;
+        
+        [self presentViewController:browser animated:YES completion:nil];
+    };
     
-    IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotoURLs:images animatedFromView:self.animatedFromView];
-    
-    browser.displayActionButton = YES;
-    browser.displayArrowButton = NO;
-    browser.displayCounterLabel = YES;
-    [browser setInitialPageIndex: index];
-
-    browser.delegate = self;
-    
-    browser.wantsFullScreenLayout = NO; // iOS 5 & 6 only: Decide if you want the photo browser full screen, i.e. whether the status bar is affected (defaults to YES)
-    // Present
-    [self presentViewController:browser animated:YES completion:nil];
-    
+    NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
+    if ([[SDImageCache sharedImageCache] sd_imageExistsForWithKey:key]) {
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:src] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            show(image);
+        }];
+    } else {
+        show(nil);
+    }
 }
 
 
 - (void)photoBrowser:(IDMPhotoBrowser *)photoBrowser didDismissAtPageIndex:(NSUInteger)index {
-    [self.animatedFromView removeFromSuperview];
-    self.animatedFromView = nil;
 }
 
 - (void)copyLink {
