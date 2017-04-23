@@ -225,9 +225,7 @@
     [request setHTTPShouldHandleCookies:YES];
     
     // 使用XHR绕过广告
-    if ([Setting boolForKey:HPSettingEnableXHR]) {
-        [request setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
-    }
+    //[request setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
     
     return request;
 }
