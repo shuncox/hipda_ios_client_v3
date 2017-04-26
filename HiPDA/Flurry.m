@@ -33,7 +33,6 @@
         [attributes setObject:obj forKey:key];
     }];
     
-    //NSLog(@"eventName %@ attributes %@", eventName, attributes);
     [MobClick event:eventName attributes:attributes];
     DDLogInfo(@"[EVENT][%@] -> %@", eventName, attributes);
 }

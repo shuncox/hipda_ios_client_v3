@@ -93,14 +93,14 @@
         return;
     }
     
-    NSLog(@"login step1");
+    DDLogInfo(@"login step1");
     [[HPHttpClient sharedClient] getPath:@"forum/logging.php?action=login" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *src = [HPHttpClient GBKresponse2String:responseObject];
         
         NSString *formhash = [src stringBetweenString:@"formhash\" value=\"" andString:@"\""];
         if (formhash) {
             
-            NSLog(@"login get formhash %@", formhash);
+            DDLogInfo(@"login get formhash %@", formhash);
             [self _loginWithFormhash:formhash block:block];
             
         } else {
@@ -113,7 +113,7 @@
             else msg = src;
             
             if (block) {
-                NSLog(@"login step1 找不到token %@", src);
+                DDLogWarn(@"login step1 找不到token %@", src);
                 block(NO, [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:S(@"找不到token, 错误信息: %@", msg)}]);
             }
         }
@@ -131,7 +131,7 @@
     
     HPAccountCredential *credential = [HPAccountPassword credentialFor:username];
     if (!credential) {
-        NSLog(@"login credential does not contain 3 components");
+        DDLogWarn(@"login credential does not contain 3 components");
         block(NO, [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:@"Keychain出问题了"}]);
         return;
     }
@@ -150,7 +150,7 @@
          @"formhash":formhash
     };
     
-    NSLog(@"login step2 parameters %@", parameters);
+    DDLogInfo(@"login step2 parameters %@", parameters);
     
     [[HPHttpClient sharedClient] postPath:@"forum/logging.php?action=login&loginsubmit=yes&inajax=1&inajax=1" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -296,7 +296,7 @@
         [cookieStorage deleteCookie:each];
     }
     
-    NSLog(@"logout done");
+    DDLogInfo(@"logout done");
 }
 
 
@@ -319,7 +319,7 @@
 }
 
 - (void)startCheckWithDelay:(NSTimeInterval)delay {
-    NSLog(@"startCheckWithDelay %f", delay);
+    DDLogInfo(@"startCheckWithDelay %f", delay);
     if (delay == 0.f) {
         [self _checkMsgAndNoticeStep1];
     } else {
@@ -337,7 +337,7 @@
 
 - (void)_checkMsgAndNoticeStep1 {
     
-    NSLog(@"_checkMsgAndNoticeStep1...");
+    DDLogInfo(@"_checkMsgAndNoticeStep1...");
     
     NSTimeInterval t = [[NSDate date] timeIntervalSince1970];
     NSString *randomPath = [NSString stringWithFormat:@"forum/pm.php?checknewpm=%d&inajax=1&ajaxtarget=myprompt_check", (int)t];
@@ -357,7 +357,7 @@
          } else {
              
              [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *err) {
-                 NSLog(@"relogin %@", isLogin?@"success":@"fail");
+                 DDLogInfo(@"relogin %@", isLogin?@"success":@"fail");
                  
                  if (isLogin) {
                      
@@ -376,7 +376,7 @@
                                  failure:
      ^(AFHTTPRequestOperation *operation, NSError *error)
     {
-        NSLog(@"_checkMsgAndNoticeSetp1 error %@", error);
+        DDLogInfo(@"_checkMsgAndNoticeSetp1 error %@", error);
         if (_noticeRetrieveBlock) {
             _noticeRetrieveBlock(UIBackgroundFetchResultFailed);
             _noticeRetrieveBlock = nil;
@@ -386,7 +386,7 @@
 
 - (void)_checkMsgAndNoticeStep2 {
     
-     NSLog(@"_checkMsgAndNoticeStep2...");
+     DDLogInfo(@"_checkMsgAndNoticeStep2...");
     
     [self.checkPmClient getPathContent:@"forum/memcp.php?action=credits" parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
         
@@ -399,12 +399,12 @@
         if (m1) {
             RxMatchGroup *g1 = [m1.groups objectAtIndex:1];
             pm_count = [g1.value integerValue];
-            NSLog(@"get new pm_count %d", pm_count);
+            DDLogInfo(@"get new pm_count %d", pm_count);
         }
         if (m2) {
             RxMatchGroup *g2 = [m2.groups objectAtIndex:1];
             notice_count = [g2.value integerValue];
-            NSLog(@"get new notice_count %d", notice_count);
+            DDLogInfo(@"get new notice_count %d", notice_count);
         }
         
         [Setting saveInteger:pm_count forKey:HPPMCount];
@@ -427,7 +427,7 @@
         [[HPRearViewController sharedRearVC] updateBadgeNumber];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"_checkMsgAndNoticeSetp2 error %@", error);
+        DDLogWarn(@"_checkMsgAndNoticeSetp2 error %@", error);
         if (_noticeRetrieveBlock) {
             _noticeRetrieveBlock(UIBackgroundFetchResultFailed);
             _noticeRetrieveBlock = nil;
@@ -477,7 +477,7 @@
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         
         UIUserNotificationSettings *s = [[UIApplication sharedApplication] currentUserNotificationSettings];
-        NSLog(@"UIUserNotificationSettings %@", s);
+        DDLogInfo(@"UIUserNotificationSettings %@", s);
         if (s.types == UIUserNotificationTypeNone) {
             return NO;
         } else {

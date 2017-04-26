@@ -431,7 +431,7 @@
         
         NSString *key = [@"tid_" stringByAppendingString:tid];
         if ([history containsObject:key]) {
-            NSLog(@"history hit %@", content);
+            DDLogInfo(@"history hit %@", content);
             return;
         } else {
             [history addObject:key];
@@ -454,7 +454,7 @@
 - (void)routeTo:(NSDictionary *)path
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"routeTo %@", path);
+        DDLogInfo(@"routeTo %@", path);
         
         SWRevealViewController *revealController = self.viewController;
         UINavigationController *frontNavigationController = (id)revealController.frontViewController;

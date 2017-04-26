@@ -95,7 +95,7 @@
 
 - (void)check {
     
-    NSLog(@"hotpatch check...");
+    DDLogInfo(@"hotpatch check...");
     
     LevelDB *db = self.db;
     
@@ -106,11 +106,11 @@
     static BOOL first = YES;
     if (first) {
         first = !first;
-        NSLog(@"old_config: %@", old_config);
+        DDLogInfo(@"old_config: %@", old_config);
         if (old_config) {
             for (NSString *url in old_config.patches) {
                 NSString *js = db[url];
-                NSLog(@"patch %@: %@", url, js);
+                DDLogInfo(@"patch %@: %@", url, js);
                 if (js.length) {
                     [JPEngine evaluateScript:js];
                 }
@@ -119,11 +119,11 @@
     }
     
 #ifdef DEBUG
-    NSLog(@"######## patch in db #########");
+    DDLogInfo(@"######## patch in db #########");
     [self.db enumerateKeysAndObjectsUsingBlock:^(LevelDBKey *key, id value, BOOL *stop) {
-        NSLog(@"key: %@ - value: %@", NSStringFromLevelDBKey(key), value);
+        DDLogInfo(@"key: %@ - value: %@", NSStringFromLevelDBKey(key), value);
     }];
-    NSLog(@"######## patch in db #########");
+    DDLogInfo(@"######## patch in db #########");
 #endif
     
     /*
@@ -140,14 +140,14 @@
         PatchConfig *config = [MTLJSONAdapter modelOfClass:PatchConfig.class
                                         fromJSONDictionary:json
                                                      error:&error];
-        NSLog(@"get new patch: %@", config);
+        DDLogInfo(@"get new patch: %@", config);
         if (error) {
-            NSLog(@"%@", error);
+            DDLogInfo(@"%@", error);
             return;
         }
         
         if (config.version <= old_config.version) {
-            NSLog(@"config.version <= old_config.version, %@ %@", config, old_config);
+            DDLogInfo(@"config.version <= old_config.version, %@ %@", config, old_config);
             return;
         }
         
@@ -173,12 +173,12 @@
                         // save
                         db[url] = script;
                         
-                        NSLog(@"patch %@: %@", url, script);
+                        DDLogInfo(@"patch %@: %@", url, script);
                         // 只patch新的 已经patch的忽略(小心新旧冲突)  然后等下次patch
                         if ([old_config.patches containsObject:url]) {
-                            NSLog(@"pass");
+                            DDLogInfo(@"pass");
                         } else {
-                            NSLog(@"patch");
+                            DDLogInfo(@"patch");
                             if (script.length) {
                                 [JPEngine evaluateScript:script];
                             }
