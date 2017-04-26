@@ -93,9 +93,13 @@
     NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     path = [path stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
     
+    DDLogInfo(@"[GET][%@] <- with: %@", path, parameters);
+    
     [super getPath:path
         parameters:parameters
            success:^(AFHTTPRequestOperation *operation, id responseObject){
+               DDLogInfo(@"[GET][%@] -> done", path);
+               
                if (self.dnsErrorCount) {
                    NSString *user = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
                    [Flurry logEvent:@"Error DNS fix" withParameters:@{@"user":user,
@@ -106,6 +110,8 @@
                success(operation, responseObject);
            }
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               DDLogWarn(@"[GET][%@] -> error: %@", path, error);
+               
                if (error.code == -1003) {
                    
                    NSString *tip = @"DNS解析错误, 正在重试中...(%@)\n您可以切换到后两个节点或者更换DNS";
@@ -167,6 +173,7 @@
         } else {
             success(operation, content);
         }
+        DDLogVerbose(@"[GET][%@] -> %@", path, content);
     }
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                ;
@@ -195,7 +202,15 @@
         [p setObject:v forKey:k];
     }];
     
-    [super postPath:path parameters:[p copy] success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    DDLogInfo(@"[POST][%@] <- with: %@", path, parameters);
+    
+    [super postPath:path parameters:[p copy] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        DDLogWarn(@"[POST][%@] -> done", path);
+        if (success) {
+            success(operation, responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogWarn(@"[POST][%@] -> error: %@", path, error);
         if (failure) {
             failure(operation, error);
         }
