@@ -38,6 +38,7 @@ smart_pod 'MLeaksFinder', '~>0.2.0'
 pod 'BlocksKit'
 pod 'Reveal-SDK', :configurations => ['Debug']
 pod 'CocoaLumberjack'
+pod 'SSZipArchive'
 
 # JSPatch
 smart_pod 'JSPatch', '~> 1.1.3'

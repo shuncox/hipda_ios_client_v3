@@ -75,6 +75,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SKBounceAnimation (1.0.04)
+  - SSZipArchive (1.8.1)
   - SVPullToRefresh (0.4.1)
   - ZAActivityBar (0.1.1):
     - SKBounceAnimation (~> 1.0)
@@ -107,6 +108,7 @@ DEPENDENCIES:
   - Reveal-SDK
   - SAMKeychain (~> 1.5.2)
   - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`, commit `8a468e2`)
+  - SSZipArchive
   - SVPullToRefresh
   - ZAActivityBar
 
@@ -164,9 +166,10 @@ SPEC CHECKSUMS:
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   SDWebImage: 119e50946eee9ddf15589227ec2b6b37966ecd04
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
+  SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 748cc5ff0abc6c7c6b1d10b7399dc04d799fbcfb
+PODFILE CHECKSUM: a28c0fbda0be9716880a6fb1485e9acb2fcea898
 
 COCOAPODS: 1.1.1

@@ -156,7 +156,10 @@
 		EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */; };
 		EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F6A4318D9E4AD0034F880 /* HPForum.m */; };
 		EA6249D51CA94844001946B1 /* HPSetImageSizeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */; };
-		EA6408F91EB0E34C004AD7CD /* HPLogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6408F81EB0E34C004AD7CD /* HPLogsViewController.m */; };
+		EA6409011EB0E5B0004AD7CD /* HPLoggerFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6408FC1EB0E5B0004AD7CD /* HPLoggerFormatter.m */; };
+		EA6409021EB0E5B0004AD7CD /* HPLoggerViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6408FE1EB0E5B0004AD7CD /* HPLoggerViewerController.m */; };
+		EA6409031EB0E5B0004AD7CD /* HPLoggerViewerDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6409001EB0E5B0004AD7CD /* HPLoggerViewerDetailController.m */; };
+		EA6409061EB0E841004AD7CD /* HPLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6409051EB0E841004AD7CD /* HPLogger.m */; };
 		EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */; };
 		EA6760921AF8704F00BA0EF3 /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = EA67608F1AF8704F00BA0EF3 /* clip.png */; };
 		EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760901AF8704F00BA0EF3 /* clip@2x.png */; };
@@ -650,8 +653,14 @@
 		EA5F6A4318D9E4AD0034F880 /* HPForum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPForum.m; path = Model/HPForum.m; sourceTree = "<group>"; };
 		EA6249D31CA94844001946B1 /* HPSetImageSizeFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetImageSizeFilterViewController.h; path = Controller/HPSetImageSizeFilterViewController.h; sourceTree = "<group>"; };
 		EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetImageSizeFilterViewController.m; path = Controller/HPSetImageSizeFilterViewController.m; sourceTree = "<group>"; };
-		EA6408F71EB0E34C004AD7CD /* HPLogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPLogsViewController.h; path = Controller/HPLogsViewController.h; sourceTree = "<group>"; };
-		EA6408F81EB0E34C004AD7CD /* HPLogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPLogsViewController.m; path = Controller/HPLogsViewController.m; sourceTree = "<group>"; };
+		EA6408FB1EB0E5B0004AD7CD /* HPLoggerFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPLoggerFormatter.h; sourceTree = "<group>"; };
+		EA6408FC1EB0E5B0004AD7CD /* HPLoggerFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPLoggerFormatter.m; sourceTree = "<group>"; };
+		EA6408FD1EB0E5B0004AD7CD /* HPLoggerViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPLoggerViewerController.h; sourceTree = "<group>"; };
+		EA6408FE1EB0E5B0004AD7CD /* HPLoggerViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPLoggerViewerController.m; sourceTree = "<group>"; };
+		EA6408FF1EB0E5B0004AD7CD /* HPLoggerViewerDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPLoggerViewerDetailController.h; sourceTree = "<group>"; };
+		EA6409001EB0E5B0004AD7CD /* HPLoggerViewerDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPLoggerViewerDetailController.m; sourceTree = "<group>"; };
+		EA6409041EB0E841004AD7CD /* HPLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPLogger.h; sourceTree = "<group>"; };
+		EA6409051EB0E841004AD7CD /* HPLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPLogger.m; sourceTree = "<group>"; };
 		EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPQiniuUploader.h; path = Model/HPQiniuUploader.h; sourceTree = "<group>"; };
 		EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPQiniuUploader.m; path = Model/HPQiniuUploader.m; sourceTree = "<group>"; };
 		EA67608F1AF8704F00BA0EF3 /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
@@ -1362,8 +1371,6 @@
 				EAC202E11C4FD2050050994E /* HPViewHTMLController.m */,
 				EA00C5121D04412B002E2301 /* HPViewSignatureViewController.h */,
 				EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */,
-				EA6408F71EB0E34C004AD7CD /* HPLogsViewController.h */,
-				EA6408F81EB0E34C004AD7CD /* HPLogsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1569,6 +1576,21 @@
 				EA49AAE81861FBC900C03A02 /* last@2x.png */,
 			);
 			name = SwipeTableViewCell;
+			sourceTree = "<group>";
+		};
+		EA6408FA1EB0E5B0004AD7CD /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				EA6408FB1EB0E5B0004AD7CD /* HPLoggerFormatter.h */,
+				EA6408FC1EB0E5B0004AD7CD /* HPLoggerFormatter.m */,
+				EA6408FD1EB0E5B0004AD7CD /* HPLoggerViewerController.h */,
+				EA6408FE1EB0E5B0004AD7CD /* HPLoggerViewerController.m */,
+				EA6408FF1EB0E5B0004AD7CD /* HPLoggerViewerDetailController.h */,
+				EA6409001EB0E5B0004AD7CD /* HPLoggerViewerDetailController.m */,
+				EA6409041EB0E841004AD7CD /* HPLogger.h */,
+				EA6409051EB0E841004AD7CD /* HPLogger.m */,
+			);
+			path = Log;
 			sourceTree = "<group>";
 		};
 		EA6DD46C18D0A28E00727556 /* UserCenter */ = {
@@ -2046,6 +2068,7 @@
 		EAFDB84B1829EFA900C1718B /* HiPDA */ = {
 			isa = PBXGroup;
 			children = (
+				EA6408FA1EB0E5B0004AD7CD /* Log */,
 				EA8947271D3BB554009261DD /* HiPDA.entitlements */,
 				EAFDB8541829EFA900C1718B /* HPAppDelegate.h */,
 				EAFDB8551829EFA900C1718B /* HPAppDelegate.m */,
@@ -2514,7 +2537,6 @@
 				EAAD5B9B188CEFCC0084EC2D /* IDMTapDetectingImageView.m in Sources */,
 				EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */,
 				EA8186C018E29FD10092BDD7 /* HPIndecator.m in Sources */,
-				EA6408F91EB0E34C004AD7CD /* HPLogsViewController.m in Sources */,
 				EA9A39B31A5BE92E0028BE7D /* JSMessage.m in Sources */,
 				EA499F681830CE6700172989 /* HPHttpClient.m in Sources */,
 				EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */,
@@ -2527,6 +2549,7 @@
 				EA3B91C71E6C11AF00D742EF /* HPCrashReport.m in Sources */,
 				EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */,
 				EA9A39AE1A5BE92E0028BE7D /* JSAvatarImageFactory.m in Sources */,
+				EA6409021EB0E5B0004AD7CD /* HPLoggerViewerController.m in Sources */,
 				EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */,
 				EAE0FE4A1D09BC2D00F0D76E /* HPThreadFilterMenu.m in Sources */,
 				EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */,
@@ -2558,6 +2581,7 @@
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
+				EA6409061EB0E841004AD7CD /* HPLogger.m in Sources */,
 				EAC5C3481E93F0940054A66E /* NJKWebViewProgressView.m in Sources */,
 				EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */,
 				EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */,
@@ -2587,6 +2611,7 @@
 				EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */,
 				EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */,
 				EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */,
+				EA6409031EB0E5B0004AD7CD /* HPLoggerViewerDetailController.m in Sources */,
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
 				EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */,
@@ -2599,6 +2624,7 @@
 				EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */,
 				EA743C35183FA9690067F62B /* HPSearchViewController.m in Sources */,
 				EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */,
+				EA6409011EB0E5B0004AD7CD /* HPLoggerFormatter.m in Sources */,
 				EAFE683718364097003829E5 /* HPCache.m in Sources */,
 				EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */,
 				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,

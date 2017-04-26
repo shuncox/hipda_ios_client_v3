@@ -16,7 +16,7 @@
 #import "HPBlockListViewController.h"
 #import "HPLoginViewController.h"
 #import "HPAppDelegate.h"
-#import "HPLogsViewController.h"
+#import "HPLoggerViewerController.h"
 
 #import "MultilineTextItem.h"
 #import "HPSetting.h"
@@ -693,7 +693,7 @@
     }];
    
     RETableViewItem *logItem = [RETableViewItem itemWithTitle:@"查看日志" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
-        [self.navigationController pushViewController:[HPLogsViewController new] animated:YES];
+        [self.navigationController pushViewController:[HPLoggerViewerController new] animated:YES];
         [item deselectRowAnimated:YES];
     }];
     
