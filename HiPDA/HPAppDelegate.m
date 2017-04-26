@@ -150,7 +150,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"kUserDefaultsCookie"];
     
     HPCrashLog(@"-> applicationWillResignActive");
-    DDLogInfo(@"-> applicationWillResignActive");
+    DDLogInfo(@"[APP] applicationWillResignActive");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -162,7 +162,7 @@
     application.applicationIconBadgeNumber  = [[HPAccount sharedHPAccount] badgeNumber];
     
     HPCrashLog(@"-> applicationDidEnterBackground");
-    DDLogInfo(@"-> applicationDidEnterBackground");
+    DDLogInfo(@"[APP] applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -172,7 +172,7 @@
     //[[BFHotPatch shared] check];
     
     HPCrashLog(@"-> applicationWillEnterForeground");
-    DDLogInfo(@"-> applicationWillEnterForeground");
+    DDLogInfo(@"[APP] applicationWillEnterForeground");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -216,7 +216,7 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
     HPCrashLog(@"-> applicationDidBecomeActive");
-    DDLogInfo(@"-> applicationDidBecomeActive");
+    DDLogInfo(@"[APP] applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

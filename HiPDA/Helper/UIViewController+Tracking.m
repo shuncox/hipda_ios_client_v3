@@ -52,7 +52,7 @@
 - (void)xxx_viewWillAppear:(BOOL)animated {
     [self xxx_viewWillAppear:animated];
     HPCrashLog(@"-> %@", NSStringFromClass(self.class));
-    DDLogInfo(@"-> %@", NSStringFromClass(self.class));
+    DDLogInfo(@"[PAGE][%@]", NSStringFromClass(self.class));
 }
 
 @end
