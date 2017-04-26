@@ -312,7 +312,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)selectPic:(id)sender {
+- (void)selectPic:(UIButton *)sender {
     
     int tag = [sender tag];
     

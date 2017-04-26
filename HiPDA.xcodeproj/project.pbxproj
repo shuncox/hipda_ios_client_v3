@@ -156,6 +156,7 @@
 		EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */; };
 		EA5F6A4418D9E4AD0034F880 /* HPForum.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F6A4318D9E4AD0034F880 /* HPForum.m */; };
 		EA6249D51CA94844001946B1 /* HPSetImageSizeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */; };
+		EA6408F91EB0E34C004AD7CD /* HPLogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6408F81EB0E34C004AD7CD /* HPLogsViewController.m */; };
 		EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */; };
 		EA6760921AF8704F00BA0EF3 /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = EA67608F1AF8704F00BA0EF3 /* clip.png */; };
 		EA6760931AF8704F00BA0EF3 /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760901AF8704F00BA0EF3 /* clip@2x.png */; };
@@ -649,6 +650,8 @@
 		EA5F6A4318D9E4AD0034F880 /* HPForum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPForum.m; path = Model/HPForum.m; sourceTree = "<group>"; };
 		EA6249D31CA94844001946B1 /* HPSetImageSizeFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetImageSizeFilterViewController.h; path = Controller/HPSetImageSizeFilterViewController.h; sourceTree = "<group>"; };
 		EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetImageSizeFilterViewController.m; path = Controller/HPSetImageSizeFilterViewController.m; sourceTree = "<group>"; };
+		EA6408F71EB0E34C004AD7CD /* HPLogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPLogsViewController.h; path = Controller/HPLogsViewController.h; sourceTree = "<group>"; };
+		EA6408F81EB0E34C004AD7CD /* HPLogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPLogsViewController.m; path = Controller/HPLogsViewController.m; sourceTree = "<group>"; };
 		EA67608C1AF7C80200BA0EF3 /* HPQiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPQiniuUploader.h; path = Model/HPQiniuUploader.h; sourceTree = "<group>"; };
 		EA67608D1AF7C80200BA0EF3 /* HPQiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPQiniuUploader.m; path = Model/HPQiniuUploader.m; sourceTree = "<group>"; };
 		EA67608F1AF8704F00BA0EF3 /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
@@ -1359,6 +1362,8 @@
 				EAC202E11C4FD2050050994E /* HPViewHTMLController.m */,
 				EA00C5121D04412B002E2301 /* HPViewSignatureViewController.h */,
 				EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */,
+				EA6408F71EB0E34C004AD7CD /* HPLogsViewController.h */,
+				EA6408F81EB0E34C004AD7CD /* HPLogsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -2509,6 +2514,7 @@
 				EAAD5B9B188CEFCC0084EC2D /* IDMTapDetectingImageView.m in Sources */,
 				EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */,
 				EA8186C018E29FD10092BDD7 /* HPIndecator.m in Sources */,
+				EA6408F91EB0E34C004AD7CD /* HPLogsViewController.m in Sources */,
 				EA9A39B31A5BE92E0028BE7D /* JSMessage.m in Sources */,
 				EA499F681830CE6700172989 /* HPHttpClient.m in Sources */,
 				EA743C23183E21000067F62B /* HPLoginViewController.m in Sources */,

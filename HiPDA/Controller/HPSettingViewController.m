@@ -16,6 +16,7 @@
 #import "HPBlockListViewController.h"
 #import "HPLoginViewController.h"
 #import "HPAppDelegate.h"
+#import "HPLogsViewController.h"
 
 #import "MultilineTextItem.h"
 #import "HPSetting.h"
@@ -691,12 +692,17 @@
         [Flurry logEvent:@"Setting EnterGithub"];
     }];
    
+    RETableViewItem *logItem = [RETableViewItem itemWithTitle:@"查看日志" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        [self.navigationController pushViewController:[HPLogsViewController new] animated:YES];
+        [item deselectRowAnimated:YES];
+    }];
     
     
     [section addItem:reportItem];
     [section addItem:replyItem];
     [section addItem:aboutItem];
     [section addItem:githubItem];
+    [section addItem:logItem];
     
     [_manager addSection:section];
     return section;
