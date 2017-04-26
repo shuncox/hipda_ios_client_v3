@@ -31,6 +31,13 @@
     #import "UIViewController+Tracking.h"
     #import "NSError+HPError.h"
 
+    #import <CocoaLumberjack/CocoaLumberjack.h>
+    #ifdef DEBUG
+        static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+    #else
+        static const DDLogLevel ddLogLevel = DDLogLevelInfo;
+    #endif
+
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
 
