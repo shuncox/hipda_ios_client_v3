@@ -15,6 +15,7 @@
 + (void)logEvent:(NSString *)eventName {
     eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"-"];
     [MobClick event:eventName];
+    DDLogInfo(@"[EVENT][%@]", eventName);
 }
 
 + (void)logEvent:(NSString *)eventName withParameters:(NSDictionary *)parameters {
@@ -34,6 +35,7 @@
     
     //NSLog(@"eventName %@ attributes %@", eventName, attributes);
     [MobClick event:eventName attributes:attributes];
+    DDLogInfo(@"[EVENT][%@] -> %@", eventName, attributes);
 }
 
 + (void)setUserID:(NSString *)userID {

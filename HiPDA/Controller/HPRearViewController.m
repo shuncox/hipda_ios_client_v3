@@ -135,6 +135,7 @@
 
 + (void)threadVCRefresh {
     [[[HPRearViewController sharedRearVC] threadViewController] refresh:[UIButton new]];
+    DDLogVerbose(@"");
 }
 
 

@@ -18,11 +18,6 @@ void HPCrashLog(NSString *format, ...)
         va_start(args, format);
         CLSLogv(format, args);
         va_end(args);
-    } else {
-        va_list args;
-        va_start(args, format);
-        NSLogv(format, args);
-        va_end(args);
     }
 }
 

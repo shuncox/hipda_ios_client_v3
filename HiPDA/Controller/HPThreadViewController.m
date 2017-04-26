@@ -144,6 +144,7 @@ typedef enum{
         @strongify(self);
         [self.dropMenu dismiss];
         [self refresh:[UIButton new]];
+        DDLogVerbose(@"");
     };
     [filterMenu updateWithFid:self.current_fid];
     
@@ -255,6 +256,7 @@ typedef enum{
     
     [self.filterMenu updateWithFid:self.current_fid];
     [self refresh:[UIButton new]];
+    DDLogVerbose(@"");
 }
 
 - (void)load:(LoadType)type
@@ -619,6 +621,7 @@ typedef enum{
 
 - (void)compositionDoneWithType:(ActionType)type error:(NSError *)error {
     [self refresh:[UIButton new]];
+    DDLogVerbose(@"");
 }
 
 #pragma mark - login
@@ -635,6 +638,7 @@ typedef enum{
     [SVProgressHUD showSuccessWithStatus:@"登陆成功"];
     [self refresh:[UIButton new]];
     [Flurry logEvent:@"ThreadVC AutoLogin" withParameters:@{@"error":@""}];
+    DDLogVerbose(@"");
 }
 
 #pragma mark - 自动刷新
@@ -653,6 +657,7 @@ typedef enum{
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.lastEnterBackgroundDate];
     if (interval > 10 * 60) {
         [self refresh:[UIButton new]];
+        DDLogInfo(@"离开超过10分钟, 回来时自动刷新");
     }
     
     self.lastEnterBackgroundDate = nil;
