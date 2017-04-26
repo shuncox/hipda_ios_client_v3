@@ -693,6 +693,7 @@
     }];
    
     RETableViewItem *logItem = [RETableViewItem itemWithTitle:@"查看日志" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        @strongify(self);
         [self.navigationController pushViewController:[HPLoggerViewerController new] animated:YES];
         [item deselectRowAnimated:YES];
     }];
