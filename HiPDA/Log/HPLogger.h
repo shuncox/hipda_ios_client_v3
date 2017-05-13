@@ -17,4 +17,6 @@
 
 @interface HPLogger : NSObject
 
++ (void)getZipFile:(void (^)(NSString *path))complete;
+
 @end

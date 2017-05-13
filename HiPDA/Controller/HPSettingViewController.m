@@ -33,6 +33,7 @@
 #import <SDWebImage/SDImageCache.h>
 #import "HPCrashReport.h"
 #import "HPURLProtocol.h"
+#import "HPLogger.h"
 
 // mail
 #import <MessageUI/MFMailComposeViewController.h>
@@ -629,7 +630,7 @@
     
     // Bug & 建议
     //
-    RETableViewItem *reportItem = [RETableViewItem itemWithTitle:@"联系作者" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+    RETableViewItem *reportItem = [RETableViewItem itemWithTitle:@"反馈问题" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         [item deselectRowAnimated:YES];
         @strongify(self);
         // 获得设备信息
@@ -658,7 +659,16 @@
         [controller setToRecipients:@[@"wujichao.hpclient@gmail.com"]];
         [controller setSubject:@"HP论坛客户端反馈: "];
         [controller setMessageBody:[NSString stringWithFormat:@"\n\n\n网络(eg:移动2g): \n设备: %@ \niOS版本: %@ \n客户端版本: v%@", device_model, system_version, VERSION] isHTML:NO];
-        if (controller) [self presentViewController:controller animated:YES completion:NULL];
+        
+        [HPLogger getZipFile:^(NSString *path) {
+            if (!path) {
+                [self presentViewController:controller animated:YES completion:NULL];
+                return;
+            }
+            NSData *data = [NSData dataWithContentsOfFile:path];
+            [controller addAttachmentData:data mimeType:@"application/zip" fileName:@"日志.zip"];
+            [self presentViewController:controller animated:YES completion:NULL];
+        }];
     }];
     
 
@@ -777,6 +787,5 @@
     
     return YES;
 }
-
 
 @end
