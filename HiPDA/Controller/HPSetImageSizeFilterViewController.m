@@ -55,7 +55,7 @@
     titleLabel.text = [title stringByAppendingString:@"下 "];
     [self addSubview:titleLabel];
     
-    
+    // 目前只能拿到原图的size 而不是缩略图的size, 所以无法做一个智能模式, 大于xxx不自动加载
     UISegmentedControl *loadModeControl = [[UISegmentedControl alloc] initWithItems:@[@"图片自动加载", @"图片手动加载"]];
     self.loadModeControl = loadModeControl;
     [self addSubview:loadModeControl];
@@ -151,6 +151,7 @@
         @keypath(self, autoLoadMode),
         @keypath(self, autoLoadThreshold)
     ] task:^(id obj, NSString *keyPath) {
+        @strongify(self);
         
         NSString *text = nil;
         if (self.autoLoad) {
