@@ -369,6 +369,7 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    DDLogInfo(@"[APP] performFetch");
     if (![Setting boolForKey:HPSettingBgFetchNotice]) {
         completionHandler(UIBackgroundFetchResultNoData);
         return;
