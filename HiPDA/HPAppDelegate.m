@@ -392,8 +392,9 @@
         [NSStandardUserDefaults saveObject:log forKey:@"HPBgFetchLog"];
         //NSLog(@"%@", log);
         //
-        //
-        completionHandler(result);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(result);
+        });
     }];
     [[HPAccount sharedHPAccount] startCheckWithDelay:0.f];
 }
