@@ -71,6 +71,8 @@ typedef enum{
 @property (nonatomic, strong) HPNavigationDropdownMenu *dropMenu;
 @property (nonatomic, strong) HPThreadFilterMenu *filterMenu;
 
+@property (nonatomic, assign) BOOL launchingFromBackgroundFetch;
+
 @end
 
 @implementation HPThreadViewController {
@@ -155,10 +157,13 @@ typedef enum{
             [self.filterMenu updateWithFid:self.current_fid];
         }
     }];
-    
-    
-    //
-    [self refresh:[UIButton new]];
+   
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
+        self.launchingFromBackgroundFetch = YES;
+        DDLogInfo(@"检测到bgfetch唤起, 下次启动刷新");
+    } else {
+        [self refresh:[UIButton new]];
+    }
 }
 
 
@@ -649,6 +654,13 @@ typedef enum{
 
 - (void)applicationDidBecomeActiveNotification:(NSNotification *)notification
 {
+    if (self.launchingFromBackgroundFetch) {
+        DDLogInfo(@"检测到上次bgfetch, 所以刷新");
+        self.launchingFromBackgroundFetch = NO;
+        [self refresh:[UIButton new]];
+        return;
+    }
+    
     if (!self.lastEnterBackgroundDate) {
         return;
     }

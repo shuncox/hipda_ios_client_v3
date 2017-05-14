@@ -126,7 +126,13 @@
     self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
-    [[HPAccount sharedHPAccount] startCheckWithDelay:30.f];
+    if ([application applicationState] == UIApplicationStateBackground) {
+        // backgroudFetch launching...
+        DDLogInfo(@"backgroudFetch launching...");
+    } else {
+        [[HPAccount sharedHPAccount] startCheckWithDelay:30.f];
+        DDLogInfo(@"normal launching...");
+    }
     
     UILocalNotification *localNotification =
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];

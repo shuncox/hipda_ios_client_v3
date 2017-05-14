@@ -53,7 +53,7 @@
         [self save];
     }
     
-    NSLog(@"savedSettings %@", savedSettings);
+    DDLogInfo(@"savedSettings %@", savedSettings);
     
     ///////////
     // app update setting
