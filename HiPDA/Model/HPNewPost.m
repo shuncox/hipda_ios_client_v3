@@ -841,15 +841,29 @@
 
 
 + (NSString *)preProcessHTML:(NSMutableString *)string {
-
+    
     if ([Setting boolForKey:HPSettingNightMode]) {
         [string replaceOccurrencesOfString:@"<font color=\"Black\">" withString:@"<font color=\"White\">" options:0 range:NSMakeRange(0, string.length)];
     } else {
         [string replaceOccurrencesOfString:@"<font color=\"White\">" withString:@"<font color=\"Red\">" options:0 range:NSMakeRange(0, string.length)];
     }
     
-    
     NSString *final = (NSString *)string;
+    
+    // 小尾巴太长
+    // <a href="http://www.hi-pda.com/forum/viewthread.php?tid=1579403" target="_blank"><font size="1">HiPDA·NG</font>
+    final = [RX(@"<a href=[^>]+><font size=\"1\">([^<]+)</font>") replace:final withDetailsBlock:^NSString *(RxMatch *match) {
+        if (match.groups.count != 2) {
+            return match.value;
+        }
+
+        NSString *content = [(RxMatchGroup *)match.groups[1] value];
+        if (content.length > 10) {
+            return [match.value stringByReplacingOccurrencesOfString:content withString:[[content substringToIndex:10] stringByAppendingString:@"..."]];
+        } else {
+            return match.value;
+        }
+    }];
     
     AFNetworkReachabilityStatus status = [[HPHttpClient sharedClient] networkReachabilityStatus];
     
@@ -883,7 +897,7 @@
     
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
         NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
-        final = [rx replace:string withDetailsBlock:^NSString *(RxMatch *match) {
+        final = [rx replace:final withDetailsBlock:^NSString *(RxMatch *match) {
             NSString *imageNode = match.value;
             imageNode = [imageNode stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
             return imageNode;
@@ -894,7 +908,7 @@
         
         NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
 
-        final = [rx replace:string withDetailsBlock:^NSString *(RxMatch *match) {
+        final = [rx replace:final withDetailsBlock:^NSString *(RxMatch *match) {
             
             // 缓存里有就不过滤
             NSString *src = [(RxMatchGroup *)match.groups[1] value];
