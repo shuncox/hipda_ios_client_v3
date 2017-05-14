@@ -34,6 +34,7 @@
 #import "HPCrashReport.h"
 #import "HPURLProtocol.h"
 #import "HPLogger.h"
+#import "HPHttpClient.h"
 
 // mail
 #import <MessageUI/MFMailComposeViewController.h>
@@ -383,19 +384,27 @@
         NSArray *actions = @[
             ^{
                 [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
+                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_WWW_BASE_HOST];
                 [Setting saveBool:NO forKey:HPSettingForceDNS];
+                [Setting saveBool:YES forKey:HPSettingEnableHTTPS];
             },
             ^{
                 [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
+                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_CNC_BASE_HOST];
                 [Setting saveBool:NO forKey:HPSettingForceDNS];
+                [Setting saveBool:YES forKey:HPSettingEnableHTTPS];
             },
             ^{
                 [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
+                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_WWW_BASE_HOST];
                 [Setting saveBool:YES forKey:HPSettingForceDNS];
+                [Setting saveBool:NO forKey:HPSettingEnableHTTPS];
             },
             ^{
                 [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
+                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_CNC_BASE_HOST];
                 [Setting saveBool:YES forKey:HPSettingForceDNS];
+                [Setting saveBool:NO forKey:HPSettingEnableHTTPS];
             },
 #ifdef DEBUG
             ^{
@@ -433,11 +442,20 @@
     // https
     //
     BOOL enableHttps = [Setting boolForKey:HPSettingEnableHTTPS];
-    REBoolItem *enableHttpsItem = [REBoolItem itemWithTitle:@"HTTPS (杜绝运营商劫持)" value:enableHttps switchValueChangeHandler:^(REBoolItem *item) {
+    REBoolItem *enableHttpsItem = [REBoolItem itemWithTitle:@"HTTPS(建议打开)" value:enableHttps switchValueChangeHandler:^(REBoolItem *item) {
         
         NSLog(@"enableHttps Value: %@", item.value ? @"YES" : @"NO");
-        [Setting saveBool:item.value forKey:HPSettingEnableHTTPS];
-        
+        if (item.value) {
+            [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
+            [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_WWW_BASE_HOST];
+            [Setting saveBool:NO forKey:HPSettingForceDNS];
+            [Setting saveBool:YES forKey:HPSettingEnableHTTPS];
+        } else {
+            [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
+            [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_CNC_BASE_HOST];
+            [Setting saveBool:YES forKey:HPSettingForceDNS];
+            [Setting saveBool:NO forKey:HPSettingEnableHTTPS];
+        }
         [Flurry logEvent:@"Setting Https" withParameters:@{@"flag":@(item.value)}];
     }];
     
@@ -453,8 +471,8 @@
     [section addItem:isPrintItem];
 #if DEBUG_MODE // 由于上了https, 所以不再允许设置httpdns
     [section addItem:nodeItem];
-    [section addItem:enableHttpsItem];
 #endif
+    [section addItem:enableHttpsItem];
 #if DEBUG_MODE
     [section addItem:enableWKWebviewItem];
 #endif
