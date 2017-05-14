@@ -200,22 +200,6 @@ typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
 #define HPSettingImageAutoLoadModeAutoThresholdWifi @"HPSettingImageAutoLoadModeAutoThresholdWifi"
 
 
-// to delete
-#define HPSettingImageSizeFilterEnableWWAN @"HPSettingImageSizeFilterEnableWWAN"
-#define HPSettingImageSizeFilterMinValueWWAN @"HPSettingImageSizeFilterMinValueWWAN"
-#define HPSettingImageCDNEnableWWAN @"HPSettingImageCDNEnableWWAN"
-#define HPSettingImageCDNMinValueWWAN @"HPSettingImageCDNMinValueWWAN"
-#define HPOnlineImageCDNEnableWWAN @"imageCDNEnableWWAN"
-#define HPOnlineImageCDNMinValueWWAN @"imageCDNMinValueWWAN"
-
-// to delete
-#define HPSettingImageSizeFilterEnableWifi @"HPSettingImageSizeFilterEnableWifi"
-#define HPSettingImageSizeFilterMinValueWifi @"HPSettingImageSizeFilterMinValueWifi"
-#define HPSettingImageCDNEnableWifi @"HPSettingImageCDNEnableWifi"
-#define HPSettingImageCDNMinValueWifi @"HPSettingImageCDNMinValueWifi"
-#define HPOnlineImageCDNEnableWifi @"imageCDNEnableWifi"
-#define HPOnlineImageCDNMinValueWifi @"imageCDNMinValueWifi"
-
 //#define HPOnlineConfigEnableHTTPSSetting @"enableHTTPSSetting"
 
 #define HPDraft @"HPDraft"

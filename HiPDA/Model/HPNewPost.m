@@ -865,108 +865,87 @@
         }
     }];
     
-    AFNetworkReachabilityStatus status = [[HPHttpClient sharedClient] networkReachabilityStatus];
     
     BOOL imageAutoLoadEnable = NO;
-    BOOL imageSizeFilterEnable = NO;
-    NSInteger imageSizeFilterMinValue = 0;
-    BOOL imageCDNEnable = NO;
-    NSInteger imageCDNMinValue = 0;
+    HPImageAutoLoadMode autoLoadMode = 0;
+    CGFloat autoLoadThreshold = 0.f;
     
+    AFNetworkReachabilityStatus status = [[HPHttpClient sharedClient] networkReachabilityStatus];
     if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
         imageAutoLoadEnable = [Setting boolForKey:HPSettingImageAutoLoadEnableWifi];
-        
-        imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnableWifi];
-        imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValueWifi];
-        
-        imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnableWifi];
-        imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:HPOnlineImageCDNEnableWifi defaultYES:imageCDNEnable];
-        imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValueWifi];
-        imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:HPOnlineImageCDNMinValueWifi defaultValue:imageCDNMinValue]);
+        autoLoadMode = [Setting integerForKey:HPSettingImageAutoLoadModeWifi];
+        autoLoadThreshold = [Setting floatForKey:HPSettingImageAutoLoadModeAutoThresholdWifi];
     } else {
         imageAutoLoadEnable = [Setting boolForKey:HPSettingImageAutoLoadEnableWWAN];
-        
-        imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnableWWAN];
-        imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValueWWAN];
-        
-        imageCDNEnable = [Setting boolForKey:HPSettingImageCDNEnableWWAN];
-        imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:HPOnlineImageCDNEnableWWAN defaultYES:imageCDNEnable];
-        imageCDNMinValue = [Setting integerForKey:HPSettingImageCDNMinValueWWAN];
-        imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:HPOnlineImageCDNMinValueWWAN defaultValue:imageCDNMinValue]);
+        autoLoadMode = [Setting integerForKey:HPSettingImageAutoLoadModeWWAN];
+        autoLoadThreshold = [Setting floatForKey:HPSettingImageAutoLoadModeAutoThresholdWWAN];
     }
-    
-    if (status == AFNetworkReachabilityStatusReachableViaWiFi) {
-        NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
-        final = [rx replace:final withDetailsBlock:^NSString *(RxMatch *match) {
-            NSString *imageNode = match.value;
-            imageNode = [imageNode stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
-            return imageNode;
-        }];
-    }
-    
-    if (!imageAutoLoadEnable || imageSizeFilterEnable) {
+ 
+/*
+ * 加载策略:
+ *   1. BOOL imageAutoLoadEnable = NO;
+ *   目前只能拿到原图的size 而不是缩略图的size, 所以无法做一个智能模式, 大于xxx不自动加载, 只要关了autoload, 一律手动载入
+ *   -> 是否换成placeholder
+ *
+ *   2. HPImageAutoLoadMode autoLoadMode = 0;
+ *      CGFloat autoLoadThreshold = 0.f;
+ *   -> 是否替换url
+ */
+    NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
+    final = [rx replace:final withDetailsBlock:^NSString *(RxMatch *match) {
         
-        NSRegularExpression *rx = RX(@"<img class=\"attach_image\" src=\"(.*?)\"(.*?)/>");
-
-        final = [rx replace:final withDetailsBlock:^NSString *(RxMatch *match) {
-            
-            // 缓存里有就不过滤
+        NSString *imageNode = match.value;
+        
+        // 缓存里有就不过滤
+        {
             NSString *src = [(RxMatchGroup *)match.groups[1] value];
+            // 如果没有域名, 只是相对路径, 那么就检测HP_BASE_URL的缓存, 毕竟加载html时, baseurl为HP_BASE_URL
+            if ([src rangeOfString:HP_IMG_BASE_URL].location == NSNotFound) {
+                src = [[HP_BASE_URL stringByAppendingString:@"/forum/"] stringByAppendingString:src];
+            }
+            NSString *src_original = [src stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
+            if ([src_original rangeOfString:HP_IMG_BASE_URL].location == NSNotFound) {
+                src_original = [[HP_BASE_URL stringByAppendingString:@"/forum/"] stringByAppendingString:src_original];
+            }
             NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
+            NSString *key2 = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src_original]];
             if ([[SDImageCache sharedImageCache] hp_imageDataExistsWithKey:key]) {
                 return match.value;
             }
-            
-            NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
-            double imageSize = sizeString.length ? [sizeString doubleValue] : 0.f;
-            
-            // 论坛自带的缩略图, 获取到的图片尺寸是原图尺寸, 因此, 缩略图均不过滤.
-            BOOL isThumbnail = [src hasSuffix:HP_THUMB_URL_SUFFIX];
-            
-            BOOL filter = !isThumbnail &&
-                            imageSizeFilterEnable &&
-                            imageSize >= imageSizeFilterMinValue;
-            filter = filter || !imageAutoLoadEnable;
-            
-            BOOL useCDN = filter &&
-                            imageCDNEnable &&
-                            imageSize >= imageCDNMinValue
-                            && ![src hasSuffix:@".gif"];
-            
-            if (filter) {
-                NSString *imageNode = match.value;
-                if (useCDN) {
-                    // <img class=\"attach_image\" src=\"http://img.hi-pda.com/forum/attachments/day_160327/1603272216a6c3122910ffe02f.jpeg\" aid=\"2465634\" size=\"719.06\" />
-                    imageNode = [imageNode stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/forum/", HP_IMG_BASE_URL] withString:@""];
-                    imageNode = [RX(@"src=\"([^\"]+)\"") replace:imageNode withDetailsBlock:^NSString *(RxMatch *match) {
-                        // 只有路径的图片是hi-pda图片
-                        if ([match.value indexOf:@"http"] != -1) {
-                            return match.value;
-                        }
-                        if (match.groups.count != 2) {
-                            return match.value;
-                        }
-                        
-                        NSString *src = [(RxMatchGroup *)match.groups[1] value];
-                        src = [NSString stringWithFormat:@"%@/forum/%@", HP_IMG_BASE_URL, src];
-                        src = [src hp_thumbnailURL];
-                        
-                        return [NSString stringWithFormat:@"src=\"%@\"", src];
-                    }];
-                }
-                NSString *sizeDisplayString = [sizeString imageSizeString];
-                NSParameterAssert(sizeDisplayString.length);
-                NSString *tip = [NSString stringWithFormat:@"点击查看图片%@", sizeDisplayString.length ? [NSString stringWithFormat:@"(%@)", sizeDisplayString] : @""];
-                if (useCDN) {
-                    tip = [NSString stringWithFormat:@"原图%@ 点击查看经CDN压缩过的图片", sizeDisplayString.length ? sizeDisplayString : @""];
-                }
-                imageNode = [imageNode stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-                return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>%@</div>", imageNode, sizeDisplayString.length ? tip : @"");
-            } else {
-                return match.value;
+            if ([[SDImageCache sharedImageCache] hp_imageDataExistsWithKey:key2]) {
+                return [match.value stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
             }
-        }];
-    }
+        }
+        
+        
+        NSString *sizeString = [match.value stringBetweenString:@"size=\"" andString:@"\""];
+        double imageSize = sizeString.length ? [sizeString doubleValue] : 0.f;
+        
+        switch (autoLoadMode) {
+            case HPImageAutoLoadModePerferAuto:
+                if (imageSize <= autoLoadThreshold) {
+                    imageNode = [imageNode stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
+                }
+                break;
+            case HPImageAutoLoadModePerferThumb:
+                // no-op;
+                break;
+            case HPImageAutoLoadModePerferOriginal:
+                imageNode = [imageNode stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
+                break;
+        }
+ 
+        if (!imageAutoLoadEnable) {
+            NSString *sizeDisplayString = [sizeString imageSizeString];
+            NSParameterAssert(sizeDisplayString.length);
+            BOOL isThumbnail = [imageNode rangeOfString:HP_THUMB_URL_SUFFIX].location != NSNotFound;
+            NSString *tip = [NSString stringWithFormat:@"点击查看图片%@", sizeDisplayString.length ? [NSString stringWithFormat:@"(%@)", isThumbnail ? @"缩略图" : sizeDisplayString] : @""];
+            imageNode = [imageNode stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+            return S(@"<div class='img_placeholder' image='%@' onclick='img_click(this)'>%@</div>", imageNode, sizeDisplayString.length ? tip : @"");
+        } else {
+            return imageNode;
+        }
+    }];
     
     return final;
 }
