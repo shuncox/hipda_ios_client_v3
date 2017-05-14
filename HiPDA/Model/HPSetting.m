@@ -134,16 +134,12 @@
                                HP_SHOW_MESSAGE_IMAGE_NOTICE:@(NO),
                                
                                HPSettingImageAutoLoadEnableWWAN:@YES,
-                               HPSettingImageSizeFilterEnableWWAN:@YES,
-                               HPSettingImageSizeFilterMinValueWWAN:@1024,
-                               HPSettingImageCDNEnableWWAN:@NO,
-                               HPSettingImageCDNMinValueWWAN:@1024,
+                               HPSettingImageAutoLoadModeWWAN: @(HPImageAutoLoadModePerferThumb),
+                               HPSettingImageAutoLoadModeAutoThresholdWWAN: @(512),
                                
                                HPSettingImageAutoLoadEnableWifi:@YES,
-                               HPSettingImageSizeFilterEnableWifi:@NO,
-                               HPSettingImageSizeFilterMinValueWifi:@1024,
-                               HPSettingImageCDNEnableWifi:@NO,
-                               HPSettingImageCDNMinValueWifi:@1024,
+                               HPSettingImageAutoLoadModeWWAN: @(HPImageAutoLoadModePerferAuto),
+                               HPSettingImageAutoLoadModeAutoThresholdWWAN: @(1024),
                                
                                HPSettingPrintPagePost:@YES,
                                HPSettingEnableHTTPS:@YES,
