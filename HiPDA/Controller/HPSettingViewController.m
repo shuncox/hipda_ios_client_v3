@@ -473,9 +473,10 @@
     [section addItem:nodeItem];
 #endif
     [section addItem:enableHttpsItem];
-#if DEBUG_MODE
-    [section addItem:enableWKWebviewItem];
-#endif
+    
+    if ([UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:YES]) {
+        [section addItem:enableWKWebviewItem];
+    }
     
     [_manager addSection:section];
     return section;

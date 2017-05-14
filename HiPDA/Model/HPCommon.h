@@ -199,8 +199,9 @@ typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
 #define HPSettingImageAutoLoadModeWifi @"HPSettingImageAutoLoadModeWifi"
 #define HPSettingImageAutoLoadModeAutoThresholdWifi @"HPSettingImageAutoLoadModeAutoThresholdWifi"
 
-
+// Umeng Settings
 //#define HPOnlineConfigEnableHTTPSSetting @"enableHTTPSSetting"
+#define HPOnlineWKWebviewEnable @"enableWKWebview"
 
 #define HPDraft @"HPDraft"
 
