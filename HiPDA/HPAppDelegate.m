@@ -47,6 +47,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    DDLogInfo(@"launching...");
+    
     [HPCrashReport setUp];
     
     [[HPHotPatch shared] check];
@@ -140,6 +142,7 @@
         [self FinishLaunchingWithReciveLocalNotification:localNotification];
     }
 
+    DDLogInfo(@"finish launching");
     return YES;
 }
 
