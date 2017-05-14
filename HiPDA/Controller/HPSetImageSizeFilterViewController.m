@@ -11,18 +11,20 @@
 #import "UIControl+ALActionBlocks.h"
 #import "NSString+HPImageSize.h"
 #import "UIAlertView+Blocks.h"
+#import <BlocksKit/NSObject+BKBlockObservation.h>
+#import <Mantle/EXTKeyPathCoding.h>
+#import <BlocksKit/UIControl+BlocksKit.h>
 
 @interface HPSetImageSizeFilterView : UIView
 
-@property (nonatomic, strong) UISwitch *autoLoadSwitch;
-
-@property (nonatomic, strong) UISwitch *sizeFilterSwitch;
-@property (nonatomic, strong) UISlider *filterValueSlider;
-
-@property (nonatomic, strong) UISwitch *CDNSwitch;
-@property (nonatomic, strong) UISlider *CDNfilterValueSlider;
-
+@property (nonatomic, strong) UISegmentedControl *loadModeControl;
+@property (nonatomic, strong) UISegmentedControl *autoLoadModeControl;
+@property (nonatomic, strong) UISlider *autoLoadThresholdSlider;
 @property (nonatomic, strong) UILabel *descLabel;
+
+@property (nonatomic, assign) BOOL autoLoad;
+@property (nonatomic, assign) HPImageAutoLoadMode autoLoadMode;
+@property (nonatomic, assign) CGFloat autoLoadThreshold;
 
 @end
 
@@ -38,15 +40,13 @@
     self = [super initWithFrame:CGRectZero];
     if (!self) return nil;
    
+    @weakify(self);
+    
     // keys
     //
     NSString *AutoLoadEnableKey = keys[0];
-    NSString *FilterEnableKey = keys[1];
-    NSString *FilterMinValueKey = keys[2];
-    NSString *CDNEnableKey = keys[3];
-    NSString *CDNMinValueKey = keys[4];
-    NSString *CDNOnlineEnableKey = keys[5];
-    NSString *CDNOnlineMinValueKey = keys[6];
+    NSString *AutoLoadModeKey = keys[1];
+    NSString *AutoLoadThresholdKey = keys[2];
     
     // views
     //
@@ -55,215 +55,132 @@
     titleLabel.text = [title stringByAppendingString:@"下 "];
     [self addSubview:titleLabel];
     
-    UILabel *subTitleLabel = [UILabel new];
-    subTitleLabel.font = [UIFont systemFontOfSize:14.f];
-    [self addSubview:subTitleLabel];
-    void (^updateSubTitleLabel)(BOOL on) = ^(BOOL on) {
-        subTitleLabel.text = on ? @"图片自动载入" : @"图片不自动载入";
-    };
     
-    UILabel *filterTitleLabel = [UILabel new];
-    filterTitleLabel.font = [UIFont systemFontOfSize:14.f];
-    [self addSubview:filterTitleLabel];
-    void (^updateFilterTipLabel)(BOOL on, float value) = ^(BOOL on, float value) {
-        NSString *s = [@(value).stringValue imageSizeString];
-        filterTitleLabel.text = [NSString stringWithFormat:@"图片尺寸超过 %@ 不自动载入", s];
-        if (!on) filterTitleLabel.text = @"所有尺寸的图片都自动载入";
-    };
+    UISegmentedControl *loadModeControl = [[UISegmentedControl alloc] initWithItems:@[@"图片自动加载", @"图片手动加载"]];
+    self.loadModeControl = loadModeControl;
+    [self addSubview:loadModeControl];
+    [loadModeControl bk_addEventHandler:^(UISegmentedControl *control) {
+        @strongify(self);
+        self.autoLoad = control.selectedSegmentIndex == 0;
+    } forControlEvents:UIControlEventValueChanged];
     
-    UILabel *CDNFilterTitleLabel = [UILabel new];
-    CDNFilterTitleLabel.font = [UIFont systemFontOfSize:14.f];
-    [self addSubview:CDNFilterTitleLabel];
-    void (^updateCDNFilterTipLabel)(BOOL on, float value) = ^(BOOL on, float value) {
-        NSString *s = [@(value).stringValue imageSizeString];
-        CDNFilterTitleLabel.text = [NSString stringWithFormat:@"图片尺寸超过 %@ 使用CDN压缩", s];
-        if (!on) CDNFilterTitleLabel.text = @"任何图片都不使用CDN加速";
-    };
-   
-    @weakify(self);
-    void (^updateUI)(BOOL, BOOL, BOOL) = ^(BOOL autoLoadSwitchOn, BOOL sizeFilterSwitchOn, BOOL CDNSwitchOn) {
-        @strongify(self);
-        if (autoLoadSwitchOn) {
-            filterTitleLabel.hidden = NO;
-            self.sizeFilterSwitch.hidden = NO;
-            self.filterValueSlider.hidden = !sizeFilterSwitchOn;
-            CDNFilterTitleLabel.hidden = !sizeFilterSwitchOn;
-            self.CDNSwitch.hidden = !sizeFilterSwitchOn;
-            self.CDNfilterValueSlider.hidden = !(CDNSwitchOn && sizeFilterSwitchOn);
-            self.descLabel.hidden = self.CDNfilterValueSlider.hidden;
-        } else {
-            filterTitleLabel.hidden = YES;
-            self.filterValueSlider.hidden = YES;
-            self.sizeFilterSwitch.hidden = YES;
-            CDNFilterTitleLabel.hidden = YES;
-            self.CDNfilterValueSlider.hidden = YES;
-            self.CDNSwitch.hidden = YES;
-            self.descLabel.hidden = YES;
-        }
-        updateSubTitleLabel(autoLoadSwitchOn);
-        updateFilterTipLabel(sizeFilterSwitchOn, self.filterValueSlider.value);
-        updateCDNFilterTipLabel(CDNSwitchOn, self.CDNfilterValueSlider.value);
-        
-        if (![UMOnlineConfig getBoolConfigWithKey:CDNOnlineEnableKey defaultYES:YES]) {
-            self.CDNSwitch.hidden = YES;
-            self.CDNfilterValueSlider.hidden = YES;
-            CDNFilterTitleLabel.hidden = YES;
-            self.descLabel.hidden = YES;
-        }
-    };
- 
-    self.autoLoadSwitch = [UISwitch new];
-    [self addSubview:self.autoLoadSwitch];
-    [self.autoLoadSwitch handleControlEvents:UIControlEventValueChanged withBlock:^(UISwitch *weakSender) {
-        [Setting saveInteger:weakSender.on forKey:AutoLoadEnableKey];
-        @strongify(self);
-        updateUI(self.autoLoadSwitch.on, self.sizeFilterSwitch.on, self.CDNSwitch.on);
-    }];
     
-    self.sizeFilterSwitch = [UISwitch new];
-    [self addSubview:self.sizeFilterSwitch];
-    [self.sizeFilterSwitch handleControlEvents:UIControlEventValueChanged withBlock:^(UISwitch *weakSender) {
-        [Setting saveInteger:weakSender.on forKey:FilterEnableKey];
+    UISegmentedControl *autoLoadModeControl = [[UISegmentedControl alloc] initWithItems:@[@"优先加载原图", @"优先加载缩略图", @"智能模式"]];
+    self.autoLoadModeControl = autoLoadModeControl;
+    [self addSubview:autoLoadModeControl];
+    [autoLoadModeControl bk_addEventHandler:^(UISegmentedControl *control) {
         @strongify(self);
-        updateUI(self.autoLoadSwitch.on, self.sizeFilterSwitch.on, self.CDNSwitch.on);
-    }];
+        self.autoLoadMode = control.selectedSegmentIndex;
+    } forControlEvents:UIControlEventValueChanged];
     
-    self.filterValueSlider = [UISlider new];
-    [self addSubview:self.filterValueSlider];
-    self.filterValueSlider.minimumValue = 0;
-    self.filterValueSlider.maximumValue = 3 * 1024;
-    self.filterValueSlider.continuous = YES;
-    [self.filterValueSlider handleControlEvents:UIControlEventValueChanged withBlock:^(UISlider *weakSender) {
-        @strongify(self);
-        [Setting saveInteger:weakSender.value forKey:FilterMinValueKey];
-        updateFilterTipLabel(self.sizeFilterSwitch.on, weakSender.value);
-        if (self.CDNfilterValueSlider.value < weakSender.value) {
-            self.CDNfilterValueSlider.value = weakSender.value;
-            [self.CDNfilterValueSlider sendActionsForControlEvents:UIControlEventValueChanged];
-        }
-    }];
     
-    self.CDNSwitch = [UISwitch new];
-    [self addSubview:self.CDNSwitch];
-    [self.CDNSwitch handleControlEvents:UIControlEventValueChanged withBlock:^(UISwitch *weakSender) {
-        @strongify(self);
-        /*
-        if (![UMOnlineConfig getBoolConfigWithKey:CDNOnlineEnableKey defaultYES:YES]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"功能已下线" message:@"由于流量费用超标, 本功能暂时下线.\n未来可能作为收费项目, 大概1~3元一月." delegate:self cancelButtonTitle:nil otherButtonTitles:@"我愿意付费使用", @"我不愿意付费使用", @"下次再说",nil];
-            [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                NSArray *list = @[@"ImageCDN_Pay_Yes", @"ImageCDN_Pay_No", @"ImageCDN_Pay_NotDecide"];
-                [Flurry logEvent:list[buttonIndex % list.count]];
-            }];
-            [weakSender setOn:NO animated:YES];
-            return;
-        }*/
-        [Setting saveInteger:weakSender.on forKey:CDNEnableKey];
-        updateUI(self.autoLoadSwitch.on, self.sizeFilterSwitch.on, self.CDNSwitch.on);
-    }];
+    UISlider *slider = [UISlider new];
+    self.autoLoadThresholdSlider = slider;
+    [self addSubview:slider];
     
-    self.CDNfilterValueSlider = [UISlider new];
-    [self addSubview:self.CDNfilterValueSlider];
-    self.CDNfilterValueSlider.minimumValue = 0;
-    self.CDNfilterValueSlider.maximumValue = 3 * 1024;
-    self.CDNfilterValueSlider.continuous = YES;
-    [self.CDNfilterValueSlider handleControlEvents:UIControlEventValueChanged withBlock:^(UISlider *weakSender) {
+    slider.minimumValue = 0;
+    slider.maximumValue = 3 * 1000;
+    slider.continuous = YES;
+    
+    [slider handleControlEvents:UIControlEventValueChanged withBlock:^(UISlider *weakSender) {
         @strongify(self);
-        NSInteger minValue = [UMOnlineConfig getIntegerConfigWithKey:CDNOnlineMinValueKey defaultValue:1024];
-        minValue = MAX(self.filterValueSlider.value, minValue);
-        if (weakSender.value < minValue) {
-            [weakSender setValue:minValue animated:YES];
-            return;
-        }
-        [Setting saveInteger:weakSender.value forKey:CDNMinValueKey];
-        updateCDNFilterTipLabel(self.CDNSwitch.on, weakSender.value);
+        self.autoLoadThreshold = round(weakSender.value / 100) * 100;
     }];
     
     UILabel *descLabel = [UILabel new];
-    descLabel.text = @"通过CDN对图片进行压缩加速, 由于流量费用的缘故, 目前只对超大图片启用.\n"
-    @"这个功能属于试验功能, 未来可能由于流量费用超标而下线.\n"
-    @"此功能由七牛CDN强力驱动\n";
-    descLabel.numberOfLines = 0;
-    descLabel.font = [UIFont systemFontOfSize:12.f];
-    descLabel.textColor = [UIColor grayColor];
-    [self addSubview:descLabel];
     self.descLabel = descLabel;
-   
+    [self addSubview:descLabel];
+    
+    descLabel.numberOfLines = 0;
+    descLabel.font = [UIFont systemFontOfSize:14.f];
+    descLabel.textColor = [UIColor blackColor];
+
+    
     // constraints
     //
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(0);
-        make.left.equalTo(self).offset(20);
+        make.left.equalTo(self).offset(20.f);
+        make.right.equalTo(self).offset(-20.f);
     }];
-    [subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(titleLabel.mas_right);
-        make.bottom.equalTo(titleLabel);
-    }];
-    [self.autoLoadSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(subTitleLabel);
-        make.right.equalTo(self).offset(-20);
+    [loadModeControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(titleLabel.mas_bottom).offset(20.f);
+        make.left.right.equalTo(titleLabel);
     }];
     
-    [filterTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(titleLabel.mas_bottom).offset(20);
-        make.left.equalTo(self).offset(20);
+    [autoLoadModeControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(loadModeControl.mas_bottom).offset(20.f);
+        make.left.right.equalTo(titleLabel);
     }];
     
-    [self.sizeFilterSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(filterTitleLabel);
-        make.right.equalTo(self).offset(-20);
-    }];
-    
-    [self.filterValueSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.sizeFilterSwitch.mas_bottom).offset(5);
-        make.left.equalTo(self).offset(20);
-        make.right.equalTo(self).offset(-20);
-    }];
-    
-    [CDNFilterTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.filterValueSlider.mas_bottom).offset(20);
-        make.left.equalTo(self).offset(20);
-    }];
-    
-    [self.CDNSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(CDNFilterTitleLabel);
-        make.right.equalTo(self).offset(-20);
-    }];
-    
-    [self.CDNfilterValueSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.CDNSwitch.mas_bottom).offset(5);
-        make.left.equalTo(self).offset(20);
-        make.right.equalTo(self).offset(-20);
+    [slider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(autoLoadModeControl.mas_bottom).offset(20.f);
+        make.left.right.equalTo(titleLabel);
     }];
     
     [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.CDNfilterValueSlider.mas_bottom).offset(10);
-        make.left.equalTo(self).offset(20);
-        make.right.equalTo(self).offset(-20);
-        make.bottom.equalTo(self);
+        make.top.equalTo(slider.mas_bottom).offset(10.f);
+        make.left.right.equalTo(titleLabel);
+        make.bottom.equalTo(self).offset(-20);
     }];
     
-    // loadData
+    
+    // bindings
     //
-    BOOL autoLoadEnable = [Setting boolForKey:AutoLoadEnableKey];
+    [self bk_addObserverForKeyPath:@keypath(self, autoLoad) task:^(id target) {
+        @strongify(self);
+        [Setting saveInteger:self.autoLoad forKey:AutoLoadEnableKey];
+        self.loadModeControl.selectedSegmentIndex = self.autoLoad ? 0 : 1;
+    }];
     
-    BOOL imageSizeFilterEnable = [Setting boolForKey:FilterEnableKey];
-    NSInteger imageSizeFilterMinValue = [Setting integerForKey:FilterMinValueKey];
+    [self bk_addObserverForKeyPath:@keypath(self, autoLoadMode) task:^(id target) {
+        @strongify(self);
+        [Setting saveInteger:self.autoLoadMode forKey:AutoLoadModeKey];
+        self.autoLoadModeControl.selectedSegmentIndex = self.autoLoadMode;
+        self.autoLoadThresholdSlider.hidden = self.autoLoadMode != HPImageAutoLoadModePerferAuto;
+    }];
     
-    BOOL imageCDNEnable = [Setting boolForKey:CDNEnableKey];
-    imageCDNEnable = [UMOnlineConfig getBoolConfigWithKey:CDNOnlineEnableKey defaultYES:imageCDNEnable];
-    NSInteger imageCDNMinValue = [Setting integerForKey:CDNMinValueKey];
-    imageCDNMinValue = MAX(imageCDNMinValue, [UMOnlineConfig getIntegerConfigWithKey:CDNOnlineMinValueKey defaultValue:imageCDNMinValue]);
+    [self bk_addObserverForKeyPath:@keypath(self, autoLoadThreshold) task:^(id target) {
+        @strongify(self);
+        [Setting saveFloat:self.autoLoadThreshold forKey:AutoLoadThresholdKey];
+        self.autoLoadThresholdSlider.value = self.autoLoadThreshold;
+    }];
     
-    self.autoLoadSwitch.on = autoLoadEnable;
+    [self bk_addObserverForKeyPaths:@[
+        @keypath(self, autoLoad),
+        @keypath(self, autoLoadMode),
+        @keypath(self, autoLoadThreshold)
+    ] task:^(id obj, NSString *keyPath) {
+        
+        NSString *text = nil;
+        if (self.autoLoad) {
+            text = [NSString stringWithFormat:@"%@下, 帖子中的图片会自动载入. ", title];
+        } else {
+            text = [NSString stringWithFormat:@"%@下, 帖子中的图片不自动载入, 手动点击后", title];
+        }
+        
+        NSString *loadModeText = nil;
+        switch (self.autoLoadMode) {
+            case HPImageAutoLoadModePerferAuto:
+                loadModeText = [NSString stringWithFormat:@"\n图片大小超过 %.1fMB 优先加载缩略图, 否则优先载入原图", self.autoLoadThreshold / 1000];
+                break;
+            case HPImageAutoLoadModePerferThumb:
+                loadModeText = @"将会优先载入缩略图.";
+                break;
+            case HPImageAutoLoadModePerferOriginal:
+                loadModeText = @"将会优先载入原图.";
+                break;
+        }
+        
+        self.descLabel.text = [NSString stringWithFormat:@"%@%@", text, loadModeText];
+    }];
     
-    self.sizeFilterSwitch.on = imageSizeFilterEnable;
-    [self.filterValueSlider setValue:imageSizeFilterMinValue animated:YES];
     
-    self.CDNSwitch.on = imageCDNEnable;
-    [self.CDNfilterValueSlider setValue:imageCDNMinValue animated:YES];
-    
-    updateUI(self.autoLoadSwitch.on, self.sizeFilterSwitch.on, self.CDNSwitch.on);
-   
+    // load settings
+    //
+    self.autoLoad = [Setting boolForKey:AutoLoadEnableKey];
+    self.autoLoadMode = [Setting integerForKey:AutoLoadModeKey];
+    self.autoLoadThreshold = [Setting floatForKey:AutoLoadThresholdKey];
     
     return self;
 }
@@ -288,22 +205,14 @@
     
     self.wwanSettingView = [[HPSetImageSizeFilterView alloc] initWithTitle:@"移动网络" keys:@[
         HPSettingImageAutoLoadEnableWWAN,
-        HPSettingImageSizeFilterEnableWWAN,
-        HPSettingImageSizeFilterMinValueWWAN,
-        HPSettingImageCDNEnableWWAN,
-        HPSettingImageCDNMinValueWWAN,
-        HPOnlineImageCDNEnableWWAN,
-        HPOnlineImageCDNMinValueWWAN,
+        HPSettingImageAutoLoadModeWWAN,
+        HPSettingImageAutoLoadModeAutoThresholdWWAN,
     ]];
     
     self.wifiSettingView = [[HPSetImageSizeFilterView alloc] initWithTitle:@"Wifi网络" keys:@[
         HPSettingImageAutoLoadEnableWifi,
-        HPSettingImageSizeFilterEnableWifi,
-        HPSettingImageSizeFilterMinValueWifi,
-        HPSettingImageCDNEnableWifi,
-        HPSettingImageCDNMinValueWifi,
-        HPOnlineImageCDNEnableWifi,
-        HPOnlineImageCDNMinValueWifi,
+        HPSettingImageAutoLoadModeWifi,
+        HPSettingImageAutoLoadModeAutoThresholdWifi,
     ]];
     
     [self.view addSubview:self.wwanSettingView];
@@ -331,7 +240,7 @@
 {
     [super viewDidDisappear:animated];
     
-    
+    /*
     BOOL autoLoadEnable = [Setting boolForKey:HPSettingImageAutoLoadEnableWWAN];
     BOOL imageSizeFilterEnable = [Setting boolForKey:HPSettingImageSizeFilterEnableWWAN];
     NSInteger imageSizeFilterMinValue = [Setting integerForKey:HPSettingImageSizeFilterMinValueWWAN];
@@ -359,6 +268,7 @@
     };
     
     [Flurry logEvent:@"Setting_ImageLoad" withParameters:p];
+    */
 }
 
 @end

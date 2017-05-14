@@ -183,7 +183,24 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingEnableWKWebview @"HPSettingEnableWKWebview"
 
 // image
+typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
+    HPImageAutoLoadModePerferOriginal = 0,
+    HPImageAutoLoadModePerferThumb = 1,
+    HPImageAutoLoadModePerferAuto = 2,
+};
+
+// 移动网络
 #define HPSettingImageAutoLoadEnableWWAN @"HPSettingImageAutoLoadEnableWWAN"
+#define HPSettingImageAutoLoadModeWWAN @"HPSettingImageAutoLoadModeWWAN"
+#define HPSettingImageAutoLoadModeAutoThresholdWWAN @"HPSettingImageAutoLoadModeAutoThresholdWWAN"
+
+// WIFI
+#define HPSettingImageAutoLoadEnableWifi @"HPSettingImageAutoLoadEnableWifi"
+#define HPSettingImageAutoLoadModeWifi @"HPSettingImageAutoLoadModeWifi"
+#define HPSettingImageAutoLoadModeAutoThresholdWifi @"HPSettingImageAutoLoadModeAutoThresholdWifi"
+
+
+// to delete
 #define HPSettingImageSizeFilterEnableWWAN @"HPSettingImageSizeFilterEnableWWAN"
 #define HPSettingImageSizeFilterMinValueWWAN @"HPSettingImageSizeFilterMinValueWWAN"
 #define HPSettingImageCDNEnableWWAN @"HPSettingImageCDNEnableWWAN"
@@ -191,7 +208,7 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPOnlineImageCDNEnableWWAN @"imageCDNEnableWWAN"
 #define HPOnlineImageCDNMinValueWWAN @"imageCDNMinValueWWAN"
 
-#define HPSettingImageAutoLoadEnableWifi @"HPSettingImageAutoLoadEnableWifi"
+// to delete
 #define HPSettingImageSizeFilterEnableWifi @"HPSettingImageSizeFilterEnableWifi"
 #define HPSettingImageSizeFilterMinValueWifi @"HPSettingImageSizeFilterMinValueWifi"
 #define HPSettingImageCDNEnableWifi @"HPSettingImageCDNEnableWifi"
