@@ -448,6 +448,12 @@ CGFloat SVProgressHUDRingThickness = 6;
 
 - (void)showProgress:(float)progress status:(NSString*)string maskType:(SVProgressHUDMaskType)hudMaskType {
     
+#ifdef DEBUG
+    if (string && [string rangeOfString:@"请求超时"].location != NSNotFound) {
+        NSAssert(0, @"");
+    }
+#endif
+    
     if(!self.overlayView.superview){
         NSEnumerator *frontToBackWindows = [[[UIApplication sharedApplication]windows]reverseObjectEnumerator];
         
@@ -537,6 +543,13 @@ CGFloat SVProgressHUDRingThickness = 6;
 
 
 - (void)showImage:(UIImage *)image status:(NSString *)string duration:(NSTimeInterval)duration {
+    
+#ifdef DEBUG
+    if (string && [string rangeOfString:@"请求超时"].location != NSNotFound) {
+        NSAssert(0, @"");
+    }
+#endif
+    
     self.progress = -1;
     [self cancelRingLayerAnimation];
     
