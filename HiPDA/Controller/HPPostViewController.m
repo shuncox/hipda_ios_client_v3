@@ -325,6 +325,7 @@ HPStupidBarDelegate
                                              init];
     
     if (IOS9_OR_LATER) {
+        // 实测有用
         configuration.websiteDataStore = [WKWebsiteDataStore nonPersistentDataStore];
     }
     
