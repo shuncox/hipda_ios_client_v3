@@ -18,7 +18,9 @@
     dispatch_once(&onceToken, ^{
 #ifdef DEBUG
         [DDLog addLogger:[DDTTYLogger sharedInstance]]; // TTY = Xcode console
-        [DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
+        [DDTTYLogger sharedInstance].logFormatter = [[HPASLLoggerFormatter alloc] init];
+        [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+//        [DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
 #endif
         DDFileLogger *fileLogger = [[DDFileLogger alloc] init]; // File Logger
         fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
