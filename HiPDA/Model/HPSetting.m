@@ -138,8 +138,8 @@
                                HPSettingImageAutoLoadModeAutoThresholdWWAN: @(512),
                                
                                HPSettingImageAutoLoadEnableWifi:@YES,
-                               HPSettingImageAutoLoadModeWWAN: @(HPImageAutoLoadModePerferAuto),
-                               HPSettingImageAutoLoadModeAutoThresholdWWAN: @(1024),
+                               HPSettingImageAutoLoadModeWifi: @(HPImageAutoLoadModePerferAuto),
+                               HPSettingImageAutoLoadModeAutoThresholdWifi: @(1024),
                                
                                HPSettingPrintPagePost:@YES,
                                HPSettingEnableHTTPS:@YES,
