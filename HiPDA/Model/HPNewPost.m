@@ -900,11 +900,11 @@
         {
             NSString *src = [(RxMatchGroup *)match.groups[1] value];
             // 如果没有域名, 只是相对路径, 那么就检测HP_BASE_URL的缓存, 毕竟加载html时, baseurl为HP_BASE_URL
-            if ([src rangeOfString:HP_IMG_BASE_URL].location == NSNotFound) {
+            if ([src rangeOfString:HP_BASE_URL].location == NSNotFound) {
                 src = [[HP_BASE_URL stringByAppendingString:@"/forum/"] stringByAppendingString:src];
             }
             NSString *src_original = [src stringByReplacingOccurrencesOfString:HP_THUMB_URL_SUFFIX withString:@""];
-            if ([src_original rangeOfString:HP_IMG_BASE_URL].location == NSNotFound) {
+            if ([src_original rangeOfString:HP_BASE_URL].location == NSNotFound) {
                 src_original = [[HP_BASE_URL stringByAppendingString:@"/forum/"] stringByAppendingString:src_original];
             }
             NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
