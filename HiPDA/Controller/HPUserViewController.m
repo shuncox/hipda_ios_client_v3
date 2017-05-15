@@ -161,7 +161,7 @@
         }
         
         if (_data) {
-            _cell2.textLabel.text = _data? @"发短消息":nil;
+            _cell2.textLabel.text = _data? @"短消息":nil;
             _cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
