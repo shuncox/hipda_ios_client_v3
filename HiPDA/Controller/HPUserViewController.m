@@ -16,6 +16,7 @@
 #import "HPMessage.h"
 #import "HPBlockService.h"
 #import "HPSetting.h"
+#import "HPMessageDetailViewController.h"
 
 @interface HPUserViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -200,7 +201,10 @@
         
     } else if (indexPath.section == 1 && indexPath.row == 1) {
         
-        [self promptForSendMessage:_user.username];
+        HPMessageDetailViewController *detailViewController = [[HPMessageDetailViewController alloc] init];
+        detailViewController.user = self.user;
+        
+        [self.navigationController pushViewController:detailViewController animated:YES];
         
         [Flurry logEvent:@"Read ViewUser Action" withParameters:@{@"action":@"sendMessage"}];
         
@@ -224,40 +228,5 @@
 {
     [self.tableView reloadData];
 }
-
-#pragma mark - send message
-
-- (void)promptForSendMessage:(NSString *)username {
-    NSString *title = [NSString stringWithFormat:@"收件人: %@", username];
-    [UIAlertView showSendMessageDialogWithTitle:title handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-        
-        if (buttonIndex != [alertView cancelButtonIndex]) {
-            
-            UITextField *content = [alertView textFieldAtIndex:0];
-            NSString *message = content.text;
-            [self sendMessageTo:username message:message];
-        }
-    }];
-}
-
-- (void)sendMessageTo:(NSString *)username
-              message:(NSString *)message {
-    
-    if (!message || [message isEqualToString:@""]) {
-        [SVProgressHUD showErrorWithStatus:@"消息内容不能为空"];
-        return;
-    }
-    
-    [SVProgressHUD showWithStatus:@"发送中..."];
-    [HPMessage sendMessageWithUsername:username message:message block:^(NSError *error) {
-        if (error) {
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        } else {
-            [SVProgressHUD showSuccessWithStatus:@"已送达"];
-        }
-    }];
-}
-
-
 
 @end
