@@ -38,22 +38,10 @@
         // UIWebView
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         
-        if (!IOS9_OR_LATER) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [application endBackgroundTask:bgTask];
-                bgTask = UIBackgroundTaskInvalid;
-            });
-            return;
-        }
-        // WKWekView
-        NSSet *websiteDataTypes = [NSSet setWithArray:@[WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache]];
-        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
-        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [application endBackgroundTask:bgTask];
-                bgTask = UIBackgroundTaskInvalid;
-            });
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [application endBackgroundTask:bgTask];
+            bgTask = UIBackgroundTaskInvalid;
+        });
     });
 }
 

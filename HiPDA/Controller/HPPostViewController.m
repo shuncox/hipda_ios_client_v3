@@ -323,6 +323,11 @@ HPStupidBarDelegate
     // pointing back to this ViewController.
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]
                                              init];
+    
+    if (IOS9_OR_LATER) {
+        configuration.websiteDataStore = [WKWebsiteDataStore nonPersistentDataStore];
+    }
+    
     WKUserContentController *controller = [[WKUserContentController alloc]
                                            init];
     
