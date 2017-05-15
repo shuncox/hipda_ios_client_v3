@@ -161,37 +161,9 @@
              // animate = yes = crash often
              [weakSelf scrollToBottomAnimated:NO];
              
-         } else {
-             [SVProgressHUD dismiss];
-             
-             NSString *tip = nil;
-             switch (weakSelf.range) {
-                 case HPMessageRangeLatest:
-                     tip = @"最近三天没有新短消息\n是否查看更早时间的短消息历史？";
-                     break;
-                 case HPMessageRangeCurrentWeek:
-                     tip = @"本周没有新短消息\n是否查看更早时间的短消息历史？";
-                     break;
-                 case HPMessageRangeAll:
-                     tip = @"未找到任何记录\n是否重试？";
-                     break;
-                 default:
-                     break;
-             }
-             
-             [UIAlertView showConfirmationDialogWithTitle:@"提示"
-                                                  message:tip
-                                                  handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-              {
-                  if (buttonIndex != [alertView cancelButtonIndex]) {
-                      
-                      if (weakSelf.range < HPMessageRangeAll) {
-                          weakSelf.range++;
-                      }
-                      
-                      [weakSelf refresh:nil];
-                  }
-              }];
+         } else if (weakSelf.range < HPMessageRangeAll) {
+             weakSelf.range++;
+             [weakSelf refresh:nil];
          }
      }];
 }
