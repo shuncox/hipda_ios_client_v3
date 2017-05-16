@@ -164,6 +164,8 @@
          } else if (weakSelf.range < HPMessageRangeAll) {
              weakSelf.range++;
              [weakSelf refresh:nil];
+         } else {
+             [SVProgressHUD dismiss];
          }
      }];
 }
