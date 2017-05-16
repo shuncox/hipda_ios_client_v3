@@ -19,10 +19,15 @@
 #import "SWRevealViewController.h"
 #import "HPRearViewController.h"
 #import "UITableView+ScrollToTop.h"
+#import "HPMessageSearchUserViewController.h"
 
 @interface HPMessageViewController ()
 
 @property NSInteger current_page;
+
+// search
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) HPMessageSearchUserViewController *searchUserViewController;
 
 @end
 
@@ -34,15 +39,16 @@
 {
     [super viewDidLoad];
     
-    
     self.title = @"短消息";
     
+    if (IOS8_OR_LATER) {
+        [self setupSearchBar];
+    }
 
     [self addPageControlBtn];
     [self addRevealActionBI];
     
     [self addRefreshControl];
-    
     
     //[self load];
    
@@ -68,6 +74,29 @@
 }
 
 #pragma mark -
+
+
+- (void)setupSearchBar
+{
+    self.searchUserViewController = [HPMessageSearchUserViewController new];
+    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:self.searchUserViewController];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:wrapper];
+    
+    self.searchUserViewController.searchController = self.searchController;
+    
+    self.searchController.delegate = self.searchUserViewController;
+    self.searchController.searchResultsUpdater = self.searchUserViewController;
+    
+    self.searchController.searchBar.placeholder = @"请输入用户名";
+    self.searchController.searchBar.delegate = self.searchUserViewController;
+    
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+}
+
 
 - (void)load {
     _current_page = 1;
@@ -214,6 +243,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
     
     HPMessageDetailViewController *detailViewController =
         [[HPMessageDetailViewController alloc] init];

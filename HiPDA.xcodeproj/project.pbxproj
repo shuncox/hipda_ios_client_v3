@@ -138,6 +138,7 @@
 		EA49AAE91861FBC900C03A02 /* last.png in Resources */ = {isa = PBXBuildFile; fileRef = EA49AAE71861FBC900C03A02 /* last.png */; };
 		EA49AAEA1861FBC900C03A02 /* last@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA49AAE81861FBC900C03A02 /* last@2x.png */; };
 		EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4C5A0A18E5658700B12442 /* UIImage+Resize.m */; };
+		EA4CDC6E1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4CDC6D1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m */; };
 		EA5708241AA09C5200AD2247 /* HPHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */; };
 		EA5962C3192A24EE00D486C1 /* rear-cell-backgroud.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */; };
 		EA5DF0E118311F05008E4248 /* list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5DF0D918311F04008E4248 /* list@2x.png */; };
@@ -628,6 +629,8 @@
 		EA49AAE81861FBC900C03A02 /* last@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "last@2x.png"; path = "Image/SwipeTableViewCell/last@2x.png"; sourceTree = "<group>"; };
 		EA4C5A0918E5658700B12442 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Helper/UIImage+Resize.h"; sourceTree = "<group>"; };
 		EA4C5A0A18E5658700B12442 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Helper/UIImage+Resize.m"; sourceTree = "<group>"; };
+		EA4CDC6C1ECAB67B00FAED6B /* HPMessageSearchUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPMessageSearchUserViewController.h; path = Controller/HPMessageSearchUserViewController.h; sourceTree = "<group>"; };
+		EA4CDC6D1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessageSearchUserViewController.m; path = Controller/HPMessageSearchUserViewController.m; sourceTree = "<group>"; };
 		EA5708221AA09C5200AD2247 /* HPHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHistoryViewController.h; path = Controller/HPHistoryViewController.h; sourceTree = "<group>"; };
 		EA5708231AA09C5200AD2247 /* HPHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHistoryViewController.m; path = Controller/HPHistoryViewController.m; sourceTree = "<group>"; };
 		EA5962C2192A24EE00D486C1 /* rear-cell-backgroud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rear-cell-backgroud.png"; path = "View/rear-cell-backgroud.png"; sourceTree = "<group>"; };
@@ -1614,6 +1617,8 @@
 				EA743C34183FA9690067F62B /* HPSearchViewController.m */,
 				EA13B90D1949F8C300E01AF5 /* HPUserViewController.h */,
 				EA13B90E1949F8C300E01AF5 /* HPUserViewController.m */,
+				EA4CDC6C1ECAB67B00FAED6B /* HPMessageSearchUserViewController.h */,
+				EA4CDC6D1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m */,
 			);
 			name = UserCenter;
 			sourceTree = "<group>";
@@ -2653,6 +2658,7 @@
 				EA083D6F18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				EAA1E68818D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m in Sources */,
 				EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */,
+				EA4CDC6E1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m in Sources */,
 				EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */,
 				EAC5C33D1E93D36E0054A66E /* HPPostViewController.m in Sources */,
 				EA499F461830C2D800172989 /* TFHpple.m in Sources */,
