@@ -56,7 +56,7 @@
 #import "HPActivity.h"
 #import "HPBlockService.h"
 
-#import <BlocksKit/NSObject+BKBlockObservation.h>
+#import <KVOController/KVOController.h>
 #import "NJKWebViewProgressView.h"
 #import "WKWebView+Synchronize.h"
 #import "HPJSMessage.h"
@@ -664,10 +664,13 @@ HPStupidBarDelegate
     [self.webView addSubview:self.progressView];
     
     @weakify(self);
-    [self.webView bk_addObserverForKeyPath:@"estimatedProgress" task:^(id target) {
-        @strongify(self);
-        [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
-    }];
+    [self.KVOController observe:self.webView
+                        keyPath:@"estimatedProgress"
+                        options:NSKeyValueObservingOptionNew
+                          block:^(id observer, id object, NSDictionary *change) {
+                              @strongify(self);
+                              [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
+                          }];
 }
 
 - (void)reload:(id)sender {

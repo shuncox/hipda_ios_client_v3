@@ -39,6 +39,7 @@ pod 'BlocksKit'
 #pod 'Reveal-SDK', :configurations => ['Debug']
 pod 'CocoaLumberjack'
 pod 'SSZipArchive'
+pod 'KVOController'
 
 # JSPatch
 smart_pod 'JSPatch', '~> 1.1.3'
