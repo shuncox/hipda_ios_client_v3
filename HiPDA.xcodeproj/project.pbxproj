@@ -399,6 +399,7 @@
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
 		EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF18F251B01037300B50E19 /* HPURLProtocol.m */; };
 		EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF3C568194C11E700168263 /* HPSetStupidBarController.m */; };
+		EAF41EF41ECAE36D00441A22 /* HPUserSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF41EF31ECAE36D00441A22 /* HPUserSearch.m */; };
 		EAF55C981B7A478B0022F2CB /* debug-hotpatch.js in Resources */ = {isa = PBXBuildFile; fileRef = EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */; };
 		EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */; };
 		EAF568A51BF335AA00041A40 /* NSString+HPOnlineParamaters.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */; };
@@ -991,6 +992,8 @@
 		EAF18F251B01037300B50E19 /* HPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPURLProtocol.m; path = Model/HPURLProtocol.m; sourceTree = "<group>"; };
 		EAF3C567194C11E700168263 /* HPSetStupidBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetStupidBarController.h; path = Controller/HPSetStupidBarController.h; sourceTree = "<group>"; };
 		EAF3C568194C11E700168263 /* HPSetStupidBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetStupidBarController.m; path = Controller/HPSetStupidBarController.m; sourceTree = "<group>"; };
+		EAF41EF21ECAE36D00441A22 /* HPUserSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPUserSearch.h; path = Model/HPUserSearch.h; sourceTree = "<group>"; };
+		EAF41EF31ECAE36D00441A22 /* HPUserSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPUserSearch.m; path = Model/HPUserSearch.m; sourceTree = "<group>"; };
 		EAF55C971B7A478B0022F2CB /* debug-hotpatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "debug-hotpatch.js"; path = "HotPatch/debug-hotpatch.js"; sourceTree = "<group>"; };
 		EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMOnlineConfig.a; sourceTree = "<group>"; };
 		EAF568A11BF32C1D00041A40 /* UMOnlineConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMOnlineConfig.h; sourceTree = "<group>"; };
@@ -1090,6 +1093,8 @@
 				EA480F2B18BA19F300C1E522 /* HPDatabase.m */,
 				D772D4BE192283D100994743 /* HPAttention.h */,
 				D772D4BF192283D100994743 /* HPAttention.m */,
+				EAF41EF21ECAE36D00441A22 /* HPUserSearch.h */,
+				EAF41EF31ECAE36D00441A22 /* HPUserSearch.m */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -2579,6 +2584,7 @@
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,
 				EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */,
 				EAACE5441D0DA42300EDD096 /* UITableView+ScrollToTop.m in Sources */,
+				EAF41EF41ECAE36D00441A22 /* HPUserSearch.m in Sources */,
 				EA9A39B51A5BE92E0028BE7D /* JSMessageSoundEffect.m in Sources */,
 				EAA1E68E18D03A6700E1CFE1 /* MultilineTextItem.m in Sources */,
 				EAA1E68D18D03A6700E1CFE1 /* MultilineTextCell.m in Sources */,

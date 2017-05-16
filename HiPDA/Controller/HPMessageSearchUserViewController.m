@@ -11,9 +11,7 @@
 #import "UITableView+ScrollToTop.h"
 #import "HPUser.h"
 #import "HPMessageDetailViewController.h"
-
-// TODO
-#import "HPSearchViewController.h"
+#import "HPUserSearch.h"
 
 static NSString * const CellIdentifier = @"CellWithIdentifier";
 
@@ -45,7 +43,7 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
              return text.length > 0;
          }] throttle:0.3]
        flattenMap:^RACStream *(NSString *key) {
-           return [HPSearchViewController signalForSearchUserWithKey:key];
+           return [HPUserSearch signalForSearchUserWithKey:key];
        }]
       deliverOn:[RACScheduler mainThreadScheduler]]
      subscribeNext:^(NSArray *results) {
@@ -72,7 +70,7 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    HPUser *user = [[self.results objectAtIndex:indexPath.row] objectForKey:@"user"];
+    HPUser *user = [self.results objectAtIndex:indexPath.row];
     [cell.textLabel setText:user.username];
     
     return cell;
@@ -85,7 +83,7 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
     [self.searchController.searchBar resignFirstResponder];
     self.searchController.searchBar.hidden = YES;
     
-    HPUser *user = [[self.results objectAtIndex:indexPath.row] objectForKey:@"user"];
+    HPUser *user = [self.results objectAtIndex:indexPath.row];
     
     HPMessageDetailViewController *detailViewController = [[HPMessageDetailViewController alloc] init];
     detailViewController.user = user;

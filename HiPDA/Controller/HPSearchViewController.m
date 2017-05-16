@@ -13,7 +13,7 @@
 
 #import "HPSearch.h"
 #import "HPUser.h"
-#import "HPDatabase.h"
+#import "HPUserSearch.h"
 
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
@@ -115,8 +115,7 @@
         return text.length > 0 && self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser;
     }] throttle:0.3]
        flattenMap:^RACStream *(NSString *key) {
-           @strongify(self);
-           return [self.class signalForSearchUserWithKey:key];
+           return [HPUserSearch signalForSearchUserWithKey:key];
        }]
       deliverOn:[RACScheduler mainThreadScheduler]]
      subscribeNext:^(NSArray *results) {
@@ -367,13 +366,13 @@
         //cell.detailTextLabel.numberOfLines = 0;
     }
     
-    NSMutableDictionary *dict = [_results objectAtIndex:indexPath.row];
     
     HPSearchType type = _searchBar.selectedScopeButtonIndex;
     
     switch (type) {
         case HPSearchTypeTitle:
         {
+            NSMutableDictionary *dict = [self.results objectAtIndex:indexPath.row];
             cell.textLabel.attributedText = [dict objectForKey:@"title"];
             
             
@@ -386,6 +385,7 @@
         }
         case HPSearchTypeFullText:
         {
+            NSMutableDictionary *dict = [self.results objectAtIndex:indexPath.row];
             cell.textLabel.attributedText = [dict objectForKey:@"detail"];
             
             NSString *moreInfo = [NSString stringWithFormat:@"标题: %@, 作者: %@",
@@ -397,8 +397,10 @@
         case HPSearchTypeUser:
         {
             HPSearchUserCell *userCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HPSearchUserCell.class)];
-            HPUser *user = [dict objectForKey:@"user"];
+            
+            HPUser *user = [self.results objectAtIndex:indexPath.row];
             userCell.user = user;
+            
             return userCell;
         }
         default:
@@ -413,17 +415,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSMutableDictionary *dict = [_results objectAtIndex:indexPath.row];
     UIViewController *vc = nil;
     
     if (self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
-        HPUser *user = dict[@"user"];
+        HPUser *user = [self.results objectAtIndex:indexPath.row];
         HPUserViewController *uvc = [HPUserViewController new];
         uvc.username = user.username;
         uvc.uid = user.uid;
         vc = uvc;
         
     } else {
+        NSMutableDictionary *dict = [self.results objectAtIndex:indexPath.row];
+        
         HPThread *thread = [HPThread new];
         thread.fid = [[dict objectForKey:@"fidString"] integerValue];
         thread.tid = [[dict objectForKey:@"tidString"] integerValue];
@@ -482,59 +485,5 @@
     
     return fmaxf(70.0f, sizeToFit.height + 40.0f);*/
 }
-
-
-+ (RACSignal *)signalForSearchUserWithKey:(NSString *)key {
-    
-    static NSOperationQueue *q = nil;
-    if (!q) {
-        q = [[NSOperationQueue alloc] init];
-        [q setMaxConcurrentOperationCount:1];
-    }
-    
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
-        NSBlockOperation *op = [[NSBlockOperation alloc] init];
-        
-        [op addExecutionBlock:^{
-            
-            NSMutableArray *results = [NSMutableArray array];
-            [[HPDatabase sharedDb].queue inDatabase:^(FMDatabase *db) {
-                
-                // 优化排序 http://stackoverflow.com/questions/10070508/sqlite-like-order-by-match-query
-                NSString *sql = [NSString stringWithFormat:
-                               @"SELECT *\n"
-                                "FROM user\n"
-                                "WHERE username LIKE '%%%@%%'\n"
-                                "ORDER BY (\n"
-                                    "CASE WHEN username = '%@' THEN 1\n"
-                                    "WHEN username LIKE '%@%%' THEN 2\n"
-                                    "ELSE 3 END\n"
-                                "), username\n"
-                                "LIMIT 1000\n", key, key, key];
-                
-                FMResultSet *resultSet = [db executeQuery:sql];
-                
-                while ([resultSet next]) {
-                    NSString *username = [resultSet stringForColumnIndex:0];
-                    NSString *uid = [resultSet stringForColumnIndex:1];
-                    
-                    HPUser *user = [HPUser new];
-                    user.username = username;
-                    user.uid = [uid integerValue];
-                    [results addObject:@{@"user": user}];
-                }
-            }];
-            
-            [subscriber sendNext:[results copy]];
-            [subscriber sendCompleted];
-        }];
-        
-        [q addOperation:op];
-        
-        return nil;
-    }];
-}
-
 
 @end
