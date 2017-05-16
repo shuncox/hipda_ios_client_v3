@@ -377,7 +377,8 @@ HPStupidBarDelegate
     NSLog(@"UIWebViewVC dealloc");
     [self.webView stopLoading];
     [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"observe"];
-//    [self.webView setDelegate:nil];
+    
+    self.webView.scrollView.delegate = nil;
     self.webView.navigationDelegate = nil;
    
     [self.webView.scrollView removeObserver:self forKeyPath:@"contentOffset" context:(__bridge void *)self];
