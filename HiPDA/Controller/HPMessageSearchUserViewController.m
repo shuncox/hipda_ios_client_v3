@@ -10,7 +10,7 @@
 #import <ReactiveCocoa.h>
 #import "UITableView+ScrollToTop.h"
 #import "HPUser.h"
-#import "HPUserViewController.h"
+#import "HPMessageDetailViewController.h"
 
 // TODO
 #import "HPSearchViewController.h"
@@ -82,16 +82,15 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    HPUser *user = [[self.results objectAtIndex:indexPath.row] objectForKey:@"user"];
-    
-    HPUserViewController *uvc = [HPUserViewController new];
-    uvc.username = user.username;
-    uvc.uid = user.uid;
-    
     [self.searchController.searchBar resignFirstResponder];
     self.searchController.searchBar.hidden = YES;
     
-    [self.navigationController pushViewController:uvc animated:YES];
+    HPUser *user = [[self.results objectAtIndex:indexPath.row] objectForKey:@"user"];
+    
+    HPMessageDetailViewController *detailViewController = [[HPMessageDetailViewController alloc] init];
+    detailViewController.user = user;
+    
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 #pragma mark - UISearchResultsUpdating
