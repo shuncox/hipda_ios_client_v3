@@ -674,6 +674,11 @@
         
         
         MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
+        if (!controller) {
+            [SVProgressHUD showErrorWithStatus:@"请先在系统设置中配置一个邮箱账号, 再反馈问题\n或者您可以直接使用回帖建议来反馈问题"];
+            return;
+        }
+        
         controller.mailComposeDelegate = self;
         [controller setToRecipients:@[@"wujichao.hpclient@gmail.com"]];
         [controller setSubject:@"HP论坛客户端反馈: "];
