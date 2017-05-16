@@ -15,4 +15,6 @@ UISearchResultsUpdating,
 UISearchBarDelegate
 >
 
+@property (nonatomic, weak) UISearchController *searchController;
+
 @end

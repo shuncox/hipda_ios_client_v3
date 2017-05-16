@@ -57,6 +57,12 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
      }];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.searchController.searchBar.hidden = NO;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.results.count;
@@ -81,6 +87,9 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
     HPUserViewController *uvc = [HPUserViewController new];
     uvc.username = user.username;
     uvc.uid = user.uid;
+    
+    [self.searchController.searchBar resignFirstResponder];
+    self.searchController.searchBar.hidden = YES;
     
     [self.navigationController pushViewController:uvc animated:YES];
 }

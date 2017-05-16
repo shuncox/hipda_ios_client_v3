@@ -79,7 +79,11 @@
 - (void)setupSearchBar
 {
     self.searchUserViewController = [HPMessageSearchUserViewController new];
-    self.searchController = [[UISearchController alloc]initWithSearchResultsController:self.searchUserViewController];
+    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:self.searchUserViewController];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:wrapper];
+    
+    self.searchUserViewController.searchController = self.searchController;
     
     self.searchController.delegate = self.searchUserViewController;
     self.searchController.searchResultsUpdater = self.searchUserViewController;
@@ -239,6 +243,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (self.searchController.isActive) {
+        [self.searchController setActive:NO];
+    }
     
     HPMessageDetailViewController *detailViewController =
         [[HPMessageDetailViewController alloc] init];
