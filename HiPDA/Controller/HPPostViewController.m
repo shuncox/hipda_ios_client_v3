@@ -960,7 +960,7 @@ HPStupidBarDelegate
                                   theTitle,
                                   _current_author_uid != 0 ? @"查看全部" : @"只看楼主",
                                   @"浏览器打开",
-                                  @"细节调整",
+                                  @"调整字体",
                                   @"更多",
                                   nil];
     self.currentActionSheet = actionSheet;
