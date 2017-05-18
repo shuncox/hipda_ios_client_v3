@@ -1169,6 +1169,12 @@ HPStupidBarDelegate
 
 - (void)openUrl:(NSURL *)url {
     
+    if (![url.absoluteString hasPrefix:@"http://"] &&
+        ![url.absoluteString hasPrefix:@"https://"]) {
+        DDLogError(@"非法的url: %@", url.absoluteString);
+        return;
+    }
+    
     // todo
     // setting safari
     if (IOS9_2_OR_LATER) { //iOS 9.2 自带滑动返回
