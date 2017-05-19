@@ -234,6 +234,12 @@
 		</dict>
 		<dict>
 			<key>key</key>
+			<string>装修</string>
+			<key>value</key>
+			<integer>81</integer>
+		</dict>
+		<dict>
+			<key>key</key>
 			<string>YY</string>
 			<key>value</key>
 			<integer>39</integer>
@@ -456,6 +462,12 @@
 			<string>Nook</string>
 			<key>value</key>
 			<integer>77</integer>
+		</dict>
+		<dict>
+			<key>key</key>
+			<string>Kobo</string>
+			<key>value</key>
+			<integer>80</integer>
 		</dict>
 		<dict>
 			<key>key</key>
