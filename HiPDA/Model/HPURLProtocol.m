@@ -169,6 +169,9 @@ static id<HPURLMapping> s_URLMapping;
     
     @weakify(self);
     NSString *cacheKey = [[self class] cacheKeyForURL:self.request.URL];
+    // 根据苹果CustomHTTPProtocol的thread notes
+    // self.client URLProtocolDidFinishLoading: 等方法
+    // 需要在client的线程里调用
     [[SDImageCache sharedImageCache] hp_queryImageDataFromCacheForKey:cacheKey
                                                            scheduleOn:[NSThread currentThread]
                                                            completion:^(NSData *data, SDImageCacheType cacheType)
@@ -190,16 +193,17 @@ static id<HPURLMapping> s_URLMapping;
         //
         //https://github.com/evermeer/EVURLCache/blob/master/EVURLCache.m:87
         NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL MIMEType:@"cache" expectedContentLength:[data length] textEncodingName:nil] ;
-        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
-        //https://github.com/buzzfeed/mattress/blob/master/Source/URLProtocol.swift#L195
-        [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
         
-        //另一种实现
-        /*
-         [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-         [self.client URLProtocol:self didLoadData:data];
-         [self.client URLProtocolDidFinishLoading:self];
-         */
+        if (0) {
+            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
+            //https://github.com/buzzfeed/mattress/blob/master/Source/URLProtocol.swift#L195
+            [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
+        } else {
+            //另一种实现
+            [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+            [self.client URLProtocol:self didLoadData:data];
+            [self.client URLProtocolDidFinishLoading:self];
+        }
     }];
 }
 
@@ -211,6 +215,11 @@ static id<HPURLMapping> s_URLMapping;
 #pragma mark -
 - (void)sendRequest
 {
+//    An NSURLConnections created with the
+//    +connectionWithRequest:delegate: or -initWithRequest:delegate:
+//    methods are scheduled on the current runloop immediately, and
+//    it is not necessary to send the -start message to begin the
+//    resource load.<p>
     self.URLConnection = [NSURLConnection connectionWithRequest:[self modifiedRequestWithOriginalRequest:self.request] delegate:self];
     NSLog(@"startLoading %@", self.URLConnection);
 }
