@@ -102,6 +102,17 @@ static id<HPURLMapping> s_URLMapping;
     [NSURLProtocol registerClass:self];
 }
 
+- (void)dealloc
+{
+    if (IOS8_OR_LATER && !IOS9_OR_LATER) {
+        if (self.URLConnection) {
+            [self.URLConnection cancel];
+            [self.URLConnection setValue:nil forKeyPath:@"_internal._delegate"];
+            self.URLConnection = nil;
+        }
+    }
+}
+
 - (NSURLRequest *)modifiedRequestWithOriginalRequest:(NSURLRequest *)request {
     NSURL *requestURL = request.URL;
     NSMutableURLRequest *modifiedRequest = request.mutableCopy;
@@ -209,6 +220,9 @@ static id<HPURLMapping> s_URLMapping;
 
 - (void)stopLoading {
     [self.URLConnection cancel];
+    if (IOS8_OR_LATER && !IOS9_OR_LATER) {
+        [self.URLConnection setValue:nil forKeyPath:@"_internal._delegate"];
+    }
     self.URLConnection = nil;
 }
 
