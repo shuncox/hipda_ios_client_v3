@@ -366,46 +366,33 @@
         //cell.detailTextLabel.numberOfLines = 0;
     }
     
-    
-    HPSearchType type = _searchBar.selectedScopeButtonIndex;
-    
-    switch (type) {
-        case HPSearchTypeTitle:
-        {
-            NSMutableDictionary *dict = [self.results objectAtIndex:indexPath.row];
-            cell.textLabel.attributedText = [dict objectForKey:@"title"];
-            
-            
-            NSString *moreInfo = [NSString stringWithFormat:@"%@  -  %@  -  %@",
-                                  [dict objectForKey:@"forum"],
-                                  [dict objectForKey:@"username"],
-                                  [dict objectForKey:@"dateString"]];
-            cell.detailTextLabel.text = moreInfo;
-            break;
-        }
-        case HPSearchTypeFullText:
-        {
-            NSMutableDictionary *dict = [self.results objectAtIndex:indexPath.row];
-            cell.textLabel.attributedText = [dict objectForKey:@"detail"];
-            
-            NSString *moreInfo = [NSString stringWithFormat:@"标题: %@, 作者: %@",
-                                  [dict objectForKey:@"title"],
-                                  [dict objectForKey:@"username"]];
-            cell.detailTextLabel.text = moreInfo;
-            break;
-        }
-        case HPSearchTypeUser:
-        {
-            HPSearchUserCell *userCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HPSearchUserCell.class)];
-            
-            HPUser *user = [self.results objectAtIndex:indexPath.row];
-            userCell.user = user;
-            
-            return userCell;
-        }
-        default:
-            NSLog(@"error HPSearchType %d", type);
-            break;
+    id data = [self.results objectAtIndex:indexPath.row];
+    if ([data isKindOfClass:NSDictionary.class] && [data objectForKey:@"detail"]) {
+        NSDictionary *dict = (NSDictionary *)data;
+        cell.textLabel.attributedText = [dict objectForKey:@"detail"];
+        
+        NSString *moreInfo = [NSString stringWithFormat:@"标题: %@, 作者: %@",
+                              [dict objectForKey:@"title"],
+                              [dict objectForKey:@"username"]];
+        cell.detailTextLabel.text = moreInfo;
+    } else if ([data isKindOfClass:NSDictionary.class] && [data objectForKey:@"title"]) {
+        NSDictionary *dict = (NSDictionary *)data;
+        cell.textLabel.attributedText = [dict objectForKey:@"title"];
+        
+        NSString *moreInfo = [NSString stringWithFormat:@"%@  -  %@  -  %@",
+                              [dict objectForKey:@"forum"],
+                              [dict objectForKey:@"username"],
+                              [dict objectForKey:@"dateString"]];
+        cell.detailTextLabel.text = moreInfo;
+    } else if ([data isKindOfClass:HPUser.class]) {
+        HPSearchUserCell *userCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HPSearchUserCell.class)];
+        
+        HPUser *user = [self.results objectAtIndex:indexPath.row];
+        userCell.user = user;
+        
+        return userCell;
+    } else {
+        NSAssert(0, @"数据不对%@", data);
     }
     
     return cell;
@@ -442,30 +429,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSMutableDictionary *dict = [_results objectAtIndex:indexPath.row];
-    NSAttributedString *text = nil;
-    HPSearchType type = _searchBar.selectedScopeButtonIndex;
-    switch (type) {
-        case HPSearchTypeTitle:
-        {
-            text = [dict objectForKey:@"title"];
-            break;
-        }
-        case HPSearchTypeFullText:
-        {
-            text = [dict objectForKey:@"detail"];
-            break;
-        }
-        case HPSearchTypeUser:
-        {
-            return 50.f;
-            break;
-        }
-        default:
-            NSLog(@"error HPSearchType %d", type);
-            break;
+    id data = [self.results objectAtIndex:indexPath.row];
+    if ([data isKindOfClass:HPUser.class]) {
+        return 50.f;
     }
 
+    NSAttributedString *text = nil;
+    
+    if ([data isKindOfClass:NSDictionary.class] && [data objectForKey:@"detail"]) {
+        text = [data objectForKey:@"detail"];
+    } else if ([data isKindOfClass:NSDictionary.class] && [data objectForKey:@"title"]) {
+        text = [data objectForKey:@"title"];
+    }else {
+        NSAssert(0, @"数据不对%@", data);
+        text = [[NSAttributedString alloc] initWithString:@""];
+    }
     
     CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
     
@@ -478,12 +456,6 @@
     CGFloat height = MAX(size.height + 20 , 50.0f);
     
     return height + (CELL_CONTENT_MARGIN * 2);
-    
-    /*
-
-    CGSize sizeToFit = [[dict objectForKey:@"title"] sizeWithFont:[UIFont systemFontOfSize:16.0f] constrainedToSize:CGSizeMake(320.0f, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-    
-    return fmaxf(70.0f, sizeToFit.height + 40.0f);*/
 }
 
 @end
