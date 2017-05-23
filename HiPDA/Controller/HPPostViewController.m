@@ -1169,6 +1169,16 @@ HPStupidBarDelegate
 
 - (void)openUrl:(NSURL *)url {
     
+    if ([url.absoluteString hasPrefix:@"video://"]) {
+        url = [NSURL URLWithString:[url.absoluteString stringByReplacingOccurrencesOfString:@"video://" withString:@"http://"]];
+        
+        // iOS9之后 用 SFSafariViewController
+        if (!IOS9_OR_LATER) {
+            [[UIApplication sharedApplication] openURL:url];
+            return;
+        }
+    }
+    
     if (![url.absoluteString hasPrefix:@"http://"] &&
         ![url.absoluteString hasPrefix:@"https://"]) {
         DDLogError(@"非法的url: %@", url.absoluteString);
