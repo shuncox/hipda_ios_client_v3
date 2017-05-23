@@ -177,7 +177,7 @@
 #pragma mark - actions
 - (void)action:(id)sender {
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"刷新", @"最近三天", @"本周", @"全部", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"刷新", @"用户主页", @"最近三天", @"本周", @"全部", nil];
     
     [actionSheet showInView:self.view];
 }
@@ -188,14 +188,21 @@
             [self refresh:nil];
             break;
         case 1:
+        {
+            HPUserViewController *uvc = [HPUserViewController new];
+            uvc.uid = self.user.uid;
+            [self.navigationController pushViewController:uvc animated:YES];
+            break;
+        }
+        case 2:
             _range = HPMessageRangeLatest;
             [self refresh:nil];
             break;
-        case 2:
+        case 3:
             _range = HPMessageRangeCurrentWeek;
             [self refresh:nil];
             break;
-        case 3:
+        case 4:
             _range = HPMessageRangeAll;
             [self refresh:nil];
             break;
