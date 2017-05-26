@@ -88,7 +88,7 @@ inline Class PostViewControllerClass()
         enableWKWebview = [Setting boolForKey:HPSettingEnableWKWebview];
     }
     
-    if (!IOS9_OR_LATER) {
+    if (!IOS8_OR_LATER) {
         enableWKWebview = NO;
     }
     
