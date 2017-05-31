@@ -472,7 +472,10 @@
 #if DEBUG_MODE // 由于上了https, 所以不再允许设置httpdns
     [section addItem:nodeItem];
 #endif
+    
+#if DEBUG_MODE
     [section addItem:enableHttpsItem];
+#endif
     
     if ([UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:YES]) {
         [section addItem:enableWKWebviewItem];

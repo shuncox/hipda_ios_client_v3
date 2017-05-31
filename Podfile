@@ -42,11 +42,11 @@ pod 'SSZipArchive'
 pod 'KVOController'
 
 # JSPatch
-smart_pod 'JSPatch', '~> 1.1.3'
-smart_pod 'JSPatch/Extensions'
-smart_pod 'JSPatch/JPCFunction'
-smart_pod 'JSPatch/JPBlock'
-smart_pod 'JSPatch/JPCFunctionBinder'
+#smart_pod 'JSPatch', '~> 1.1.3'
+#smart_pod 'JSPatch/Extensions'
+#smart_pod 'JSPatch/JPCFunction'
+#smart_pod 'JSPatch/JPBlock'
+#smart_pod 'JSPatch/JPCFunctionBinder'
 
 end
 
