@@ -7,6 +7,15 @@
 //
 
 #import "HPHotPatch.h"
+
+#if __has_include(<JSPatch/JPEngine.h>)
+
+#if __has_include(<JSPatch/RenamePrefix.h>)
+#import <JSPatch/RenamePrefix.h>
+#endif
+
+#import <JSPatch/JPEngine.h>
+
 #import "MobClick.h"
 #import <Mantle.h>
 #import <LevelDB.h>
@@ -205,3 +214,23 @@
 }
 
 @end
+
+#else
+
+@implementation HPHotPatch
+
++ (HPHotPatch *)shared
+{
+    static dispatch_once_t once;
+    static HPHotPatch *singleton;
+    dispatch_once(&once, ^ { singleton = [[HPHotPatch alloc] init]; });
+    return singleton;
+}
+
+- (void)check {
+    DDLogInfo(@"hotpatch disable");
+}
+
+@end
+
+#endif
