@@ -142,6 +142,9 @@
         [self FinishLaunchingWithReciveLocalNotification:localNotification];
     }
 
+    // 友盟统计
+    [self setupAnalytics];
+    
     DDLogInfo(@"finish launching");
     return YES;
 }
@@ -195,29 +198,6 @@
         [[SDImageCache sharedImageCache] setMaxCacheAge:60 * 60 * 24 * 3];
         // SDWebImage 最大缓存大小, 默认不限, 改成500m
         [[SDImageCache sharedImageCache] setMaxCacheSize:500 * 1024 * 1024];
-        
-        // 友盟
-        BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
-        if (dataTrackingEnable) {
-            [MobClick setLogEnabled:NO];
-            [MobClick setBackgroundTaskEnabled:NO];
-            [MobClick setLatency:30];
-#if DEBUG
-            [MobClick startWithAppkey:UM_APP_KEY_DEV reportPolicy:BATCH channelId:@"debug"];
-            //[MobClick setLogEnabled:YES];
-#else
-            [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
-#endif
-        }
-        [Flurry trackUserIfNeeded];
-        
-        // 友盟在线参数, 配置后十分钟生效
-#if DEBUG
-        [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
-        [UMOnlineConfig setLogEnabled:YES];
-#else
-        [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
-#endif
     });
     
 //    [self routeTo:@{@"tid": @"1831924"}];
@@ -226,6 +206,32 @@
     
     HPCrashLog(@"-> applicationDidBecomeActive");
     DDLogInfo(@"[APP] applicationDidBecomeActive");
+}
+
+- (void)setupAnalytics
+{
+    // 友盟
+    BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
+    if (dataTrackingEnable) {
+        [MobClick setLogEnabled:NO];
+        [MobClick setBackgroundTaskEnabled:NO];
+        [MobClick setLatency:30];
+#if DEBUG
+        [MobClick startWithAppkey:UM_APP_KEY_DEV reportPolicy:BATCH channelId:@"debug"];
+        //[MobClick setLogEnabled:YES];
+#else
+        [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
+#endif
+    }
+    [Flurry trackUserIfNeeded];
+    
+    // 友盟在线参数, 配置后十分钟生效
+#if DEBUG
+    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
+    [UMOnlineConfig setLogEnabled:YES];
+#else
+    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
+#endif
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
