@@ -52,33 +52,6 @@
     return NVC;
 }
 
-+ (id)fetchSSIDInfo
-{
-    /*
-    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
-    NSLog(@"Supported interfaces: %@", ifs);
-    id info = nil;
-    for (NSString *ifnam in ifs) {
-        info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
-        NSLog(@"%@ => %@", ifnam, info);
-        if (info && [info count]) { break; }
-    }
-    return info;
-    NSLog(@"%@", info);
-   */
-    return nil;
-    /*
-    Supported interfaces: (
- en0
- )
- 2014-03-30 19:24:44.303 HiPDA[1867:907] HPCommon.m:47 > {
- BSSID = "c2:75:d5:80:5a:b5";
- SSID = "SUDA_WLAN";
- SSIDDATA = <53554441 5f574c41 4e>;
- }
-     */
-}
-
 inline Class PostViewControllerClass()
 {
     BOOL enableWKWebview = [UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:YES];

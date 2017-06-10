@@ -254,5 +254,5 @@ typedef NSInteger HPImageDisplayStyle;
 + (NSTimeInterval)timeIntervalSince1970WithString:(NSString *)string;
 + (UINavigationController *)NVCWithRootVC:(UIViewController *)rootVC;
 + (UINavigationController *)swipeableNVCWithRootVC:(UIViewController *)rootVC;
-//+ (id)fetchSSIDInfo;
+
 @end
