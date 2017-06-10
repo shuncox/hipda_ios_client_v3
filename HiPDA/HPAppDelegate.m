@@ -198,6 +198,9 @@
         [[SDImageCache sharedImageCache] setMaxCacheAge:60 * 60 * 24 * 3];
         // SDWebImage 最大缓存大小, 默认不限, 改成500m
         [[SDImageCache sharedImageCache] setMaxCacheSize:500 * 1024 * 1024];
+        
+        
+        [Flurry trackUserIfNeeded];
     });
     
 //    [self routeTo:@{@"tid": @"1831924"}];
@@ -223,7 +226,6 @@
         [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
 #endif
     }
-    [Flurry trackUserIfNeeded];
     
     // 友盟在线参数, 配置后十分钟生效
 #if DEBUG
