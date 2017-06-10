@@ -56,7 +56,8 @@
 #import "HPActivity.h"
 #import "HPBlockService.h"
 #import "SDImageCache+URLCache.h"
-
+#import "HPPDFPrintPageRenderer.h"
+#import "HPPDFPreviewViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -2341,6 +2342,20 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 #pragma mark -
+- (void)exportPDF
+{
+    [SVProgressHUD show];
+    // todo remove webview bgcolor
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewPrintFormatter *fmt = [self.webView viewPrintFormatter];
+        HPPDFPrintPageRenderer *render = [[HPPDFPrintPageRenderer alloc] init];
+        [render addPrintFormatter:fmt startingAtPageAtIndex:0];
+        NSData *pdfData = [render printToPDF];
+        
+        [SVProgressHUD dismiss];
+        [HPPDFPreviewViewController presentInViewController:self pdfData:pdfData];
+    });
+}
 
 - (void)share:(id)sender {
     NSMutableArray *activityItems = [@[] mutableCopy];
@@ -2363,6 +2378,13 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                               [weakSelf copyContent];
                                           }];
     
+    UIActivity *exportPDF = [HPActivity activityWithType:@"HPExportPDF"
+                                                   title:@"导出PDF"
+                                                   image:[UIImage imageNamed:@"activity_export_pdf"]
+                                             actionBlock:^{
+                                                 [weakSelf exportPDF];
+                                             }];
+    
     UIActivity *capturePost = [HPActivity activityWithType:@"HPCapturePost"
                                                 title:@"保存截图"
                                                 image:[UIImage imageNamed:@"activity_capture_post"]
@@ -2379,7 +2401,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
                                                 [weakSelf.navigationController pushViewController:vc animated:YES];
                                             }];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, capturePost, viewHTML]];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, exportPDF, capturePost, viewHTML]];
     
     activityViewController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     

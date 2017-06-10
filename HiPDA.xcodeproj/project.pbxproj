@@ -168,6 +168,7 @@
 		EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */; };
 		EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */; };
 		EA6E72201EEC3EA90050B496 /* HPPDFPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6E721F1EEC3EA90050B496 /* HPPDFPrintPageRenderer.m */; };
+		EA6E72251EEC46EA0050B496 /* HPPDFPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6E72241EEC46EA0050B496 /* HPPDFPreviewViewController.m */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
 		EA71C0E01EA78F2C005108C6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC5C3411E93E2ED0054A66E /* WebKit.framework */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
@@ -677,6 +678,8 @@
 		EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadFilterMenuItemView.m; path = View/HPThreadFilterMenuItemView.m; sourceTree = "<group>"; };
 		EA6E721E1EEC3EA90050B496 /* HPPDFPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPDFPrintPageRenderer.h; path = Helper/HPPDFPrintPageRenderer.h; sourceTree = "<group>"; };
 		EA6E721F1EEC3EA90050B496 /* HPPDFPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPPDFPrintPageRenderer.m; path = Helper/HPPDFPrintPageRenderer.m; sourceTree = "<group>"; };
+		EA6E72231EEC46EA0050B496 /* HPPDFPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPDFPreviewViewController.h; path = Controller/HPPDFPreviewViewController.h; sourceTree = "<group>"; };
+		EA6E72241EEC46EA0050B496 /* HPPDFPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPPDFPreviewViewController.m; path = Controller/HPPDFPreviewViewController.m; sourceTree = "<group>"; };
 		EA7111D918B10C44007AD5D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EA7111DB18B10C5D007AD5D1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Blocks.h"; path = "Helper/UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1382,6 +1385,8 @@
 				EAC202E11C4FD2050050994E /* HPViewHTMLController.m */,
 				EA00C5121D04412B002E2301 /* HPViewSignatureViewController.h */,
 				EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */,
+				EA6E72231EEC46EA0050B496 /* HPPDFPreviewViewController.h */,
+				EA6E72241EEC46EA0050B496 /* HPPDFPreviewViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -2665,6 +2670,7 @@
 				EA083D6E18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				EA42B9B61EA50BFC008FC2AA /* HPJSMessage.m in Sources */,
 				EA7514B61E7783F1002C7D3B /* HPActivityItem.m in Sources */,
+				EA6E72251EEC46EA0050B496 /* HPPDFPreviewViewController.m in Sources */,
 				EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */,
 				EA4138C9188D5530001F9542 /* SWRevealViewController.m in Sources */,
 				EA083D6F18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
