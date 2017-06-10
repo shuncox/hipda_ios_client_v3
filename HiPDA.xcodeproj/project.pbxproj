@@ -167,6 +167,7 @@
 		EA6760941AF8704F00BA0EF3 /* clip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6760911AF8704F00BA0EF3 /* clip@3x.png */; };
 		EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */; };
 		EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */; };
+		EA6E72201EEC3EA90050B496 /* HPPDFPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6E721F1EEC3EA90050B496 /* HPPDFPrintPageRenderer.m */; };
 		EA7111D818B10C44007AD5D1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA7111DA18B10C44007AD5D1 /* Localizable.strings */; };
 		EA71C0E01EA78F2C005108C6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC5C3411E93E2ED0054A66E /* WebKit.framework */; };
 		EA743C20183E1AF30067F62B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = EA743C1F183E1AF30067F62B /* UIAlertView+Blocks.m */; };
@@ -674,6 +675,8 @@
 		EA689B661BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSWDirectionalPanGestureRecognizer.m; path = Controller/SSWDirectionalPanGestureRecognizer.m; sourceTree = "<group>"; };
 		EA68C45D1D0AE463009E635F /* HPThreadFilterMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPThreadFilterMenuItemView.h; path = View/HPThreadFilterMenuItemView.h; sourceTree = "<group>"; };
 		EA68C45E1D0AE463009E635F /* HPThreadFilterMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadFilterMenuItemView.m; path = View/HPThreadFilterMenuItemView.m; sourceTree = "<group>"; };
+		EA6E721E1EEC3EA90050B496 /* HPPDFPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPDFPrintPageRenderer.h; path = Helper/HPPDFPrintPageRenderer.h; sourceTree = "<group>"; };
+		EA6E721F1EEC3EA90050B496 /* HPPDFPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPPDFPrintPageRenderer.m; path = Helper/HPPDFPrintPageRenderer.m; sourceTree = "<group>"; };
 		EA7111D918B10C44007AD5D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EA7111DB18B10C5D007AD5D1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EA743C1E183E1AF30067F62B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+Blocks.h"; path = "Helper/UIAlertView+Blocks.h"; sourceTree = "<group>"; };
@@ -1511,6 +1514,8 @@
 				EA42B9AF1EA4FDCB008FC2AA /* WKWebView+Synchronize.m */,
 				EA42B9B71EA516E4008FC2AA /* FLWeakProxy.h */,
 				EA42B9B81EA516E4008FC2AA /* FLWeakProxy.m */,
+				EA6E721E1EEC3EA90050B496 /* HPPDFPrintPageRenderer.h */,
+				EA6E721F1EEC3EA90050B496 /* HPPDFPrintPageRenderer.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2544,6 +2549,7 @@
 				EA9A39B11A5BE92E0028BE7D /* JSBubbleView.m in Sources */,
 				EAF568A51BF335AA00041A40 /* NSString+HPOnlineParamaters.m in Sources */,
 				EA0FF7D01837CE6300B0EBA6 /* HPFavorite.m in Sources */,
+				EA6E72201EEC3EA90050B496 /* HPPDFPrintPageRenderer.m in Sources */,
 				EAAD5B9B188CEFCC0084EC2D /* IDMTapDetectingImageView.m in Sources */,
 				EAF3C569194C11E700168263 /* HPSetStupidBarController.m in Sources */,
 				EA8186C018E29FD10092BDD7 /* HPIndecator.m in Sources */,
