@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 def smart_pod(name, options = nil)
     dir = name.split('/', 2).first;
@@ -40,6 +40,7 @@ pod 'BlocksKit'
 pod 'CocoaLumberjack'
 pod 'SSZipArchive'
 pod 'KVOController'
+pod '1PasswordExtension', '~> 1.8.4'
 
 # JSPatch
 #smart_pod 'JSPatch', '~> 1.1.3'
