@@ -410,6 +410,18 @@ function warpImageNode(image) {
     }
 }
 
+var savedBackgroudColor = null;
+function clearBackgroudColor() {
+    savedBackgroudColor = window.getComputedStyle(document.body).backgroundColor;
+    document.body.style.backgroundColor = "#FFFFFF";
+}
+
+function restoreBackgroudColor() {
+    if (savedBackgroudColor) {
+        document.body.style.backgroundColor = savedBackgroudColor;
+    }
+}
+
 </script>
 
 </body>

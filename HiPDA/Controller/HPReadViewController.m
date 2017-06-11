@@ -2345,7 +2345,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 - (void)exportPDF
 {
     [SVProgressHUD show];
-    // todo remove webview bgcolor
+    [self.webView stringByEvaluatingJavaScriptFromString:@"clearBackgroudColor();"];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         UIViewPrintFormatter *fmt = [self.webView viewPrintFormatter];
         HPPDFPrintPageRenderer *render = [[HPPDFPrintPageRenderer alloc] init];
@@ -2354,6 +2355,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         [SVProgressHUD dismiss];
         [HPPDFPreviewViewController presentInViewController:self pdfData:pdfData];
+        
+        [self.webView stringByEvaluatingJavaScriptFromString:@"restoreBackgroudColor();"];
     });
 }
 
