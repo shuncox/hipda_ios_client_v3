@@ -86,14 +86,15 @@
     _selectTypeBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     _selectTypeBtn.titleLabel.font = [UIFont systemFontOfSize:16.f];
     
+    CGFloat originY = 20;
     _selectTypeBtn.frame = CGRectMake(5.f,
-                                      5.f,
+                                      originY,
                                       70.f,
                                       24.f);
     
     CGFloat originX = 5.f + (_types?70.f:0.f) + 5.f;
     _titleField.frame = CGRectMake(originX,
-                                   5.f,
+                                   originY,
                                    self.view.bounds.size.width - originX - 5.f,
                                    24.f);
     
@@ -104,11 +105,11 @@
 
     UIView *line1 = [UIView new];
     line1.backgroundColor = rgb(205.f, 205.f, 205.f);
-    line1.frame = CGRectMake(7, 32, HP_SCREEN_WIDTH-14, .5);
+    line1.frame = CGRectMake(7, originY + 27, HP_SCREEN_WIDTH-14, .5);
     
     UIView *line2 = [UIView new];
     line2.backgroundColor = rgb(205.f, 205.f, 205.f);
-    line2.frame = CGRectMake(72.f, 7, .5, 22);
+    line2.frame = CGRectMake(72.f, originY + 2, .5, 22);
     
     [self.view addSubview:line1];
     if (_types) [self.view addSubview:line2];
