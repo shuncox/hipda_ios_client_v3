@@ -848,8 +848,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     NSInteger floor = [(HPNewPost *)_posts[0] floor] + _posts.count - 1;
 
-    NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",floor];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    [self callWebviewJumpToFloor:floor];
 }
 
 
@@ -1433,12 +1432,14 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (!floor) floor = _gotoFloor;
    
-   
-    
-    NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",floor];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    [self callWebviewJumpToFloor:floor];
     
     _gotoFloor = 0;
+}
+
+- (void)callWebviewJumpToFloor:(NSInteger)floor {
+    NSString *js = [NSString stringWithFormat:@"jumpToFloor(%ld, %@);", floor, @(IOS11_OR_LATER)];
+    [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
 
 - (void)gotoFloorWithUrl:(NSString *)url {
@@ -2330,9 +2331,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     if (_current_floor < start) {
         _current_floor = start;
     }
-        
-    NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",_current_floor];
-    [self.webView stringByEvaluatingJavaScriptFromString:js];
+    
+    [self callWebviewJumpToFloor:_current_floor];
 }
 
 #pragma mark -

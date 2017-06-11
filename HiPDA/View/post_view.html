@@ -386,6 +386,15 @@ function getPosition(element) {
     return { x: xPosition, y: yPosition };
 }
 
+//https://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
+function getPosition2(el) {
+  el = el.getBoundingClientRect();
+  return {
+    x: el.left + window.scrollX,
+    y: el.top + window.scrollY
+  }
+}
+
 var images = document.getElementsByTagName('IMG');
 for (var i in images) {
     var image = images[i];
@@ -419,6 +428,27 @@ function clearBackgroudColor() {
 function restoreBackgroudColor() {
     if (savedBackgroudColor) {
         document.body.style.backgroundColor = savedBackgroudColor;
+    }
+}
+
+function jumpToFloor(floor, isIOS11) {
+    jumpToAnchor('floor_'+floor, isIOS11);
+}
+
+function jumpToAnchor(anchor, isIOS11) {
+    if (!isIOS11) {
+        location.href='#'+anchor;
+        return;   
+    }
+
+    var aa = document.getElementsByTagName('a');
+    for (var i = 0; i < aa.length; i++) {
+        var a = aa[i];
+        if (a.getAttribute('name') === anchor) {
+           var p = getPosition2(a);
+           window.scrollTo(0, p.y); 
+           break;
+       }
     }
 }
 
