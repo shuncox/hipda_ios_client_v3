@@ -23,6 +23,7 @@
 #import "UIAlertView+Blocks.h"
 #import "DZWebBrowser.h"
 #import "HPAppDelegate.h"
+#import <1PasswordExtension/OnePasswordExtension.h>
 
 @interface HPLoginViewController ()
 
@@ -89,6 +90,14 @@
  
     self.passwordItem = [RETextItem itemWithTitle:@"密码" value:nil placeholder:@"******"];
     self.passwordItem.secureTextEntry = YES;
+    self.passwordItem.accessoryView = ({
+        UIButton *b = [UIButton new];
+        b.hidden = ![[OnePasswordExtension sharedExtension] isAppExtensionAvailable];
+        [b setImage:[UIImage imageNamed:@"onepassword-button"] forState:UIControlStateNormal];
+        [b sizeToFit];
+        [b addTarget:self action:@selector(findLoginFrom1Password:) forControlEvents:UIControlEventTouchUpInside];
+        b;
+    });
     
     self.secureQuestionItem = [RERadioItem itemWithTitle:@"安全提问" value:@"无" selectionHandler:^(RERadioItem *item) {
         [item deselectRowAnimated:YES]; // same as [weakSelf.tableView deselectRowAtIndexPath:item.indexPath animated:YES];
@@ -207,6 +216,22 @@
     [_section addItem:self.LoginBtnItem];
     
     [self.manager addSection:_section];
+}
+
+
+- (void)findLoginFrom1Password:(id)sender {
+    [[OnePasswordExtension sharedExtension] findLoginForURLString:@"https://www.hi-pda.com" forViewController:self sender:sender completion:^(NSDictionary *loginDictionary, NSError *error) {
+        if (loginDictionary.count == 0) {
+            if (error.code != AppExtensionErrorCodeCancelledByUser) {
+                NSLog(@"Error invoking 1Password App Extension for find login: %@", error);
+            }
+            return;
+        }
+        
+        self.usernameItem.value = loginDictionary[AppExtensionUsernameKey];
+        self.passwordItem.value = loginDictionary[AppExtensionPasswordKey];
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)zhuce:(id)sender {
