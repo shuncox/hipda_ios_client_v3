@@ -49,7 +49,7 @@
               @{@"key":@"屏幕下边沿中间", @"value":HPSettingStupidBarCenterAction},
               @{@"key":@"屏幕下边沿右边", @"value":HPSettingStupidBarRightAction}];
     
-    _actions = @[@"收藏", @"加关注", @"跳页", @"上一页", @"下一页", @"回复", @"只看楼主", @"刷新", @"滚动至页面底部", @"GoogleReader - J", @"GoogleReader - K"];
+    _actions = @[@"收藏", @"加关注", @"跳页", @"上一页", @"下一页", @"回复", @"只看楼主", @"刷新", @"滚动至页面底部", @"下一楼", @"上一楼"];
 }
 
 - (void)didReceiveMemoryWarning
