@@ -572,6 +572,14 @@
            block:(void (^)(NSError *error))block {
     
     NSString *path = @"forum/post.php?action=edit&extra=&editsubmit=yes&mod=";
+    
+    if ([parameters objectForKey:@"message"]) {
+        NSMutableDictionary *d = [parameters mutableCopy];
+        NSString *content = [self.class autoWarp:parameters[@"message"]];
+        [d setObject:content  forKey:@"message"];
+        parameters = [d copy];
+    }
+    
     NSLog(@"%@", parameters);
     [[HPHttpClient sharedClient] postPath:path
                                parameters:parameters
@@ -610,8 +618,18 @@
     
     // url
     NSString *urlRegEx = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
-    NSString *r = [RX(urlRegEx) replace:text withBlock:^NSString *(NSString *match) {
-        return [NSString stringWithFormat:@"[url]%@[/url]", match];
+    
+    NSString *r = [RX(urlRegEx) replace:text withDetailsBlock:^NSString *(RxMatch *match) {
+        
+        // 已经[url]%@[/url]就不管了
+        NSRange r = match.range;
+        NSString *a = [match.original safe_substringWithRange:r.location - 5:5];
+        NSString *b = [match.original safe_substringWithRange:r.location + r.length:6];
+        if ([a isEqualToString:@"[url]"] && [b isEqualToString:@"[/url]"]) {
+            return match.value;
+        }
+        
+        return [NSString stringWithFormat:@"[url]%@[/url]", match.value];
     }];
     
     // 不知为啥\u00a0造成文字截断...

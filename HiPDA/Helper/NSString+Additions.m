@@ -481,6 +481,19 @@ NSString *substr(NSString *str, int start, int length)
     return [RX(@"http[^ '\"<>]+\\.js") matches:self];
 }
 
+- (NSString *)safe_substringWithRange:(NSInteger)location :(NSUInteger)length
+{
+    if (location < 0) {
+        return nil;
+    }
+    
+    if ((location + length) > self.length) {
+        return nil;
+    }
+    
+    return [self substringWithRange:NSMakeRange(location, length)];
+}
+
 @end
 
 @implementation NSObject (isEmpty)

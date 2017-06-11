@@ -52,6 +52,8 @@ NSString *substr(NSString *str, int start, int length);
 
 - (NSArray *)hp_jsLinks;
 
+- (NSString *)safe_substringWithRange:(NSInteger)location :(NSUInteger)length;
+
 // url encode, decode
 - (NSString *)URLEncode;
 - (NSString *)URLEncodeUsingEncoding:(NSStringEncoding)encoding;
