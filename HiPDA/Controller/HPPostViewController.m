@@ -1234,8 +1234,9 @@ HPStupidBarDelegate
     __block NSUInteger index = 0;
     [_posts enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         HPNewPost *post = (HPNewPost *)obj;
-        if (post.images && (index = [post.images indexOfObject:src]) != NSNotFound) {
-            images = post.images;
+        HPImageNode *node = [[HPImageNode alloc] initWithURL:src];
+        if (post.images && (index = [post.images indexOfObject:node]) != NSNotFound) {
+            images = [post.images hp_imageThumbnailURLs];
             *stop = YES;
         }
     }];

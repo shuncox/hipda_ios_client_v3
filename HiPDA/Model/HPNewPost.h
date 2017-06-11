@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HPImageNode.h"
 
 @class HPUser;
 @class HPThread;
@@ -22,7 +23,7 @@
 @property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *body_html;
 
-@property (nonatomic, strong) NSArray *images;
+@property (nonatomic, strong) NSArray<HPImageNode *> *images;
 
 
 + (void)loadThreadWithTid:(NSInteger)tid

@@ -103,6 +103,7 @@
 		EA3B991F18F9812900F726E1 /* HPBgFetchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B991E18F9812900F726E1 /* HPBgFetchViewController.m */; };
 		EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C12184AD81700B86C92 /* HPMessageViewController.m */; };
 		EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C15184B5C7500B86C92 /* HPMessageDetailViewController.m */; };
+		EA3FF77C1EED86FC00FFE648 /* HPImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */; };
 		EA4138C9188D5530001F9542 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4138C8188D5530001F9542 /* SWRevealViewController.m */; };
 		EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D61842F5D100ADA47D /* HPNotice.m */; };
 		EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */; };
@@ -575,6 +576,8 @@
 		EA3F4C12184AD81700B86C92 /* HPMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessageViewController.m; path = Controller/HPMessageViewController.m; sourceTree = "<group>"; };
 		EA3F4C14184B5C7500B86C92 /* HPMessageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPMessageDetailViewController.h; path = Controller/HPMessageDetailViewController.h; sourceTree = "<group>"; };
 		EA3F4C15184B5C7500B86C92 /* HPMessageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessageDetailViewController.m; path = Controller/HPMessageDetailViewController.m; sourceTree = "<group>"; };
+		EA3FF77A1EED86FC00FFE648 /* HPImageNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageNode.h; path = Model/HPImageNode.h; sourceTree = "<group>"; };
+		EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageNode.m; path = Model/HPImageNode.m; sourceTree = "<group>"; };
 		EA4138C7188D5530001F9542 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = Vender/SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
 		EA4138C8188D5530001F9542 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = Vender/SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
 		EA4266D51842F5D100ADA47D /* HPNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNotice.h; path = Model/HPNotice.h; sourceTree = "<group>"; };
@@ -1422,6 +1425,8 @@
 				EAA1BEC21DB3217400F61E1B /* HPAccountPassword.h */,
 				EAA1BEC31DB3217400F61E1B /* HPAccountPassword.m */,
 				EA06A5F618C0E45F00EDBDEA /* More */,
+				EA3FF77A1EED86FC00FFE648 /* HPImageNode.h */,
+				EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2608,6 +2613,7 @@
 				EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */,
 				EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */,
 				EA499F481830C2D800172989 /* XPathQuery.m in Sources */,
+				EA3FF77C1EED86FC00FFE648 /* HPImageNode.m in Sources */,
 				EA368A8018C75E9900C5C5BD /* HPBaseCompostionViewController.m in Sources */,
 				EA083D6D18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroup.m in Sources */,
 				EAA1E68518D03A4100E1CFE1 /* UIImage+fixOrientation.m in Sources */,

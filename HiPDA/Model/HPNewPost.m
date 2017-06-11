@@ -355,7 +355,7 @@
         _body_html = [rx replace:_body_html with:@""];
         
         
-        __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
+        __block NSMutableArray<HPImageNode *> *imgsArray = [NSMutableArray arrayWithCapacity:5];
         // 用来去重 和 查找imagesize
         __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
         
@@ -372,7 +372,7 @@
             NSString *src = m1.value;
             
             // 正则提取是倒序
-            [imgsArray insertObject:src atIndex:0];
+            [imgsArray insertObject:[[HPImageNode alloc] initWithURL:src] atIndex:0];
             NSString *aid = m2.value;
             if (aid.length) {
                 [aidArray addObject:aid];
@@ -386,6 +386,8 @@
 //=============================================
         
         // 帖子底部 image
+        NSUInteger start_index = imgsArray.count;
+        
         _body_html = [RX(@"<br /><br /><img src=\"[^\"]*images/attachicons.*?aid=(\\d+).*?src=\"(.*?)\".*?/>") replace:_body_html withDetailsBlock:^NSString *(RxMatch *match) {
             
             RxMatchGroup *m1 = [match.groups objectAtIndex:1];
@@ -394,9 +396,12 @@
             NSString *aid = m1.value;
             NSString *src = m2.value;
             
-            if ([imgsArray indexOfObject:src] == NSNotFound) {
+            HPImageNode *n = [[HPImageNode alloc] initWithURL:src];
+            if ([imgsArray indexOfObject:n] == NSNotFound) {
                 // 正则提取是倒序
-                [imgsArray insertObject:src atIndex:0];
+                // start_index 原因是 `帖子内部 image` 已经倒插了一批进来
+                // 5 4 3 2 1 10 9 8 7 6
+                [imgsArray insertObject:n atIndex:start_index];
             }
             if (aid.length && [aidArray indexOfObject:aid] == NSNotFound) {
                 [aidArray addObject:aid];
@@ -583,7 +588,7 @@
         _body_html = [rx replace:_body_html with:@""];
         
         
-        __block NSMutableArray *imgsArray = [NSMutableArray arrayWithCapacity:5];
+        __block NSMutableArray<HPImageNode *> *imgsArray = [NSMutableArray arrayWithCapacity:5];
         // 用来去重 和 查找imagesize
         __block NSMutableArray *aidArray = [NSMutableArray arrayWithCapacity:5];
         
@@ -597,7 +602,7 @@
             NSString *src = m1.value;
             
             // 正则提取是倒序
-            [imgsArray insertObject:src atIndex:0];
+            [imgsArray insertObject:[[HPImageNode alloc] initWithURL:src] atIndex:0];
             NSString *aid = m2.value;
             if (aid.length) {
                 [aidArray addObject:aid];
@@ -616,8 +621,9 @@
             // img_html 最后会附加到 body_html 后面
             NSMutableString *img_html = [NSMutableString stringWithCapacity:5];
             void(^addImageNode)(NSString *src, NSString *aid) = ^(NSString *src, NSString *aid) {
-                if ([imgsArray indexOfObject:src] == NSNotFound) {
-                    [imgsArray addObject:src];
+                HPImageNode *n = [[HPImageNode alloc] initWithURL:src];
+                if ([imgsArray indexOfObject:n] == NSNotFound) {
+                    [imgsArray addObject:n];
                 }
                 // 去重
                 if (aid.length && [aidArray indexOfObject:aid] == NSNotFound) {
