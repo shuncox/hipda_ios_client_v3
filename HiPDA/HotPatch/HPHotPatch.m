@@ -96,7 +96,7 @@
 #ifdef DEBUG
         NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"debug-hotpatch" ofType:@"js"];
         NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
-        [JPEngine runScript:script];
+        [JPEngine evaluateScript:script];
 #endif
     }
     return self;
@@ -121,7 +121,7 @@
                 NSString *js = db[url];
                 DDLogInfo(@"patch %@: %@", url, js);
                 if (js.length) {
-                    [JPEngine runScript:js];
+                    [JPEngine evaluateScript:js];
                 }
             }
         }
@@ -189,7 +189,7 @@
                         } else {
                             DDLogInfo(@"patch");
                             if (script.length) {
-                                [JPEngine runScript:script];
+                                [JPEngine evaluateScript:script];
                             }
                         }
                     }
