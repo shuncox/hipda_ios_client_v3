@@ -402,18 +402,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UIViewController *vc = nil;
-    
-    if (self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
-        HPUser *user = [self.results objectAtIndex:indexPath.row];
-        HPUserViewController *uvc = [HPUserViewController new];
-        uvc.username = user.username;
-        uvc.uid = user.uid;
-        vc = uvc;
-        
-    } else {
-        NSMutableDictionary *dict = [self.results objectAtIndex:indexPath.row];
-        
+    void(^gotoThreadDetail)(NSDictionary *dict) = ^(NSDictionary *dict) {
         HPThread *thread = [HPThread new];
         thread.fid = [[dict objectForKey:@"fidString"] integerValue];
         thread.tid = [[dict objectForKey:@"tidString"] integerValue];
@@ -421,10 +410,27 @@
         thread.title = [title string];
         NSInteger find_pid = [[dict objectForKey:@"pidString"] integerValue];
         
-        vc = [[PostViewControllerClass() alloc] initWithThread:thread find_pid:find_pid];
-    }
+        UIViewController *vc = [[PostViewControllerClass() alloc] initWithThread:thread find_pid:find_pid];
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    };
     
-    [self.navigationController pushViewController:vc animated:YES];
+    id data = [self.results objectAtIndex:indexPath.row];
+    if ([data isKindOfClass:NSDictionary.class] && [data objectForKey:@"detail"]) {
+        NSDictionary *dict = (NSDictionary *)data;
+        gotoThreadDetail(dict);
+    } else if ([data isKindOfClass:NSDictionary.class] && [data objectForKey:@"title"]) {
+        NSDictionary *dict = (NSDictionary *)data;
+        gotoThreadDetail(dict);
+    } else if ([data isKindOfClass:HPUser.class]) {
+        HPUser *user = [self.results objectAtIndex:indexPath.row];
+        HPUserViewController *uvc = [HPUserViewController new];
+        uvc.username = user.username;
+        uvc.uid = user.uid;
+        [self.navigationController pushViewController:uvc animated:YES];
+    } else {
+        NSAssert(0, @"数据不对%@", data);
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
