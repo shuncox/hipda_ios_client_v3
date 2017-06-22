@@ -54,7 +54,7 @@
 
 inline Class PostViewControllerClass()
 {
-    BOOL enableWKWebview = [UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:YES];
+    BOOL enableWKWebview = [UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:NO];
     
     // 线上配置允许, 再看用户配置
     if (enableWKWebview) {
