@@ -190,7 +190,7 @@
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    _contentTextFiled.delegate = self;
+    _contentTextFiled.delegate = nil;
 }
 
 
