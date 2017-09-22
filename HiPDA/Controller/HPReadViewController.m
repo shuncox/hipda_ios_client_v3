@@ -292,6 +292,22 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     [self setView:wv];
     self.webView = wv;
+    
+    // http://blog.persistent.info/2017/01/disabling-click-delay-in-uiwebview.html?showComment=1506066665431#c9097756993713924090
+    for (UIView* view in wv.scrollView.subviews) {
+        if ([view.class.description isEqualToString:[@[@"UIW", @"ebBrow", @"serView"] componentsJoinedByString:@""]]) {
+            for (UIGestureRecognizer *gestureRecognizer in view.gestureRecognizers) {
+                if ([gestureRecognizer isKindOfClass:UITapGestureRecognizer.class]) {
+                    UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *) gestureRecognizer;
+                    if (tapRecognizer.numberOfTapsRequired == 2 && tapRecognizer.numberOfTouchesRequired == 1) {
+                        tapRecognizer.enabled = NO;
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -444,12 +460,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     NSMutableString *string = [[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"post_view" ofType:@"html"] encoding:NSUTF8StringEncoding error:nil] mutableCopy];
 #endif
     
-    if (IS_IPAD) {
-        // ipad 上禁用 FastClick,
-        // ipad上老误触, 禁用了虽然延迟但是忍了
-        [string replaceOccurrencesOfString:@"FastClick.attach(document.body);" withString:@";" options:0 range:NSMakeRange(0, string.length)];
-    }
-    
     if (_thread.title && !refresh)
         [string replaceOccurrencesOfString:@"##title##" withString:_thread.title options:0 range:NSMakeRange(0, string.length)];
    
@@ -480,7 +490,6 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [NSString stringWithFormat:@"\"%@\",\"HelveticaNeue-Bold\"", boldFont] :
             [NSString stringWithFormat:@"\"%@\",\"HelveticaNeue\"", regularFont]
         ,
-        @"**[enable_fastclick]**": IOS11_OR_LATER ? @"0" : @"1",
 #if DEBUG && 0
         @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
 #else
