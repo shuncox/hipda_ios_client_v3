@@ -95,6 +95,11 @@
     _fids = [Setting objectForKey:HPSettingFavForums];
     _fids_title = [Setting objectForKey:HPSettingFavForumsTitle];
     
+    NSAssert(_fids.count == _fids_title.count, @"");
+    if (_fids_title.count < _fids.count) { //做一个保护
+        _fids = [_fids subarrayWithRange:NSMakeRange(0, _fids_title.count)];
+    }
+    
     if ([HPAccount isAccountForReviewer]) {
         _fids = @[@24, @25, @23];
         _fids_title = @[@"意欲蔓延", @"吃喝玩乐", @"随笔与文集"];
