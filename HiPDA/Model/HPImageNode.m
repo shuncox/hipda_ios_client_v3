@@ -28,7 +28,6 @@
         _url = [url copy];
         
         NSRange r1 = [url rangeOfString:@"attachments/"];
-        NSParameterAssert(r1.location != NSNotFound);
         if (r1.location != NSNotFound) {
             NSUInteger s = r1.location + r1.length;
             NSRange r2 = [url rangeOfString:@"." options:0 range:NSMakeRange(s, url.length - s)];
