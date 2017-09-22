@@ -16,6 +16,7 @@
 #import "AFHTTPRequestOperation.h"
 
 #import "NSString+Additions.h"
+#import "NSString+HTML.h"
 #import <NSString+Emoji/NSString+Emoji.h>
 
 @implementation HPReplyParams
@@ -543,7 +544,9 @@
         RxMatchGroup *g = [m.groups objectAtIndex:1];
         //NSLog(@"message, %@", g.value);
         
-        [dict setObject:g.value?g.value:@"" forKey:@"message"];
+        NSString *message = g.value?g.value:@"";
+        message = [[message stringByDecodingHTMLEntities] stringByDecodingHTMLEntities];
+        [dict setObject:message forKey:@"message"];
         
         
         // images
@@ -621,11 +624,10 @@
     
     NSString *r = [RX(urlRegEx) replace:text withDetailsBlock:^NSString *(RxMatch *match) {
         
-        // 已经[url]%@[/url]就不管了
+        // 已经[url=%@]text[/url]就不管了
         NSRange r = match.range;
-        NSString *a = [match.original safe_substringWithRange:r.location - 5:5];
-        NSString *b = [match.original safe_substringWithRange:r.location + r.length:6];
-        if ([a isEqualToString:@"[url]"] && [b isEqualToString:@"[/url]"]) {
+        NSString *a = [match.original safe_substringWithRange:r.location - 5:4];
+        if ([a isEqualToString:@"[url"]) {
             return match.value;
         }
         
