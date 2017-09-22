@@ -285,10 +285,11 @@ FastClick.prototype.destroy=function(){var a=this.layer;deviceIsAndroid&&(a.remo
 FastClick.notNeeded=function(a){var b,c;if("undefined"===typeof window.ontouchstart)return!0;if(c=+(/Chrome\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1])if(deviceIsAndroid){if((b=document.querySelector("meta[name=viewport]"))&&(-1!==b.content.indexOf("user-scalable=no")||31<c&&window.innerWidth<=window.screen.width))return!0}else return!0;return"none"===a.style.msTouchAction?!0:!1};FastClick.attach=function(a){return new FastClick(a)};
 "undefined"!==typeof define&&define.amd?define(function(){return FastClick}):"undefined"!==typeof module&&module.exports?(module.exports=FastClick.attach,module.exports.FastClick=FastClick):window.FastClick=FastClick;
 
+if (**[enable_fastclick]**) {
 window.addEventListener('load', function() {
     FastClick.attach(document.body);
 }, false);
-
+}
 
 var screen = {width: **[screen_width]**, height: **[screen_height]**};
 

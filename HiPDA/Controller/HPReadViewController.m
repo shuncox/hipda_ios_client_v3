@@ -480,6 +480,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             [NSString stringWithFormat:@"\"%@\",\"HelveticaNeue-Bold\"", boldFont] :
             [NSString stringWithFormat:@"\"%@\",\"HelveticaNeue\"", regularFont]
         ,
+        @"**[enable_fastclick]**": IOS11_OR_LATER ? @"0" : @"1",
 #if DEBUG && 0
         @"**[debug_script]**": @"<script src=\"http://wechatfe.github.io/vconsole/lib/vconsole.min.js?v=1.3.0\"></script>",
 #else
