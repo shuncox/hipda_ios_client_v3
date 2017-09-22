@@ -136,7 +136,36 @@
                                                 CGImageGetBitmapInfo(imageRef));
 
     if (bitmap == NULL) {
-        NSLog(@"Failed context creation - image format is not supported by device. To force creation, try setting colorspace as CGColorSpaceCreateDeviceRGB() and/or bitmapinfo as kCGImageAlphaNone");
+        // backup
+        // https://github.com/ibireme/YYImage/blob/master/YYImage/YYImageCoder.m#L874
+        
+        CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef) & kCGBitmapAlphaInfoMask;
+        BOOL hasAlpha = NO;
+        if (alphaInfo == kCGImageAlphaPremultipliedLast ||
+            alphaInfo == kCGImageAlphaPremultipliedFirst ||
+            alphaInfo == kCGImageAlphaLast ||
+            alphaInfo == kCGImageAlphaFirst) {
+            hasAlpha = YES;
+        }
+        
+        CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Host;
+        bitmapInfo |= hasAlpha ? kCGImageAlphaPremultipliedFirst : kCGImageAlphaNoneSkipFirst;
+        CGContextRef context = CGBitmapContextCreate(NULL,
+                                                     newRect.size.width,
+                                                     newRect.size.height,
+                                                     8,
+                                                     0,
+                                                     CGColorSpaceCreateDeviceRGB(),
+                                                     bitmapInfo);
+        
+        bitmap = context;
+        if (!context) {
+            DDLogInfo(@"Failed context creation backup");
+        }
+    }
+    
+    if (bitmap == NULL) {
+        DDLogInfo(@"Failed context creation - image format is not supported by device. To force creation, try setting colorspace as CGColorSpaceCreateDeviceRGB() and/or bitmapinfo as kCGImageAlphaNone");
     } else {
     
         // Rotate and/or flip the image if required by its orientation
