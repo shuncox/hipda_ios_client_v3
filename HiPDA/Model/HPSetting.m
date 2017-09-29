@@ -146,7 +146,7 @@
                                
                                HPSettingRegularFontMode:@YES,
                                
-                               HPSettingEnableWKWebview:@YES,
+                               HPSettingEnableWKWebview:@NO,
                                };
     return defaults;
 }

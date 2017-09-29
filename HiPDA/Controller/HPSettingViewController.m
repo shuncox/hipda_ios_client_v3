@@ -477,7 +477,7 @@
     [section addItem:enableHttpsItem];
 #endif
     
-    if ([UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:YES]) {
+    if ([UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:NO]) {
         [section addItem:enableWKWebviewItem];
     }
     
