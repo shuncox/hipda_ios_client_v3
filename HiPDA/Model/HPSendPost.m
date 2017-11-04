@@ -14,6 +14,7 @@
 #import "HPHttpClient.h"
 #import "HPSetting.h"
 #import "AFHTTPRequestOperation.h"
+#import "NSError+HPError.h"
 
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
@@ -501,6 +502,16 @@
         
         //对不起，您无权编辑他人发表的帖子，请返回
         NSLog(@"%@", html);
+        NSString *alert_info = [html stringBetweenString:@"<div class=\"alert_info\">" andString:@"</p>"];
+        NSString *alert_error = [html stringBetweenString:@"<div class=\"alert_error\">" andString:@"</p>"];
+        if (alert_info || alert_error) {
+            NSString *err = @"";
+            if (alert_info) err = alert_info;
+            else err = alert_error;
+            block(nil, [NSError errorWithErrorCode:500 errorMsg:err]);
+            return;
+        }
+
         //<input type="hidden" name="formhash" id="formhash" value="c8e6fe39" />
         NSArray *ms = [RX(@"<input.*?name=\"(.*?)\".*?value=\"(.*?)\".*?/>") matchesWithDetails:html];
         

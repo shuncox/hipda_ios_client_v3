@@ -24,6 +24,6 @@
 @end
 
 @interface NSError (HPError)
-+ (instancetype)errorWithErrorCodeMsg:(NSInteger)code errorMsg:(NSString *)errorMsg;
++ (instancetype)errorWithErrorCode:(NSInteger)code errorMsg:(NSString *)errorMsg;
 + (instancetype)crawlerErrorWithContext:(HPCrawlerErrorContext *)context;
 @end

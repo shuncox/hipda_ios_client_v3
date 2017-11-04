@@ -149,9 +149,9 @@
             else {
                 NSError *e = nil;
                 if (msg) {
-                    e = [NSError errorWithErrorCodeMsg:HPERROR_DISCUZ_ALERT_CODE errorMsg:msg];
+                    e = [NSError errorWithErrorCode:HPERROR_DISCUZ_ALERT_CODE errorMsg:msg];
                 } else if ([html indexOf:@"stickthread_"] != -1) {
-                    e = [NSError errorWithErrorCodeMsg:HPERROR_NOT_DEFAULT_THREAD_SETTING_CODE errorMsg:html];
+                    e = [NSError errorWithErrorCode:HPERROR_NOT_DEFAULT_THREAD_SETTING_CODE errorMsg:html];
                 } else {
                     e = [NSError crawlerErrorWithContext:context];
                 }

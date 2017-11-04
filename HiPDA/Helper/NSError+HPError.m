@@ -12,7 +12,7 @@
 @end
 
 @implementation NSError (HPError)
-+ (instancetype)errorWithErrorCodeMsg:(NSInteger)code errorMsg:(NSString *)errorMsg
++ (instancetype)errorWithErrorCode:(NSInteger)code errorMsg:(NSString *)errorMsg
 {
     return [[NSError alloc]
             initWithDomain:@".hi-pda.com"
