@@ -120,8 +120,7 @@
     f.size.width = self.view.bounds.size.width - 10.f;
     self.contentTextFiled.frame = f;
     
-    float height = 260;
-    _typePickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, [self.view bounds].size.height - height, [self.view bounds].size.width, height)];
+    _typePickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
     _typePickerView.delegate = self;
     _typePickerView.showsSelectionIndicator = YES;
     
@@ -225,6 +224,9 @@
     
     [self.view endEditing:YES];
     // pick forum
+    
+    CGFloat height = 260;
+    _typePickerView.frame = CGRectMake(0, [self.view bounds].size.height - height, [self.view bounds].size.width, height);
     [self.view addSubview:_typePickerView];
 }
 
@@ -236,6 +238,7 @@
     _current_type = [[[_types objectAtIndex:row] objectForKey:@"value"] integerValue];
     
     [_titleField becomeFirstResponder];
+    [_typePickerView removeFromSuperview];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
