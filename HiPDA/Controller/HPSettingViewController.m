@@ -102,7 +102,7 @@
     self.imageSection = [self addImageControls];
     
     if (IOS7_OR_LATER) {
-        RETableViewSection *bgFetchSection = [RETableViewSection sectionWithHeaderTitle:@" " footerTitle:nil];
+        RETableViewSection *bgFetchSection = [RETableViewSection sectionWithHeaderTitle:nil];
         @weakify(self);
         RETableViewItem *bgFetchItem = [RETableViewItem itemWithTitle:@"后台应用程序刷新" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
             @strongify(self);
@@ -121,7 +121,7 @@
     self.aboutSection = [self addAboutControls];
     
     @weakify(self);
-    RETableViewSection *logoutSection = [RETableViewSection sectionWithHeaderTitle:@"  " footerTitle:@" "];
+    RETableViewSection *logoutSection = [RETableViewSection sectionWithHeaderTitle:nil];
     RETableViewItem *logoutItem = [RETableViewItem itemWithTitle:@"登出" accessoryType:UITableViewCellAccessoryNone selectionHandler:^(RETableViewItem *item) {
         
         [UIAlertView showConfirmationDialogWithTitle:@"登出"
@@ -170,9 +170,8 @@
 
 - (RETableViewSection *)addPreferenceControls {
     
-    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil footerTitle:@"  "];
-    //RETableViewSection *section = [RETableViewSection section];
-    
+    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
+
     //
     BOOL isNightMode = [Setting boolForKey:HPSettingNightMode];
     @weakify(self);
@@ -484,7 +483,6 @@
     
     __typeof (&*self) __weak weakSelf = self;
     
-    //RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@"Image load"];
     RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
     
     
@@ -537,7 +535,7 @@
 
 - (RETableViewSection *)addDataTrackingControls {
     
-    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@" " footerTitle:nil];
+    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
     
     //
     BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
@@ -619,9 +617,8 @@
 
 - (RETableViewSection *)addAboutControls
 {
-    //RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@"About"];
-    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:@"  " footerTitle:nil];
-    
+    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
+
     // 致谢
     //
     @weakify(self);
