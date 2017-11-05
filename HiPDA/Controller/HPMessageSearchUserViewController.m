@@ -37,6 +37,14 @@ static NSString * const CellIdentifier = @"CellWithIdentifier";
         return tuple.second;
     }];
     
+    if ([UIDevice hp_isiPhoneX]) {
+        // 这个地方的 searchbar 使用的姿势不是很标准, 所以系统默认的调整有些问题, 禁用系统的自动跳过, 我们自己调整一下.
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        UIEdgeInsets insets = self.tableView.contentInset;
+        insets.bottom = [UIDevice hp_safeAreaInsets].bottom;
+        self.tableView.contentInset = insets;
+    }
+    
     @weakify(self);
     [[[[[textSignal
          filter:^BOOL(NSString *text) {
