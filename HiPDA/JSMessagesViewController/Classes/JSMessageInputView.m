@@ -158,6 +158,13 @@ static const CGFloat accessoryButtonWidth = 44.f;
         _textView.delegate = delegate;
         _textView.keyboardDelegate = delegate;
         _textView.dismissivePanGestureRecognizer = panGestureRecognizer;
+        
+        // 给 iPhone X 上的 inputbar 加一个下巴
+        if ([UIDevice hp_isiPhoneX]) {
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, 100)];
+            v.backgroundColor = [UIColor colorWithRed:247.f/255.f green:247.f/255.f blue:247.f/255.f alpha:1];
+            [self addSubview:v];
+        }
     }
     return self;
 }
