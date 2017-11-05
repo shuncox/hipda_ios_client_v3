@@ -19,7 +19,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([self.dataSource tableView:self numberOfRowsInSection:0] > 0) {
             NSIndexPath* top = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            [self scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
         }
     });
 }
