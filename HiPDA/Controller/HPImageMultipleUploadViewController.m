@@ -375,6 +375,7 @@
             }
         } else {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+            weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
         }
     }];
 }
