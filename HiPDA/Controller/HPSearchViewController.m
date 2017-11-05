@@ -78,7 +78,7 @@
   
     // search bar
     //
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
     _searchBar.delegate = self;
     
     _searchBar.placeholder=@"keywords";
@@ -88,8 +88,7 @@
     
     _searchBar.showsScopeBar = YES;
     _searchBar.scopeButtonTitles = @[@"标题", @"全文", @"用户"];
-    
-    _searchBar.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 44 + 40);
+    [_searchBar sizeToFit];
 
     if (!_user) self.tableView.tableHeaderView = _searchBar;
     
