@@ -137,7 +137,9 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 
 - (void)setup {
     if (CGRectIsEmpty(self.bounds)) {
-        self.bounds = (CGRect){CGPointZero,WUEmoticonsKeyboardDefaultSize};
+        CGSize size = WUEmoticonsKeyboardDefaultSize;
+        size.height += [UIDevice hp_safeAreaInsets].bottom;
+        self.bounds = (CGRect){CGPointZero, size};
     }
     
     self.backgroundColor = [UIColor blackColor];
@@ -183,7 +185,10 @@ CGFloat const WUEmoticonsKeyboardToolsViewDefaultHeight = 45;
 }
 
 - (CGRect)toolsViewFrame {
-    return CGRectMake(0, CGRectGetHeight(self.bounds) - self.toolsViewHeight, CGRectGetWidth(self.bounds), self.toolsViewHeight);
+    return CGRectMake(0,
+                      CGRectGetHeight(self.bounds) - self.toolsViewHeight - [UIDevice hp_safeAreaInsets].bottom,
+                      CGRectGetWidth(self.bounds),
+                      self.toolsViewHeight);
 }
 
 - (CGRect)keyItemGroupViewFrame {
