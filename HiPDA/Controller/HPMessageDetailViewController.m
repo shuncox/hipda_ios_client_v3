@@ -111,11 +111,6 @@
                                                          action:@selector(action:)];
     self.navigationItem.rightBarButtonItem = moreBI;
     
-    // gesture
-    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(back:)];
-    rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:rightSwipeGesture];
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didTapImage:) name:HP_MESSAGE_CELL_TAP_IMAGE object:nil];
 }
 
@@ -378,7 +373,7 @@
 
 - (BOOL)allowsPanToDismissKeyboard
 {
-    return YES;
+    return NO;
 }
 
 #pragma mark - Messages view data source: REQUIRED

@@ -71,7 +71,7 @@
     [self setBackgroundColor:[UIColor js_backgroundColorClassic]];
     
     CGRect inputFrame = CGRectMake(0.0f,
-                                   self.view.frame.size.height - inputViewHeight,
+                                   self.view.frame.size.height - inputViewHeight - [UIDevice hp_safeAreaInsets].bottom,
                                    self.view.frame.size.width,
                                    inputViewHeight);
     
@@ -442,8 +442,8 @@
 - (UIEdgeInsets)tableViewInsetsWithBottomValue:(CGFloat)bottom
 {
     UIEdgeInsets insets = UIEdgeInsetsZero;
-    
-    if ([self respondsToSelector:@selector(topLayoutGuide)]) {
+
+    if (![UIDevice hp_isiPhoneX] && [self respondsToSelector:@selector(topLayoutGuide)]) {
         insets.top = self.topLayoutGuide.length;
     }
     
@@ -494,7 +494,7 @@
                          CGFloat inputViewFrameY = keyboardY - inputViewFrame.size.height;
                          
                          // for ipad modal form presentations
-                         CGFloat messageViewFrameBottom = self.view.frame.size.height - inputViewFrame.size.height;
+                         CGFloat messageViewFrameBottom = self.view.frame.size.height - inputViewFrame.size.height - [UIDevice hp_safeAreaInsets].bottom;
                          if (inputViewFrameY > messageViewFrameBottom)
                              inputViewFrameY = messageViewFrameBottom;
 						 
@@ -503,8 +503,9 @@
 																  inputViewFrame.size.width,
 																  inputViewFrame.size.height);
 
-                         [self setTableViewInsetsWithBottomValue:self.view.frame.size.height
-                                                                - self.messageInputView.frame.origin.y];
+                         [self setTableViewInsetsWithBottomValue:
+                          self.view.frame.size.height - [UIDevice hp_safeAreaInsets].bottom
+                          - self.messageInputView.frame.origin.y];
                      }
                      completion:nil];
 }
