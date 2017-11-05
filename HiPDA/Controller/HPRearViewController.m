@@ -30,7 +30,7 @@
 #import <SVProgressHUD.h>
 #import "BBBadgeBarButtonItem.h"
 
-#define TOP_CELL_HEIGHT (HP_NAVBAR_HEIGHT)
+#define TOP_CELL_HEIGHT (44.f) //navbar height
 #define TAG_OVERVIEW 1011
 
 
@@ -194,6 +194,16 @@
     [super viewWillDisappear:animated];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    // iPhone X 会自动加上 safeArea
+    // 非 iPHone X, 加上 20 (height of status bar)
+    if (![UIDevice hp_isiPhoneX]) {
+        self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -291,7 +301,12 @@
         return TOP_CELL_HEIGHT;
     } else if (indexPath.row == _vc_classes.count){
         
-        CGFloat screent_height = self.view.bounds.size.height;
+        CGFloat screent_height = self.tableView.bounds.size.height;
+        if ([UIDevice hp_isiPhoneX]) {
+            screent_height = screent_height - self.tableView.safeAreaInsets.top - self.tableView.safeAreaInsets.bottom;
+        } else {
+            screent_height = screent_height - self.tableView.contentInset.top;
+        }
         CGFloat other_hight_sum = TOP_CELL_HEIGHT + (_vc_classes.count-1)*rowHeight + _fids.count*rowHeight;
         
         return MAX(screent_height - other_hight_sum, 0.f);
@@ -418,10 +433,7 @@
 
 - (UITableViewCell *)topCell {
     if (_topCell) return _topCell;
-    
-    
-    CGFloat dy = IOS7_OR_LATER ? 20.f : 0.f;
-    
+
     _topCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"topCell"];
     [_topCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
@@ -437,7 +449,7 @@
      */
     UIView *m = [UIView new];
     m.backgroundColor = rgb(186.f, 186.f, 186.f);
-    m.frame = CGRectMake(42, dy+33.f, 10, 2);
+    m.frame = CGRectMake(42, 33.f, 10, 2);
     [_topCell.contentView addSubview:m];
 
     
@@ -448,7 +460,7 @@
     [settingB setImage:[UIImage imageNamed:@"settings_highlight.png"] forState:UIControlStateHighlighted];
     settingB.showsTouchWhenHighlighted = YES;
     [settingB sizeToFit];
-    settingB.center = CGPointMake(20, dy+23.f);
+    settingB.center = CGPointMake(20, 23.f);
     
     UIButton *searchB = [[UIButton alloc] init];
     [_topCell.contentView addSubview:searchB];
@@ -457,7 +469,7 @@
     [settingB setImage:[UIImage imageNamed:@"search_highlight.png"] forState:UIControlStateHighlighted];
     searchB.showsTouchWhenHighlighted = YES;
     [searchB sizeToFit];
-    searchB.center = CGPointMake(70, dy+23.f);
+    searchB.center = CGPointMake(70, 23.f);
     
     _topCell.backgroundColor = rgb(26.f, 26.f, 26.f);
     
