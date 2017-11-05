@@ -63,7 +63,7 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         // Custom initialization
     }
@@ -74,16 +74,14 @@
 {
     [super viewDidLoad];
 
-    // 在 RETableViewManager  修改字体 ui7kit 没patch tablecell
-    
     self.title = @"设置";
-    
-    
+    [self.tableView setBackgroundColor:[HPTheme backgroundColor]];
+
     UIBarButtonItem *closeButtonItem = [
                                          [UIBarButtonItem alloc] initWithTitle:@"完成"
                                          style:UIBarButtonItemStylePlain
                                          target:self action:@selector(close:)];
-     self.navigationItem.leftBarButtonItem = closeButtonItem;
+    self.navigationItem.leftBarButtonItem = closeButtonItem;
     
     // clear btn
     UIBarButtonItem *clearButtonItem = [
@@ -93,11 +91,7 @@
                                         action:@selector(reset:)];
     self.navigationItem.rightBarButtonItem = clearButtonItem;
     
-    if (IOS7_OR_LATER) {
-        //[self.tableView setBackgroundColor:[HPTheme backgroundColor]];
-    }
-  
-     
+
     // Create manager
     //
     self.manager = [[RETableViewManager alloc] initWithTableView:self.tableView delegate:self];
