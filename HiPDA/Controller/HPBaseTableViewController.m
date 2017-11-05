@@ -105,7 +105,7 @@
 }
 
 - (void)showRefreshControl {
-    CGFloat offset = IOS7_OR_LATER ? 64.f:0.f;
+    CGFloat offset = HP_NAVBAR_HEIGHT;
     [self.refreshControl beginRefreshing];
     if (self.tableView.contentOffset.y == -offset) {
         [UIView animateWithDuration:0.1

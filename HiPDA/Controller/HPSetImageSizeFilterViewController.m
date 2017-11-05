@@ -224,7 +224,7 @@
     
     [self.wwanSettingView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(64.f + 20);
+        make.top.equalTo(self.view).offset(HP_NAVBAR_HEIGHT + 20);
     }];
     [separator mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);

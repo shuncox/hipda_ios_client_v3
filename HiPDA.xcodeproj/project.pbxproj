@@ -395,6 +395,7 @@
 		EAE0FE4A1D09BC2D00F0D76E /* HPThreadFilterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */; };
 		EAE0FE5B1D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */; };
 		EAE0FE5C1D09BFF700F0D76E /* HPNavigationDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */; };
+		EAE3931D1FAEB74700E2E6A8 /* UIDevice+iPhoneX.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE3931B1FAEB74600E2E6A8 /* UIDevice+iPhoneX.m */; };
 		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; };
 		EAE8C0311D43B89500C315AA /* NSError+BlockService.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE8C0301D43B89500C315AA /* NSError+BlockService.m */; };
 		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
@@ -987,6 +988,8 @@
 		EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = HPNavigationDropdownMenu.bundle; path = View/HPNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
 		EAE0FE591D09BFF700F0D76E /* HPNavigationDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNavigationDropdownMenu.h; path = View/HPNavigationDropdownMenu.h; sourceTree = "<group>"; };
 		EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPNavigationDropdownMenu.m; path = View/HPNavigationDropdownMenu.m; sourceTree = "<group>"; };
+		EAE3931B1FAEB74600E2E6A8 /* UIDevice+iPhoneX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+iPhoneX.m"; path = "Helper/UIDevice+iPhoneX.m"; sourceTree = "<group>"; };
+		EAE3931C1FAEB74600E2E6A8 /* UIDevice+iPhoneX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+iPhoneX.h"; path = "Helper/UIDevice+iPhoneX.h"; sourceTree = "<group>"; };
 		EAE6D7D21BDFAADA00195839 /* HPSearchUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSearchUserCell.h; path = View/HPSearchUserCell.h; sourceTree = "<group>"; };
 		EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchUserCell.m; path = View/HPSearchUserCell.m; sourceTree = "<group>"; };
 		EAE8C02F1D43B89500C315AA /* NSError+BlockService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+BlockService.h"; path = "Helper/NSError+BlockService.h"; sourceTree = "<group>"; };
@@ -1456,6 +1459,8 @@
 		EA499F3E1830C1F400172989 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				EAE3931C1FAEB74600E2E6A8 /* UIDevice+iPhoneX.h */,
+				EAE3931B1FAEB74600E2E6A8 /* UIDevice+iPhoneX.m */,
 				EA3B91BC1E6C09B500D742EF /* HPOnceRunService.h */,
 				EA3B91BD1E6C09B500D742EF /* HPOnceRunService.m */,
 				EAE8C02F1D43B89500C315AA /* NSError+BlockService.h */,
@@ -2556,6 +2561,7 @@
 				EA743C2F183F9A9E0067F62B /* HPMyReply.m in Sources */,
 				EA7840791BE1F06F00139141 /* SVProgressHUD.m in Sources */,
 				EAA1E68318D03A4100E1CFE1 /* UIColor+iOS7Colors.m in Sources */,
+				EAE3931D1FAEB74700E2E6A8 /* UIDevice+iPhoneX.m in Sources */,
 				EA9A39B11A5BE92E0028BE7D /* JSBubbleView.m in Sources */,
 				EAF568A51BF335AA00041A40 /* NSString+HPOnlineParamaters.m in Sources */,
 				EA0FF7D01837CE6300B0EBA6 /* HPFavorite.m in Sources */,

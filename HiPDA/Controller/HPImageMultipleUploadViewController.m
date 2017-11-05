@@ -81,13 +81,9 @@
     self.title = @"上传图片";
     
     CGRect f = self.view.bounds;
-    if (IOS7_OR_LATER) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-        f.size.height -= 64.f;
-    } else {
-        f.size.height -= 44.f;
-    }
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    f.size.height -= HP_NAVBAR_HEIGHT;
+
     self.view.backgroundColor = [HPTheme backgroundColor];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(5.f, 5.f, f.size.width-10.f, f.size.height - 74.f - 12.f)];
@@ -99,7 +95,7 @@
     [self.view addSubview:self.tableView];
     
     UIView *container = [UIView new];
-    container.frame = CGRectMake(0, f.size.height - 44, f.size.width, 44.f);
+    container.frame = CGRectMake(0, f.size.height - 44 - [UIDevice hp_safeAreaInsets].bottom, f.size.width, 44.f);
     container.backgroundColor = rgb(245.f, 245.f, 245.f);
     [self.view addSubview:container];
     
@@ -126,7 +122,7 @@
     
     UIView *container2 = [UIView new];
     [self.view addSubview:container2];
-    container2.frame = CGRectMake(0, f.size.height - 78.f, f.size.width, 34.f);
+    container2.frame = CGRectMake(0, f.size.height - 78.f - [UIDevice hp_safeAreaInsets].bottom, f.size.width, 34.f);
     container2.backgroundColor = rgb(245.f, 245.f, 245.f);
     UIView *line2 = [UIView new];
     line2.backgroundColor = rgb(205.f, 205.f, 205.f);

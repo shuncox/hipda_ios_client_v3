@@ -1216,7 +1216,7 @@ HPStupidBarDelegate
         rect.size.height = [object[@"height"] doubleValue];
         rect;
     });
-    rect.origin.y += 64.f;
+    rect.origin.y += HP_NAVBAR_HEIGHT;
     
     // cdn -> 原图url
     // 现在的交互形式是 用户点击小图(CDN压缩图片), 然后加载大图, 加载好大图来替换小图

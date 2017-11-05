@@ -507,9 +507,12 @@
                          if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
                              self.center = CGPointMake(x, (height - 20) - CGRectGetHeight(self.frame) / 2.0);
                          } else {
-                             self.center = CGPointMake(x, height - CGRectGetHeight(self.frame) / 2.0);
+                             if ([UIDevice hp_isiPhoneX]) {
+                                 self.center = CGPointMake(x, height - CGRectGetHeight(self.frame) / 2.0 - [UIDevice hp_safeAreaInsets].bottom + 8.f/*bottom margin*/);
+                             } else {
+                                 self.center = CGPointMake(x, height - CGRectGetHeight(self.frame) / 2.0);
+                             }
                          }
-                         
                      } completion:^(BOOL finished) {
                          self.visible = YES;
                      }];

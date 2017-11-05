@@ -1162,7 +1162,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     CGRect rect = CGRectZero;
     if (m.groups.count == 2) {
         rect = CGRectFromString([(RxMatchGroup *)(m.groups[1]) value]);
-        rect.origin.y += 64.f;
+        rect.origin.y += HP_NAVBAR_HEIGHT;
     }
 
     __block NSArray *images = nil;
@@ -1636,7 +1636,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (!_pageView) {
         
-        _pageView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.bounds.size.width, 82.0f)];
+        _pageView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.bounds.size.width, 82.0f + [UIDevice hp_safeAreaInsets].bottom)];
         
         if (![Setting boolForKey:HPSettingNightMode]) {
             _pageView.backgroundColor = [UIColor whiteColor];
@@ -1743,7 +1743,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
     
     if (!_adjustView) {
         
-        CGFloat height = 150.f;
+        CGFloat height = 150.f + [UIDevice hp_safeAreaInsets].bottom;
         
         _adjustView = [[UIView alloc] initWithFrame:CGRectMake(0.f, self.view.bounds.size.height - height, self.view.bounds.size.width, height)];
     
@@ -2108,9 +2108,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 }
 
 - (CGFloat)contentSize {
-	
     // return height of table view
-    return [self.webView.scrollView contentSize].height;
+    return [self.webView.scrollView contentSize].height + [UIDevice hp_safeAreaInsets].bottom;
 }
 
 - (float)endOfTableView:(UIScrollView *)scrollView {

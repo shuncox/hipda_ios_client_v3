@@ -17,7 +17,7 @@
     int scrollByY = self.frame.size.height;
     int imageName = 0;
     
-    int y = IOS7_OR_LATER ? 64 : 0;
+    int y = HP_NAVBAR_HEIGHT;
     [self stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.scrollTo(0,%d);", y]];
     
     NSMutableArray* images = [[NSMutableArray alloc] init];

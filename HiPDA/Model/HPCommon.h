@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NSUserDefaults+Convenience.h"
+#import "UIDevice+iPhoneX.h"
 
 //helper
 //
@@ -34,6 +35,8 @@
 #define HP_CONVERT_HEIGHT(a) (ceilf((a)*kScreenHeight/568.f))
 
 #define HP_1PX (1.0f / [UIScreen mainScreen].scale)
+
+#define HP_NAVBAR_HEIGHT ([UIDevice hp_isiPhoneX] ? 88.f : 64.f)
 
 // Copy from Tweet4China
 // Created by Jason Hsu

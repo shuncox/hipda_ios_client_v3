@@ -117,7 +117,11 @@
     CGFloat offset = 0;
     if ([self.containerView isKindOfClass:UIScrollView.class]) {
         UIScrollView *v = (UIScrollView *)self.containerView;
-        offset = v.contentOffset.y + v.contentInset.top;
+        if ([UIDevice hp_isiPhoneX]) {
+            offset = v.contentOffset.y + v.contentInset.top + v.safeAreaInsets.top;
+        } else {
+            offset = v.contentOffset.y + v.contentInset.top;
+        }
     }
     
     CGRect backgroundViewFrame = self.backgroundView.frame;

@@ -30,7 +30,7 @@
 #import <SVProgressHUD.h>
 #import "BBBadgeBarButtonItem.h"
 
-#define TOP_CELL_HEIGHT ((IOS7_OR_LATER) ? 64.f : 44.f )
+#define TOP_CELL_HEIGHT (HP_NAVBAR_HEIGHT)
 #define TAG_OVERVIEW 1011
 
 

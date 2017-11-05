@@ -517,14 +517,6 @@ typedef enum{
         _loadingMore = YES;
         [self loadmore:nil];
         [_loadingMoreView setState:EGOOPullRefreshLoading];
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.2];
-        UIEdgeInsets edgeInset = UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f);
-        if (IOS7_OR_LATER) {
-            edgeInset.top += 64.0f;
-        }
-        [self.tableView setContentInset:edgeInset];
-        [UIView commitAnimations];
 	}
 }
 
@@ -532,13 +524,6 @@ typedef enum{
 	
 	_loadingMore = NO;
 	
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:.3];
-    UIEdgeInsets edgeInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
-    if (IOS7_OR_LATER) edgeInset.top = 64.0f;
-	[self.tableView setContentInset:edgeInset];
-	[UIView commitAnimations];
-    
     if ([_loadingMoreView state] != EGOOPullRefreshNormal) {
         [_loadingMoreView setState:EGOOPullRefreshNormal];
     }
@@ -546,7 +531,7 @@ typedef enum{
 
 - (float)tableViewHeight {
     // return height of table view
-    return MAX(CGRectGetHeight(self.tableView.frame) - 64.f, [self.tableView contentSize].height);
+    return MAX(CGRectGetHeight(self.tableView.frame) - HP_NAVBAR_HEIGHT, [self.tableView contentSize].height + [UIDevice hp_safeAreaInsets].bottom);
 }
 
 - (float)endOfTableView:(UIScrollView *)scrollView {
