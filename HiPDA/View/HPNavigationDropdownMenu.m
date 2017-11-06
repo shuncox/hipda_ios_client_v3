@@ -117,10 +117,11 @@
     CGFloat offset = 0;
     if ([self.containerView isKindOfClass:UIScrollView.class]) {
         UIScrollView *v = (UIScrollView *)self.containerView;
-        if ([UIDevice hp_isiPhoneX]) {
-            offset = v.contentOffset.y + v.contentInset.top + v.safeAreaInsets.top;
-        } else {
+
+        if (SYSTEM_VERSION_LESS_THAN(@"11.0")) {
             offset = v.contentOffset.y + v.contentInset.top;
+        } else {
+            offset = v.contentOffset.y + v.contentInset.top + v.safeAreaInsets.top;
         }
     }
     
