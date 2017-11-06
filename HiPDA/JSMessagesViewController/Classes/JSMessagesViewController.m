@@ -443,7 +443,7 @@
 {
     UIEdgeInsets insets = UIEdgeInsetsZero;
 
-    if (![UIDevice hp_isiPhoneX] && [self respondsToSelector:@selector(topLayoutGuide)]) {
+    if (SYSTEM_VERSION_LESS_THAN(@"11.0") && [self respondsToSelector:@selector(topLayoutGuide)]) {
         insets.top = self.topLayoutGuide.length;
     }
     
