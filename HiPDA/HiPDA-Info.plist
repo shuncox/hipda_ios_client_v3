@@ -66,6 +66,8 @@
 	<string>HiPDA需要您的同意, 才能访问相机</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>HiPDA需要您的同意, 才能访问相册</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>HiPDA需要您的同意, 才能访问相册</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
