@@ -198,9 +198,9 @@
 {
     [super viewDidLayoutSubviews];
     
-    // iPhone X 会自动加上 safeArea
-    // 非 iPHone X, 加上 20 (height of status bar)
-    if (![UIDevice hp_isiPhoneX]) {
+    // iOS11+, 比如iPhone X, 会自动加上 safeAreaInsets
+    // iOS11以下, 加上 20 (height of status bar)
+    if (SYSTEM_VERSION_LESS_THAN(@"11.0")) {
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
     }
 }
@@ -302,11 +302,12 @@
     } else if (indexPath.row == _vc_classes.count){
         
         CGFloat screent_height = self.tableView.bounds.size.height;
-        if ([UIDevice hp_isiPhoneX]) {
-            screent_height = screent_height - self.tableView.safeAreaInsets.top - self.tableView.safeAreaInsets.bottom;
-        } else {
+        if (SYSTEM_VERSION_LESS_THAN(@"11.0")) {
             screent_height = screent_height - self.tableView.contentInset.top;
+        } else {
+            screent_height = screent_height - self.tableView.safeAreaInsets.top - self.tableView.safeAreaInsets.bottom;
         }
+        
         CGFloat other_hight_sum = TOP_CELL_HEIGHT + (_vc_classes.count-1)*rowHeight + _fids.count*rowHeight;
         
         return MAX(screent_height - other_hight_sum, 0.f);
