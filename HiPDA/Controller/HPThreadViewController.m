@@ -232,7 +232,9 @@ typedef enum{
                                                            action:@selector(revealToggle:)];
      */
     
-    self.navigationItem.leftBarButtonItem = [[HPRearViewController sharedRearVC] sharedRevealActionBI];
+    UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedItem.width = 40.0f;
+    self.navigationItem.leftBarButtonItems = @[[[HPRearViewController sharedRearVC] sharedRevealActionBI], fixedItem];
     
     _refreshButtonBI = [UIBarButtonItem barItemWithImage:[[UIImage imageNamed:@"home_refresh.png"] changeColor:[UIColor grayColor]]
                                               size:CGSizeMake(40.f, 40.f)
