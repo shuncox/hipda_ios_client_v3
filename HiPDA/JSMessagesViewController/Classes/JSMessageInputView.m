@@ -27,6 +27,8 @@ static const CGFloat accessoryButtonWidth = 44.f;
 - (void)configureInputBarWithStyle:(JSMessageInputViewStyle)style;
 - (void)configureSendButtonWithStyle:(JSMessageInputViewStyle)style;
 
+@property (nonatomic, strong) UIView *iPhoneXBottomFakeView;
+
 @end
 
 
@@ -164,9 +166,21 @@ static const CGFloat accessoryButtonWidth = 44.f;
             UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, 100)];
             v.backgroundColor = [UIColor colorWithRed:247.f/255.f green:247.f/255.f blue:247.f/255.f alpha:1];
             [self addSubview:v];
+            self.iPhoneXBottomFakeView = v;
         }
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    if (self.iPhoneXBottomFakeView) {
+        CGRect f = self.iPhoneXBottomFakeView.frame;
+        f.origin.y = self.frame.size.height;
+        self.iPhoneXBottomFakeView.frame = f;
+    }
 }
 
 - (void)dealloc
