@@ -14,6 +14,7 @@
 #import "NSString+Additions.h"
 #import "HPSettingViewController.h"//¬_¬
 #import "HPLoginViewController.h"//¬_¬
+#import "UIAlertView+Blocks.h"
 #import "HPThread.h"
 #import "NSString+HPOnlineParamaters.h"
 
@@ -246,6 +247,40 @@
 }
 
 
+- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    AFHTTPRequestOperation *operation = [super HTTPRequestOperationWithRequest:urlRequest success:success failure:failure];
+    if (operation) {
+        [operation setRedirectResponseBlock:^NSURLRequest *(NSURLConnection *connection, NSURLRequest *request, NSURLResponse *redirectResponse) {
+            if (redirectResponse && [redirectResponse isKindOfClass:NSHTTPURLResponse.class]) {
+                NSHTTPURLResponse *resp = (NSHTTPURLResponse *)redirectResponse;
+                NSDictionary *headers = resp.allHeaderFields;
+                if (resp.statusCode == 302
+                    && headers[@"Location"]
+                    && [headers[@"Location"] rangeOfString:@"memcp.php?action=bind"].location != NSNotFound) {
+                    [self.class presentBindWebView:headers[@"Location"]];
+                    return nil;
+                }
+            }
+            return request;
+        }];
+    }
+    return operation;
+}
+
++ (void)presentBindWebView:(NSString *)url
+{
+    dispatch_async(dispatch_get_main_queue() , ^{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"实名验证" message:@"根据国家法规要求，用户必须做手机验证, 是否去认证" delegate:nil cancelButtonTitle:@"暂不" otherButtonTitles:@"去认证", nil];
+        [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex != alertView.cancelButtonIndex) {
+                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            }
+        }];
+    });
+}
 
 + (NSString *)GBKresponse2String:(id) responseObject {
     
