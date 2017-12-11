@@ -70,6 +70,7 @@ typedef NSUInteger ActionType;
                     block:(void (^)(NSString *msg, NSError *error))block;
 
 + (void)loadParametersWithBlock:(void (^)(NSDictionary *parameters, NSError *error))block;
++ (void)loadFormHashWithBlock:(void (^)(NSString *formhash, NSError *error))block;
 /*
 + (void)loadParameters:(ActionType )actionType
                    fid:(NSInteger)fid

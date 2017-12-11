@@ -59,34 +59,34 @@
     [self.indicator startAnimating];
 
     __weak typeof(self) weakSelf = self;
-    [HPSendPost loadParametersWithBlock:^(NSDictionary *parameters, NSError *error) {
-         
-         [weakSelf.indicator stopAnimating];
-         
-         _formhash = [parameters objectForKey:@"formhash"];
-         
-         
-         if (_formhash) {
-             
-             if (_waitingForToken) {
-                 _waitingForToken = NO;
-                 [weakSelf send:nil];
-             }
-             
-         } else {
-            
-             [UIAlertView showConfirmationDialogWithTitle:@"出错啦"
-                message:[NSString stringWithFormat:@"获取回复token失败(错误信息:%@), 是否重试?", [error localizedDescription]]
-                handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-              {
-                  if (buttonIndex == [alertView cancelButtonIndex]) {
-                      ;
-                  } else {
-                      [weakSelf loadFormhash];
-                  }
-              }];
-         }
-     }];
+   
+    [HPSendPost loadFormHashWithBlock:^(NSString *formhash, NSError *error) {
+        
+        [weakSelf.indicator stopAnimating];
+        if (error) {
+            if ([error isNeedBindError]) {
+                [weakSelf close];
+                return;
+            }
+            [UIAlertView showConfirmationDialogWithTitle:@"出错啦"
+                                                 message:[NSString stringWithFormat:@"加载失败(%@), 是否重试?", [error localizedDescription]]
+                                                 handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+             {
+                 if (buttonIndex == [alertView cancelButtonIndex]) {
+                     ;
+                 } else {
+                     [weakSelf loadFormhash];
+                 }
+             }];
+            return;
+        }
+        
+        _formhash = formhash;
+        if (_waitingForToken) {
+            _waitingForToken = NO;
+            [weakSelf send:nil];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning

@@ -159,20 +159,17 @@
     
     
     // 2 submit
-    [HPSendPost loadParametersWithBlock:^(NSDictionary *results, NSError *error) {
+    [HPSendPost loadFormHashWithBlock:^(NSString *formhash, NSError *error) {
+
+        if (error) {
+            if (block) {
+                block(@"", error);
+            }
+            return;
+        }
         
         NSString *path = @"forum/my.php?item=favorites&type=thread";
-        
-        NSString *formhash = [results objectForKey:@"formhash"];
-        
-        if (!formhash) {
-            NSDictionary *details = [NSDictionary dictionaryWithObject:@"获取token失败" forKey:NSLocalizedDescriptionKey];
-            block(nil, [NSError errorWithDomain:@"world" code:200 userInfo:details]);
-            return;
-        };
-        
         NSString *tidString = [NSString stringWithFormat:@"%ld", tid];
-        
         NSDictionary *parameters = @{@"formhash": formhash,
                                      @"delete[]": tidString,
                                      @"favsubmit": @"true"};

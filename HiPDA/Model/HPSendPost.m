@@ -359,6 +359,21 @@
     [HPSendPost loadParameters:0 fid:0 tid:0 re:0 block:block];
 }
 
++ (void)loadFormHashWithBlock:(void (^)(NSString *formhash, NSError *error))block {
+    [self.class loadParametersWithBlock:^(NSDictionary *parameters, NSError *error) {
+        if (error) {
+            block(nil, error);
+            return;
+        }
+        NSString *formhash = parameters[@"formhash"];
+        if (formhash.length) {
+            block(formhash, nil);
+        } else {
+            block(nil, [NSError errorWithErrorCode:HPERROR_NO_FORMHASH_CODE errorMsg:@"获取Token失败"]);
+        }
+    }];
+}
+
 + (void)loadParameters:(ActionType)actionType
                    fid:(NSInteger)fid
                    tid:(NSInteger)tid
@@ -432,10 +447,13 @@
         if (block) {
             block(parameters, nil);
         }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {
-            block([NSDictionary dictionary], error);
+            if ([error isNeedBindError]) {
+                block(nil, [NSError errorWithErrorCode:HPERROR_NEED_BIND_CODE errorMsg:@"需要实名认证"]);
+            } else {
+                block(nil, error);
+            }
         }
     }];
 }

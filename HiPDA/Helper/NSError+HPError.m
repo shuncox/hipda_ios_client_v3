@@ -7,6 +7,7 @@
 //
 
 #import "NSError+HPError.h"
+#import "HPHttpClient.h"
 
 @implementation HPCrawlerErrorContext
 @end
@@ -26,5 +27,24 @@
               initWithDomain:@".hi-pda.com"
               code:HPERROR_CRAWLER_CODE
               userInfo:@{NSLocalizedDescriptionKey:@"爬虫错误", @"context": context}];
+}
+
+- (BOOL)isNeedBindError
+{
+    if (self.code == HPERROR_NEED_BIND_CODE) {
+        return YES;
+    }
+    
+    if (self.userInfo && self.userInfo[AFNetworkingOperationFailingURLResponseErrorKey]) {
+        NSHTTPURLResponse *resp = self.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        NSDictionary *headers = resp.allHeaderFields;
+        if (resp.statusCode == 302
+            && headers[@"Location"]
+            && [headers[@"Location"] rangeOfString:@"memcp.php?action=bind"].location != NSNotFound) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 @end

@@ -132,24 +132,17 @@
     [self.indicator startAnimating];
     
     __weak typeof(self) weakSelf = self;
-    [HPSendPost loadParametersWithBlock:^(NSDictionary *parameters, NSError *error) {
-        
+    
+    [HPSendPost loadFormHashWithBlock:^(NSString *formhash, NSError *error) {
+
         [weakSelf.indicator stopAnimating];
-        
-        _formhash = [parameters objectForKey:@"formhash"];
-        
-        
-        if (_formhash) {
-            
-            if (_waitingForToken) {
-                _waitingForToken = NO;
-                [weakSelf send:nil];
+        if (error) {
+            if ([error isNeedBindError]) {
+                [weakSelf close];
+                return;
             }
-            
-        } else {
-            
             [UIAlertView showConfirmationDialogWithTitle:@"出错啦"
-                                                 message:[NSString stringWithFormat:@"获取回复token失败(错误信息:%@), 是否重试?", [error localizedDescription]]
+                                                 message:[NSString stringWithFormat:@"加载失败(%@), 是否重试?", [error localizedDescription]]
                                                  handler:^(UIAlertView *alertView, NSInteger buttonIndex)
              {
                  if (buttonIndex == [alertView cancelButtonIndex]) {
@@ -158,6 +151,13 @@
                      [weakSelf loadFormhash];
                  }
              }];
+            return;
+        }
+
+        _formhash = formhash;
+        if (_waitingForToken) {
+            _waitingForToken = NO;
+            [weakSelf send:nil];
         }
     }];
 }

@@ -11,6 +11,8 @@
 
 #define HPERROR_CRAWLER_CODE (9000)
 #define HPERROR_NOT_DEFAULT_THREAD_SETTING_CODE (9001)
+#define HPERROR_NEED_BIND_CODE (9002)
+#define HPERROR_NO_FORMHASH_CODE (9003)
 
 
 #define HPERROR_DISCUZ_ALERT_CODE (8000)
@@ -26,4 +28,7 @@
 @interface NSError (HPError)
 + (instancetype)errorWithErrorCode:(NSInteger)code errorMsg:(NSString *)errorMsg;
 + (instancetype)crawlerErrorWithContext:(HPCrawlerErrorContext *)context;
+
+- (BOOL)isNeedBindError;
+
 @end

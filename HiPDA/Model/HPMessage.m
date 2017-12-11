@@ -315,17 +315,16 @@
     // emoji
     message = [message stringByReplacingEmojiUnicodeWithCheatCodes];
     
-    [HPSendPost loadParametersWithBlock:^(NSDictionary *results, NSError *error) {
+    [HPSendPost loadFormHashWithBlock:^(NSString *formhash, NSError *error) {
+
+        if (error) {
+            if (block) {
+                block(error);
+            }
+            return;
+        }
         
         NSString *path = @"forum/pm.php?action=send&pmsubmit=yes&infloat=yes&sendnew=yes";
-        NSString *formhash = [results objectForKey:@"formhash"];
-        
-        if (!formhash) {
-            NSDictionary *details = [NSDictionary dictionaryWithObject:@"获取token失败" forKey:NSLocalizedDescriptionKey];
-            block([NSError errorWithDomain:@"world" code:200 userInfo:details]);
-            return;
-        };
-        
         NSDictionary *parameters = @{@"formhash": formhash,
                                      @"message": message,
                                      @"msgto": username,
