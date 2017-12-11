@@ -114,7 +114,7 @@
                
                if (error.code == -1003) {
                    
-                   NSString *tip = @"DNS解析错误, 正在重试中...(%@)\n您可以切换到后两个节点或者更换DNS";
+                   NSString *tip = @"DNS解析错误, 正在重试中...(%@)";
                    if (!self.alertView) {
                        self.alertView = [[UIAlertView alloc] initWithTitle:@"DNS错误" message:S(tip, @"") delegate:self cancelButtonTitle:@"停止" otherButtonTitles:@"切换节点", nil];
                        [self.alertView show];

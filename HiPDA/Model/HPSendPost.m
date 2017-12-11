@@ -295,7 +295,7 @@
             NSString *hash = [parameters objectForKey:@"hash"];
             NSString *fileName = imageName?imageName:[NSString stringWithFormat:@"iOS_fly_%d.jpeg", arc4random() % 101];
             
-            if ([uid isEqual:[NSNull null]] || [hash isEqual:[NSNull null]]) {
+            if (!uid || !hash) {
                 NSLog(@"error !uid || !hash");
                 
                 if (block) {
@@ -414,13 +414,19 @@
         //name="hash" value="56ffb4c9e25da81f57226d959ccf94f9">
         NSString *hash = [html stringBetweenString:@"name=\"hash\" value=\"" andString:@"\""];
         
-        NSDictionary *parameters = @{
-                                     @"formhash":(formhash?formhash:[NSNull null]),
-                                     @"posttime":(posttime?posttime:[NSNull null]),
-                                     @"uid":(uid?uid:[NSNull null]),
-                                     @"hash":(hash?hash:[NSNull null])
-                                     };
-        
+        NSMutableDictionary *parameters = [@{} mutableCopy];
+        if (formhash) {
+            parameters[@"formhash"] = formhash;
+        }
+        if (posttime) {
+            parameters[@"posttime"] = posttime;
+        }
+        if (uid) {
+            parameters[@"uid"] = uid;
+        }
+        if (hash) {
+            parameters[@"hash"] = hash;
+        }
         NSLog(@"get parameters %@", parameters);
         
         if (block) {
