@@ -389,7 +389,6 @@
      DDLogInfo(@"_checkMsgAndNoticeStep2...");
     
     [self.checkPmClient getPathContent:@"forum/memcp.php?action=credits" parameters:nil success:^(AFHTTPRequestOperation *operation, NSString *html) {
-        
         //NSLog(@"checkMsgAndNotice %@", html);
         
         NSInteger pm_count = 0, notice_count = 0;
@@ -433,6 +432,31 @@
             _noticeRetrieveBlock = nil;
         }
     }];
+}
+
+- (void)checkMsgAndNoticeFromAnyPage:(NSString *)html {
+    //NSLog(@"checkMsgAndNotice %@", html);
+    
+    NSInteger pm_count = 0, notice_count = 0;
+    RxMatch *m1 = [RX(@"私人消息 \\((\\d+)\\)") firstMatchWithDetails:html];
+    RxMatch *m2 = [RX(@"帖子消息 \\((\\d+)\\)") firstMatchWithDetails:html];
+    
+    if (m1) {
+        RxMatchGroup *g1 = [m1.groups objectAtIndex:1];
+        pm_count = [g1.value integerValue];
+        DDLogInfo(@"get new pm_count %d", pm_count);
+    }
+    if (m2) {
+        RxMatchGroup *g2 = [m2.groups objectAtIndex:1];
+        notice_count = [g2.value integerValue];
+        DDLogInfo(@"get new notice_count %d", notice_count);
+    }
+    
+    if (pm_count || notice_count) {
+        [Setting saveInteger:pm_count forKey:HPPMCount];
+        [Setting saveInteger:notice_count forKey:HPNoticeCount];
+        [[HPRearViewController sharedRearVC] updateBadgeNumber];
+    }
 }
 
 - (void)addLocalNotification {

@@ -168,6 +168,7 @@
         NSError *error;
         NSString *content = [HPHttpClient prepareHTML:responseObject error:&error];
         //NSLog(@"content html %@", content);
+        [[HPAccount sharedHPAccount] checkMsgAndNoticeFromAnyPage:content];
         
         if (error) {
             failure(operation, error);

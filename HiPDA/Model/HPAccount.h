@@ -32,6 +32,7 @@ typedef void (^NoticeRetrieveBlock)(UIBackgroundFetchResult result);
 //fake register
 - (void)registerWithBlock:(void (^)(BOOL isLogin, NSError *error))block;
 
+- (void)checkMsgAndNoticeFromAnyPage:(NSString *)html;
 
 // bg fetch
 - (void)startCheckWithDelay:(NSTimeInterval)delay;
