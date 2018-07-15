@@ -330,7 +330,7 @@
 
 - (void)checkMsgAndNotice {
     
-    _checkTimer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self selector: @selector(_checkMsgAndNoticeStep1) userInfo:nil repeats:YES];
+    _checkTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector: @selector(_checkMsgAndNoticeStep1) userInfo:nil repeats:YES];
     //_checkTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector: @selector(_checkMsgAndNoticeStep1) userInfo:nil repeats:YES];
     [_checkTimer fire];
 }

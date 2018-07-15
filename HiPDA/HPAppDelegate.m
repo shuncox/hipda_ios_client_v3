@@ -132,7 +132,7 @@
         // backgroudFetch launching...
         DDLogInfo(@"backgroudFetch launching...");
     } else {
-        [[HPAccount sharedHPAccount] startCheckWithDelay:30.f];
+        [[HPAccount sharedHPAccount] startCheckWithDelay:10.f];
         DDLogInfo(@"normal launching...");
     }
     
