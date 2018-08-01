@@ -89,6 +89,7 @@
 		EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */; };
 		EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */; };
 		EA181ED918BB725200EE57F1 /* uid.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EA181ED818BB725200EE57F1 /* uid.sqlite */; };
+		EA223C562111FF770028B78A /* HPPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA223C542111FF760028B78A /* HPPushService.m */; };
 		EA2454BC1B60BF3000BCD6C6 /* HPHotPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */; };
 		EA301CE31D97FA0800F32169 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */; };
 		EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -550,6 +551,8 @@
 		EA17909B1BE0B9D300E8152F /* HPSFSafariViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSFSafariViewController.h; path = Controller/HPSFSafariViewController.h; sourceTree = "<group>"; };
 		EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSFSafariViewController.m; path = Controller/HPSFSafariViewController.m; sourceTree = "<group>"; };
 		EA181ED818BB725200EE57F1 /* uid.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = uid.sqlite; sourceTree = "<group>"; };
+		EA223C542111FF760028B78A /* HPPushService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPPushService.m; path = Service/HPPushService.m; sourceTree = "<group>"; };
+		EA223C552111FF770028B78A /* HPPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPushService.h; path = Service/HPPushService.h; sourceTree = "<group>"; };
 		EA2454BA1B60BF3000BCD6C6 /* HPHotPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHotPatch.h; path = HotPatch/HPHotPatch.h; sourceTree = "<group>"; };
 		EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHotPatch.m; path = HotPatch/HPHotPatch.m; sourceTree = "<group>"; };
 		EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -1892,6 +1895,8 @@
 		EAA727F11D3D263900566999 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				EA223C552111FF770028B78A /* HPPushService.h */,
+				EA223C542111FF760028B78A /* HPPushService.m */,
 				EAA727F21D3D266100566999 /* HPBlockService.h */,
 				EAA727F31D3D266100566999 /* HPBlockService.m */,
 				EA3B91C51E6C11AF00D742EF /* HPCrashReport.h */,
@@ -2595,6 +2600,7 @@
 				EA00C5141D04412B002E2301 /* HPViewSignatureViewController.m in Sources */,
 				EA499F311830C02200172989 /* HPUser.m in Sources */,
 				EA8186BD18E1E1F10092BDD7 /* IBActionSheet.m in Sources */,
+				EA223C562111FF770028B78A /* HPPushService.m in Sources */,
 				EA6249D51CA94844001946B1 /* HPSetImageSizeFilterViewController.m in Sources */,
 				EA13CD991C11B8AD0023041F /* HPActivity.m in Sources */,
 				EA3A7C7C1C95637A00FD4B44 /* NSRegularExpression+HP.m in Sources */,

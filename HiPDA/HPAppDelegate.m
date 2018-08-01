@@ -28,6 +28,7 @@
 #import "NSRegularExpression+HP.h"
 #import "HPReadViewController.h"
 #import "HPCrashReport.h"
+#import "HPPushService.h"
 #import <SDWebImage/SDImageCache.h>
 
 #define AlertPMTag 1357
@@ -141,6 +142,14 @@
     if (localNotification) {
         [self FinishLaunchingWithReciveLocalNotification:localNotification];
     }
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        [HPPushService didRecieveRemoteNotification:userInfo fromLaunching:YES];
+    }
+    
+    // TODO
+    [HPPushService doRegister];
 
     // 友盟统计
     [self setupAnalytics];
@@ -245,6 +254,25 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     [self showAlert];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [HPPushService didRegisterForRemoteNotificationsWithDeviceToken:deviceToken error:nil];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    [HPPushService didRegisterForRemoteNotificationsWithDeviceToken:nil error:error];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    BOOL fromLaunching = YES;
+    if (application.applicationState == UIApplicationStateActive) {
+        fromLaunching = NO;
+    }
+    [HPPushService didRecieveRemoteNotification:userInfo fromLaunching:fromLaunching];
 }
 
 //http://stackoverflow.com/questions/17276898/mpmovieplayerviewcontroller-allow-landscape-mode
