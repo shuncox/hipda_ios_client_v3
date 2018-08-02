@@ -126,9 +126,10 @@
     
     [subAttrString addAttribute:NSParagraphStyleAttributeName value:paragrapStyle range:NSMakeRange(0, [subtitle length])];
     
-    // replyCount red
-    [subAttrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[subtitle rangeOfString:[NSString stringWithFormat:@" %ld", _thread.replyCount]]];
-    
+    if (![Setting boolForKey:HPSettingNightMode]) {
+        // replyCount red
+        [subAttrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[subtitle rangeOfString:[NSString stringWithFormat:@" %ld", _thread.replyCount]]];
+    }    
     
     // title
     //
