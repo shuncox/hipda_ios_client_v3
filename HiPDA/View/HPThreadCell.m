@@ -54,15 +54,8 @@
     CALayer *layer  = _avatarView.layer;
     [layer setMasksToBounds:YES];
     [layer setCornerRadius:3.0];
-
     [layer setBorderWidth:.7f];
-    if ([Setting boolForKey:HPSettingNightMode]) {
-        [layer setBorderColor:[rgb(100.f, 100.f, 100.f) CGColor]];
-    } else {
-        [layer setBorderColor:[rgb(205.f, 205.f, 205.f) CGColor]];
-    }
-    
-    
+
     _titleLabel = [UILabel new];
     [_titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [_titleLabel setNumberOfLines:0];
@@ -102,6 +95,11 @@
 - (void)configure:(HPThread *)thread {
     _thread = thread;
     
+    if ([Setting boolForKey:HPSettingNightMode]) {
+        [_avatarView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    } else {
+        [_avatarView.layer setBorderColor:[rgb(205.f, 205.f, 205.f) CGColor]];
+    }
     
     // subtitle
     //
@@ -129,7 +127,7 @@
     if (![Setting boolForKey:HPSettingNightMode]) {
         // replyCount red
         [subAttrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[subtitle rangeOfString:[NSString stringWithFormat:@" %ld", _thread.replyCount]]];
-    }    
+    }
     
     // title
     //
