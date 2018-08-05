@@ -290,9 +290,9 @@
 
 #pragma mark - Tap Detection
 
-- (void)handleSingleTap:(CGPoint)touchPoint {
-	[_photoBrowser performSelector:@selector(toggleControls) withObject:nil afterDelay:0.2];
-}
+//- (void)handleSingleTap:(CGPoint)touchPoint {
+////    [_photoBrowser performSelector:@selector(toggleControls) withObject:nil afterDelay:0.2];
+//}
 
 - (void)handleDoubleTap:(CGPoint)touchPoint {
 	
@@ -316,7 +316,8 @@
 
 // Image View
 - (void)imageView:(UIImageView *)imageView singleTapDetected:(UITouch *)touch { 
-    [self handleSingleTap:[touch locationInView:imageView]];
+//    [self handleSingleTap:[touch locationInView:imageView]];
+    [_photoBrowser doneButtonPressed:imageView];
 }
 - (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITouch *)touch {
     [self handleDoubleTap:[touch locationInView:imageView]];

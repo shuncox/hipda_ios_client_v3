@@ -1195,7 +1195,7 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         
         browser.delegate = self;
         
-        [self presentViewController:browser animated:YES completion:nil];
+        [self presentViewController:browser animated:NO completion:nil];
     };
     
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];

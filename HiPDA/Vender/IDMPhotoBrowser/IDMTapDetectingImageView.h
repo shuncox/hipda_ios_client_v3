@@ -16,12 +16,10 @@
 @property (nonatomic, weak) id <IDMTapDetectingImageViewDelegate> tapDelegate;
 - (void)handleSingleTap:(UITouch *)touch;
 - (void)handleDoubleTap:(UITouch *)touch;
-- (void)handleTripleTap:(UITouch *)touch;
 @end
 
 @protocol IDMTapDetectingImageViewDelegate <NSObject>
 @optional
 - (void)imageView:(UIImageView *)imageView singleTapDetected:(UITouch *)touch;
 - (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITouch *)touch;
-- (void)imageView:(UIImageView *)imageView tripleTapDetected:(UITouch *)touch;
 @end
