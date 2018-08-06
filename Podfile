@@ -41,6 +41,7 @@ pod 'CocoaLumberjack'
 pod 'SSZipArchive'
 pod 'KVOController'
 pod '1PasswordExtension', '~> 1.8.4'
+pod 'PromisesObjC', '1.2.3'
 
 # JSPatch
 #smart_pod 'JSPatch', '~> 1.1.3'

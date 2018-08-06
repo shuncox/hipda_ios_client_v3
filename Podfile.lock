@@ -45,6 +45,7 @@ PODS:
   - NSString+Emoji (0.2.0)
   - Objective-LevelDB (2.1.4):
     - leveldb-library (~> 1.18)
+  - PromisesObjC (1.2.3)
   - Qiniu (7.0.7):
     - AFNetworking (~> 1.0)
   - ReactiveCocoa (2.5):
@@ -89,6 +90,7 @@ DEPENDENCIES:
   - MTLog
   - NSString+Emoji
   - Objective-LevelDB
+  - PromisesObjC (= 1.2.3)
   - Qiniu (from `https://github.com/qiniu/objc-sdk.git`, branch `AFNetworking-1.x`)
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
@@ -143,6 +145,7 @@ SPEC CHECKSUMS:
   MTLog: 058f30e9cd35d7394c8050ef2e3361c35f9ca1d3
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
+  PromisesObjC: a3a4263d8a9260214267e0b3788d0f83466ad449
   Qiniu: 1cf45054ac5395e047f3644bdc72da7040f5b35d
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
@@ -157,6 +160,6 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 61738ca8d02797a046d12d1d2ae9a965967c188a
+PODFILE CHECKSUM: 6bc560600584b9cd0651eb4d6ba28fa976fadd66
 
 COCOAPODS: 1.1.1
