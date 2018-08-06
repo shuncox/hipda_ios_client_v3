@@ -374,7 +374,6 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         return;
     }
     
-    self.view.alpha = 0.0f;
     _pagingScrollView.alpha = 0.f;
     
     CGRect screenBound = [[UIScreen mainScreen] bounds];
@@ -542,6 +541,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 	CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
 	_pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
     //_pagingScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _pagingScrollView.alpha = 0.f;
 	_pagingScrollView.pagingEnabled = YES;
 	_pagingScrollView.delegate = self;
 	_pagingScrollView.showsHorizontalScrollIndicator = NO;
