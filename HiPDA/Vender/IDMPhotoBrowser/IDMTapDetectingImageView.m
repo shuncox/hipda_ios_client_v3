@@ -25,6 +25,10 @@
         [self addGestureRecognizer:doubleTap];
 
         [singleTap requireGestureRecognizerToFail:doubleTap];
+        
+        UILongPressGestureRecognizer *longPress =
+        [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongTap:)];
+        [self addGestureRecognizer:longPress];
 	}
 	return self;
 }
@@ -43,14 +47,23 @@
 	return self;
 }
 
-- (void)handleSingleTap:(UITouch *)touch {
+- (void)handleSingleTap:(UITapGestureRecognizer *)singleTap {
 	if ([tapDelegate respondsToSelector:@selector(imageView:singleTapDetected:)])
-		[tapDelegate imageView:self singleTapDetected:touch];
+		[tapDelegate imageView:self singleTapDetected:singleTap];
 }
 
-- (void)handleDoubleTap:(UITouch *)touch {
+- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTap {
 	if ([tapDelegate respondsToSelector:@selector(imageView:doubleTapDetected:)])
-		[tapDelegate imageView:self doubleTapDetected:touch];
+		[tapDelegate imageView:self doubleTapDetected:doubleTap];
+}
+
+- (void)handleLongTap:(UILongPressGestureRecognizer *)longPress
+{
+    if (longPress.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    if ([tapDelegate respondsToSelector:@selector(imageView:longTapDetected:)])
+        [tapDelegate imageView:self longTapDetected:longPress];
 }
 
 - (void)dealloc

@@ -34,14 +34,14 @@
 	return self;
 }
 
-- (void)handleSingleTap:(UITouch *)touch {
-	if ([self.tapDelegate respondsToSelector:@selector(view:singleTapDetected:)])
-		[self.tapDelegate view:self singleTapDetected:touch];
+- (void)handleSingleTap:(UITapGestureRecognizer *)singleTap {
+    if ([self.tapDelegate respondsToSelector:@selector(view:singleTapDetected:)])
+        [self.tapDelegate view:self singleTapDetected:singleTap];
 }
 
-- (void)handleDoubleTap:(UITouch *)touch {
-	if ([self.tapDelegate respondsToSelector:@selector(view:doubleTapDetected:)])
-		[self.tapDelegate view:self doubleTapDetected:touch];
+- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTap {
+    if ([self.tapDelegate respondsToSelector:@selector(view:doubleTapDetected:)])
+        [self.tapDelegate view:self doubleTapDetected:doubleTap];
 }
 
 - (void)dealloc
