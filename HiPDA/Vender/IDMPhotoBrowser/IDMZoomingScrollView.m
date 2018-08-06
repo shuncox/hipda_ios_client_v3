@@ -315,21 +315,24 @@
 }
 
 // Image View
-- (void)imageView:(UIImageView *)imageView singleTapDetected:(UITouch *)touch { 
+- (void)imageView:(UIImageView *)imageView singleTapDetected:(UITapGestureRecognizer *)singleTap {
 //    [self handleSingleTap:[touch locationInView:imageView]];
     [_photoBrowser doneButtonPressed:imageView];
 }
-- (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITouch *)touch {
-    [self handleDoubleTap:[touch locationInView:imageView]];
+- (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITapGestureRecognizer *)doubleTap {
+    [self handleDoubleTap:[doubleTap locationInView:imageView]];
+}
+- (void)imageView:(UIImageView *)imageView longTapDetected:(UILongPressGestureRecognizer *)longPress {
+    [_photoBrowser actionButtonPressed:imageView];
 }
 
 // Background View
-- (void)view:(UIView *)view singleTapDetected:(UITouch *)touch {
+- (void)view:(UIView *)view singleTapDetected:(UITapGestureRecognizer *)singleTap {
     //[self handleSingleTap:[touch locationInView:view]];
     [_photoBrowser doneButtonPressed:view];
 }
-- (void)view:(UIView *)view doubleTapDetected:(UITouch *)touch {
-    [self handleDoubleTap:[touch locationInView:view]];
+- (void)view:(UIView *)view doubleTapDetected:(UITapGestureRecognizer *)doubleTap {
+    [self handleDoubleTap:[doubleTap locationInView:view]];
 }
 
 - (void)dealloc

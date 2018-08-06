@@ -78,4 +78,5 @@
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 
 - (void)doneButtonPressed:(id)sender;
+- (void)actionButtonPressed:(id)sender;
 @end
