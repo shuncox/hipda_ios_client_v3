@@ -5,6 +5,8 @@
 
 #import "HPPushService.h"
 #import "HPApi.h"
+#import "HPPushData.h"
+#import "HPRearViewController.h"
 
 static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN";
 
@@ -68,27 +70,21 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
 + (void)didRecieveRemoteNotification:(NSDictionary *)userInfo
                        fromLaunching:(BOOL)fromLaunching {
     
-    /*{
-        "aps": {
-            "alert": "【黄晓明躲baby身..",
-            "badge": null,
-            "sound": null
-        },
-        "mt": 5,
-        "rid": "notice_132401"
-    }*/
-    long type = [[userInfo objectForKey:@"mt"] longValue];
-    NSString *refIdentifier = [userInfo objectForKey:@"rid"];
+
+    HPPushData *data = [MTLJSONAdapter modelOfClass:HPPushData.class
+                                 fromJSONDictionary:userInfo
+                                              error:nil];
     
-    NSString *alertBody = nil;
-    NSDictionary *aps = [userInfo objectForKey:@"aps"];
-    if (aps && [aps isKindOfClass:NSDictionary.class]) {
-        alertBody = [userInfo objectForKey:@"alert"];
-    }
+    NSString *title = data.aps[@"alert"];
     
     if (!fromLaunching) {
+        
+        
+        
         return;
     }
+    
+    
 }
 
 @end

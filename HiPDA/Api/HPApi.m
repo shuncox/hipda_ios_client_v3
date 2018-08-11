@@ -11,6 +11,7 @@
 #import <Mantle/Mantle.h>
 #import "NSError+HPError.h"
 #import "HPApiConfig.h"
+#import "HPLabUserService.h"
 
 @interface HPApi()
 
@@ -52,10 +53,23 @@
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass
 {
+     return [self request:api params:params returnClass:returnClass needLogin:YES];
+}
+
+- (FBLPromise *)request:(NSString *)api
+                 params:(NSDictionary *)params
+            returnClass:(Class)returnClass
+              needLogin:(BOOL)needLogin
+{
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
                                                                      FBLPromiseRejectBlock reject) {
         NSString *url = [self.config.baseUrl stringByAppendingString:api];
-        NSDictionary *headers = @{@"X-TOKEN": @"644982_ddb8f780014d48fcbdd178f292f9fd57"};
+        NSString *token = [HPLabUserService instance].user.token;
+        if (needLogin && !token.length) {
+            reject([NSError errorWithErrorCode:-1 errorMsg:@"token不存在"]);
+            return;
+        }
+        NSDictionary *headers = @{@"X-TOKEN": token ?: @""};
         
         DDLogInfo(@"request api: %@, params: %@", api, params);
         [self post:url params:params headers:headers

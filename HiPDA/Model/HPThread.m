@@ -20,7 +20,7 @@
 #import "NSString+Additions.h"
 #import "NSUserDefaults+Convenience.h"
 #import "NSString+HTML.h"
-
+#import "NSRegularExpression+HP.h"
 #import <AFHTTPRequestOperation.h>
 
 @implementation HPThread
@@ -188,6 +188,7 @@
             block([threads copy], nil);
         }
         
+        [self saveUID:html];
     
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {
@@ -211,6 +212,15 @@
             }
         }];
     });
+}
+
++ (void)saveUID:(NSString *)html
+{
+    NSString *tid = [RX(@"<cite><a href=\"space\\.php\\?uid=(\\d+)[^>]+>[^<]+</a>") firstMatchValue:html];
+    if (tid.length) {
+        [[NSUserDefaults standardUserDefaults] setObject:tid forKey:kHPAccountUID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 //

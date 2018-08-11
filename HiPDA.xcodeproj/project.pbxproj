@@ -106,6 +106,11 @@
 		EA3B91BE1E6C09B500D742EF /* HPOnceRunService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B91BD1E6C09B500D742EF /* HPOnceRunService.m */; };
 		EA3B91C71E6C11AF00D742EF /* HPCrashReport.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */; };
 		EA3B991F18F9812900F726E1 /* HPBgFetchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B991E18F9812900F726E1 /* HPBgFetchViewController.m */; };
+		EA3C7055211F1170003DD443 /* HPPushData.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C7054211F1170003DD443 /* HPPushData.m */; };
+		EA3C705F211F15DB003DD443 /* HPLabService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C705E211F15DB003DD443 /* HPLabService.m */; };
+		EA3C7062211F15EC003DD443 /* HPLabUserService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C7061211F15EC003DD443 /* HPLabUserService.m */; };
+		EA3C7067211F16E1003DD443 /* HPLabUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C7066211F16E1003DD443 /* HPLabUser.m */; };
+		EA3C706A211F1D17003DD443 /* HPLabGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3C7069211F1D17003DD443 /* HPLabGuideViewController.m */; };
 		EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C12184AD81700B86C92 /* HPMessageViewController.m */; };
 		EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C15184B5C7500B86C92 /* HPMessageDetailViewController.m */; };
 		EA3FF77C1EED86FC00FFE648 /* HPImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */; };
@@ -588,6 +593,16 @@
 		EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPCrashReport.m; path = Service/HPCrashReport.m; sourceTree = "<group>"; };
 		EA3B991D18F9812900F726E1 /* HPBgFetchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBgFetchViewController.h; path = Controller/HPBgFetchViewController.h; sourceTree = "<group>"; };
 		EA3B991E18F9812900F726E1 /* HPBgFetchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPBgFetchViewController.m; path = Controller/HPBgFetchViewController.m; sourceTree = "<group>"; };
+		EA3C7053211F1170003DD443 /* HPPushData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPPushData.h; path = Model/HPPushData.h; sourceTree = "<group>"; };
+		EA3C7054211F1170003DD443 /* HPPushData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPPushData.m; path = Model/HPPushData.m; sourceTree = "<group>"; };
+		EA3C705D211F15DB003DD443 /* HPLabService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPLabService.h; sourceTree = "<group>"; };
+		EA3C705E211F15DB003DD443 /* HPLabService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPLabService.m; sourceTree = "<group>"; };
+		EA3C7060211F15EC003DD443 /* HPLabUserService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPLabUserService.h; sourceTree = "<group>"; };
+		EA3C7061211F15EC003DD443 /* HPLabUserService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPLabUserService.m; sourceTree = "<group>"; };
+		EA3C7065211F16E1003DD443 /* HPLabUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPLabUser.h; sourceTree = "<group>"; };
+		EA3C7066211F16E1003DD443 /* HPLabUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPLabUser.m; sourceTree = "<group>"; };
+		EA3C7068211F1D17003DD443 /* HPLabGuideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPLabGuideViewController.h; sourceTree = "<group>"; };
+		EA3C7069211F1D17003DD443 /* HPLabGuideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPLabGuideViewController.m; sourceTree = "<group>"; };
 		EA3F4C11184AD81700B86C92 /* HPMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPMessageViewController.h; path = Controller/HPMessageViewController.h; sourceTree = "<group>"; };
 		EA3F4C12184AD81700B86C92 /* HPMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessageViewController.m; path = Controller/HPMessageViewController.m; sourceTree = "<group>"; };
 		EA3F4C14184B5C7500B86C92 /* HPMessageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPMessageDetailViewController.h; path = Controller/HPMessageDetailViewController.h; sourceTree = "<group>"; };
@@ -1380,6 +1395,29 @@
 			name = Compostion;
 			sourceTree = "<group>";
 		};
+		EA3C7056211F1471003DD443 /* Lab */ = {
+			isa = PBXGroup;
+			children = (
+				EA3C7064211F16D7003DD443 /* Model */,
+				EA3C705D211F15DB003DD443 /* HPLabService.h */,
+				EA3C705E211F15DB003DD443 /* HPLabService.m */,
+				EA3C7060211F15EC003DD443 /* HPLabUserService.h */,
+				EA3C7061211F15EC003DD443 /* HPLabUserService.m */,
+				EA3C7068211F1D17003DD443 /* HPLabGuideViewController.h */,
+				EA3C7069211F1D17003DD443 /* HPLabGuideViewController.m */,
+			);
+			path = Lab;
+			sourceTree = "<group>";
+		};
+		EA3C7064211F16D7003DD443 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA3C7065211F16E1003DD443 /* HPLabUser.h */,
+				EA3C7066211F16E1003DD443 /* HPLabUser.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		EA4138C6188D5524001F9542 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1468,6 +1506,8 @@
 				EA06A5F618C0E45F00EDBDEA /* More */,
 				EA3FF77A1EED86FC00FFE648 /* HPImageNode.h */,
 				EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */,
+				EA3C7053211F1170003DD443 /* HPPushData.h */,
+				EA3C7054211F1170003DD443 /* HPPushData.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2138,6 +2178,7 @@
 		EAFDB84B1829EFA900C1718B /* HiPDA */ = {
 			isa = PBXGroup;
 			children = (
+				EA3C7056211F1471003DD443 /* Lab */,
 				EA084D93211C864A003089E7 /* Api */,
 				EA6408FA1EB0E5B0004AD7CD /* Log */,
 				EA8947271D3BB554009261DD /* HiPDA.entitlements */,
@@ -2592,6 +2633,7 @@
 				EA499F501830C32700172989 /* UIImage+fixOrientation.m in Sources */,
 				EA9A39AF1A5BE92E0028BE7D /* JSBubbleImageViewFactory.m in Sources */,
 				EA084D9C211C91DF003089E7 /* HPApiResult.m in Sources */,
+				EA3C705F211F15DB003DD443 /* HPLabService.m in Sources */,
 				EA480F2C18BA19F300C1E522 /* HPDatabase.m in Sources */,
 				EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */,
 				EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */,
@@ -2657,6 +2699,7 @@
 				EA9A39B51A5BE92E0028BE7D /* JSMessageSoundEffect.m in Sources */,
 				EAA1E68E18D03A6700E1CFE1 /* MultilineTextItem.m in Sources */,
 				EAA1E68D18D03A6700E1CFE1 /* MultilineTextCell.m in Sources */,
+				EA3C7067211F16E1003DD443 /* HPLabUser.m in Sources */,
 				EA499F4F1830C32700172989 /* NSString+Additions.m in Sources */,
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
@@ -2701,6 +2744,7 @@
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
 				EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */,
 				EA42B9B01EA4FDCB008FC2AA /* WKWebView+Synchronize.m in Sources */,
+				EA3C706A211F1D17003DD443 /* HPLabGuideViewController.m in Sources */,
 				EA0880191C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m in Sources */,
 				EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */,
 				EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */,
@@ -2729,6 +2773,7 @@
 				EA9A39AD1A5BE92E0028BE7D /* UIImage+JSMessagesView.m in Sources */,
 				EA083D6E18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				EA42B9B61EA50BFC008FC2AA /* HPJSMessage.m in Sources */,
+				EA3C7062211F15EC003DD443 /* HPLabUserService.m in Sources */,
 				EA7514B61E7783F1002C7D3B /* HPActivityItem.m in Sources */,
 				EA6E72251EEC46EA0050B496 /* HPPDFPreviewViewController.m in Sources */,
 				EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */,
@@ -2739,6 +2784,7 @@
 				EA4CDC6E1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m in Sources */,
 				EA5F164818D7062900F6AAB3 /* NSHTTPCookieStorage+info.m in Sources */,
 				EAC5C33D1E93D36E0054A66E /* HPPostViewController.m in Sources */,
+				EA3C7055211F1170003DD443 /* HPPushData.m in Sources */,
 				EA499F461830C2D800172989 /* TFHpple.m in Sources */,
 				EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */,
 				EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */,

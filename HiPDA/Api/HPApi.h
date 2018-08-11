@@ -20,4 +20,9 @@
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass;
 
+- (FBLPromise *)request:(NSString *)api
+                 params:(NSDictionary *)params
+            returnClass:(Class)returnClass
+              needLogin:(BOOL)needLogin;
+
 @end
