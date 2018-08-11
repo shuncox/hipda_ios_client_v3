@@ -14,6 +14,9 @@
 + (instancetype)instance;
 
 - (FBLPromise *)request:(NSString *)api
+                 params:(NSDictionary *)params;
+
+- (FBLPromise *)request:(NSString *)api
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass;
 

@@ -44,6 +44,12 @@
 
 - (FBLPromise *)request:(NSString *)api
                  params:(NSDictionary *)params
+{
+    return [self request:api params:params returnClass:nil];
+}
+
+- (FBLPromise *)request:(NSString *)api
+                 params:(NSDictionary *)params
             returnClass:(Class)returnClass
 {
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,

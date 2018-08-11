@@ -4,6 +4,7 @@
 //
 
 #import "HPPushService.h"
+#import "HPApi.h"
 
 static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN";
 
@@ -35,17 +36,33 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
     if (error) {
         return;
     }
-
-    NSString *tokenString = [NSString stringWithFormat:@"%@",deviceToken];
     
-    [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:NOTIFICATION_DEVICE_TOKEN];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+#ifdef DEBUG
+    int env = 1;
+#else
+    int env = 0;
+#endif
+    NSString *key = [NSString stringWithFormat:@"%@_%@", NOTIFICATION_DEVICE_TOKEN, @(env)];
     
-//    [[BFClient sharedClient] uploadDeviceToken:deviceToken success:^{
-//        NSLog(@"upload token done");
-//    } failure:^(NSString *errorMessage, NSError *error) {
-//        NSLog(@"upload token error %@", errorMessage);
-//    }];
+    NSString *tokenString = [[[[NSString stringWithFormat:@"%@", deviceToken] stringByReplacingOccurrencesOfString:@"<" withString:@""] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *oldDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+   
+    if (oldDeviceToken && [tokenString isEqualToString:oldDeviceToken]) {
+        DDLogInfo(@"token没有变");
+        return;
+    }
+    
+    [[[[HPApi instance] request:@"/device_token/update"
+                         params:@{@"currToken": tokenString,
+                                  @"prevToken": oldDeviceToken ?: @"",
+                                  @"env": @(env)}]
+      then:^id(id data) {
+          [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:key];
+          [[NSUserDefaults standardUserDefaults] synchronize];
+          return nil;
+      }] catch:^(NSError *error) {
+          DDLogError(@"token上传失败 %@", error);
+      }];
 }
 
 + (void)didRecieveRemoteNotification:(NSDictionary *)userInfo
