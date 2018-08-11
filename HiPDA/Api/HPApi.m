@@ -14,6 +14,7 @@
 @interface HPApi()
 
 @property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) dispatch_queue_t queue;;
 
 @end
 
@@ -25,6 +26,7 @@
     if (self) {
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _session = [NSURLSession sessionWithConfiguration:configuration];
+        _queue = dispatch_queue_create("com.jichaowu.HPApi", DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
 }
@@ -33,8 +35,8 @@
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass
 {
-    FBLPromise<id> *promise = [FBLPromise onQueue:dispatch_get_main_queue() async:^(FBLPromiseFulfillBlock fulfill,
-                                                                                    FBLPromiseRejectBlock reject) {
+    FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
+                                                                     FBLPromiseRejectBlock reject) {
         NSString *url = [@"http://localhost:8080/api" stringByAppendingString:api];
         NSDictionary *headers = @{@"X-TOKEN": @"644982_ddb8f780014d48fcbdd178f292f9fd57"};
         [self post:url params:params headers:headers
