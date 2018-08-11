@@ -11,6 +11,8 @@
 
 @interface HPApi : NSObject
 
++ (instancetype)instance;
+
 - (FBLPromise *)request:(NSString *)api
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass;

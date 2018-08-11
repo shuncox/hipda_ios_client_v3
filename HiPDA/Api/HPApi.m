@@ -22,6 +22,14 @@
 
 @implementation HPApi
 
++ (instancetype)instance;
+{
+    static dispatch_once_t once;
+    static HPApi *singleton;
+    dispatch_once(&once, ^ { singleton = [[HPApi alloc] init]; });
+    return singleton;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -67,12 +75,15 @@
                   return;
               }
               
-              id data = [MTLJSONAdapter modelOfClass:returnClass
-                                  fromJSONDictionary:result.data
-                                               error:&json_error];
-              if (json_error) {
-                  reject(json_error);
-                  return;
+              id data = result.data;
+              if (returnClass) {
+                  data = [MTLJSONAdapter modelOfClass:returnClass
+                                   fromJSONDictionary:result.data
+                                                error:&json_error];
+                  if (json_error) {
+                      reject(json_error);
+                      return;
+                  }
               }
               
               fulfill(data);
