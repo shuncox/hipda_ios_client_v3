@@ -10,11 +10,13 @@
 #import "HPApiResult.h"
 #import <Mantle/Mantle.h>
 #import "NSError+HPError.h"
+#import "HPApiConfig.h"
 
 @interface HPApi()
 
+@property (nonatomic, strong) HPApiConfig *config;
 @property (nonatomic, strong) NSURLSession *session;
-@property (nonatomic, strong) dispatch_queue_t queue;;
+@property (nonatomic, strong) dispatch_queue_t queue;
 
 @end
 
@@ -24,6 +26,7 @@
 {
     self = [super init];
     if (self) {
+        _config = [HPApiConfig config];
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _session = [NSURLSession sessionWithConfiguration:configuration];
         _queue = dispatch_queue_create("com.jichaowu.HPApi", DISPATCH_QUEUE_CONCURRENT);
@@ -37,10 +40,13 @@
 {
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
                                                                      FBLPromiseRejectBlock reject) {
-        NSString *url = [@"http://localhost:8080/api" stringByAppendingString:api];
+        NSString *url = [self.config.baseUrl stringByAppendingString:api];
         NSDictionary *headers = @{@"X-TOKEN": @"644982_ddb8f780014d48fcbdd178f292f9fd57"};
+        
+        DDLogInfo(@"request api: %@, params: %@", api, params);
         [self post:url params:params headers:headers
           complete:^(NSDictionary *json, NSError *error) {
+              DDLogInfo(@"request api: %@, result: %@, error: %@", api, json, error);
               if (error) {
                   reject(error);
                   return;
@@ -85,6 +91,8 @@
     
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    NSString *UA = [NSString stringWithFormat:@"com.jichaowu.hipda %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    [request addValue:UA forHTTPHeaderField:@"User-Agent"];
     if (headers) {
         [request setAllHTTPHeaderFields:headers];
     }

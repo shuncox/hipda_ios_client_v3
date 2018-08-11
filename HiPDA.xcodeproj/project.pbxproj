@@ -67,8 +67,9 @@
 		EA083DBE18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBB18C8D18900BD8F07 /* WUDemoKeyboardTextKeyCell.m */; };
 		EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */; };
 		EA084D96211C864A003089E7 /* HPApi.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084D94211C864A003089E7 /* HPApi.m */; };
-		EA084D99211C8DEB003089E7 /* HPApiUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084D98211C8DEB003089E7 /* HPApiUser.m */; };
 		EA084D9C211C91DF003089E7 /* HPApiResult.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084D9B211C91DF003089E7 /* HPApiResult.m */; };
+		EA084D9F211EC392003089E7 /* HPApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084D9E211EC392003089E7 /* HPApiConfig.m */; };
+		EA084DA3211EC95F003089E7 /* HPApiUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084DA2211EC95F003089E7 /* HPApiUser.m */; };
 		EA0880191C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0880181C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m */; };
 		EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0901A9185316DD0067961E /* HPSetForumsViewController.m */; };
 		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; };
@@ -519,10 +520,12 @@
 		EA083DBC18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WUDemoKeyboardBuilder.m; path = Vender/WUEmoticonsKeyboard/custom/WUDemoKeyboardBuilder.m; sourceTree = "<group>"; };
 		EA084D94211C864A003089E7 /* HPApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPApi.m; sourceTree = "<group>"; };
 		EA084D95211C864A003089E7 /* HPApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPApi.h; sourceTree = "<group>"; };
-		EA084D97211C8DEB003089E7 /* HPApiUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiUser.h; sourceTree = "<group>"; };
-		EA084D98211C8DEB003089E7 /* HPApiUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiUser.m; sourceTree = "<group>"; };
 		EA084D9A211C91DF003089E7 /* HPApiResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiResult.h; sourceTree = "<group>"; };
 		EA084D9B211C91DF003089E7 /* HPApiResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiResult.m; sourceTree = "<group>"; };
+		EA084D9D211EC392003089E7 /* HPApiConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiConfig.h; sourceTree = "<group>"; };
+		EA084D9E211EC392003089E7 /* HPApiConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiConfig.m; sourceTree = "<group>"; };
+		EA084DA1211EC95F003089E7 /* HPApiUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPApiUser.h; sourceTree = "<group>"; };
+		EA084DA2211EC95F003089E7 /* HPApiUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPApiUser.m; sourceTree = "<group>"; };
 		EA0880171C15A2FD008F01A7 /* UMOnlineConfig+BOOL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UMOnlineConfig+BOOL.h"; path = "Helper/UMOnlineConfig+BOOL.h"; sourceTree = "<group>"; };
 		EA0880181C15A2FD008F01A7 /* UMOnlineConfig+BOOL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UMOnlineConfig+BOOL.m"; path = "Helper/UMOnlineConfig+BOOL.m"; sourceTree = "<group>"; };
 		EA0901A8185316DD0067961E /* HPSetForumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetForumsViewController.h; path = Controller/HPSetForumsViewController.h; sourceTree = "<group>"; };
@@ -1214,12 +1217,22 @@
 			children = (
 				EA084D95211C864A003089E7 /* HPApi.h */,
 				EA084D94211C864A003089E7 /* HPApi.m */,
-				EA084D97211C8DEB003089E7 /* HPApiUser.h */,
-				EA084D98211C8DEB003089E7 /* HPApiUser.m */,
 				EA084D9A211C91DF003089E7 /* HPApiResult.h */,
 				EA084D9B211C91DF003089E7 /* HPApiResult.m */,
+				EA084D9D211EC392003089E7 /* HPApiConfig.h */,
+				EA084D9E211EC392003089E7 /* HPApiConfig.m */,
+				EA084DA0211EC95F003089E7 /* Response */,
 			);
 			path = Api;
+			sourceTree = "<group>";
+		};
+		EA084DA0211EC95F003089E7 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				EA084DA1211EC95F003089E7 /* HPApiUser.h */,
+				EA084DA2211EC95F003089E7 /* HPApiUser.m */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		EA0FF7B41837B05300B0EBA6 /* DZWebBrowser */ = {
@@ -2648,7 +2661,6 @@
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
-				EA084D99211C8DEB003089E7 /* HPApiUser.m in Sources */,
 				EA6409061EB0E841004AD7CD /* HPLogger.m in Sources */,
 				EAC5C3481E93F0940054A66E /* NJKWebViewProgressView.m in Sources */,
 				EA68C45F1D0AE463009E635F /* HPThreadFilterMenuItemView.m in Sources */,
@@ -2681,6 +2693,7 @@
 				EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */,
 				EAAFD2391BE09D34001E24EC /* HPSwipeRootViewController.m in Sources */,
 				EA6409031EB0E5B0004AD7CD /* HPLoggerViewerDetailController.m in Sources */,
+				EA084DA3211EC95F003089E7 /* HPApiUser.m in Sources */,
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
 				EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */,
@@ -2745,6 +2758,7 @@
 				EA78407E1BE203D400139141 /* NSError+HPError.m in Sources */,
 				EAD214821E75A07700C6ECC1 /* HPNSURLCacheCleaner.m in Sources */,
 				EADF46721CA76CDC00D71C25 /* NSString+HPImageSize.m in Sources */,
+				EA084D9F211EC392003089E7 /* HPApiConfig.m in Sources */,
 				EAA727F41D3D266100566999 /* HPBlockService.m in Sources */,
 				EA075F5E18E447FD00A07C08 /* HPNewThreadViewController.m in Sources */,
 			);
