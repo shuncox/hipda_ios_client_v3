@@ -24,12 +24,12 @@
 
 #pragma mark - cookiesPermission
 
-- (BOOL)cookiesPermission
+- (BOOL)grantUploadCookies
 {
     return [[HPSetting sharedSetting] boolForKey:HPSettingLabCookiesPermission];
 }
 
-- (void)setCookiesPermission:(BOOL)grant
+- (void)setGrantUploadCookies:(BOOL)grant
 {
     [[HPSetting sharedSetting] saveBool:grant forKey:HPSettingLabCookiesPermission];
 }
@@ -37,7 +37,7 @@
 
 - (FBLPromise *)checkCookiesPermission
 {
-    if ([HPLabService instance].cookiesPermission) {
+    if ([HPLabService instance].grantUploadCookies) {
         return [FBLPromise resolvedWith:@YES];
     }
     
@@ -50,7 +50,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确认上传cookies" message:@"blabla..." delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
         [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex != alertView.cancelButtonIndex) {
-                self.cookiesPermission = YES;
+                self.grantUploadCookies = YES;
                 fulfill(@YES);
             } else {
                 fulfill(@NO);
@@ -61,12 +61,12 @@
 
 #pragma mark - push
 
-- (BOOL)enablePush
+- (BOOL)enableMessagePush
 {
     return [[HPSetting sharedSetting] boolForKey:HPSettingLabEnablePush];
 }
 
-- (void)setEnablePush:(BOOL)enable
+- (void)setEnableMessagePush:(BOOL)enable
 {
     [[HPSetting sharedSetting] saveBool:enable forKey:HPSettingLabEnablePush];
 }

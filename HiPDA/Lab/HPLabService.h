@@ -14,11 +14,11 @@
 + (instancetype)instance;
 
 // 授权上传cookies
-@property (nonatomic, assign) BOOL cookiesPermission;
+@property (nonatomic, assign) BOOL grantUploadCookies;
 - (FBLPromise<NSNumber/*BOOL*/ *> *)checkCookiesPermission;
 
 // 开启消息推送
-@property (nonatomic, assign) BOOL enablePush;
+@property (nonatomic, assign) BOOL enableMessagePush;
 - (FBLPromise<NSNumber/*BOOL*/ *> *)getPushEnable;
 - (FBLPromise *)updatePushEnable:(BOOL)enable;
 

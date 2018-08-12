@@ -134,10 +134,16 @@
     }];
     
     [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
+        // 1. 请求上传cookies的权限
         [[[[HPLabService instance] checkCookiesPermission] then:^id(NSNumber *grant) {
             if (grant.boolValue) {
+                // TODO: 2. 请求推送权限
+                
+                // 3. 调用接口开启推送
+                
+                // 4. 优化成promise chain, 而不是 callback hell
                 [[[[HPLabService instance] updatePushEnable:s.on] then:^id(id data) {
-                    [HPLabService instance].enablePush = s.on;
+                    [HPLabService instance].enableMessagePush = s.on;
                     return nil;
                 }] catch:^(NSError *error) {
                     s.on = !s.on;
@@ -209,14 +215,14 @@
 - (void)refresh:(id)sender
 {
     self.textLabel.text = [HPLabUserService instance].user.description;
-    self.enableLabSwitch.on = [HPLabService instance].cookiesPermission;
-    self.enablePushSwitch.on = [HPLabService instance].enablePush;
+    self.enableLabSwitch.on = [HPLabService instance].grantUploadCookies;
+    self.enablePushSwitch.on = [HPLabService instance].enableMessagePush;
     self.enableSubSwitch.on = [HPLabService instance].enableSubscribe;
     
     if ([HPLabUserService instance].isLogin) {
         [[[[HPLabService instance] getPushEnable] then:^id(NSNumber *enable) {
-            [HPLabService instance].enablePush = enable.boolValue;
-            self.enablePushSwitch.on = [HPLabService instance].enablePush;
+            [HPLabService instance].enableMessagePush = enable.boolValue;
+            self.enablePushSwitch.on = [HPLabService instance].enableMessagePush;
             return nil;
         }] catch:^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];

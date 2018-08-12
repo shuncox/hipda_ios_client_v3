@@ -67,7 +67,8 @@
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
                                                                      FBLPromiseRejectBlock reject) {
         
-        if (![HPLabService instance].cookiesPermission) {
+        if (![HPLabUserService instance].isLogin
+            && ![HPLabService instance].grantUploadCookies) {
             reject([NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]);
             return;
         }
