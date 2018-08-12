@@ -195,13 +195,15 @@
                           
                           HPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
                           [appDelegate setupBgFetch];
+
+                          [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
                       }];
                      
                  } else {
                      [SVProgressHUD dismiss];
                      NSLog(@"%@", [error localizedDescription]);
                      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-                     
+                     [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginError object:nil userInfo:@{@"error":[NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:errMsg}]}];
                      [[HPAccount sharedHPAccount] logout];
                  }
              }];

@@ -25,28 +25,6 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
-
-/*
- loginfield // username uid email
- username
- password
- questionid
- */
-/*
- 0 安全提问
- 1 母亲的名字
- 2 爷爷的名字
- 3 父亲出生的城市
- 4 您其中一位老师的名字
- 5 您个人计算机的型号
- 6 您最喜欢的餐馆名称
- 7 驾驶执照的最后四位数字
- */
-/*
- answer
- formhash // 69dd40ac
- */
-
 @interface HPAccount ()
 
 @property (nonatomic, strong) NSTimer *checkTimer;
@@ -161,13 +139,7 @@
         NSString *errMsg = [html stringBetweenString:@"<![CDATA[" andString:@"]]"];
         if (!errMsg) errMsg = html;
         if (!html) errMsg = @"null response";
-        
-        if (isSuccess) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginError object:nil userInfo:@{@"error":[NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:errMsg}]}];
-        }
-        
+       
         if (block) {
             block(isSuccess, [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:errMsg}]);
         }
@@ -179,85 +151,10 @@
     }];
 }
 
-//
-//- (void)old____loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
-//    
-//    _loginfield = @"username";
-//    _formhash = @"69dd40ac";
-//    
-//    _username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-//    _password = [NSStandardUserDefaults stringForKey:kHPAccountPassword or:@""];
-//    _questionid = [NSStandardUserDefaults stringForKey:kHPAccountQuestionid or:@""];
-//    _answer = [NSStandardUserDefaults stringForKey:kHPAccountAnswer or:@""];
-//    _uid = [NSStandardUserDefaults stringForKey:kHPAccountUID or:@""];
-//    
-//    //NSLog(@"loginWithBlock call _username: %@",_username);
-//    if (![HPAccount isSetAccount]) {
-//        
-//        HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
-//        
-//        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:[HPCommon NVCWithRootVC:loginvc] animated:YES completion:^{
-//            ;
-//        }];
-//        block(NO, [NSError errorWithDomain:@".hi-pda.com" code:kHPNoAccountCode userInfo:nil]);
-//        return;
-//    }
-//    
-//    NSString *loginPath = [NSString stringWithFormat:@"forum/logging.php?action=login&loginsubmit=yes&inajax=1&answer=%@&cookietime=2592000&formhash=%@&loginfield=%@&password=%@&questionid=%@&referer=http://www.hi-pda.com/forum/forumdisplay.php?fid=2&username=%@", _answer, _formhash, _loginfield, _password, _questionid, _username];
-//    loginPath = [loginPath stringByAddingPercentEscapesUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)];
-//    
-//    NSLog(@"loginPath %@", loginPath);
-//    
-//    NSLog(@"login before");
-//    [NSHTTPCookieStorage describeCookies];
-//    
-//    [[HPHttpClient sharedClient] getPath:loginPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        //NSHTTPURLResponse *response = [operation response];
-//        
-//        // note
-//        // 三处改变
-//        // 1 这里
-//        // 2 httpclient handle cookie
-//        // 3 每次开启和结束是保存cooclie
-//        // 4 httpclient shared set cookie header
-//        /*
-//         //NSArray * all = [NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:[NSURL URLWithString:@"http://www.hi-pda.com"]];
-//         //NSLog(@"How many Cookies: %d", all.count);
-//         
-//         //[[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookies:all forURL:[NSURL URLWithString:@"http://www.hi-pda.com"] mainDocumentURL:nil];
-//         */
-//        
-//        NSLog(@"login done");
-//        [NSHTTPCookieStorage describeCookies];
-//        
-//        
-//        NSString *html = [HPHttpClient GBKresponse2String:responseObject];
-//        //NSLog(@"login html : %@",html);
-//        
-//        BOOL isSuccess = ([html indexOf:@"欢迎您回来"] != -1);
-//        NSString *errMsg = [html stringBetweenString:@"<![CDATA[" andString:@"]]"];
-//        if (!errMsg) errMsg = html;
-//        if (!html) errMsg = @"null response";
-//        
-//        if (isSuccess) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
-//        } else {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginError object:nil userInfo:@{@"error":errMsg}];
-//        }
-//        
-//        if (block) {
-//            block(isSuccess, [NSError errorWithDomain:@".hi-pda.com" code:NSURLErrorUserAuthenticationRequired userInfo:@{NSLocalizedDescriptionKey:errMsg}]);
-//        }
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        if (block) {
-//            block(NO, error);
-//        }
-//    }];
-//}
-
-
+/*
+ * 登录成功会发送 kHPUserLoginSuccess 通知, 同时调用 [Setting loadSetting] 加载设置
+ * 登出会发送 kHPUserLogout 通知, 同时清除设置, 同时调用 [Setting loadDefaults] 加载默认设置
+ */
 - (void)logout {
     
     NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
@@ -297,6 +194,8 @@
     }
     
     DDLogInfo(@"logout done");
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLogout object:nil];
 }
 
 

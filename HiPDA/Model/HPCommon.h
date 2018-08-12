@@ -223,6 +223,7 @@ typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
 // notiy
 #define kHPUserLoginSuccess @"HPUserLoginSuccess"
 #define kHPUserLoginError @"HPUserLoginError"
+#define kHPUserLogout @"kHPUserLogout"
 #define kHPThemeDidChanged @"HPThemeDidChanged"
 #define kHPBlockListDidChange @"kHPBlockListDidChange"
 #define kHPThreadListDidChange @"kHPThreadListDidChange"
