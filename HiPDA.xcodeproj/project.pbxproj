@@ -202,6 +202,7 @@
 		EA74459818CA1E62002467EE /* compose_emotion.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458C18CA1E62002467EE /* compose_emotion.png */; };
 		EA74459918CA1E62002467EE /* compose_emotion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA74458D18CA1E62002467EE /* compose_emotion@2x.png */; };
 		EA7514B61E7783F1002C7D3B /* HPActivityItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7514B51E7783F1002C7D3B /* HPActivityItem.m */; };
+		EA76ACFC2120274800DACCF7 /* HPJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = EA76ACFB2120274800DACCF7 /* HPJSON.m */; };
 		EA7840781BE1F06F00139141 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EA7840751BE1F06F00139141 /* SVProgressHUD.bundle */; };
 		EA7840791BE1F06F00139141 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7840771BE1F06F00139141 /* SVProgressHUD.m */; };
 		EA78407E1BE203D400139141 /* NSError+HPError.m in Sources */ = {isa = PBXBuildFile; fileRef = EA78407D1BE203D400139141 /* NSError+HPError.m */; };
@@ -746,6 +747,8 @@
 		EA74458D18CA1E62002467EE /* compose_emotion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "compose_emotion@2x.png"; path = "Image/compose/compose_emotion@2x.png"; sourceTree = "<group>"; };
 		EA7514B41E7783F1002C7D3B /* HPActivityItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPActivityItem.h; path = Vender/IDMPhotoBrowser/HPActivityItem.h; sourceTree = "<group>"; };
 		EA7514B51E7783F1002C7D3B /* HPActivityItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPActivityItem.m; path = Vender/IDMPhotoBrowser/HPActivityItem.m; sourceTree = "<group>"; };
+		EA76ACFA2120274800DACCF7 /* HPJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPJSON.h; path = Helper/HPJSON.h; sourceTree = "<group>"; };
+		EA76ACFB2120274800DACCF7 /* HPJSON.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPJSON.m; path = Helper/HPJSON.m; sourceTree = "<group>"; };
 		EA7840751BE1F06F00139141 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		EA7840761BE1F06F00139141 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		EA7840771BE1F06F00139141 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -1609,6 +1612,8 @@
 				EA42B9B81EA516E4008FC2AA /* FLWeakProxy.m */,
 				EA6E721E1EEC3EA90050B496 /* HPPDFPrintPageRenderer.h */,
 				EA6E721F1EEC3EA90050B496 /* HPPDFPrintPageRenderer.m */,
+				EA76ACFA2120274800DACCF7 /* HPJSON.h */,
+				EA76ACFB2120274800DACCF7 /* HPJSON.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -2644,6 +2649,7 @@
 				EA499F341830C05700172989 /* HPSendPost.m in Sources */,
 				EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */,
 				EAAD5B9E188CEFCC0084EC2D /* IDMPhoto.m in Sources */,
+				EA76ACFC2120274800DACCF7 /* HPJSON.m in Sources */,
 				EA3B991F18F9812900F726E1 /* HPBgFetchViewController.m in Sources */,
 				EA9A39B21A5BE92E0028BE7D /* JSDismissiveTextView.m in Sources */,
 				EA743C2F183F9A9E0067F62B /* HPMyReply.m in Sources */,

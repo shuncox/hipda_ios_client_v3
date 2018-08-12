@@ -186,6 +186,8 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingEnableHTTPS @"HPSettingEnableHTTPS"
 #define HPSettingEnableWKWebview @"HPSettingEnableWKWebview"
 
+#define HPSettingLabUserInfo @"HPSettingLabUserInfo"
+
 // image
 typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
     HPImageAutoLoadModePerferOriginal = 0,

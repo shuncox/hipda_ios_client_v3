@@ -10,6 +10,8 @@
 #import "HPApi.h"
 #import "NSError+HPError.h"
 #import "HPHttpClient.h"
+#import "HPSetting.h"
+#import "HPJSON.h"
 
 @interface HPLabUserService()
 
@@ -25,6 +27,24 @@
     static HPLabUserService *singleton;
     dispatch_once(&once, ^ { singleton = [[HPLabUserService alloc] init]; });
     return singleton;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        [self load];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:kHPUserLoginSuccess object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            [self load];
+        }];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:kHPUserLogout object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            [self unload];
+        }];
+    }
+    return self;
 }
 
 - (BOOL)isLogin
@@ -57,6 +77,10 @@
         // 3. 获取userId
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kHPAccountUID];
         long userId = [uid longLongValue];
+        if (userId <= 0) {
+            reject([NSError errorWithErrorCode:-1 errorMsg:@"未登录"]);
+            return;
+        }
         
         [[[[HPApi instance] request:@"/user/login"
                              params:@{@"cdb_auth": cdb_auth,
@@ -66,6 +90,7 @@
                           needLogin:NO]
           then:^id(HPLabUser *user) {
               self.user = user;
+              [self save];
               fulfill(user);
               return nil;
           }] catch:^(NSError *error) {
@@ -81,6 +106,7 @@
                              params:nil]
           then:^id(id data) {
               self.user = nil;
+              [self save];
               fulfill(nil);
               return nil;
           }] catch:^(NSError *error) {
@@ -99,6 +125,29 @@
     }] catch:^(NSError *error) {
         DDLogError(@"user debug: %@", error);
     }];
+}
+
+- (void)load
+{
+    NSString *jsonString = [[HPSetting sharedSetting] objectForKey:HPSettingLabUserInfo];
+    if (!jsonString.length) {
+        return;
+    }
+    self.user = (HPLabUser *)[HPJSON mtl_fromJSON:jsonString class:HPLabUser.class];
+}
+
+- (void)save
+{
+    if (!self.user) {
+        return;
+    }
+    NSString *jsonString = [HPJSON mtl_toJSON:self.user];
+    [[HPSetting sharedSetting] saveObject:jsonString forKey:HPSettingLabUserInfo];
+}
+
+- (void)unload
+{
+    self.user = nil;
 }
 
 @end

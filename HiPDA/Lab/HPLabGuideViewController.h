@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HPBaseTableViewController.h"
 
-@interface HPLabGuideViewController : UIViewController
+@interface HPLabGuideViewController : HPBaseTableViewController
 
 @end

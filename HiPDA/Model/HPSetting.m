@@ -147,6 +147,8 @@
                                HPSettingRegularFontMode:@YES,
                                
                                HPSettingEnableWKWebview:@NO,
+                               
+                               HPSettingLabUserInfo: @"",
                                };
     return defaults;
 }
