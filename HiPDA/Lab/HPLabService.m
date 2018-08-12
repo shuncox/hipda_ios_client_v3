@@ -50,12 +50,8 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确认上传cookies" message:@"blabla..." delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
         [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex != alertView.cancelButtonIndex) {
-                [[[[HPLabUserService instance] loginIfNeeded] then:^id(id value) {
-                    fulfill(@YES);
-                    return nil;
-                }] catch:^(NSError *error) {
-                    reject(error);
-                }];
+                self.cookiesPermission = YES;
+                fulfill(@YES);
             } else {
                 fulfill(@NO);
             }

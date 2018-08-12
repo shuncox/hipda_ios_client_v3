@@ -12,6 +12,7 @@
 #import "NSError+HPError.h"
 #import "HPApiConfig.h"
 #import "HPLabUserService.h"
+#import "HPLabService.h"
 
 @interface HPApi()
 
@@ -61,8 +62,23 @@
             returnClass:(Class)returnClass
               needLogin:(BOOL)needLogin
 {
+    
+    
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
                                                                      FBLPromiseRejectBlock reject) {
+        
+        if (![HPLabService instance].cookiesPermission) {
+            reject([NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]);
+            return;
+        }
+// TODO auto login
+//        [[[[HPLabUserService instance] loginIfNeeded] then:^id (HPLabUser *user) {
+//
+//            return nil;
+//        }] catch:^(NSError *error) {
+//            ;
+//        }];
+        
         NSString *url = [self.config.baseUrl stringByAppendingString:api];
         NSString *token = [HPLabUserService instance].user.token;
         if (needLogin && !token.length) {
@@ -101,6 +117,9 @@
                                    fromJSONDictionary:result.data
                                                 error:&json_error];
                   if (json_error) {
+                      
+                      // TODO auto  refresh token
+                      
                       reject(json_error);
                       return;
                   }
