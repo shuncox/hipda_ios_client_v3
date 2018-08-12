@@ -7,7 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PromisesObjC/FBLPromises.h>
 
 @interface HPLabService : NSObject
+
++ (instancetype)instance;
+
+// 授权上传cookies
+@property (nonatomic, assign) BOOL cookiesPermission;
+- (FBLPromise<NSNumber/*BOOL*/ *> *)checkCookiesPermission;
+
+// 开启消息推送
+@property (nonatomic, assign) BOOL enablePush;
+- (FBLPromise<NSNumber/*BOOL*/ *> *)getPushEnable;
+- (FBLPromise *)updatePushEnable:(BOOL)enable;
+
+// 开启订阅
+@property (nonatomic, assign) BOOL enableSubscribe;
 
 @end

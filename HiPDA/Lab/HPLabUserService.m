@@ -52,6 +52,14 @@
     return !!self.user;
 }
 
+- (FBLPromise *)loginIfNeeded
+{
+    if (self.isLogin) {
+        return [FBLPromise resolvedWith:self.user];
+    }
+    return [self login];
+}
+
 - (FBLPromise *)login
 {
     return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {

@@ -149,6 +149,9 @@
                                HPSettingEnableWKWebview:@NO,
                                
                                HPSettingLabUserInfo: @"",
+                               HPSettingLabCookiesPermission: @NO,
+                               HPSettingLabEnablePush: @NO,
+                               HPSettingLabEnableSubscribe: @NO,
                                };
     return defaults;
 }

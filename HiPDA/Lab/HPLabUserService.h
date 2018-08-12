@@ -17,7 +17,8 @@
 @property (nonatomic, readonly, strong) HPLabUser *user;
 
 - (BOOL)isLogin;
-- (FBLPromise *)login;
+- (FBLPromise<HPLabUser *> *)loginIfNeeded;
+- (FBLPromise<HPLabUser *> *)login;
 - (FBLPromise *)logout;
 - (void)debug;
 

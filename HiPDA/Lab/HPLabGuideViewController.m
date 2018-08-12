@@ -10,8 +10,20 @@
 #import <Masonry/Masonry.h>
 #import "HPLabUserService.h"
 #import "SVProgressHUD.h"
+#import "HPLabService.h"
+#import <BlocksKit/UIControl+BlocksKit.h>
+#import "UIAlertView+Blocks.h"
 
 @interface HPLabGuideViewController()
+
+@property (nonatomic, strong) UILabel *enableLabLabel;
+@property (nonatomic, strong) UISwitch *enableLabSwitch;
+
+@property (nonatomic, strong) UILabel *enablePushLabel;
+@property (nonatomic, strong) UISwitch *enablePushSwitch;
+
+@property (nonatomic, strong) UILabel *enableSubLabel;
+@property (nonatomic, strong) UISwitch *enableSubSwitch;
 
 @property (nonatomic, strong) UILabel *textLabel;
 @property (nonatomic, strong) UIButton *loginButton;
@@ -33,14 +45,61 @@
     
     self.title = @"收藏";
     [self addRevealActionBI];
-  
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _enableLabLabel = [UILabel new];
+    _enableLabLabel.text = @"授权cookies";
+    [self.view addSubview:_enableLabLabel];
+    [_enableLabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.view).offset(100.f);
+    }];
+    
+    _enableLabSwitch = [UISwitch new];
+    [self.view addSubview:_enableLabSwitch];
+    _enableLabSwitch.enabled = NO;
+    [_enableLabSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_enableLabLabel.mas_right);
+        make.top.equalTo(_enableLabLabel);
+    }];
+    
+    _enablePushLabel = [UILabel new];
+    _enablePushLabel.text = @"开启消息推送";
+    [self.view addSubview:_enablePushLabel];
+    [_enablePushLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(_enableLabLabel.mas_bottom).offset(20.f);
+    }];
+    
+    _enablePushSwitch = [UISwitch new];
+    [self.view addSubview:_enablePushSwitch];
+    [_enablePushSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_enablePushLabel.mas_right);
+        make.top.equalTo(_enablePushLabel);
+    }];
+    
+    _enableSubLabel = [UILabel new];
+    _enableSubLabel.text = @"开启订阅";
+    [self.view addSubview:_enableSubLabel];
+    [_enableSubLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(_enablePushLabel.mas_bottom).offset(20.f);
+    }];
+    
+    _enableSubSwitch = [UISwitch new];
+    [self.view addSubview:_enableSubSwitch];
+    [_enableSubSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_enableSubLabel.mas_right);
+        make.top.equalTo(_enableSubLabel);
+    }];
     
     _textLabel = [UILabel new];
     _textLabel.numberOfLines = 0;
     [self.view addSubview:_textLabel];
     [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.view).offset(200.f);
         make.height.equalTo(@200);
     }];
     
@@ -73,6 +132,41 @@
         make.centerX.equalTo(self.view);
         make.top.equalTo(_logoutButton.mas_bottom);
     }];
+    
+    [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
+        [[[[HPLabService instance] checkCookiesPermission] then:^id(NSNumber *grant) {
+            if (grant.boolValue) {
+                [[[[HPLabService instance] updatePushEnable:s.on] then:^id(id data) {
+                    [HPLabService instance].enablePush = s.on;
+                    return nil;
+                }] catch:^(NSError *error) {
+                    s.on = !s.on;
+                    [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+                }];
+            } else {
+                s.on = !s.on;
+            }
+            return nil;
+        }] catch:^(NSError *error) {
+            s.on = !s.on;
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+        }];
+    } forControlEvents:UIControlEventValueChanged];
+    
+    [_enableSubSwitch bk_addEventHandler:^(UISwitch *s) {
+        [[[[HPLabService instance] checkCookiesPermission] then:^id(NSNumber *grant) {
+            if (grant.boolValue) {
+                // TODO 调用接口
+                [HPLabService instance].enableSubscribe = s.on;
+            } else {
+                s.on = !s.on;
+            }
+            return nil;
+        }] catch:^(NSError *error) {
+            s.on = !s.on;
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+        }];
+    } forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -115,11 +209,25 @@
 - (void)refresh:(id)sender
 {
     self.textLabel.text = [HPLabUserService instance].user.description;
+    self.enableLabSwitch.on = [HPLabService instance].cookiesPermission;
+    self.enablePushSwitch.on = [HPLabService instance].enablePush;
+    self.enableSubSwitch.on = [HPLabService instance].enableSubscribe;
+    
+    if ([HPLabUserService instance].isLogin) {
+        [[[[HPLabService instance] getPushEnable] then:^id(NSNumber *enable) {
+            [HPLabService instance].enablePush = enable.boolValue;
+            self.enablePushSwitch.on = [HPLabService instance].enablePush;
+            return nil;
+        }] catch:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+        }];
+    }
 }
 
 - (void)setup
 {
     
 }
+
 
 @end

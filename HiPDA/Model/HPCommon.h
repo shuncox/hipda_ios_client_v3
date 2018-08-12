@@ -187,6 +187,9 @@ extern NSString *HP_CNC_BASE_IP;
 #define HPSettingEnableWKWebview @"HPSettingEnableWKWebview"
 
 #define HPSettingLabUserInfo @"HPSettingLabUserInfo"
+#define HPSettingLabCookiesPermission @"HPSettingLabCookiesPermission"
+#define HPSettingLabEnablePush @"HPSettingLabEnablePush"
+#define HPSettingLabEnableSubscribe @"HPSettingLabEnableSubscribe"
 
 // image
 typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
