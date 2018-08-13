@@ -67,6 +67,19 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
       }];
 }
 
++ (NSString *)currDeviceToken
+{
+#ifdef DEBUG
+    int env = 1;
+#else
+    int env = 0;
+#endif
+    NSString *key = [NSString stringWithFormat:@"%@_%@", NOTIFICATION_DEVICE_TOKEN, @(env)];
+    
+    NSString *oldDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    return oldDeviceToken;
+}
+
 + (void)didRecieveRemoteNotification:(NSDictionary *)userInfo
                        fromLaunching:(BOOL)fromLaunching {
     

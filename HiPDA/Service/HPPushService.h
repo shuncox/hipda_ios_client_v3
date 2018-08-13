@@ -14,4 +14,6 @@
 
 + (void)didRecieveRemoteNotification:(NSDictionary *)userInfo fromLaunching:(BOOL)fromLaunching;
 
++ (NSString *)currDeviceToken;
+
 @end
