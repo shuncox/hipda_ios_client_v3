@@ -62,8 +62,20 @@
             returnClass:(Class)returnClass
               needLogin:(BOOL)needLogin
 {
-    
-    
+    if (needLogin) {
+        return [[HPLabUserService instance] loginIfNeeded]
+        .then(^id(HPLabUser *yser) {
+            return [self _request:api params:params returnClass:returnClass needLogin:needLogin];
+        });
+    }
+    return [self _request:api params:params returnClass:returnClass needLogin:needLogin];
+}
+
+- (FBLPromise *)_request:(NSString *)api
+                 params:(NSDictionary *)params
+            returnClass:(Class)returnClass
+              needLogin:(BOOL)needLogin
+{
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
                                                                      FBLPromiseRejectBlock reject) {
         
@@ -72,13 +84,7 @@
             reject([NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]);
             return;
         }
-// TODO auto login
-//        [[[[HPLabUserService instance] loginIfNeeded] then:^id (HPLabUser *user) {
-//
-//            return nil;
-//        }] catch:^(NSError *error) {
-//            ;
-//        }];
+
         
         NSString *url = [self.config.baseUrl stringByAppendingString:api];
         NSString *token = [HPLabUserService instance].user.token;
