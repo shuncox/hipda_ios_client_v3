@@ -229,6 +229,7 @@
 		EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */; };
 		EA8947291D3BB62A009261DD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8947281D3BB62A009261DD /* CloudKit.framework */; };
 		EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */; };
+		EA9195A121297FEE00D7D3C6 /* HPRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9195A021297FEE00D7D3C6 /* HPRouter.m */; };
 		EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */ = {isa = PBXBuildFile; fileRef = EA91EE131BF75A60009271EF /* debug_crawler_html.html */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
@@ -786,6 +787,8 @@
 		EA8947281D3BB62A009261DD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		EA91959C21297CA000D7D3C6 /* HPBackgroundFetchService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPBackgroundFetchService.h; path = Service/HPBackgroundFetchService.h; sourceTree = "<group>"; };
 		EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBackgroundFetchService.m; path = Service/HPBackgroundFetchService.m; sourceTree = "<group>"; };
+		EA91959F21297FEE00D7D3C6 /* HPRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPRouter.h; path = Service/HPRouter.h; sourceTree = "<group>"; };
+		EA9195A021297FEE00D7D3C6 /* HPRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPRouter.m; path = Service/HPRouter.m; sourceTree = "<group>"; };
 		EA91EE131BF75A60009271EF /* debug_crawler_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = debug_crawler_html.html; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
@@ -1986,6 +1989,8 @@
 				EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */,
 				EA91959C21297CA000D7D3C6 /* HPBackgroundFetchService.h */,
 				EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */,
+				EA91959F21297FEE00D7D3C6 /* HPRouter.h */,
+				EA9195A021297FEE00D7D3C6 /* HPRouter.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2802,6 +2807,7 @@
 				EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */,
 				EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */,
 				EAE0FE441D09527F00F0D76E /* NSString+CDN.m in Sources */,
+				EA9195A121297FEE00D7D3C6 /* HPRouter.m in Sources */,
 				EA075F5B18E4079900A07C08 /* BBBadgeBarButtonItem.m in Sources */,
 				EA9A39AC1A5BE92E0028BE7D /* UIColor+JSMessagesView.m in Sources */,
 				EAFDB8521829EFA900C1718B /* main.m in Sources */,
