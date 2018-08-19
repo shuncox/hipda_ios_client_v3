@@ -35,6 +35,7 @@
 #import "HPURLProtocol.h"
 #import "HPLogger.h"
 #import "HPHttpClient.h"
+#import "HPLabService.h"
 
 // mail
 #import <MessageUI/MFMailComposeViewController.h>
@@ -101,7 +102,7 @@
     self.preferenceSection = [self addPreferenceControls];
     self.imageSection = [self addImageControls];
     
-    if (IOS7_OR_LATER) {
+    if (IOS7_OR_LATER && ![HPLabService instance].enableMessagePush) {
         RETableViewSection *bgFetchSection = [RETableViewSection sectionWithHeaderTitle:nil];
         @weakify(self);
         RETableViewItem *bgFetchItem = [RETableViewItem itemWithTitle:@"后台应用程序刷新" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
