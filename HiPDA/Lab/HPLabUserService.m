@@ -33,8 +33,8 @@
 {
     self = [super init];
     if (self) {
-        
         [self load];
+        
         
         [[NSNotificationCenter defaultCenter] addObserverForName:kHPUserLoginSuccess object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             [self load];
@@ -64,6 +64,8 @@
 {
     return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
         
+        reject([NSError errorWithErrorCode:0 errorMsg:@"aaa"]);
+        return;
         // 1. 获取 cdb_auth
         NSString *cdb_auth = nil;
         NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
@@ -90,49 +92,48 @@
             return;
         }
         
-        [[[[HPApi instance] request:@"/user/login"
-                             params:@{@"cdb_auth": cdb_auth,
-                                      @"ua": ua,
-                                      @"userId": @(userId)}
-                        returnClass:HPLabUser.class
-                          needLogin:NO]
-          then:^id(HPLabUser *user) {
-              self.user = user;
-              [self save];
-              fulfill(user);
-              return nil;
-          }] catch:^(NSError *error) {
-              reject(error);
-          }];
+        [[HPApi instance] request:@"/user/login"
+                           params:@{@"cdb_auth": cdb_auth,
+                                    @"ua": ua,
+                                    @"userId": @(userId)}
+                      returnClass:HPLabUser.class
+                        needLogin:NO]
+        .then(^id(HPLabUser *user) {
+            self.user = user;
+            [self save];
+            fulfill(user);
+            return nil;
+        })
+        .catch(^(NSError *error) {
+            reject(error);
+        });
     }];
 }
 
-- (FBLPromise *)logout
+- (FBLPromise<HPLabUser *> *)logout
 {
-    return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
-        [[[[HPApi instance] request:@"/user/logout"
-                             params:nil]
-          then:^id(id data) {
-              self.user = nil;
-              [self save];
-              fulfill(nil);
-              return nil;
-          }] catch:^(NSError *error) {
-              reject(error);
-          }];
-    }];
+    return [[HPApi instance] request:@"/user/logout"
+                              params:nil]
+    .then(^id(id data) {
+        HPLabUser *user = self.user;
+        self.user = nil;
+        [self save];
+        return user;
+    });
 }
 
 - (void)debug
 {
-    [[[[HPApi instance] request:@"/user/debug"
-                         params:nil
-                    returnClass:nil] then:^id(id data) {
+    [[HPApi instance] request:@"/user/debug"
+                       params:nil
+                  returnClass:nil]
+    .then(^id(id data) {
         DDLogInfo(@"user debug: %@", data);
         return nil;
-    }] catch:^(NSError *error) {
+    })
+    .catch(^(NSError *error) {
         DDLogError(@"user debug: %@", error);
-    }];
+    });
 }
 
 - (void)load

@@ -135,32 +135,31 @@
     
     [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
         // 1. 请求上传cookies的权限
-        [[[[HPLabService instance] checkCookiesPermission] then:^id(NSNumber *grant) {
-            if (grant.boolValue) {
-                // TODO: 2. 请求推送权限
-                
-                // 3. 调用接口开启推送
-                
-                // 4. 优化成promise chain, 而不是 callback hell
-                [[[[HPLabService instance] updatePushEnable:s.on] then:^id(id data) {
-                    [HPLabService instance].enableMessagePush = s.on;
-                    return nil;
-                }] catch:^(NSError *error) {
-                    s.on = !s.on;
-                    [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-                }];
-            } else {
-                s.on = !s.on;
+        [[HPLabService instance] checkCookiesPermission]
+        .then(^id(NSNumber *grant) {
+            if (!grant.boolValue) {
+                return [FBLPromise resolvedWith:@(NO)];
             }
-            return nil;
-        }] catch:^(NSError *error) {
+            // TODO:
+            // 2. 请求推送权限
+            // 3. 调用接口开启推送
+            
+            // 4. 优化成promise chain, 而不是 callback hell
+            return [[HPLabService instance] updatePushEnable:s.on];
+        })
+        .then(^id(NSNumber *success) {
+            [HPLabService instance].enableMessagePush = success.boolValue;
+            return success;
+        })
+        .catch(^(NSError *error) {
             s.on = !s.on;
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        }];
+        });
     } forControlEvents:UIControlEventValueChanged];
     
     [_enableSubSwitch bk_addEventHandler:^(UISwitch *s) {
-        [[[[HPLabService instance] checkCookiesPermission] then:^id(NSNumber *grant) {
+        [[HPLabService instance] checkCookiesPermission]
+        .then(^id(NSNumber *grant) {
             if (grant.boolValue) {
                 // TODO 调用接口
                 [HPLabService instance].enableSubscribe = s.on;
@@ -168,10 +167,11 @@
                 s.on = !s.on;
             }
             return nil;
-        }] catch:^(NSError *error) {
+        })
+        .catch(^(NSError *error) {
             s.on = !s.on;
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        }];
+        });
     } forControlEvents:UIControlEventValueChanged];
 }
 
@@ -220,13 +220,15 @@
     self.enableSubSwitch.on = [HPLabService instance].enableSubscribe;
     
     if ([HPLabUserService instance].isLogin) {
-        [[[[HPLabService instance] getPushEnable] then:^id(NSNumber *enable) {
+        [[HPLabService instance] getPushEnable]
+        .then(^id(NSNumber *enable) {
             [HPLabService instance].enableMessagePush = enable.boolValue;
             self.enablePushSwitch.on = [HPLabService instance].enableMessagePush;
             return nil;
-        }] catch:^(NSError *error) {
+        })
+        .catch(^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        }];
+        });
     }
 }
 

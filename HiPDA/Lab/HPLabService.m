@@ -71,33 +71,21 @@
     [[HPSetting sharedSetting] saveBool:enable forKey:HPSettingLabEnablePush];
 }
 
-
-- (FBLPromise *)getPushEnable
+- (FBLPromise<NSNumber/*BOOL*/ *> *)getPushEnable
 {
-    return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
-        [[[[HPApi instance] request:@"/message/state"
-                             params:nil]
-          then:^id(NSDictionary *data) {
-              fulfill(data[@"enable"]);
-              return nil;
-          }] catch:^(NSError *error) {
-              reject(error);
-          }];
-    }];
+    return [[HPApi instance] request:@"/message/state" params:nil]
+    .then(^id(NSDictionary *data) {
+        return data[@"enable"];
+    });
 }
 
-- (FBLPromise *)updatePushEnable:(BOOL)enable
+- (FBLPromise<NSNumber/*BOOL*/ *> *)updatePushEnable:(BOOL)enable;
 {
-    return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
-        [[[[HPApi instance] request:@"/message/enable"
-                             params:@{@"enable": @(enable)}]
-          then:^id(id data) {
-              fulfill(data);
-              return nil;
-          }] catch:^(NSError *error) {
-              reject(error);
-          }];
-    }];
+    return [[HPApi instance] request:@"/message/enable"
+                              params:@{@"enable": @(enable)}]
+    .then(^id(id data) {
+        return @(YES);
+    });
 }
 
 #pragma mark - subscribe

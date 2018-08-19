@@ -20,7 +20,7 @@
 // 开启消息推送
 @property (nonatomic, assign) BOOL enableMessagePush;
 - (FBLPromise<NSNumber/*BOOL*/ *> *)getPushEnable;
-- (FBLPromise *)updatePushEnable:(BOOL)enable;
+- (FBLPromise<NSNumber/*BOOL*/ *> *)updatePushEnable:(BOOL)enable;
 
 // 开启订阅
 @property (nonatomic, assign) BOOL enableSubscribe;

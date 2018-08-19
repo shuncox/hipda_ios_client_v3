@@ -17,7 +17,7 @@
 #ifdef DEBUG
     config.baseUrl = @"http://192.168.2.223:8080/api";
 #else
-    config.baseUrl = nil;
+    config.baseUrl = @"https://apocalypse.jichaowu.com/api";
 #endif
 
     return config;
