@@ -33,19 +33,15 @@
 #import "HPBackgroundFetchService.h"
 #import "HPRouter.h"
 
-#define AlertPMTag 1357
-#define AlertNoticeTag 2468
-
-
 #define UM_APP_KEY (@"543b7fe7fd98c59dcb0418ef")
 #define UM_APP_KEY_DEV (UM_APP_KEY)
 
 @interface HPAppDelegate()
 
-@property (nonatomic, strong)HPRearViewController *rearViewController;
-@property (nonatomic, strong)UIAlertView *notificationAlertView;
+@property (nonatomic, strong) HPRearViewController *rearViewController;
 
 @end
+
 @implementation HPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -133,7 +129,7 @@
     UILocalNotification *localNotification =
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotification) {
-        [self FinishLaunchingWithReciveLocalNotification:localNotification];
+        [[HPBackgroundFetchService instance] didReciveLocalNotification:localNotification];
     }
     
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -179,9 +175,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    // 省流量
-    //[[BFHotPatch shared] check];
-    
+
     HPCrashLog(@"-> applicationWillEnterForeground");
     DDLogInfo(@"[APP] applicationWillEnterForeground");
 }
@@ -240,7 +234,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    [self showAlert];
+    [[HPBackgroundFetchService instance] didReciveLocalNotification:notification];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -266,104 +260,16 @@
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     UIViewController *vc = [self hp_topViewController];
-    if (IOS9_2_OR_LATER && [vc isKindOfClass:NSClassFromString(@"SFSafariViewController")])
-    {
-        if (vc.isBeingDismissed)
-        {
+    if (IOS9_2_OR_LATER && [vc isKindOfClass:NSClassFromString(@"SFSafariViewController")]) {
+        if (vc.isBeingDismissed) {
             return UIInterfaceOrientationMaskPortrait;
         }
-        else
-        {
+        else {
             return UIInterfaceOrientationMaskAllButUpsideDown;
         }
-    }
-    else
-    {
+    } else {
         return UIInterfaceOrientationMaskPortrait;
     }
-}
-
-- (void)showAlert {
-    
-    //clear
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    
-    NSInteger pm_count = [Setting integerForKey:HPPMCount];
-    NSInteger notice_count = [Setting integerForKey:HPNoticeCount];
-    
-    NSString *msg = nil;
-    int tag = -1;
-    if (pm_count > 0) {
-        msg = S(@"您有新的短消息(%d)", pm_count);
-        tag = AlertPMTag;
-    } else if (notice_count > 0){
-        msg = S(@"您有新的帖子消息(%d)", notice_count);
-        tag = AlertNoticeTag;
-    } else {
-        
-        //
-        return;
-    }
-    
-    NSLog(@"__ %@", _notificationAlertView);
-    if (!_notificationAlertView) {
-        _notificationAlertView = [[UIAlertView alloc] initWithTitle:@"提醒"
-                                                            message:msg
-                                                           delegate:self
-                                                  cancelButtonTitle:@"忽略"
-                                                  otherButtonTitles:@"查看", nil];
-        _notificationAlertView.tag = tag;
-        [_notificationAlertView show];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-
-    if (buttonIndex == 0) {
-        
-        if (alertView.tag == AlertPMTag) {
-            
-            [HPMessage ignoreMessage];
-            
-        } else if (alertView.tag == AlertNoticeTag) {
-            
-            [HPNotice ignoreNotice];
-            
-        } else {
-            ;
-        }
-
-    } else if (buttonIndex == 1) {
-        if (_rearViewController) {
-            
-            if (alertView.tag == AlertPMTag) {
-                
-                [_rearViewController switchToMessageVC];
-                
-            } else if (alertView.tag == AlertNoticeTag) {
-                
-                [_rearViewController switchToNoticeVC];
-                
-            } else {
-                ;
-            }
-        } else {
-            ;
-        }
-        
-    } else {
-        ;
-    }
-    
-    _notificationAlertView = nil;
-}
-
-- (void)FinishLaunchingWithReciveLocalNotification:(UILocalNotification *)localNotification {
-    
-    NSLog(@"Notification Body: %@",localNotification.alertBody);
-    NSLog(@"%@", localNotification.userInfo);
-    
-    [self showAlert];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler

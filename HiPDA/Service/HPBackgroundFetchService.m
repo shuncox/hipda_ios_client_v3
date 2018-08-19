@@ -11,6 +11,18 @@
 #import "HPSetting.h"
 #import "HPAccount.h"
 #import "UIAlertView+Blocks.h"
+#import "HPRearViewController.h"
+#import "HPMessage.h"
+#import "HPNotice.h"
+
+#define AlertPMTag 1357
+#define AlertNoticeTag 2468
+
+@interface HPBackgroundFetchService()
+
+@property (nonatomic, strong)UIAlertView *notificationAlertView;
+
+@end
 
 @implementation HPBackgroundFetchService
 
@@ -85,5 +97,91 @@
     [[HPAccount sharedHPAccount] startCheckWithDelay:0.f];
 }
 
+#pragma mark -
+
+- (void)showAlert {
+    
+    //clear
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+    NSInteger pm_count = [Setting integerForKey:HPPMCount];
+    NSInteger notice_count = [Setting integerForKey:HPNoticeCount];
+    
+    NSString *msg = nil;
+    int tag = -1;
+    if (pm_count > 0) {
+        msg = S(@"您有新的短消息(%@)", @(pm_count));
+        tag = AlertPMTag;
+    } else if (notice_count > 0){
+        msg = S(@"您有新的帖子消息(%@)", @(notice_count));
+        tag = AlertNoticeTag;
+    } else {
+        
+        //
+        return;
+    }
+    
+    NSLog(@"__ %@", _notificationAlertView);
+    if (!_notificationAlertView) {
+        _notificationAlertView = [[UIAlertView alloc] initWithTitle:@"提醒"
+                                                            message:msg
+                                                           delegate:self
+                                                  cancelButtonTitle:@"忽略"
+                                                  otherButtonTitles:@"查看", nil];
+        _notificationAlertView.tag = tag;
+        [_notificationAlertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    HPRearViewController *rearViewController = [HPRearViewController sharedRearVC];
+    
+    if (buttonIndex == 0) {
+        
+        if (alertView.tag == AlertPMTag) {
+            
+            [HPMessage ignoreMessage];
+            
+        } else if (alertView.tag == AlertNoticeTag) {
+            
+            [HPNotice ignoreNotice];
+            
+        } else {
+            ;
+        }
+        
+    } else if (buttonIndex == 1) {
+        if (rearViewController) {
+            
+            if (alertView.tag == AlertPMTag) {
+                
+                [rearViewController switchToMessageVC];
+                
+            } else if (alertView.tag == AlertNoticeTag) {
+                
+                [rearViewController switchToNoticeVC];
+                
+            } else {
+                ;
+            }
+        } else {
+            ;
+        }
+        
+    } else {
+        ;
+    }
+    
+    _notificationAlertView = nil;
+}
+
+- (void)didReciveLocalNotification:(UILocalNotification *)localNotification {
+    
+    NSLog(@"Notification Body: %@",localNotification.alertBody);
+    NSLog(@"%@", localNotification.userInfo);
+    
+    [self showAlert];
+}
 
 @end

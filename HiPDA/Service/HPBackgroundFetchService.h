@@ -17,4 +17,6 @@
 - (void)setupBgFetch;
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
+- (void)didReciveLocalNotification:(UILocalNotification *)localNotification;
+
 @end

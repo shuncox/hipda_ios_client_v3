@@ -24,6 +24,7 @@
 #import "DZWebBrowser.h"
 #import "HPAppDelegate.h"
 #import <1PasswordExtension/OnePasswordExtension.h>
+#import "HPBackgroundFetchService.h"
 
 @interface HPLoginViewController ()
 
@@ -193,8 +194,7 @@
                               [HPRearViewController threadVCRefresh];
                           }
                           
-                          HPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-                          [appDelegate setupBgFetch];
+                          [[HPBackgroundFetchService instance] setupBgFetch];
 
                           [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
                       }];

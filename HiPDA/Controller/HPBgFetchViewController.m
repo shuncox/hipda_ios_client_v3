@@ -10,6 +10,7 @@
 #import "HPSetting.h"
 #import "MultilineTextItem.h"
 #import "HPAppDelegate.h"
+#import "HPBackgroundFetchService.h"
 
 
 @interface HPBgFetchViewController ()
@@ -34,8 +35,7 @@
     [super viewWillDisappear:animated];
     
     // update bgFetch setting
-    HPAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    [appDelegate setupBgFetch];
+    [[HPBackgroundFetchService instance] setupBgFetch];
 }
 
 - (void)viewDidLoad
