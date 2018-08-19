@@ -13,6 +13,7 @@
 #import "HPLabService.h"
 #import <BlocksKit/UIControl+BlocksKit.h>
 #import "UIAlertView+Blocks.h"
+#import "HPPushService.h"
 
 @interface HPLabGuideViewController()
 
@@ -134,21 +135,36 @@
     }];
     
     [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
-        // 1. 请求上传cookies的权限
-        [[HPLabService instance] checkCookiesPermission]
-        .then(^id(NSNumber *grant) {
-            if (!grant.boolValue) {
-                return [FBLPromise resolvedWith:@(NO)];
-            }
-            // TODO:
+        FBLPromise *promise = nil;
+        if (s.on) { //开启推送
+            promise =
+            // 1. 请求上传cookies的权限
+            [[HPLabService instance] checkCookiesPermission]
             // 2. 请求推送权限
+            .then(^id(NSNumber *grant) {
+                if (!grant.boolValue) {
+                    return [FBLPromise resolvedWith:@(NO)];
+                }
+                return [HPPushService checkPushPermission];
+            })
             // 3. 调用接口开启推送
-            
-            // 4. 优化成promise chain, 而不是 callback hell
-            return [[HPLabService instance] updatePushEnable:s.on];
-        })
+            .then(^id(NSNumber/*HPAuthorizationStatus*/ *value) {
+                HPAuthorizationStatus status = value.intValue;
+                if (status == HPAuthorizationStatusDenied) {
+                    return [FBLPromise resolvedWith:@(NO)];
+                }
+                return [[HPLabService instance] updatePushEnable:YES];
+            });
+        } else { //关闭推送
+            // 调用接口关闭推送
+            promise = [[HPLabService instance] updatePushEnable:NO];
+        }
+        
+        promise
         .then(^id(NSNumber *success) {
-            [HPLabService instance].enableMessagePush = success.boolValue;
+            if (success.boolValue) {
+                [HPLabService instance].enableMessagePush = ![HPLabService instance].enableMessagePush;
+            }
             return success;
         })
         .catch(^(NSError *error) {

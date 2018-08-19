@@ -21,14 +21,33 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
               categories:(NSSet *)categories
 {
     UIApplication *app = [UIApplication sharedApplication];
-    if (IOS8_OR_LATER) {
-        [app registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationType)types
-                                                                                categories:categories]];
+    [app registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationType)types
+                                                                            categories:categories]];
 
-        [app registerForRemoteNotifications];
-    } else {
-        [app registerForRemoteNotificationTypes:types];
+    [app registerForRemoteNotifications];
+}
+
++ (BOOL)isEnabledRemoteNotification
+{
+    UIUserNotificationType types = [[[UIApplication sharedApplication] currentUserNotificationSettings] types];
+    return types != UIUserNotificationTypeNone;
+}
+
++ (FBLPromise<NSNumber/*HPAuthorizationStatus*/ *> *)checkPushPermission
+{
+    BOOL grant = [HPPushService isEnabledRemoteNotification];
+    if (grant) {
+        return [FBLPromise resolvedWith:@(HPAuthorizationStatusAuthorized)];
     }
+    // 如果问过, 判断是否同意, 返回是否同意
+    BOOL didAskForPermission = [NSStandardUserDefaults boolForKey:kHPAskNotificationPermission or:NO];
+    if (didAskForPermission) {
+        return [FBLPromise resolvedWith:@(HPAuthorizationStatusDenied)];
+    }
+    
+    // 如果没问过, 不搞预先询问了, 直接doRegister, 暂时不太好拿到回调, 直接返回未定, 走下一步
+    [HPPushService doRegister];
+    return [FBLPromise resolvedWith:@(HPAuthorizationStatusUnDetermined)];
 }
 
 + (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
