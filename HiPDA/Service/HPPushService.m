@@ -7,6 +7,7 @@
 #import "HPApi.h"
 #import "HPPushData.h"
 #import "HPRearViewController.h"
+#import "UIAlertView+Blocks.h"
 
 static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN";
 
@@ -102,21 +103,41 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
 + (void)didRecieveRemoteNotification:(NSDictionary *)userInfo
                        fromLaunching:(BOOL)fromLaunching {
     
-
     HPPushData *data = [MTLJSONAdapter modelOfClass:HPPushData.class
                                  fromJSONDictionary:userInfo
                                               error:nil];
     
     NSString *title = data.aps[@"alert"];
     
+    // 用户点开推送就清空App角标
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    // App在前台收到推送, 弹窗提示
     if (!fromLaunching) {
-        
-        
-        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提醒"
+                                                            message:title
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"忽略"
+                                                  otherButtonTitles:@"查看", nil];
+        [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex != alertView.cancelButtonIndex) {
+                [HPPushService routeToTargetViewController:data];
+            }
+        }];
         return;
     }
     
+    [HPPushService routeToTargetViewController:data];
+}
+
++ (void)routeToTargetViewController:(HPPushData *)data {
+    HPRearViewController *rearViewController = [HPRearViewController sharedRearVC];
     
+    if (data.pm > 0) {
+        [rearViewController switchToMessageVC];
+    } else if (data.thread > 0) {
+        [rearViewController switchToNoticeVC];
+    }
 }
 
 @end
