@@ -228,6 +228,7 @@
 		EA831B931841092600616E94 /* HPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA831B921841092600616E94 /* HPMessage.m */; };
 		EA87A6841A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */; };
 		EA8947291D3BB62A009261DD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8947281D3BB62A009261DD /* CloudKit.framework */; };
+		EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */; };
 		EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */ = {isa = PBXBuildFile; fileRef = EA91EE131BF75A60009271EF /* debug_crawler_html.html */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
@@ -783,6 +784,8 @@
 		EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageMultipleUploadViewController.m; path = Controller/HPImageMultipleUploadViewController.m; sourceTree = "<group>"; };
 		EA8947271D3BB554009261DD /* HiPDA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HiPDA.entitlements; sourceTree = "<group>"; };
 		EA8947281D3BB62A009261DD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		EA91959C21297CA000D7D3C6 /* HPBackgroundFetchService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPBackgroundFetchService.h; path = Service/HPBackgroundFetchService.h; sourceTree = "<group>"; };
+		EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBackgroundFetchService.m; path = Service/HPBackgroundFetchService.m; sourceTree = "<group>"; };
 		EA91EE131BF75A60009271EF /* debug_crawler_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = debug_crawler_html.html; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
@@ -1981,6 +1984,8 @@
 				EAA727F31D3D266100566999 /* HPBlockService.m */,
 				EA3B91C51E6C11AF00D742EF /* HPCrashReport.h */,
 				EA3B91C61E6C11AF00D742EF /* HPCrashReport.m */,
+				EA91959C21297CA000D7D3C6 /* HPBackgroundFetchService.h */,
+				EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2760,6 +2765,7 @@
 				EAFE683718364097003829E5 /* HPCache.m in Sources */,
 				EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */,
 				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,
+				EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */,
 				EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */,
 				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
 				EAC5C3401E93DD300054A66E /* WKWebView+HPSafeLoadString.m in Sources */,

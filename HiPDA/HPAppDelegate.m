@@ -30,6 +30,7 @@
 #import "HPCrashReport.h"
 #import "HPPushService.h"
 #import <SDWebImage/SDImageCache.h>
+#import "HPBackgroundFetchService.h"
 
 #define AlertPMTag 1357
 #define AlertNoticeTag 2468
@@ -56,15 +57,6 @@
     
     //
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    // clean
-    if ([NSStandardUserDefaults objectForKey:@"hp-mark-old-273"] == nil) {
-        [self clean];
-        [NSStandardUserDefaults saveObject:@"whoiam" forKey:@"hp-mark-old-273"];
-        NSLog(@"clean done");
-    } else {
-        NSLog(@"clean already");
-    }
     
     //
     NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:10 * 1024 * 1024 diskCapacity:50 * 1024 * 1024 diskPath:nil];
@@ -147,9 +139,6 @@
     if (userInfo) {
         [HPPushService didRecieveRemoteNotification:userInfo fromLaunching:YES];
     }
-    
-    // TODO
-    [HPPushService doRegister];
 
     // 友盟统计
     [self setupAnalytics];
@@ -201,13 +190,12 @@
     // 启动时执行的任务, 延迟到启动后
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self setupBgFetch];
+        [[HPBackgroundFetchService instance] setupBgFetch];
         
         // SDWebImage 缓存时长 默认一周, 改成三天
         [[SDImageCache sharedImageCache] setMaxCacheAge:60 * 60 * 24 * 3];
         // SDWebImage 最大缓存大小, 默认不限, 改成500m
         [[SDImageCache sharedImageCache] setMaxCacheSize:500 * 1024 * 1024];
-        
         
         [Flurry trackUserIfNeeded];
     });
@@ -379,76 +367,12 @@
     [self showAlert];
 }
 
-- (void)setupBgFetch {
-    BOOL enableBgFetch = [Setting boolForKey:HPSettingBgFetchNotice];
-    if (enableBgFetch) {
-        
-        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
-        [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:interval * 60.f];
-        
-        NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-        BOOL haveAsk = [NSStandardUserDefaults boolForKey:kHPAskNotificationPermission or:NO];
-        BOOL haveLogin = [HPAccount isSetAccount] && ![username isEqualToString:@"wujichao"];
-        
-        if (!haveAsk && haveLogin && IOS8_OR_LATER) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请求后台伪推送权限" message:@"Hi, 俺利用了iOS7+的后台应用程序刷新来实现新消息的推送，不是很及时，但有总比没有好。\n但是，发送本地推送需要您的授权，若您需要这个功能请点击授权" delegate:nil cancelButtonTitle:@"不" otherButtonTitles:@"授权", nil];
-            [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex != alertView.cancelButtonIndex) {
-                    [[HPAccount sharedHPAccount] askLocalNotificationPermission];
-                } else {
-                    [Setting saveBool:NO forKey:HPSettingBgFetchNotice];
-                }
-            }];
-        }
-    }
-}
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     DDLogInfo(@"[APP] performFetch");
-    if (![Setting boolForKey:HPSettingBgFetchNotice]) {
-        completionHandler(UIBackgroundFetchResultNoData);
-        return;
-    }
-    
-    [[HPAccount sharedHPAccount] setNoticeRetrieveBlock:^(UIBackgroundFetchResult result) {
-        // log
-        //
-        NSMutableArray *log = [NSMutableArray arrayWithArray:[NSStandardUserDefaults objectForKey:@"HPBgFetchLog"]];
-        
-        if (log.count > 233) {
-            [log removeLastObject];
-        }
-        
-        NSInteger interval = [Setting integerForKey:HPBgFetchInterval];
-        [log insertObject:@{@"interval":@(interval),
-                            @"date":[NSDate date],
-                            @"result":@(result)} //0 NewData, 1 NoData, 2 Failed
-                  atIndex:0];
-        [NSStandardUserDefaults saveObject:log forKey:@"HPBgFetchLog"];
-        //NSLog(@"%@", log);
-        //
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completionHandler(result);
-        });
-    }];
-    [[HPAccount sharedHPAccount] startCheckWithDelay:0.f];
+    [[HPBackgroundFetchService instance] application:application performFetchWithCompletionHandler:completionHandler];
 }
-
-- (void)clean {
-    // NSUserDefaults
-    //
-    
-    // clear cookies
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *each in cookieStorage.cookies) {
-        [cookieStorage deleteCookie:each];
-    }
-
-    // clear egocache
-    [[EGOCache globalCache] clearCache];
-}
-
 
 #pragma mark -
 
