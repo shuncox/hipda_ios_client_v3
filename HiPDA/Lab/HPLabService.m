@@ -84,7 +84,7 @@
     return [[HPApi instance] request:@"/message/enable"
                               params:@{@"enable": @(enable)}]
     .then(^id(id data) {
-        return @(YES);
+        return @(enable);
     });
 }
 

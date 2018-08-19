@@ -134,25 +134,34 @@
         make.top.equalTo(_logoutButton.mas_bottom);
     }];
     
+    NSError *USER_CANCEL_ERROR = [NSError new];
+    NSError *USER_DENY_PUSH_ERROR = [NSError new];
+    
     [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
         FBLPromise *promise = nil;
         if (s.on) { //开启推送
             promise =
             // 1. 请求上传cookies的权限
             [[HPLabService instance] checkCookiesPermission]
-            // 2. 请求推送权限
             .then(^id(NSNumber *grant) {
                 if (!grant.boolValue) {
-                    return [FBLPromise resolvedWith:@(NO)];
+                    return USER_CANCEL_ERROR;
                 }
+                return grant;
+            })
+            // 2. 请求推送权限
+            .then(^id(NSNumber *grant) {
                 return [HPPushService checkPushPermission];
             })
-            // 3. 调用接口开启推送
             .then(^id(NSNumber/*HPAuthorizationStatus*/ *value) {
                 HPAuthorizationStatus status = value.intValue;
                 if (status == HPAuthorizationStatusDenied) {
-                    return [FBLPromise resolvedWith:@(NO)];
+                    return USER_DENY_PUSH_ERROR;
                 }
+                return value;
+            })
+            // 3. 调用接口开启推送
+            .then(^id(NSNumber/*HPAuthorizationStatus*/ *value) {
                 return [[HPLabService instance] updatePushEnable:YES];
             });
         } else { //关闭推送
@@ -161,15 +170,28 @@
         }
         
         promise
-        .then(^id(NSNumber *success) {
-            if (success.boolValue) {
-                [HPLabService instance].enableMessagePush = ![HPLabService instance].enableMessagePush;
-            }
-            return success;
+        .then(^id(NSNumber *enable) {
+            [HPLabService instance].enableMessagePush = enable.boolValue;
+            return enable;
         })
         .catch(^(NSError *error) {
             s.on = !s.on;
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+            if (error == USER_CANCEL_ERROR) { //用户取消授权
+                // no-op;
+            } else if (error == USER_DENY_PUSH_ERROR) { //用户关闭推送权限
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                    message:@"消息推送需要您打开推送权限"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"取消"
+                                                          otherButtonTitles:@"确定", nil];
+                [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                    if (buttonIndex != alertView.cancelButtonIndex) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                    }
+                }];
+            } else {
+                [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+            }
         });
     } forControlEvents:UIControlEventValueChanged];
     
