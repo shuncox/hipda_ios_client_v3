@@ -63,9 +63,6 @@
 - (FBLPromise *)login
 {
     return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
-        
-        reject([NSError errorWithErrorCode:0 errorMsg:@"aaa"]);
-        return;
         // 1. 获取 cdb_auth
         NSString *cdb_auth = nil;
         NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];

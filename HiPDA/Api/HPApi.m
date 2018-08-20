@@ -62,35 +62,37 @@
             returnClass:(Class)returnClass
               needLogin:(BOOL)needLogin
 {
-    if (needLogin) {
-        return [[HPLabUserService instance] loginIfNeeded]
-        .then(^id(HPLabUser *yser) {
-            return [self _request:api params:params returnClass:returnClass needLogin:needLogin];
-        });
+    if (!needLogin) {
+        return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:YES];
     }
-    return [self _request:api params:params returnClass:returnClass needLogin:needLogin];
+    
+    NSString *token = [HPLabUserService instance].user.token;
+    if (!token.length) {
+        if (![HPLabService instance].grantUploadCookies) {
+            return [FBLPromise resolvedWith:[NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]];
+        } else {
+            return [[HPLabUserService instance] loginIfNeeded]
+            .then(^id(HPLabUser *yser) {
+                return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:YES];
+            });
+        }
+    }
+    return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:YES];
 }
 
 - (FBLPromise *)_request:(NSString *)api
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass
               needLogin:(BOOL)needLogin
+               canRetry:(BOOL)canRetry
 {
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
                                                                      FBLPromiseRejectBlock reject) {
-        
-        if (![HPLabUserService instance].isLogin
-            && ![HPLabService instance].grantUploadCookies) {
-            reject([NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]);
-            return;
-        }
-
-        
         NSString *url = [self.config.baseUrl stringByAppendingString:api];
+       
         NSString *token = [HPLabUserService instance].user.token;
-        if (needLogin && !token.length) {
-            reject([NSError errorWithErrorCode:-1 errorMsg:@"token不存在"]);
-            return;
+        if (needLogin && !token.length) { //保护一下
+            reject([NSError errorWithErrorCode:-1 errorMsg:@"token异常"]);
         }
         NSDictionary *headers = @{@"X-TOKEN": token ?: @""};
         
@@ -104,29 +106,22 @@
               }
               
               NSError *json_error = nil;
-              HPApiResult *result = [MTLJSONAdapter modelOfClass:HPApiResult.class
-                                              fromJSONDictionary:json
-                                                           error:&json_error];
+              id data = [HPApi ParseJSON:json returnClass:returnClass error:&json_error];
+              
               if (json_error) {
-                  reject(json_error);
-                  return;
-              }
-              
-              if (!result.data) {
-                  NSError *bizError = [NSError errorWithErrorCode:result.code errorMsg:result.message];
-                  reject(bizError);
-                  return;
-              }
-              
-              id data = result.data;
-              if (returnClass) {
-                  data = [MTLJSONAdapter modelOfClass:returnClass
-                                   fromJSONDictionary:result.data
-                                                error:&json_error];
-                  if (json_error) {
-                      
-                      // TODO auto  refresh token
-                      
+                  if (json_error.code == 401 && canRetry) {
+                      [[HPLabUserService instance] loginIfNeeded]
+                      .then(^id(HPLabUser *yser) {
+                          return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:NO];
+                      })
+                      .then(^id(id data) {
+                          fulfill(data);
+                          return data;
+                      })
+                      .catch(^(NSError *error) {
+                          reject(error);
+                      });
+                  } else {
                       reject(json_error);
                       return;
                   }
@@ -137,6 +132,34 @@
     }];
     
     return promise;
+}
+
++ (id)ParseJSON:(NSDictionary *)json
+    returnClass:(Class)returnClass
+          error:(NSError **)error
+{
+    HPApiResult *result = [MTLJSONAdapter modelOfClass:HPApiResult.class
+                                    fromJSONDictionary:json
+                                                 error:error];
+    if (*error) {
+        return nil;
+    }
+    
+    if (result.code != 0) {
+        *error = [NSError errorWithErrorCode:result.code errorMsg:result.message];
+        return nil;
+    }
+    
+    id data = result.data;
+    if (returnClass) {
+        data = [MTLJSONAdapter modelOfClass:returnClass
+                         fromJSONDictionary:result.data
+                                      error:error];
+        if (*error) {
+            return nil;
+        }
+    }
+    return data;
 }
 
 - (NSURLSessionDataTask *)post:(NSString *)url
