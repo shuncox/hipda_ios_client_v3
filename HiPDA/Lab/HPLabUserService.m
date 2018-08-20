@@ -12,6 +12,7 @@
 #import "HPHttpClient.h"
 #import "HPSetting.h"
 #import "HPJSON.h"
+#import "HPLabService.h"
 
 @interface HPLabUserService()
 
@@ -49,7 +50,7 @@
 
 - (BOOL)isLogin
 {
-    return !!self.user;
+    return self.user && self.user.token.length;
 }
 
 - (FBLPromise *)loginIfNeeded
@@ -60,8 +61,19 @@
     return [self login];
 }
 
+- (FBLPromise *)relogin
+{
+    self.user = nil;
+    [self save];
+    return [self login];
+}
+
 - (FBLPromise *)login
 {
+    if (![HPLabService instance].grantUploadCookies) {
+        return [FBLPromise resolvedWith:[NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]];
+    }
+    
     return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
         // 1. 获取 cdb_auth
         NSString *cdb_auth = nil;
@@ -96,6 +108,10 @@
                       returnClass:HPLabUser.class
                         needLogin:NO]
         .then(^id(HPLabUser *user) {
+            if (!user.token.length) {
+                reject([NSError errorWithErrorCode:-1 errorMsg:@"系统异常"]);
+                return nil;
+            }
             self.user = user;
             [self save];
             fulfill(user);

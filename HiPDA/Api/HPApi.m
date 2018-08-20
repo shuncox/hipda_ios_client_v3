@@ -63,27 +63,18 @@
               needLogin:(BOOL)needLogin
 {
     if (!needLogin) {
-        return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:YES];
+        return [self _request:api params:params returnClass:returnClass canRetry:YES];
     }
     
-    NSString *token = [HPLabUserService instance].user.token;
-    if (!token.length) {
-        if (![HPLabService instance].grantUploadCookies) {
-            return [FBLPromise resolvedWith:[NSError errorWithErrorCode:-1 errorMsg:@"未授权cookies"]];
-        } else {
-            return [[HPLabUserService instance] loginIfNeeded]
-            .then(^id(HPLabUser *yser) {
-                return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:YES];
-            });
-        }
-    }
-    return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:YES];
+    return [[HPLabUserService instance] loginIfNeeded]
+    .then(^id(HPLabUser *yser) {
+        return [self _request:api params:params returnClass:returnClass canRetry:YES];
+    });
 }
 
 - (FBLPromise *)_request:(NSString *)api
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass
-              needLogin:(BOOL)needLogin
                canRetry:(BOOL)canRetry
 {
     FBLPromise<id> *promise = [FBLPromise onQueue:self.queue async:^(FBLPromiseFulfillBlock fulfill,
@@ -91,9 +82,6 @@
         NSString *url = [self.config.baseUrl stringByAppendingString:api];
        
         NSString *token = [HPLabUserService instance].user.token;
-        if (needLogin && !token.length) { //保护一下
-            reject([NSError errorWithErrorCode:-1 errorMsg:@"token异常"]);
-        }
         NSDictionary *headers = @{@"X-TOKEN": token ?: @""};
         
         DDLogInfo(@"request api: %@, params: %@", api, params);
@@ -107,12 +95,12 @@
               
               NSError *json_error = nil;
               id data = [HPApi ParseJSON:json returnClass:returnClass error:&json_error];
-              
+             
               if (json_error) {
-                  if (json_error.code == 401 && canRetry) {
-                      [[HPLabUserService instance] loginIfNeeded]
+                  if (json_error.code == 401 && canRetry) { // 重新登录
+                      [[HPLabUserService instance] relogin]
                       .then(^id(HPLabUser *yser) {
-                          return [self _request:api params:params returnClass:returnClass needLogin:needLogin canRetry:NO];
+                          return [self _request:api params:params returnClass:returnClass canRetry:NO];
                       })
                       .then(^id(id data) {
                           fulfill(data);
@@ -123,8 +111,8 @@
                       });
                   } else {
                       reject(json_error);
-                      return;
                   }
+                  return;
               }
               
               fulfill(data);

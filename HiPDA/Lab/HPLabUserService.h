@@ -18,6 +18,7 @@
 
 - (BOOL)isLogin;
 - (FBLPromise<HPLabUser *> *)loginIfNeeded;
+- (FBLPromise<HPLabUser *> *)relogin;
 - (FBLPromise<HPLabUser *> *)login;
 - (FBLPromise<HPLabUser *> *)logout;
 - (void)debug;
