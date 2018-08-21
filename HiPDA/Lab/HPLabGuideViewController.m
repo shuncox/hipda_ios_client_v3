@@ -59,7 +59,6 @@
     
     _enableLabSwitch = [UISwitch new];
     [self.view addSubview:_enableLabSwitch];
-    _enableLabSwitch.enabled = NO;
     [_enableLabSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_enableLabLabel.mas_right);
         make.top.equalTo(_enableLabLabel);
@@ -133,6 +132,10 @@
         make.centerX.equalTo(self.view);
         make.top.equalTo(_logoutButton.mas_bottom);
     }];
+    
+    [_enableLabSwitch bk_addEventHandler:^(UISwitch *s) {
+        [HPLabService instance].grantUploadCookies = s.on;
+    } forControlEvents:UIControlEventValueChanged];
     
     NSError *USER_CANCEL_ERROR = [NSError new];
     NSError *USER_DENY_PUSH_ERROR = [NSError new];
