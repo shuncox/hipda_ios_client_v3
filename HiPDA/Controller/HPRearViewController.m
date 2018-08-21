@@ -70,37 +70,29 @@
 }
 
 - (void)setup {
-    NSMutableArray *classes = [@[[HPThreadViewController class],
-                                 [HPMessageViewController class],
-                                 [HPMyNoticeViewController class],
-                                 [HPMyThreadViewController class],
-                                 [HPMyReplyViewController class],
-                                 [HPFavoriteViewController class],
-                                 [HPHistoryViewController class],
-                                 ] mutableCopy];
+    _vc_classes = @[[HPThreadViewController class],
+                    [HPMessageViewController class],
+                    [HPMyNoticeViewController class],
+                    [HPMyThreadViewController class],
+                    [HPMyReplyViewController class],
+                    [HPFavoriteViewController class],
+                    [HPHistoryViewController class],
+                    [HPLabGuideViewController class]
+                    ];
     
-    NSMutableArray *names = [@[@"HOME",
-                               @"短消息",
-                               @"帖子消息",
-                               @"我的帖子",
-                               @"我的回复",
-                               @"收藏",
-                               @"历史",
-                               ] mutableCopy];
-    
-    if (![HPAccount isAccountForReviewer]) {
-        [classes addObject:[HPLabGuideViewController class]];
-        [names addObject:@"实验室"];
-    }
-    
-    _vc_classes = [classes copy];
-    _vc_names = [names copy];
+    _vc_names = @[@"HOME",
+                  @"短消息",
+                  @"帖子消息",
+                  @"我的帖子",
+                  @"我的回复",
+                  @"收藏",
+                  @"历史",
+                  @"实验室"];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
     for (int i = 0; i < _vc_classes.count; i++) {
         [_vc_instances addObject:[NSNull null]];
     }
-    
     
     _fids = [Setting objectForKey:HPSettingFavForums];
     _fids_title = [Setting objectForKey:HPSettingFavForumsTitle];
@@ -108,11 +100,6 @@
     NSAssert(_fids.count == _fids_title.count, @"");
     if (_fids_title.count < _fids.count) { //做一个保护
         _fids = [_fids subarrayWithRange:NSMakeRange(0, _fids_title.count)];
-    }
-    
-    if ([HPAccount isAccountForReviewer]) {
-        _fids = @[@24, @25, @23];
-        _fids_title = @[@"意欲蔓延", @"吃喝玩乐", @"随笔与文集"];
     }
     
     _current_fid = [[_fids objectAtIndex:0] integerValue];
@@ -191,6 +178,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self updateForReviewer];
     [super viewWillAppear:animated];
 }
 
@@ -577,6 +565,24 @@
 #pragma mark - 过审核
 - (void)updateForReviewer
 {
+    if (![HPAccount isAccountForReviewer]) {
+        return;
+    }
+    
+    // 去掉实验室
+    NSMutableArray *classes = [self.vc_classes mutableCopy];
+    NSMutableArray *names = [self.vc_names mutableCopy];
+    for (int i = 0; i < classes.count; i++) {
+        if ([classes[i] isEqual:HPLabGuideViewController.class]) {
+            [classes removeObjectAtIndex:i];
+            [names removeObjectAtIndex:i];
+            break;
+        }
+    }
+    self.vc_classes = [classes copy];
+    self.vc_names = [names copy];
+    
+    // 设置板块
     _fids = @[@24, @25, @23];
     _fids_title = @[@"意欲蔓延", @"吃喝玩乐", @"随笔与文集"];
     [_tableView reloadData];
