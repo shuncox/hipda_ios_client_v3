@@ -174,6 +174,8 @@
     NSLog(@"rear did load done");
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forumDidChanged) name:kHPThreadListDidChange object:nil];
+    
+    [self updateForReviewer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -585,11 +587,14 @@
     // 设置板块
     _fids = @[@24, @25, @23];
     _fids_title = @[@"意欲蔓延", @"吃喝玩乐", @"随笔与文集"];
-    [_tableView reloadData];
     
-    _current_fid = [_fids[0] integerValue];
-    _current_title = _fids_title[0];
-    [_threadViewController loadForum:_current_fid title:_current_title];
+    if (![_fids containsObject:@(_current_fid)]) {
+        _current_fid = [_fids[0] integerValue];
+        _current_title = _fids_title[0];
+        [_threadViewController loadForum:_current_fid title:_current_title];
+    }
+    
+    [_tableView reloadData];
 }
 
 #pragma mark - SWRevealViewControllerDelegate
