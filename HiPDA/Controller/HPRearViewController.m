@@ -70,24 +70,31 @@
 }
 
 - (void)setup {
-    _vc_classes = @[[HPThreadViewController class],
-                    [HPMessageViewController class],
-                    [HPMyNoticeViewController class],
-                    [HPMyThreadViewController class],
-                    [HPMyReplyViewController class],
-                    [HPFavoriteViewController class],
-                    [HPHistoryViewController class],
-                    [HPLabGuideViewController class]
-                    ];
+    NSMutableArray *classes = [@[[HPThreadViewController class],
+                                 [HPMessageViewController class],
+                                 [HPMyNoticeViewController class],
+                                 [HPMyThreadViewController class],
+                                 [HPMyReplyViewController class],
+                                 [HPFavoriteViewController class],
+                                 [HPHistoryViewController class],
+                                 ] mutableCopy];
     
-    _vc_names = @[@"HOME",
-                  @"短消息",
-                  @"帖子消息",
-                  @"我的帖子",
-                  @"我的回复",
-                  @"收藏",
-                  @"历史",
-                  @"实验室"];
+    NSMutableArray *names = [@[@"HOME",
+                               @"短消息",
+                               @"帖子消息",
+                               @"我的帖子",
+                               @"我的回复",
+                               @"收藏",
+                               @"历史",
+                               ] mutableCopy];
+    
+    if (![HPAccount isAccountForReviewer]) {
+        [classes addObject:[HPLabGuideViewController class]];
+        [names addObject:@"实验室"];
+    }
+    
+    _vc_classes = [classes copy];
+    _vc_names = [names copy];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
     for (int i = 0; i < _vc_classes.count; i++) {
