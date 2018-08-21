@@ -14,6 +14,7 @@
 #import <BlocksKit/UIControl+BlocksKit.h>
 #import "UIAlertView+Blocks.h"
 #import "HPPushService.h"
+#import <BlocksKit/UIBarButtonItem+BlocksKit.h>
 
 @interface HPLabGuideViewController()
 
@@ -35,19 +36,21 @@
 
 @implementation HPLabGuideViewController
 
-// 功能
-// 1. 登录 (授权上传cookies, 上传devicetoken)
-// 2. 登录 (调用登出接口, 调用token删除接口)
-// 3. 请求debug接口
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = @"收藏";
-    [self addRevealActionBI];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.title = @"实验室";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (self.isModal) {
+        @weakify(self);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"关闭" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            @strongify(self);
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        self.navigationItem.leftBarButtonItem = [UIBarButtonItem new];
+    }
     
     _enableLabLabel = [UILabel new];
     _enableLabLabel.text = @"授权cookies";
@@ -214,17 +217,18 @@
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         });
     } forControlEvents:UIControlEventValueChanged];
+    
+    [self refreshUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self addGuesture];
+    [self refreshUI];
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self removeGuesture];
     [super viewWillDisappear:animated];
 }
 
@@ -253,7 +257,7 @@
     [[HPLabUserService instance] debug];
 }
 
-- (void)refresh:(id)sender
+- (void)refreshUI
 {
     self.textLabel.text = [HPLabUserService instance].user.description;
     self.enableLabSwitch.on = [HPLabService instance].grantUploadCookies;
@@ -273,10 +277,17 @@
     }
 }
 
-- (void)setup
+// https://stackoverflow.com/questions/23620276/check-if-view-controller-is-presented-modally-or-pushed-on-a-navigation-stack
+- (BOOL)isModal
 {
+    if([self presentingViewController])
+        return YES;
+    if([[[self navigationController] presentingViewController] presentedViewController] == [self navigationController])
+        return YES;
+    if([[[self tabBarController] presentingViewController] isKindOfClass:[UITabBarController class]])
+        return YES;
     
+    return NO;
 }
-
 
 @end

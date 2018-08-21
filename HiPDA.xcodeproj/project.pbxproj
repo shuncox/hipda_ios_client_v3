@@ -230,6 +230,7 @@
 		EA8947291D3BB62A009261DD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8947281D3BB62A009261DD /* CloudKit.framework */; };
 		EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */; };
 		EA9195A121297FEE00D7D3C6 /* HPRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9195A021297FEE00D7D3C6 /* HPRouter.m */; };
+		EA9195A4212C5A5F00D7D3C6 /* HPSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9195A3212C5A5F00D7D3C6 /* HPSubViewController.m */; };
 		EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */ = {isa = PBXBuildFile; fileRef = EA91EE131BF75A60009271EF /* debug_crawler_html.html */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
@@ -789,6 +790,8 @@
 		EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBackgroundFetchService.m; path = Service/HPBackgroundFetchService.m; sourceTree = "<group>"; };
 		EA91959F21297FEE00D7D3C6 /* HPRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPRouter.h; path = Service/HPRouter.h; sourceTree = "<group>"; };
 		EA9195A021297FEE00D7D3C6 /* HPRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPRouter.m; path = Service/HPRouter.m; sourceTree = "<group>"; };
+		EA9195A2212C5A5F00D7D3C6 /* HPSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPSubViewController.h; path = Controller/HPSubViewController.h; sourceTree = "<group>"; };
+		EA9195A3212C5A5F00D7D3C6 /* HPSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPSubViewController.m; path = Controller/HPSubViewController.m; sourceTree = "<group>"; };
 		EA91EE131BF75A60009271EF /* debug_crawler_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = debug_crawler_html.html; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
@@ -1733,6 +1736,8 @@
 				EA13B90E1949F8C300E01AF5 /* HPUserViewController.m */,
 				EA4CDC6C1ECAB67B00FAED6B /* HPMessageSearchUserViewController.h */,
 				EA4CDC6D1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m */,
+				EA9195A2212C5A5F00D7D3C6 /* HPSubViewController.h */,
+				EA9195A3212C5A5F00D7D3C6 /* HPSubViewController.m */,
 			);
 			name = UserCenter;
 			sourceTree = "<group>";
@@ -2747,6 +2752,7 @@
 				EAA1E68718D03A4100E1CFE1 /* UIView+AnchorPoint.m in Sources */,
 				EA743C29183F32410067F62B /* HPMyThread.m in Sources */,
 				EA083DBD18C8D18900BD8F07 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
+				EA9195A4212C5A5F00D7D3C6 /* HPSubViewController.m in Sources */,
 				EAC202E21C4FD2050050994E /* HPViewHTMLController.m in Sources */,
 				EAAE256D18E135870059EEB7 /* HPRearCell.m in Sources */,
 				EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */,

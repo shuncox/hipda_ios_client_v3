@@ -24,7 +24,7 @@
 #import "HPSearchViewController.h"
 #import "HPSettingViewController.h"
 #import "HPHistoryViewController.h"
-#import "HPLabGuideViewController.h"
+#import "HPSubViewController.h"
 
 #import "NSUserDefaults+Convenience.h"
 #import "UIAlertView+Blocks.h"
@@ -77,7 +77,7 @@
                     [HPMyReplyViewController class],
                     [HPFavoriteViewController class],
                     [HPHistoryViewController class],
-                    [HPLabGuideViewController class]
+                    [HPSubViewController class]
                     ];
     
     _vc_names = @[@"HOME",
@@ -87,7 +87,7 @@
                   @"我的回复",
                   @"收藏",
                   @"历史",
-                  @"实验室"];
+                  @"订阅"];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
     for (int i = 0; i < _vc_classes.count; i++) {
@@ -571,11 +571,11 @@
         return;
     }
     
-    // 去掉实验室
+    // 去掉订阅
     NSMutableArray *classes = [self.vc_classes mutableCopy];
     NSMutableArray *names = [self.vc_names mutableCopy];
     for (int i = 0; i < classes.count; i++) {
-        if ([classes[i] isEqual:HPLabGuideViewController.class]) {
+        if ([classes[i] isEqual:HPSubViewController.class]) {
             [classes removeObjectAtIndex:i];
             [names removeObjectAtIndex:i];
             break;
