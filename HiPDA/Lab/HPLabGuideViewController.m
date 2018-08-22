@@ -18,15 +18,19 @@
 
 @interface HPLabGuideViewController()
 
-@property (nonatomic, strong) UILabel *enableLabLabel;
-@property (nonatomic, strong) UISwitch *enableLabSwitch;
-
 @property (nonatomic, strong) UILabel *enablePushLabel;
+@property (nonatomic, strong) UILabel *enablePushDesc;
 @property (nonatomic, strong) UISwitch *enablePushSwitch;
 
 @property (nonatomic, strong) UILabel *enableSubLabel;
+@property (nonatomic, strong) UILabel *enableSubDesc;
 @property (nonatomic, strong) UISwitch *enableSubSwitch;
 
+@property (nonatomic, strong) UIWebView *noticeWebView;
+
+// debug view
+@property (nonatomic, strong) UILabel *enableLabLabel;
+@property (nonatomic, strong) UISwitch *enableLabSwitch;
 @property (nonatomic, strong) UILabel *textLabel;
 @property (nonatomic, strong) UIButton *loginButton;
 @property (nonatomic, strong) UIButton *logoutButton;
@@ -52,93 +56,114 @@
         self.navigationItem.leftBarButtonItem = [UIBarButtonItem new];
     }
     
-    _enableLabLabel = [UILabel new];
-    _enableLabLabel.text = @"授权cookies";
-    [self.view addSubview:_enableLabLabel];
-    [_enableLabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view).offset(100.f);
-    }];
+    [self setupViews];
+    [self setupDebugViews];
     
-    _enableLabSwitch = [UISwitch new];
-    [self.view addSubview:_enableLabSwitch];
-    [_enableLabSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_enableLabLabel.mas_right);
-        make.top.equalTo(_enableLabLabel);
+    [self refreshUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self refreshUI];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)setupViews
+{
+    UIView *pushContainer = [UIView new];
+    pushContainer.layer.borderColor = [UIColor blackColor].CGColor;
+    pushContainer.layer.borderWidth = 1.f;
+    pushContainer.layer.cornerRadius = 20.f;
+    [self.view addSubview:pushContainer];
+    [pushContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(20.f);
+        make.right.equalTo(self.view).offset(-20.f);
+        make.top.equalTo(self.view).offset(28.f + 64.f);
+        make.height.equalTo(@120);
     }];
     
     _enablePushLabel = [UILabel new];
-    _enablePushLabel.text = @"开启消息推送";
-    [self.view addSubview:_enablePushLabel];
+    _enablePushLabel.text = @"实时消息提醒";
+    _enablePushLabel.font = [UIFont systemFontOfSize:20];
+    _enablePushLabel.textColor = [UIColor blackColor];
+    [pushContainer addSubview:_enablePushLabel];
     [_enablePushLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(_enableLabLabel.mas_bottom).offset(20.f);
+        make.left.equalTo(pushContainer).offset(14.f);
+        make.top.equalTo(pushContainer).offset(12.f);
     }];
     
     _enablePushSwitch = [UISwitch new];
-    [self.view addSubview:_enablePushSwitch];
+    [pushContainer addSubview:_enablePushSwitch];
     [_enablePushSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_enablePushLabel.mas_right);
-        make.top.equalTo(_enablePushLabel);
+        make.right.equalTo(pushContainer).offset(-14.f);
+        make.centerY.equalTo(_enablePushLabel);
     }];
     
+    _enablePushDesc = [UILabel new];
+    _enablePushDesc.text = @"提供近乎实时的短消息提醒和帖子消息提醒, 不需要客户端后台运行.\n运行原理: 在应用服务器上使用您的cookies不间断的轮训查看是否有新消息, 然后推送给您.";
+    _enablePushDesc.numberOfLines = 0;
+    _enablePushDesc.font = [UIFont systemFontOfSize:12];
+    _enablePushDesc.textColor = [UIColor blackColor];
+    [pushContainer addSubview:_enablePushDesc];
+    [_enablePushDesc mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(pushContainer).offset(14.f);
+        make.right.equalTo(pushContainer).offset(-14.f);
+        make.bottom.equalTo(pushContainer).offset(-12.f);
+    }];
+    
+    
+    UIView *subContainer = [UIView new];
+    subContainer.layer.borderColor = [UIColor blackColor].CGColor;
+    subContainer.layer.borderWidth = 1.f;
+    subContainer.layer.cornerRadius = 20.f;
+    [self.view addSubview:subContainer];
+    [subContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(pushContainer);
+        make.top.equalTo(pushContainer.mas_bottom).offset(20);
+        make.height.equalTo(@120);
+    }];
+
     _enableSubLabel = [UILabel new];
-    _enableSubLabel.text = @"开启订阅";
-    [self.view addSubview:_enableSubLabel];
+    _enableSubLabel.text = @"帖子订阅";
+    _enableSubLabel.font = [UIFont systemFontOfSize:20];
+    _enableSubLabel.textColor = [UIColor blackColor];
+    [subContainer addSubview:_enableSubLabel];
     [_enableSubLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(_enablePushLabel.mas_bottom).offset(20.f);
+        make.left.equalTo(subContainer).offset(14.f);
+        make.top.equalTo(subContainer).offset(12.f);
     }];
-    
+
     _enableSubSwitch = [UISwitch new];
     [self.view addSubview:_enableSubSwitch];
     [_enableSubSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_enableSubLabel.mas_right);
-        make.top.equalTo(_enableSubLabel);
+        make.right.equalTo(subContainer).offset(-14.f);
+        make.centerY.equalTo(_enableSubLabel);
     }];
     
-    _textLabel = [UILabel new];
-    _textLabel.numberOfLines = 0;
-    [self.view addSubview:_textLabel];
-    [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(200.f);
+    _enableSubDesc = [UILabel new];
+    _enableSubDesc.text = @"提供关键词订阅和用户名订阅功能, 并且符合条件的帖子会通过推送提醒您.\n运行原理: 在应用服务器上不间断的轮训查看是否有符合您设定条件的新帖, 然后推送给您.";
+    _enableSubDesc.numberOfLines = 0;
+    _enableSubDesc.font = [UIFont systemFontOfSize:12];
+    _enableSubDesc.textColor = [UIColor blackColor];
+    [subContainer addSubview:_enableSubDesc];
+    [_enableSubDesc mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(subContainer).offset(14.f);
+        make.right.equalTo(subContainer).offset(-14.f);
+        make.bottom.equalTo(subContainer).offset(-12.f);
+    }];
+    
+    _noticeWebView = [UIWebView new];
+    _noticeWebView.backgroundColor = [UIColor grayColor];
+    [self.view addSubview:_noticeWebView];
+    [_noticeWebView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
         make.height.equalTo(@200);
     }];
-    
-    _loginButton = [UIButton new];
-    [_loginButton setTitle:@"login" forState:UIControlStateNormal];
-    [_loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_loginButton];
-    [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(_textLabel.mas_bottom);
-    }];
-    
-    _logoutButton = [UIButton new];
-    [_logoutButton setTitle:@"logout" forState:UIControlStateNormal];
-    [_logoutButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_logoutButton];
-    [_logoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(_loginButton.mas_bottom);
-    }];
-    
-    _debugButton = [UIButton new];
-    [_debugButton setTitle:@"debug" forState:UIControlStateNormal];
-    [_debugButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_debugButton addTarget:self action:@selector(debug) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_debugButton];
-    [_debugButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(_logoutButton.mas_bottom);
-    }];
-    
-    [_enableLabSwitch bk_addEventHandler:^(UISwitch *s) {
-        [HPLabService instance].grantUploadCookies = s.on;
-    } forControlEvents:UIControlEventValueChanged];
     
     NSError *USER_CANCEL_ERROR = [NSError new];
     NSError *USER_DENY_PUSH_ERROR = [NSError new];
@@ -217,19 +242,77 @@
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         });
     } forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)setupDebugViews
+{
+    UIView *debugView = [UIView new];
+    debugView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
+    [self.view addSubview:debugView];
+    [debugView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.equalTo(self.view);
+        make.height.equalTo(@150);
+    }];
     
-    [self refreshUI];
-}
+    _textLabel = [UILabel new];
+    _textLabel.numberOfLines = 0;
+    _textLabel.text = @"11";
+    _textLabel.font = [UIFont systemFontOfSize:10.f];
+    [debugView addSubview:_textLabel];
+    [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.equalTo(debugView);
+        make.height.equalTo(@80.f);
+    }];
+    
+    _enableLabLabel = [UILabel new];
+    _enableLabLabel.text = @"授权cookies";
+    _enableLabLabel.textColor = [UIColor blackColor];
+    [debugView addSubview:_enableLabLabel];
+    [_enableLabLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(debugView);
+        make.top.equalTo(_textLabel.mas_bottom).offset(2);
+    }];
+    
+    _enableLabSwitch = [UISwitch new];
+    [debugView addSubview:_enableLabSwitch];
+    [_enableLabSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_enableLabLabel.mas_right);
+        make.centerY.equalTo(_enableLabLabel);
+    }];
+    
+    _loginButton = [UIButton new];
+    [_loginButton setTitle:@"login" forState:UIControlStateNormal];
+    [_loginButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+    [debugView addSubview:_loginButton];
+    [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_enableLabLabel.mas_bottom).offset(5);
+        make.left.equalTo(debugView);
+    }];
+    
+    _logoutButton = [UIButton new];
+    [_logoutButton setTitle:@"logout" forState:UIControlStateNormal];
+    [_logoutButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [debugView addSubview:_logoutButton];
+    [_logoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_loginButton);
+        make.left.equalTo(_loginButton.mas_right).offset(20);
+    }];
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self refreshUI];
-    [super viewWillAppear:animated];
-}
+    _debugButton = [UIButton new];
+    [_debugButton setTitle:@"debug" forState:UIControlStateNormal];
+    [_debugButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [_debugButton addTarget:self action:@selector(debug) forControlEvents:UIControlEventTouchUpInside];
+    [debugView addSubview:_debugButton];
+    [_debugButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_loginButton);
+        make.left.equalTo(_logoutButton.mas_right).offset(20);
+    }];
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
+    [_enableLabSwitch bk_addEventHandler:^(UISwitch *s) {
+        [HPLabService instance].grantUploadCookies = s.on;
+    } forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)login
