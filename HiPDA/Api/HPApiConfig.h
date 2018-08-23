@@ -11,6 +11,7 @@
 @interface HPApiConfig : NSObject
 
 @property (nonatomic, strong) NSString *baseUrl;
+@property (nonatomic, assign) BOOL online;
 
 + (instancetype)config;
 

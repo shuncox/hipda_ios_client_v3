@@ -148,6 +148,7 @@
                                
                                HPSettingEnableWKWebview:@NO,
                                
+                               HPSettingApiEnv:@YES,
                                HPSettingLabUserInfo: @"",
                                HPSettingLabCookiesPermission: @NO,
                                HPSettingLabEnablePush: @NO,

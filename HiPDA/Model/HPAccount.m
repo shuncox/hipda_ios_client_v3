@@ -58,6 +58,12 @@
     return [username isEqualToString:@"wujichao"];
 }
 
++ (BOOL)isMasterAccount
+{
+    NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+    return [username isEqualToString:@"geka"];
+}
+
 - (void)loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
     
     // acquire account info

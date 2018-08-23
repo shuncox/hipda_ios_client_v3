@@ -22,6 +22,7 @@
 #import "HPSetting.h"
 #import "HPAccount.h"
 #import "HPTheme.h"
+#import "HPApiConfig.h"
 
 #import "NSUserDefaults+Convenience.h"
 #import "RETableViewManager.h"
@@ -213,6 +214,13 @@
         [Flurry logEvent:@"Setting ToggleShowAvatar" withParameters:@{@"flag":@(item.value)}];
     }];
     
+    // isShowAvatar
+    //
+    BOOL isOnlineEnv = [HPApiConfig config].online;
+    REBoolItem *isOnlineEnvItem = [REBoolItem itemWithTitle:@"online?" value:isOnlineEnv switchValueChangeHandler:^(REBoolItem *item) {
+        [HPApiConfig config].online = item.value;
+    }];
+  
     //
     //
     NSString *postTail = [Setting objectForKey:HPSettingTail];
@@ -452,6 +460,10 @@
         }
         [Flurry logEvent:@"Setting Https" withParameters:@{@"flag":@(item.value)}];
     }];
+    
+    if ([HPAccount isMasterAccount]) {
+        [section addItem:isOnlineEnvItem];
+    }
     
     [section addItem:isNightModeItem];
     [section addItem:isShowAvatarItem];

@@ -7,20 +7,43 @@
 //
 
 #import "HPApiConfig.h"
+#import "HPSetting.h"
+
+static NSString * const DEV_URL = @"http://192.168.2.223:8080/api";
+static NSString * const ONLINE_URL = @"https://apocalypse.jichaowu.com/api";
 
 @implementation HPApiConfig
 
 + (instancetype)config
 {
-    HPApiConfig *config = [HPApiConfig new];
-    
-#ifdef DEBUG
-    config.baseUrl = @"http://192.168.2.223:8080/api";
-#else
-    config.baseUrl = @"https://apocalypse.jichaowu.com/api";
-#endif
+    static dispatch_once_t once;
+    static HPApiConfig *singleton;
+    dispatch_once(&once, ^ { singleton = [[HPApiConfig alloc] init]; });
+    return singleton;
+}
 
-    return config;
+- (id)init
+{
+    self = [super init];
+    if (self) {
+#ifdef DEBUG
+        self.online = NO;
+#else
+        self.online = YES;
+#endif
+    }
+    return self;
+}
+
+- (BOOL)online
+{
+    return [self.baseUrl isEqualToString:ONLINE_URL];
+}
+
+- (void)setOnline:(BOOL)online
+{
+    self.baseUrl = online ? ONLINE_URL : DEV_URL;
+    [Setting saveBool:online forKey:HPSettingApiEnv];
 }
 
 @end

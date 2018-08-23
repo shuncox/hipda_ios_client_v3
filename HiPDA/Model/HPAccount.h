@@ -23,6 +23,8 @@ typedef void (^NoticeRetrieveBlock)(UIBackgroundFetchResult result);
 
 // 是否是审核用的账号
 + (BOOL)isAccountForReviewer;
+// master
++ (BOOL)isMasterAccount;
 
 // login & out
 - (void)loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block;
