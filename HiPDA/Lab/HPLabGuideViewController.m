@@ -17,6 +17,7 @@
 #import <BlocksKit/UIBarButtonItem+BlocksKit.h>
 #import "HPApi.h"
 #import "HPApiLabConfig.h"
+#import "NSString+Additions.h"
 
 @interface HPLabGuideViewController()
 
@@ -144,10 +145,31 @@
     }];
 
     _enableSubSwitch = [UISwitch new];
-    [self.view addSubview:_enableSubSwitch];
+    _enableSubSwitch.hidden = YES;//TODO
+    [subContainer addSubview:_enableSubSwitch];
     [_enableSubSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(subContainer).offset(-14.f);
         make.centerY.equalTo(_enableSubLabel);
+    }];
+    
+    // TODO
+    UIView *enableSubButton = [UIView new];
+    enableSubButton.backgroundColor = [@"#909090" colorFromHexString];
+    enableSubButton.layer.cornerRadius = 6.f;
+    [subContainer addSubview:enableSubButton];
+    [enableSubButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(subContainer).offset(-14.f);
+        make.centerY.equalTo(_enableSubLabel);
+        make.width.equalTo(@50.f);
+        make.height.equalTo(@32.f);
+    }];
+    UILabel *enableSubButtonLabel = [UILabel new];
+    enableSubButtonLabel.text = @"开发中";
+    enableSubButtonLabel.font = [UIFont systemFontOfSize:14];
+    enableSubButtonLabel.textColor = [UIColor whiteColor];
+    [enableSubButton addSubview:enableSubButtonLabel];
+    [enableSubButtonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(enableSubButton);
     }];
     
     _enableSubDesc = [UILabel new];
@@ -163,6 +185,7 @@
     }];
     
     _noticeWebView = [UIWebView new];
+    _noticeWebView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_noticeWebView];
     [_noticeWebView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(subContainer.mas_bottom).offset(15.f);
