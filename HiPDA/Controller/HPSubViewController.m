@@ -30,9 +30,7 @@
     [self addGuesture];
     [super viewWillAppear:animated];
     
-    [self presentViewController:[HPCommon swipeableNVCWithRootVC:[HPLabGuideViewController new]]
-                       animated:YES
-                     completion:nil];
+    [HPLabGuideViewController presentIn:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -10,4 +10,6 @@
 
 @interface HPLabGuideViewController : UIViewController
 
++ (void)presentIn:(UIViewController *)parent;
+
 @end

@@ -11,6 +11,7 @@
 #import "HPApi.h"
 #import "UIAlertView+Blocks.h"
 #import "HPLabUserService.h"
+#import "HPLabGuideViewController.h"
 
 @interface HPLabService()
 
@@ -26,6 +27,18 @@
     static HPLabService *singleton;
     dispatch_once(&once, ^ { singleton = [[HPLabService alloc] init]; });
     return singleton;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(showGuideIfNeeded)
+                                                     name:HPLoadThreadListSuccess
+                                                   object:nil];
+    }
+    return self;
 }
 
 #pragma mark - cookiesPermission
@@ -128,4 +141,23 @@
         return config;
     });
 }
+
+#pragma mark - guide
+- (void)showGuideIfNeeded
+{
+    NSString *key = @"ShowLabGuideFlag";
+    BOOL didShow = [NSStandardUserDefaults boolForKey:key or:NO];
+    if (didShow) {
+        return;
+    }
+    [NSStandardUserDefaults saveBool:YES forKey:key];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新功能内测邀请" message:@"实时的短消息推送功能, 邀请您内测" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"好的", nil];
+    [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [HPLabGuideViewController presentIn:nil];
+        }
+    }];
+}
+
 @end

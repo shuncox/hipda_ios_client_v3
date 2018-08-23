@@ -232,6 +232,7 @@ typedef NS_ENUM(NSUInteger, HPImageAutoLoadMode) {
 #define kHPThemeDidChanged @"HPThemeDidChanged"
 #define kHPBlockListDidChange @"kHPBlockListDidChange"
 #define kHPThreadListDidChange @"kHPThreadListDidChange"
+#define HPLoadThreadListSuccess @"HPLoadThreadListSuccess"
 
 
 

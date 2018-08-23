@@ -43,6 +43,15 @@
 
 @implementation HPLabGuideViewController
 
++ (void)presentIn:(UIViewController *)parent
+{
+    if (!parent) {
+        parent = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    }
+    UIViewController *vc = [HPCommon swipeableNVCWithRootVC:[HPLabGuideViewController new]];
+    [parent presentViewController:vc animated:YES completion:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -189,6 +189,8 @@
         }
         
         [self saveUID:html];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:HPLoadThreadListSuccess object:nil];
     
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (block) {

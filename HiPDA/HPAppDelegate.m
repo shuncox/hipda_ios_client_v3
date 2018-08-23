@@ -21,6 +21,7 @@
 #import <SDWebImage/SDImageCache.h>
 #import "HPBackgroundFetchService.h"
 #import "HPRouter.h"
+#import "HPLabService.h"
 
 #define UM_APP_KEY (@"543b7fe7fd98c59dcb0418ef")
 #define UM_APP_KEY_DEV (UM_APP_KEY)
@@ -128,6 +129,9 @@
 
     // 友盟统计
     [self setupAnalytics];
+    
+    // 实验室
+    [HPLabService instance];
     
     DDLogInfo(@"finish launching");
     return YES;
