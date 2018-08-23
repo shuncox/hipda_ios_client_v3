@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <PromisesObjC/FBLPromises.h>
+#import "HPApiLabConfig.h"
 
 @interface HPLabService : NSObject
 
@@ -24,5 +25,8 @@
 
 // 开启订阅
 @property (nonatomic, assign) BOOL enableSubscribe;
+
+// 后端配置
+- (FBLPromise<HPApiLabConfig *> *)getLabConfig;
 
 @end

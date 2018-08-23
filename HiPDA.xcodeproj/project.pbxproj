@@ -231,6 +231,7 @@
 		EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */; };
 		EA9195A121297FEE00D7D3C6 /* HPRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9195A021297FEE00D7D3C6 /* HPRouter.m */; };
 		EA9195A4212C5A5F00D7D3C6 /* HPSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9195A3212C5A5F00D7D3C6 /* HPSubViewController.m */; };
+		EA9195A7212EE87E00D7D3C6 /* HPApiLabConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9195A6212EE87E00D7D3C6 /* HPApiLabConfig.m */; };
 		EA91EE141BF75A60009271EF /* debug_crawler_html.html in Resources */ = {isa = PBXBuildFile; fileRef = EA91EE131BF75A60009271EF /* debug_crawler_html.html */; };
 		EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A060F18DB11F000D5D7D9 /* HPViewController.m */; };
 		EA9A39AB1A5BE92E0028BE7D /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9A39591A5BE92E0028BE7D /* NSString+JSMessagesView.m */; };
@@ -792,6 +793,8 @@
 		EA9195A021297FEE00D7D3C6 /* HPRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPRouter.m; path = Service/HPRouter.m; sourceTree = "<group>"; };
 		EA9195A2212C5A5F00D7D3C6 /* HPSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPSubViewController.h; path = Controller/HPSubViewController.h; sourceTree = "<group>"; };
 		EA9195A3212C5A5F00D7D3C6 /* HPSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPSubViewController.m; path = Controller/HPSubViewController.m; sourceTree = "<group>"; };
+		EA9195A5212EE87E00D7D3C6 /* HPApiLabConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiLabConfig.h; sourceTree = "<group>"; };
+		EA9195A6212EE87E00D7D3C6 /* HPApiLabConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiLabConfig.m; sourceTree = "<group>"; };
 		EA91EE131BF75A60009271EF /* debug_crawler_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = debug_crawler_html.html; sourceTree = "<group>"; };
 		EA9A060E18DB11F000D5D7D9 /* HPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPViewController.h; path = Controller/HPViewController.h; sourceTree = "<group>"; };
 		EA9A060F18DB11F000D5D7D9 /* HPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPViewController.m; path = Controller/HPViewController.m; sourceTree = "<group>"; };
@@ -1258,6 +1261,8 @@
 			children = (
 				EA084DA1211EC95F003089E7 /* HPApiUser.h */,
 				EA084DA2211EC95F003089E7 /* HPApiUser.m */,
+				EA9195A5212EE87E00D7D3C6 /* HPApiLabConfig.h */,
+				EA9195A6212EE87E00D7D3C6 /* HPApiLabConfig.m */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -2723,6 +2728,7 @@
 				EA3C7067211F16E1003DD443 /* HPLabUser.m in Sources */,
 				EA499F4F1830C32700172989 /* NSString+Additions.m in Sources */,
 				EA499F2A1830BE3B00172989 /* HPThread.m in Sources */,
+				EA9195A7212EE87E00D7D3C6 /* HPApiLabConfig.m in Sources */,
 				EAA1E68218D03A4100E1CFE1 /* UIButton+Additions.m in Sources */,
 				EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */,
 				EA6409061EB0E841004AD7CD /* HPLogger.m in Sources */,

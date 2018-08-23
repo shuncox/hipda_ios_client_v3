@@ -15,6 +15,8 @@
 #import "UIAlertView+Blocks.h"
 #import "HPPushService.h"
 #import <BlocksKit/UIBarButtonItem+BlocksKit.h>
+#import "HPApi.h"
+#import "HPApiLabConfig.h"
 
 @interface HPLabGuideViewController()
 
@@ -51,13 +53,16 @@
         @weakify(self);
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"关闭" style:UIBarButtonItemStylePlain handler:^(id sender) {
             @strongify(self);
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self close];
         }];
         self.navigationItem.leftBarButtonItem = [UIBarButtonItem new];
     }
     
     [self setupViews];
+    
+#ifdef DEBUG
     [self setupDebugViews];
+#endif
     
     [self refreshUI];
 }
@@ -158,11 +163,11 @@
     }];
     
     _noticeWebView = [UIWebView new];
-    _noticeWebView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:_noticeWebView];
     [_noticeWebView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.view);
-        make.height.equalTo(@200);
+        make.top.equalTo(subContainer.mas_bottom).offset(15.f);
+        make.left.right.equalTo(subContainer);
+        make.bottom.equalTo(self.view);
     }];
     
     NSError *USER_CANCEL_ERROR = [NSError new];
@@ -247,7 +252,7 @@
 - (void)setupDebugViews
 {
     UIView *debugView = [UIView new];
-    debugView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
+    debugView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
     [self.view addSubview:debugView];
     [debugView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.equalTo(self.view);
@@ -357,6 +362,54 @@
         .catch(^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         });
+    }
+    
+    @weakify(self);
+    [SVProgressHUD show];
+    [[HPLabService instance] getLabConfig]
+    .then(^id(HPApiLabConfig *config) {
+        @strongify(self);
+        [SVProgressHUD dismiss];
+        [self handleConfig:config];
+        return config;
+    })
+    .catch(^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+        [self close];
+    });
+}
+
+- (void)handleConfig:(HPApiLabConfig *)config
+{
+    if (config.alert.length) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:config.alert
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"好的"
+                                                  otherButtonTitles:nil];
+        [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [self close];
+        }];
+        return;
+    }
+    
+    [self.noticeWebView loadHTMLString:config.noticeHtml baseURL:nil];
+    
+    if (config.disableMessagePush) {
+        // TODO
+    }
+    
+    if (config.disableSubscribe) {
+        // TODO
+    }
+}
+
+- (void)close
+{
+    if (self.isModal) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

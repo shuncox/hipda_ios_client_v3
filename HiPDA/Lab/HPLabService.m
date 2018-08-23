@@ -12,6 +12,12 @@
 #import "UIAlertView+Blocks.h"
 #import "HPLabUserService.h"
 
+@interface HPLabService()
+
+@property (nonatomic, strong) HPApiLabConfig *config;
+
+@end
+
 @implementation HPLabService
 
 + (instancetype)instance
@@ -47,15 +53,22 @@
     }
    
     return [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确认上传cookies" message:@"blabla..." delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-        [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            if (buttonIndex != alertView.cancelButtonIndex) {
-                self.grantUploadCookies = YES;
-                fulfill(@YES);
-            } else {
-                fulfill(@NO);
-            }
-        }];
+        [self getLabConfig]
+        .then(^id(HPApiLabConfig *config){
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:config.notice delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+            [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex != alertView.cancelButtonIndex) {
+                    self.grantUploadCookies = YES;
+                    fulfill(@YES);
+                } else {
+                    fulfill(@NO);
+                }
+            }];
+            return config;
+        })
+        .catch(^(NSError *error) {
+            fulfill(@NO);
+        });
     }];
 }
 
@@ -100,4 +113,19 @@
     [[HPSetting sharedSetting] saveBool:enable forKey:HPSettingLabEnableSubscribe];
 }
 
+#pragma mark - config
+- (FBLPromise<HPApiLabConfig *> *)getLabConfig
+{
+    if (self.config) {
+        return [FBLPromise resolvedWith:self.config];
+    }
+    
+    return [[HPApi instance] request:@"/config/get"
+                              params:@{@"key": @"lab_config"}
+                         returnClass:HPApiLabConfig.class]
+    .then(^id(HPApiLabConfig *config) {
+        self.config = config;
+        return config;
+    });
+}
 @end
