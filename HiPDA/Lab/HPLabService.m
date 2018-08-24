@@ -12,6 +12,7 @@
 #import "UIAlertView+Blocks.h"
 #import "HPLabUserService.h"
 #import "HPLabGuideViewController.h"
+#import "HPAccount.h"
 
 @interface HPLabService()
 
@@ -146,6 +147,10 @@
 #pragma mark - guide
 - (void)showGuideIfNeeded
 {
+    if ([HPAccount isAccountForReviewer]) {
+        return;
+    }
+    
     NSString *key = @"ShowLabGuideFlag";
     BOOL didShow = [NSStandardUserDefaults boolForKey:key or:NO];
     if (didShow) {
