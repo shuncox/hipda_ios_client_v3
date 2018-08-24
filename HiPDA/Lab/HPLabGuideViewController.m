@@ -386,9 +386,11 @@
     self.enablePushSwitch.on = [HPLabService instance].enableMessagePush;
     self.enableSubSwitch.on = [HPLabService instance].enableSubscribe;
     
+    @weakify(self);
     if ([HPLabUserService instance].isLogin) {
         [[HPLabService instance] getPushEnable]
         .then(^id(NSNumber *enable) {
+            @strongify(self);
             [HPLabService instance].enableMessagePush = enable.boolValue;
             self.enablePushSwitch.on = [HPLabService instance].enableMessagePush;
             return nil;
@@ -398,7 +400,6 @@
         });
     }
     
-    @weakify(self);
     [SVProgressHUD show];
     [[HPLabService instance] getLabConfig]
     .then(^id(HPApiLabConfig *config) {
@@ -408,6 +409,7 @@
         return config;
     })
     .catch(^(NSError *error) {
+        @strongify(self);
         [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         [self close];
     });

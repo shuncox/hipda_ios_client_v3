@@ -9,7 +9,8 @@
 #import "HPApiConfig.h"
 #import "HPSetting.h"
 
-static NSString * const DEV_URL = @"http://192.168.2.223:8080/api";
+//static NSString * const DEV_URL = @"http://192.168.2.223:8080/api";
+static NSString * const DEV_URL = @"http://172.17.53.5:8080/api";
 static NSString * const ONLINE_URL = @"https://apocalypse.jichaowu.com/api";
 
 @implementation HPApiConfig
