@@ -135,7 +135,8 @@
     
     return [[HPApi instance] request:@"/config/get"
                               params:@{@"key": @"lab_config"}
-                         returnClass:HPApiLabConfig.class]
+                         returnClass:HPApiLabConfig.class
+                           needLogin:NO]
     .then(^id(HPApiLabConfig *config) {
         self.config = config;
         return config;
