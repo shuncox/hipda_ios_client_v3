@@ -59,12 +59,7 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
         return;
     }
     
-#ifdef DEBUG
-    int env = 1;
-#else
-    int env = 0;
-#endif
-    NSString *key = [NSString stringWithFormat:@"%@_%@", NOTIFICATION_DEVICE_TOKEN, @(env)];
+    NSString *key = [HPPushService buildTokenKey];
     
     NSString *tokenString = [[[[NSString stringWithFormat:@"%@", deviceToken] stringByReplacingOccurrencesOfString:@"<" withString:@""] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *oldDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:key];
@@ -89,15 +84,21 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
 
 + (NSString *)currDeviceToken
 {
+    NSString *key = [HPPushService buildTokenKey];
+    NSString *oldDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    return oldDeviceToken;
+}
+
++ (NSString *)buildTokenKey
+{
 #ifdef DEBUG
     int env = 1;
 #else
     int env = 0;
 #endif
-    NSString *key = [NSString stringWithFormat:@"%@_%@", NOTIFICATION_DEVICE_TOKEN, @(env)];
-    
-    NSString *oldDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-    return oldDeviceToken;
+    NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
+    NSString *key = [NSString stringWithFormat:@"%@_%@_%@", NOTIFICATION_DEVICE_TOKEN, @(env), username];
+    return key;
 }
 
 + (void)didRecieveRemoteNotification:(NSDictionary *)userInfo
