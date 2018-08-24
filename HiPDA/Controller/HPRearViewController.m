@@ -77,7 +77,7 @@
                     [HPMyReplyViewController class],
                     [HPFavoriteViewController class],
                     [HPHistoryViewController class],
-                    [HPSubViewController class]
+//                    [HPSubViewController class]
                     ];
     
     _vc_names = @[@"HOME",
@@ -87,7 +87,8 @@
                   @"我的回复",
                   @"收藏",
                   @"历史",
-                  @"订阅"];
+//                  @"订阅"
+                  ];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
     for (int i = 0; i < _vc_classes.count; i++) {

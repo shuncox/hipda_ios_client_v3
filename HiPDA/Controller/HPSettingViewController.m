@@ -17,6 +17,7 @@
 #import "HPLoginViewController.h"
 #import "HPAppDelegate.h"
 #import "HPLoggerViewerController.h"
+#import "HPLabGuideViewController.h"
 
 #import "MultilineTextItem.h"
 #import "HPSetting.h"
@@ -103,21 +104,8 @@
     self.preferenceSection = [self addPreferenceControls];
     self.imageSection = [self addImageControls];
     
-    if (IOS7_OR_LATER && ![HPLabService instance].enableMessagePush) {
-        RETableViewSection *bgFetchSection = [RETableViewSection sectionWithHeaderTitle:nil];
-        @weakify(self);
-        RETableViewItem *bgFetchItem = [RETableViewItem itemWithTitle:@"后台应用程序刷新" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
-            @strongify(self);
-            HPBgFetchViewController *vc = [[HPBgFetchViewController alloc] initWithStyle:UITableViewStylePlain];
-            [self.navigationController pushViewController:vc animated:YES];
-            
-            [item deselectRowAnimated:YES];
-            
-            [Flurry logEvent:@"Account EnterBgFetch"];
-        }];
-        [bgFetchSection addItem:bgFetchItem];
-        [self.manager addSection:bgFetchSection];
-    }
+    [self addBgFetchSection];
+    [self addLabSection];
 
     self.dataTrackingSection = [self addDataTrackingControls];
     self.aboutSection = [self addAboutControls];
@@ -489,6 +477,46 @@
     
     [_manager addSection:section];
     return section;
+}
+
+- (void)addBgFetchSection
+{
+    if (IOS7_OR_LATER && ![HPLabService instance].enableMessagePush) {
+        RETableViewSection *bgFetchSection = [RETableViewSection sectionWithHeaderTitle:nil];
+        @weakify(self);
+        RETableViewItem *bgFetchItem = [RETableViewItem itemWithTitle:@"后台应用程序刷新" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+            @strongify(self);
+            HPBgFetchViewController *vc = [[HPBgFetchViewController alloc] initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            [item deselectRowAnimated:YES];
+            
+            [Flurry logEvent:@"Account EnterBgFetch"];
+        }];
+        [bgFetchSection addItem:bgFetchItem];
+        [self.manager addSection:bgFetchSection];
+    }
+}
+
+- (void)addLabSection
+{
+    if ([HPAccount isAccountForReviewer]) {
+        return;
+    }
+    
+    RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
+    @weakify(self);
+    RETableViewItem *item = [RETableViewItem itemWithTitle:@"实验室" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        @strongify(self);
+        HPLabGuideViewController *vc = [HPLabGuideViewController new];
+        vc.isModal = NO;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        [item deselectRowAnimated:YES];
+        [Flurry logEvent:@"Account EnterLab"];
+    }];
+    [section addItem:item];
+    [self.manager addSection:section];
 }
 
 

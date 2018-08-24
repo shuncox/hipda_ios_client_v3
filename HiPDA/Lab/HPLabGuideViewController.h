@@ -12,4 +12,6 @@
 
 + (void)presentIn:(UIViewController *)parent;
 
+@property (nonatomic, assign) BOOL isModal; //TODO
+
 @end

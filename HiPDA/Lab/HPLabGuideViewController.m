@@ -48,7 +48,9 @@
     if (!parent) {
         parent = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     }
-    UIViewController *vc = [HPCommon swipeableNVCWithRootVC:[HPLabGuideViewController new]];
+    HPLabGuideViewController *lab = [HPLabGuideViewController new];
+    lab.isModal = YES;
+    UIViewController *vc = [HPCommon swipeableNVCWithRootVC:lab];
     [parent presentViewController:vc animated:YES completion:nil];
 }
 
@@ -444,7 +446,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
+/*
 // https://stackoverflow.com/questions/23620276/check-if-view-controller-is-presented-modally-or-pushed-on-a-navigation-stack
 - (BOOL)isModal
 {
@@ -454,8 +456,8 @@
         return YES;
     if([[[self tabBarController] presentingViewController] isKindOfClass:[UITabBarController class]])
         return YES;
-    
     return NO;
 }
+*/
 
 @end
