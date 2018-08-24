@@ -51,6 +51,7 @@ static const int PUSH_ENV = 0;
     if (didAskForPermission) {
         return [FBLPromise resolvedWith:@(HPAuthorizationStatusDenied)];
     }
+    [NSStandardUserDefaults saveBool:YES forKey:kHPAskNotificationPermission];
     
     // 如果没问过, 不搞预先询问了, 直接doRegister, 暂时不太好拿到回调, 直接返回未定, 走下一步
     [HPPushService doRegister];
