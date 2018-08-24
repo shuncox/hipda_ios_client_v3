@@ -11,6 +11,12 @@
 
 static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN";
 
+#ifdef DEBUG
+static const int PUSH_ENV = 1;
+#else
+static const int PUSH_ENV = 0;
+#endif
+
 @implementation HPPushService
 
 + (void)doRegister {
@@ -68,11 +74,11 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
         DDLogInfo(@"token没有变");
         return;
     }
-    
+
     [[[[HPApi instance] request:@"/device_token/update"
                          params:@{@"currToken": tokenString,
                                   @"prevToken": oldDeviceToken ?: @"",
-                                  @"env": @(env)}]
+                                  @"env": @(PUSH_ENV)}]
       then:^id(id data) {
           [[NSUserDefaults standardUserDefaults] setObject:tokenString forKey:key];
           [[NSUserDefaults standardUserDefaults] synchronize];
@@ -91,13 +97,8 @@ static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN"
 
 + (NSString *)buildTokenKey
 {
-#ifdef DEBUG
-    int env = 1;
-#else
-    int env = 0;
-#endif
     NSString *username = [NSStandardUserDefaults stringForKey:kHPAccountUserName or:@""];
-    NSString *key = [NSString stringWithFormat:@"%@_%@_%@", NOTIFICATION_DEVICE_TOKEN, @(env), username];
+    NSString *key = [NSString stringWithFormat:@"%@_%@_%@", NOTIFICATION_DEVICE_TOKEN, @(PUSH_ENV), username];
     return key;
 }
 
