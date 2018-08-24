@@ -179,6 +179,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [[HPBackgroundFetchService instance] setupBgFetch];
+        [HPPushService doRegisterIfGranted];
         
         // SDWebImage 缓存时长 默认一周, 改成三天
         [[SDImageCache sharedImageCache] setMaxCacheAge:60 * 60 * 24 * 3];

@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, HPAuthorizationStatus) {
 };
 
 + (void)doRegister;
++ (void)doRegisterIfGranted;
 
 + (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
                                                    error:(NSError *)error;

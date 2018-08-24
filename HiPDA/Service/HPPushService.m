@@ -24,6 +24,14 @@ static const int PUSH_ENV = 0;
                    categories:nil];
 }
 
++ (void)doRegisterIfGranted
+{
+    BOOL grant = [HPPushService isEnabledRemoteNotification];
+    if (grant) {
+        [HPPushService doRegister];
+    }
+}
+    
 + (void)registerForTypes:(UIRemoteNotificationType)types
               categories:(NSSet *)categories
 {
@@ -44,6 +52,7 @@ static const int PUSH_ENV = 0;
 {
     BOOL grant = [HPPushService isEnabledRemoteNotification];
     if (grant) {
+        [HPPushService doRegister];
         return [FBLPromise resolvedWith:@(HPAuthorizationStatusAuthorized)];
     }
     // 如果问过, 判断是否同意, 返回是否同意
