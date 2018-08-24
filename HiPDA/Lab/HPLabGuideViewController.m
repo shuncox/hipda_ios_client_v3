@@ -75,8 +75,6 @@
 #ifdef DEBUG
     [self setupDebugViews];
 #endif
-    
-    [self refreshUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -204,8 +202,8 @@
         make.bottom.equalTo(self.view);
     }];
     
-    NSError *USER_CANCEL_ERROR = [NSError new];
-    NSError *USER_DENY_PUSH_ERROR = [NSError new];
+    NSError *USER_CANCEL_ERROR = [[NSError alloc] initWithDomain:@"" code:0 userInfo:nil];
+    NSError *USER_DENY_PUSH_ERROR = [[NSError alloc] initWithDomain:@"" code:0 userInfo:nil];
     
     [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
         FBLPromise *promise = nil;
