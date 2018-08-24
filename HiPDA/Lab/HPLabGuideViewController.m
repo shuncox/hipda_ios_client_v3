@@ -217,6 +217,10 @@
                 }
                 return grant;
             })
+            // 登录, 而不是自动登录, 防止step2请求推送异步上传token和step3开启push都需要登录
+            .then(^id(NSNumber *grant) {
+                return [[HPLabUserService instance] loginIfNeeded];
+            })
             // 2. 请求推送权限
             .then(^id(NSNumber *grant) {
                 return [HPPushService checkPushPermission];
