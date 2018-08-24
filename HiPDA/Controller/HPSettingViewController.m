@@ -104,8 +104,8 @@
     self.preferenceSection = [self addPreferenceControls];
     self.imageSection = [self addImageControls];
     
-    [self addBgFetchSection];
     [self addLabSection];
+    [self addBgFetchSection];
 
     self.dataTrackingSection = [self addDataTrackingControls];
     self.aboutSection = [self addAboutControls];
