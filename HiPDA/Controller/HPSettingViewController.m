@@ -506,7 +506,7 @@
     
     RETableViewSection *section = [RETableViewSection sectionWithHeaderTitle:nil];
     @weakify(self);
-    RETableViewItem *item = [RETableViewItem itemWithTitle:@"实验室" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+    RETableViewItem *item = [RETableViewItem itemWithTitle:@"实验室(beta)" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         @strongify(self);
         HPLabGuideViewController *vc = [HPLabGuideViewController new];
         vc.isModal = NO;

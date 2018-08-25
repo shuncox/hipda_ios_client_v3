@@ -58,7 +58,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"实验室";
+    self.title = @"实验室(beta)";
     self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.isModal) {
