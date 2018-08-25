@@ -244,6 +244,14 @@
         promise
         .then(^id(NSNumber *enable) {
             [HPLabService instance].enableMessagePush = enable.boolValue;
+            if (enable.boolValue) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"开启成功"
+                                                                    message:@"之后如果您有新的短消息或帖子提醒, 将会实时推送给您"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:@"确定", nil];
+                [alertView show];
+            }
             return enable;
         })
         .catch(^(NSError *error) {
