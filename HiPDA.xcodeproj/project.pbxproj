@@ -2269,7 +2269,6 @@
 				EAFDB83E1829EFA900C1718B /* Sources */,
 				EAFDB83F1829EFA900C1718B /* Frameworks */,
 				EAFDB8401829EFA900C1718B /* Resources */,
-				EA19F96D1A14FC7800333503 /* Run Script For Crashlytics */,
 				90B5B4AC41C4A22AAB477951 /* [CP] Embed Pods Frameworks */,
 				D6A25B0FB9B404A8B3C9BBC7 /* [CP] Copy Pods Resources */,
 			);
@@ -2630,20 +2629,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		EA19F96D1A14FC7800333503 /* Run Script For Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script For Crashlytics";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 336a8682811030a9c9e624b36e32131ea1d5a8fd 14526b38f2ae365f4eeb049dc5f8f2422ddc4c4a2dca10dcb3b46b08fdc0f4f6";
 		};
 /* End PBXShellScriptBuildPhase section */
 
