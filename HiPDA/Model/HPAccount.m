@@ -72,7 +72,9 @@
         if (isLogin) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
         } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginError object:nil userInfo:@{@"error":error}];
+            if (error.code != kHPNoAccountCode) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginError object:nil userInfo:@{@"error":error}];
+            }
         }
     }];
 }

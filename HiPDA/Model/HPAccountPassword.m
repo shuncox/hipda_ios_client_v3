@@ -57,7 +57,7 @@
 {
     // 将后台读keychain的请求直接过滤
     // TODO: 上线之后看看下面的读取错误的打点还有么?
-    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
 //        NSCAssert(NO, @"app在后台, 没有读keychain的权限");
         return nil;
     }
