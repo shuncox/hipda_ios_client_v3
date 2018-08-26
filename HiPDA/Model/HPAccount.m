@@ -98,7 +98,7 @@
     [[HPHttpClient sharedClient] getPath:@"forum/logging.php?action=login" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *src = [HPHttpClient GBKresponse2String:responseObject];
         
-        if ([src indexOf:@"欢迎您回来"]) {
+        if ([src indexOf:@"欢迎您回来"] != -1) {
             if (block) {
                 block(YES, nil);
             }
