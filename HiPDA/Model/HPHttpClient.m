@@ -67,7 +67,7 @@
     [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     
     [self setDefaultHeader:@"Host" value:HP_BASE_HOST];
-    NSString *UA = [NSString stringWithFormat:@"com.jichaowu.hipda %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    NSString *UA = @"com.jichaowu.hipda"; //UA不加版本号了, 原因是登录态cookies强相关UA, 加了UA的话, 每次用户升级都要触发重新登录
     [self setDefaultHeader:@"User-Agent" value:UA];
     [self setDefaultHeader:@"Accept" value:@"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"];
     [self setDefaultHeader:@"Accept-Encoding" value:@"gzip, deflate"];
