@@ -65,6 +65,19 @@
 }
 
 - (void)loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
+    [self _loginWithBlock:^(BOOL isLogin, NSError *error) {
+        
+        block(isLogin, error);
+        
+        if (isLogin) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginError object:nil userInfo:@{@"error":error}];
+        }
+    }];
+}
+
+- (void)_loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
     
     // acquire account info
     if (![HPAccount isSetAccount]) {
@@ -158,8 +171,8 @@
 }
 
 /*
- * 登录成功会发送 kHPUserLoginSuccess 通知, 同时调用 [Setting loadSetting] 加载设置
- * 登出会发送 kHPUserLogout 通知, 同时清除设置, 同时调用 [Setting loadDefaults] 加载默认设置
+ * 登录成功会先调用 [Setting loadSetting] 加载设置, 然后发送 kHPUserLoginSuccess 通知
+ * 登出会先清除设置, 同时调用 [Setting loadDefaults] 加载默认设置, 然后发送 kHPUserLogout 通知
  */
 - (void)logout {
     
