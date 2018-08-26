@@ -67,8 +67,10 @@
 - (void)loginWithBlock:(void (^)(BOOL isLogin, NSError *error))block {
     [self _loginWithBlock:^(BOOL isLogin, NSError *error) {
         
-        block(isLogin, error);
-        
+        if (block) {
+            block(isLogin, error);
+        }
+
         if (isLogin) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kHPUserLoginSuccess object:nil];
         } else {
@@ -95,6 +97,13 @@
     DDLogInfo(@"login step1");
     [[HPHttpClient sharedClient] getPath:@"forum/logging.php?action=login" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *src = [HPHttpClient GBKresponse2String:responseObject];
+        
+        if ([src indexOf:@"欢迎您回来"]) {
+            if (block) {
+                block(YES, nil);
+            }
+            return;
+        }
         
         NSString *formhash = [src stringBetweenString:@"formhash\" value=\"" andString:@"\""];
         if (formhash) {
