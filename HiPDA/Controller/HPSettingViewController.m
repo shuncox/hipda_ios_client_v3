@@ -136,7 +136,7 @@
     [self.manager addSection:logoutSection];
     
     RETableViewSection *versionSection = [RETableViewSection section];
-    RETableViewItem *versionItem = [RETableViewItem itemWithTitle:[NSString stringWithFormat:@"版本 %@", VERSION] accessoryType:UITableViewCellAccessoryNone selectionHandler:^(RETableViewItem *item) {
+    RETableViewItem *versionItem = [RETableViewItem itemWithTitle:[NSString stringWithFormat:@"版本 %@ (%@)", VERSION, BUILD] accessoryType:UITableViewCellAccessoryNone selectionHandler:^(RETableViewItem *item) {
         
         [item deselectRowAnimated:YES];
     }];

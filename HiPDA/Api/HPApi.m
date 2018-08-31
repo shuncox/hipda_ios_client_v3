@@ -159,7 +159,9 @@
     
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    NSString *UA = [NSString stringWithFormat:@"com.jichaowu.hipda %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    NSString *UA = [NSString stringWithFormat:@"com.jichaowu.hipda %@ %@",
+                    [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                    [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     [request addValue:UA forHTTPHeaderField:@"User-Agent"];
     if (headers) {
         [request setAllHTTPHeaderFields:headers];
