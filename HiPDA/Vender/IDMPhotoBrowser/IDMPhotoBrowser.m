@@ -371,6 +371,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     }
 
     if (!_scaleImage) {
+        _pagingScrollView.alpha = 1.f;
         return;
     }
     
