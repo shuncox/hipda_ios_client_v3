@@ -214,7 +214,7 @@
     // 友盟在线参数, 配置后十分钟生效
 #if DEBUG
     [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
-    [UMOnlineConfig setLogEnabled:YES];
+//    [UMOnlineConfig setLogEnabled:YES];
 #else
     [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
 #endif

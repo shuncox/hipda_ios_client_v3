@@ -175,7 +175,11 @@
         } else {
             success(operation, content);
         }
+#ifdef DEBUG
+        DDLogVerbose(@"[GET][%@] -> done", path);
+#else
         DDLogVerbose(@"[GET][%@] -> %@", path, content);
+#endif
     }
            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                ;
