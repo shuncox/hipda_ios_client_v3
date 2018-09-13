@@ -11,6 +11,8 @@
 #import <CTAssetsPickerController.h>
 #import <CTAssetsPageViewController.h>
 
+#import <PromisesObjC/FBLPromises.h>
+
 #import "HPAccount.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SVProgressHUD.h>
@@ -460,27 +462,61 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     ALAssetsLibrary *library = [self.class defaultAssetsLibrary];
     [SVProgressHUD showWithStatus:@"保存中..."];
+    @weakify(self);
     [library writeImageToSavedPhotosAlbum:image.CGImage
                                  metadata:[info objectForKey:UIImagePickerControllerMediaMetadata]
                           completionBlock:^(NSURL *assetURL, NSError *error) {
                               NSLog(@"assetURL %@", assetURL);
-                              [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+                              @strongify(self);
+                              [self getAsset:assetURL]
+                              .then(^id(ALAsset *asset) {
                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                      if (!asset) {
-                                          [SVProgressHUD showErrorWithStatus:@"保存失败"];
-                                          return;
-                                      }
+                                      @strongify(self);
                                       [self.assets addObject:asset];
                                       [self.tableView reloadData];
                                       [SVProgressHUD dismiss];
                                   });
-                              } failureBlock:^(NSError *error) {
+                                  return nil;
+                              })
+                              .catch(^(NSError *error) {
                                   NSLog(@"%@", error);
-                                  [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", error]];
-                              }];
+                                  [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                              });
                           }];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (FBLPromise <ALAsset *>*)getAsset:(NSURL *)assetURL
+{
+    ALAssetsLibrary *library = [self.class defaultAssetsLibrary];
+    
+    NSError *emptyError = [NSError errorWithErrorCode:0 errorMsg:@"保存失败"];
+    FBLPromise *(^block)() = ^FBLPromise *(){
+        FBLPromise<ALAsset *> *promise = [FBLPromise async:^(FBLPromiseFulfillBlock fulfill, FBLPromiseRejectBlock reject) {
+            [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+                if (asset) {
+                    fulfill(asset);
+                } else {
+                    reject(emptyError);
+                }
+            } failureBlock:^(NSError *error) {
+                reject(error);
+            }];
+        }];
+        return promise;
+    };
+    
+    // iOS11 上需要多重试几次, 有时会返回nil
+    return [FBLPromise
+            attempts:10
+            delay:0.3
+            condition:^BOOL(NSInteger remainingAttempts, NSError *error) {
+                return error == emptyError;
+            }
+            retry:^id {
+                return block();
+            }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
