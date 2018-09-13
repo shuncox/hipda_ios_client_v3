@@ -13,6 +13,7 @@
 #import <AnimatedGIFImageSerialization.h>
 #import "HPActivityItem.h"
 #import "SDImageCache+URLCache.h"
+#import "HPActivity.h"
 
 #define kUSE_CURRENT_CONTEXT_PRESENTATION_STYLE 1
 
@@ -1357,13 +1358,27 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                     HPActivityItem *item = [[HPActivityItem alloc] initWithItem:[photo underlyingImageURL]];
                     [activityItems addObject:item];
                 }
-                
+
                 if (photo.caption) {
                     [activityItems addObject:photo.caption];
                 }
                 
-                self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+                @weakify(self);
+                UIActivity *qrCodeActivity = [HPActivity activityWithType:@"HPQrCode"
+                                                              title:@"识别二维码"
+                                                              image:[UIImage imageNamed:@"activity_scan_qrcode"]
+                                                        actionBlock:^{
+                                                            @strongify(self);
+                                                            UIImage *image = [UIImage imageWithData:data];
+                                                            [self detectQrCode:image];
+                                                        }];
+                
+               
+                
+                self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[qrCodeActivity]];
                 if (IS_IPAD && IOS8_OR_LATER) self.activityViewController.popoverPresentationController.barButtonItem = sender;
+                
+                self.activityViewController.excludedActivityTypes = @[UIActivityTypeAddToReadingList, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact];
                 
                 __typeof__(self) __weak selfBlock = self;
                 [self.activityViewController setCompletionHandler:^(NSString *activityType, BOOL completed) {
@@ -1401,6 +1416,31 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         
         // Keep controls hidden
         [self setControlsHidden:NO animated:YES permanent:YES];
+    }
+}
+
+- (void)detectQrCode:(UIImage *)image
+{
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{ CIDetectorAccuracy:CIDetectorAccuracyHigh }];
+    CIImage *ciimage = [[CIImage alloc] initWithImage:image];
+    NSArray *features = [detector featuresInImage:ciimage];
+    NSMutableArray *stringList = [@[] mutableCopy];
+    for (CIQRCodeFeature *feature in features) {
+        if (feature.messageString) {
+            [stringList addObject:feature.messageString];
+        }
+        NSLog(@"%@", feature.messageString);
+        if ([feature.messageString hasPrefix:@"http"]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:feature.messageString]];
+            return;
+        }
+    }
+    if (stringList.count == 0) {
+        [SVProgressHUD showErrorWithStatus:@"无法识别"];
+    } else {
+        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+        [pasteBoard setString:[stringList componentsJoinedByString:@"\n"]];
+        [SVProgressHUD showSuccessWithStatus:@"二维码内容已拷贝"];
     }
 }
 
