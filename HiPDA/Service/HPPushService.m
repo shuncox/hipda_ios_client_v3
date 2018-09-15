@@ -8,6 +8,7 @@
 #import "HPPushData.h"
 #import "HPRearViewController.h"
 #import "UIAlertView+Blocks.h"
+#import "HPRouter.h"
 
 static NSString * const NOTIFICATION_DEVICE_TOKEN = @"NOTIFICATION_DEVICE_TOKEN";
 
@@ -149,6 +150,8 @@ static const int PUSH_ENV = 0;
         [rearViewController switchToMessageVC];
     } else if (data.thread > 0) {
         [rearViewController switchToNoticeVC];
+    } else if (data.tid > 0) {
+        [[HPRouter instance] routeTo:@{@"tid": @(data.tid)}];
     }
 }
 
