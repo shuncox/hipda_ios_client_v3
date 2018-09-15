@@ -156,7 +156,10 @@
                                                             forIndexPath:indexPath];
     
     HPApiSubFeed *feed = [self.list objectAtIndex:indexPath.row];
-    cell.textLabel.text = feed.threadInfo.title;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, uid:%@, key:%@",
+                           feed.threadInfo.title,
+                           feed.threadInfo.userName,
+                           @(feed.subByUser.userId), feed.subByKeyword.keyword];
     return cell;
 }
 
