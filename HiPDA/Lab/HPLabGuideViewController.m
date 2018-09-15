@@ -198,7 +198,9 @@
     NSError *USER_CANCEL_ERROR = [[NSError alloc] initWithDomain:@"" code:0 userInfo:nil];
     NSError *USER_DENY_PUSH_ERROR = [[NSError alloc] initWithDomain:@"" code:0 userInfo:nil];
     
+    @weakify(self);
     [_enablePushSwitch bk_addEventHandler:^(UISwitch *s) {
+        @strongify(self);
         FBLPromise *promise = nil;
         if (s.on) { //开启推送
             promise =
@@ -271,6 +273,7 @@
     [enableSubButton bk_whenTapped:^{
         [[HPLabService instance] checkCookiesPermission]
         .then(^id(NSNumber *grant) {
+            @strongify(self);
             if ([grant boolValue]) {
                 [self close];
                 [[HPRouter instance] routeTo:@{@"userCenter":@"sub"}];
