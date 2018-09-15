@@ -30,6 +30,8 @@
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
 #import "BBBadgeBarButtonItem.h"
+#import "HPLabService.h"
+#import "HPLabGuideViewController.h"
 
 #define TOP_CELL_HEIGHT (44.f) //navbar height
 #define TAG_OVERVIEW 1011
@@ -77,7 +79,7 @@
                     [HPMyReplyViewController class],
                     [HPFavoriteViewController class],
                     [HPHistoryViewController class],
-//                    [HPSubViewController class]
+                    [HPSubViewController class]
                     ];
     
     _vc_names = @[@"HOME",
@@ -87,7 +89,7 @@
                   @"我的回复",
                   @"收藏",
                   @"历史",
-//                  @"订阅"
+                  @"订阅"
                   ];
     
     _vc_instances = [NSMutableArray arrayWithCapacity:_vc_classes.count];
@@ -330,6 +332,15 @@
         if ( ![frontNavigationController.topViewController isKindOfClass:_vc_classes[row]] )
         {
             id vc = [self vcAtIndex:row];
+            
+            // 特殊处理, TODO: 这块应该移到对应vc里面, 加个协议
+            if ([vc isKindOfClass:HPSubViewController.class]) {
+                if (![HPLabService instance].grantUploadCookies) {
+                    [HPLabGuideViewController presentIn:self];
+                    return;
+                }
+            }
+            
             [revealController setFrontViewController:[HPCommon NVCWithRootVC:vc] animated:YES];
             [vc performSelector:@selector(refresh:) withObject:nil afterDelay:0.1f];
         }
@@ -402,6 +413,15 @@
 
 - (void)switchToNoticeVC {
     [self switchToVC:2];
+}
+
+- (void)switchTo:(Class)clazz {
+    for (int i = 0; i < self.vc_classes.count; i++) {
+        if (self.vc_classes[i] == clazz) {
+            [self switchToVC:i];
+            break;
+        }
+    }
 }
 
 - (void)switchToVC:(NSInteger)row

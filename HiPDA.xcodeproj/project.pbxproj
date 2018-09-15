@@ -95,6 +95,13 @@
 		EA181ED918BB725200EE57F1 /* uid.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EA181ED818BB725200EE57F1 /* uid.sqlite */; };
 		EA223C562111FF770028B78A /* HPPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA223C542111FF760028B78A /* HPPushService.m */; };
 		EA2454BC1B60BF3000BCD6C6 /* HPHotPatch.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */; };
+		EA2E74FD214CFC250032B417 /* HPSubManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E74FC214CFC250032B417 /* HPSubManageViewController.m */; };
+		EA2E7500214D02490032B417 /* HPSubTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E74FF214D02490032B417 /* HPSubTableViewCell.m */; };
+		EA2E7506214D03EC0032B417 /* HPApiPage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E7505214D03EC0032B417 /* HPApiPage.m */; };
+		EA2E7509214D06C50032B417 /* HPApiSubFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E7508214D06C50032B417 /* HPApiSubFeed.m */; };
+		EA2E750C214D074F0032B417 /* HPApiThread.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E750B214D074F0032B417 /* HPApiThread.m */; };
+		EA2E750F214D075D0032B417 /* HPApiSubByUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E750E214D075D0032B417 /* HPApiSubByUser.m */; };
+		EA2E7512214D07690032B417 /* HPApiSubByKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2E7511214D07690032B417 /* HPApiSubByKeyword.m */; };
 		EA301CE31D97FA0800F32169 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */; };
 		EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA368A6C18C6003E00C5C5BD /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -577,6 +584,20 @@
 		EA223C552111FF770028B78A /* HPPushService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPPushService.h; path = Service/HPPushService.h; sourceTree = "<group>"; };
 		EA2454BA1B60BF3000BCD6C6 /* HPHotPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHotPatch.h; path = HotPatch/HPHotPatch.h; sourceTree = "<group>"; };
 		EA2454BB1B60BF3000BCD6C6 /* HPHotPatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPHotPatch.m; path = HotPatch/HPHotPatch.m; sourceTree = "<group>"; };
+		EA2E74FB214CFC250032B417 /* HPSubManageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPSubManageViewController.h; path = Controller/HPSubManageViewController.h; sourceTree = "<group>"; };
+		EA2E74FC214CFC250032B417 /* HPSubManageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPSubManageViewController.m; path = Controller/HPSubManageViewController.m; sourceTree = "<group>"; };
+		EA2E74FE214D02490032B417 /* HPSubTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPSubTableViewCell.h; path = View/HPSubTableViewCell.h; sourceTree = "<group>"; };
+		EA2E74FF214D02490032B417 /* HPSubTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPSubTableViewCell.m; path = View/HPSubTableViewCell.m; sourceTree = "<group>"; };
+		EA2E7504214D03EC0032B417 /* HPApiPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiPage.h; sourceTree = "<group>"; };
+		EA2E7505214D03EC0032B417 /* HPApiPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiPage.m; sourceTree = "<group>"; };
+		EA2E7507214D06C50032B417 /* HPApiSubFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiSubFeed.h; sourceTree = "<group>"; };
+		EA2E7508214D06C50032B417 /* HPApiSubFeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiSubFeed.m; sourceTree = "<group>"; };
+		EA2E750A214D074F0032B417 /* HPApiThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiThread.h; sourceTree = "<group>"; };
+		EA2E750B214D074F0032B417 /* HPApiThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiThread.m; sourceTree = "<group>"; };
+		EA2E750D214D075D0032B417 /* HPApiSubByUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiSubByUser.h; sourceTree = "<group>"; };
+		EA2E750E214D075D0032B417 /* HPApiSubByUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiSubByUser.m; sourceTree = "<group>"; };
+		EA2E7510214D07690032B417 /* HPApiSubByKeyword.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPApiSubByKeyword.h; sourceTree = "<group>"; };
+		EA2E7511214D07690032B417 /* HPApiSubByKeyword.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPApiSubByKeyword.m; sourceTree = "<group>"; };
 		EA301CE21D97FA0800F32169 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		EA368A6B18C6003E00C5C5BD /* EGORefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableFooterView.m; path = Vender/EGORefreshTableHeaderView/EGORefreshTableFooterView.m; sourceTree = "<group>"; };
 		EA368A6C18C6003E00C5C5BD /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EGORefreshTableHeaderView.m; path = Vender/EGORefreshTableHeaderView/EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
@@ -1263,6 +1284,16 @@
 				EA084DA2211EC95F003089E7 /* HPApiUser.m */,
 				EA9195A5212EE87E00D7D3C6 /* HPApiLabConfig.h */,
 				EA9195A6212EE87E00D7D3C6 /* HPApiLabConfig.m */,
+				EA2E7504214D03EC0032B417 /* HPApiPage.h */,
+				EA2E7505214D03EC0032B417 /* HPApiPage.m */,
+				EA2E7507214D06C50032B417 /* HPApiSubFeed.h */,
+				EA2E7508214D06C50032B417 /* HPApiSubFeed.m */,
+				EA2E750A214D074F0032B417 /* HPApiThread.h */,
+				EA2E750B214D074F0032B417 /* HPApiThread.m */,
+				EA2E750D214D075D0032B417 /* HPApiSubByUser.h */,
+				EA2E750E214D075D0032B417 /* HPApiSubByUser.m */,
+				EA2E7510214D07690032B417 /* HPApiSubByKeyword.h */,
+				EA2E7511214D07690032B417 /* HPApiSubByKeyword.m */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1332,6 +1363,8 @@
 				EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */,
 				EAC5C3461E93F0940054A66E /* NJKWebViewProgressView.h */,
 				EAC5C3471E93F0940054A66E /* NJKWebViewProgressView.m */,
+				EA2E74FE214D02490032B417 /* HPSubTableViewCell.h */,
+				EA2E74FF214D02490032B417 /* HPSubTableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1743,6 +1776,8 @@
 				EA4CDC6D1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m */,
 				EA9195A2212C5A5F00D7D3C6 /* HPSubViewController.h */,
 				EA9195A3212C5A5F00D7D3C6 /* HPSubViewController.m */,
+				EA2E74FB214CFC250032B417 /* HPSubManageViewController.h */,
+				EA2E74FC214CFC250032B417 /* HPSubManageViewController.m */,
 			);
 			name = UserCenter;
 			sourceTree = "<group>";
@@ -2644,6 +2679,7 @@
 				EA9A39AF1A5BE92E0028BE7D /* JSBubbleImageViewFactory.m in Sources */,
 				EA084D9C211C91DF003089E7 /* HPApiResult.m in Sources */,
 				EA3C705F211F15DB003DD443 /* HPLabService.m in Sources */,
+				EA2E7509214D06C50032B417 /* HPApiSubFeed.m in Sources */,
 				EA480F2C18BA19F300C1E522 /* HPDatabase.m in Sources */,
 				EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */,
 				EA67608E1AF7C80200BA0EF3 /* HPQiniuUploader.m in Sources */,
@@ -2697,6 +2733,7 @@
 				EA3A7C7C1C95637A00FD4B44 /* NSRegularExpression+HP.m in Sources */,
 				EA9A39B71A5BE92E0028BE7D /* JSMessageTableView.m in Sources */,
 				EAE0FE5C1D09BFF700F0D76E /* HPNavigationDropdownMenu.m in Sources */,
+				EA2E7500214D02490032B417 /* HPSubTableViewCell.m in Sources */,
 				EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */,
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
 				EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */,
@@ -2769,9 +2806,11 @@
 				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,
 				EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */,
 				EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */,
+				EA2E74FD214CFC250032B417 /* HPSubManageViewController.m in Sources */,
 				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
 				EAC5C3401E93DD300054A66E /* WKWebView+HPSafeLoadString.m in Sources */,
 				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,
+				EA2E750C214D074F0032B417 /* HPApiThread.m in Sources */,
 				EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */,
 				EA9A39B61A5BE92E0028BE7D /* JSMessagesViewController.m in Sources */,
 				EAAD5B9F188CEFCC0084EC2D /* IDMPhotoBrowser.m in Sources */,
@@ -2783,6 +2822,7 @@
 				EA3B91BE1E6C09B500D742EF /* HPOnceRunService.m in Sources */,
 				EA9A39B41A5BE92E0028BE7D /* JSMessageInputView.m in Sources */,
 				EA13B912194B53D900E01AF5 /* HPStupidBar.m in Sources */,
+				EA2E750F214D075D0032B417 /* HPApiSubByUser.m in Sources */,
 				EA083D6B18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyCell.m in Sources */,
 				EA9A39AD1A5BE92E0028BE7D /* UIImage+JSMessagesView.m in Sources */,
 				EA083D6E18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
@@ -2802,6 +2842,7 @@
 				EA499F461830C2D800172989 /* TFHpple.m in Sources */,
 				EAC0E42A18BCE89700F064B6 /* HPNewPost.m in Sources */,
 				EAB5382718CB6DDF00FD183E /* HPBaseTableViewController.m in Sources */,
+				EA2E7512214D07690032B417 /* HPApiSubByKeyword.m in Sources */,
 				EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */,
 				EAE0FE441D09527F00F0D76E /* NSString+CDN.m in Sources */,
 				EA9195A121297FEE00D7D3C6 /* HPRouter.m in Sources */,
@@ -2812,6 +2853,7 @@
 				EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */,
 				EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */,
 				EA43E6F1183201C700968B94 /* HPCommon.m in Sources */,
+				EA2E7506214D03EC0032B417 /* HPApiPage.m in Sources */,
 				EA43E6EE1831F4C200968B94 /* NSUserDefaults+Convenience.m in Sources */,
 				EA083D6A18C8D11A00BD8F07 /* WUEmoticonsKeyboard.m in Sources */,
 				EA5708241AA09C5200AD2247 /* HPHistoryViewController.m in Sources */,

@@ -25,6 +25,7 @@
 - (void)switchToThreadVC;
 - (void)switchToMessageVC;
 - (void)switchToNoticeVC;
+- (void)switchTo:(Class)clazz;
 
 - (void)updateBadgeNumber;
 - (UIBarButtonItem *)sharedRevealActionBI;

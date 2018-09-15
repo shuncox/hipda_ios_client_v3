@@ -115,18 +115,6 @@
     });
 }
 
-#pragma mark - subscribe
-
-- (BOOL)enableSubscribe
-{
-    return [[HPSetting sharedSetting] boolForKey:HPSettingLabEnableSubscribe];
-}
-
-- (void)setEnableSubscribe:(BOOL)enable
-{
-    [[HPSetting sharedSetting] saveBool:enable forKey:HPSettingLabEnableSubscribe];
-}
-
 #pragma mark - config
 - (FBLPromise<HPApiLabConfig *> *)getLabConfig
 {
@@ -148,6 +136,10 @@
 - (void)showGuideIfNeeded
 {
     if ([HPAccount isAccountForReviewer]) {
+        return;
+    }
+    
+    if (self.grantUploadCookies) {
         return;
     }
     

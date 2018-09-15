@@ -18,6 +18,8 @@
 #import "HPApi.h"
 #import "HPApiLabConfig.h"
 #import "NSString+Additions.h"
+#import <BlocksKit/UIView+BlocksKit.h>
+#import "HPRouter.h"
 
 @interface HPLabGuideViewController()
 
@@ -27,7 +29,7 @@
 
 @property (nonatomic, strong) UILabel *enableSubLabel;
 @property (nonatomic, strong) UILabel *enableSubDesc;
-@property (nonatomic, strong) UISwitch *enableSubSwitch;
+@property (nonatomic, strong) UILabel *enableSubButtonLabel;
 
 @property (nonatomic, strong) UIWebView *noticeWebView;
 
@@ -153,17 +155,8 @@
         make.top.equalTo(subContainer).offset(12.f);
     }];
 
-    _enableSubSwitch = [UISwitch new];
-    _enableSubSwitch.hidden = YES;//TODO
-    [subContainer addSubview:_enableSubSwitch];
-    [_enableSubSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(subContainer).offset(-14.f);
-        make.centerY.equalTo(_enableSubLabel);
-    }];
-    
-    // TODO
     UIView *enableSubButton = [UIView new];
-    enableSubButton.backgroundColor = [@"#909090" colorFromHexString];
+    enableSubButton.backgroundColor = [@"#4CD964" colorFromHexString];
     enableSubButton.layer.cornerRadius = 6.f;
     [subContainer addSubview:enableSubButton];
     [enableSubButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -173,7 +166,7 @@
         make.height.equalTo(@32.f);
     }];
     UILabel *enableSubButtonLabel = [UILabel new];
-    enableSubButtonLabel.text = @"开发中";
+    _enableSubButtonLabel = enableSubButtonLabel;
     enableSubButtonLabel.font = [UIFont systemFontOfSize:14];
     enableSubButtonLabel.textColor = [UIColor whiteColor];
     [enableSubButton addSubview:enableSubButtonLabel];
@@ -275,22 +268,19 @@
         });
     } forControlEvents:UIControlEventValueChanged];
     
-    [_enableSubSwitch bk_addEventHandler:^(UISwitch *s) {
+    [enableSubButton bk_whenTapped:^{
         [[HPLabService instance] checkCookiesPermission]
         .then(^id(NSNumber *grant) {
-            if (grant.boolValue) {
-                // TODO 调用接口
-                [HPLabService instance].enableSubscribe = s.on;
-            } else {
-                s.on = !s.on;
+            if ([grant boolValue]) {
+                [self close];
+                [[HPRouter instance] routeTo:@{@"userCenter":@"sub"}];
             }
             return nil;
         })
         .catch(^(NSError *error) {
-            s.on = !s.on;
             [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
         });
-    } forControlEvents:UIControlEventValueChanged];
+    }];
 }
 
 - (void)setupDebugViews
@@ -394,7 +384,7 @@
     self.textLabel.text = [HPLabUserService instance].user.description;
     self.enableLabSwitch.on = [HPLabService instance].grantUploadCookies;
     self.enablePushSwitch.on = [HPLabService instance].enableMessagePush;
-    self.enableSubSwitch.on = [HPLabService instance].enableSubscribe;
+    self.enableSubButtonLabel.text = [HPLabService instance].grantUploadCookies ? @"查看" : @"开启";
     
     @weakify(self);
     if ([HPLabUserService instance].isLogin) {

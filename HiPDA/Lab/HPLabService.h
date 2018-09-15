@@ -23,9 +23,6 @@
 - (FBLPromise<NSNumber/*BOOL*/ *> *)getPushEnable;
 - (FBLPromise<NSNumber/*BOOL*/ *> *)updatePushEnable:(BOOL)enable;
 
-// 开启订阅
-@property (nonatomic, assign) BOOL enableSubscribe;
-
 // 后端配置
 - (FBLPromise<HPApiLabConfig *> *)getLabConfig;
 

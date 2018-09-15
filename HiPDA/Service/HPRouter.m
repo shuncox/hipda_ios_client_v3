@@ -14,6 +14,8 @@
 #import "HPAppDelegate.h"
 #import "HPThread.h"
 #import "HPReadViewController.h"
+#import "HPRearViewController.h"
+#import "HPSubViewController.h"
 
 @implementation HPRouter
 
@@ -109,7 +111,11 @@
         } else if ([path objectForKey:@"pid"]) { //回复
             ;
         } else if ([path objectForKey:@"userCenter"]) {
-            ;
+            HPRearViewController *rearViewController = [HPRearViewController sharedRearVC];
+            NSString *target = [path objectForKey:@"userCenter"];
+            if ([target isEqualToString:@"sub"]) {
+                [rearViewController switchTo:HPSubViewController.class];
+            }
         } else {
             ;
         }
