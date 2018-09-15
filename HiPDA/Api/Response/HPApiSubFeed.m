@@ -14,4 +14,16 @@
     return @{};
 }
 
++ (NSValueTransformer *)threadInfoJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:HPApiThread.class];
+}
+
++ (NSValueTransformer *)subByUserJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:HPApiSubByUser.class];
+}
+
++ (NSValueTransformer *)subByKeywordJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:HPApiSubByKeyword.class];
+}
+
 @end

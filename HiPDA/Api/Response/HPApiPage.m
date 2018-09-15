@@ -14,4 +14,15 @@
     return @{};
 }
 
+- (NSArray *)modelsOfClass:(Class)clazz
+{
+    if (!self.content) {
+        return nil;
+    }
+    NSError *error = nil;
+    NSArray *list = [MTLJSONAdapter modelsOfClass:clazz fromJSONArray:self.content error:&error];
+    NSParameterAssert(!error);
+    return list;
+}
+
 @end

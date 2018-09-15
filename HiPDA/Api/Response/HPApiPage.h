@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <Mantle/Mantle.h>
 
-@interface HPApiPage<T> : MTLModel <MTLJSONSerializing>
+@interface HPApiPage : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic, strong) NSArray<T> *content;
+@property (nonatomic, strong) NSArray *content; //NSDictionary
 @property (nonatomic, assign) BOOL last; //isEnd
 @property (nonatomic, assign) int totalPages;
 @property (nonatomic, assign) int size; //pageSize
 @property (nonatomic, assign) int number; //pageIndex
+
+- (NSArray *)modelsOfClass:(Class)clazz;
 
 @end
