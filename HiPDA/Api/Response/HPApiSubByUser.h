@@ -12,5 +12,6 @@
 @interface HPApiSubByUser : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic, assign) int userId;
+@property (nonatomic, strong) NSString *userName;
 
 @end

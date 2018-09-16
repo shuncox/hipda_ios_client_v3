@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HPSubManageViewController : UIViewController
+@interface HPSubManageViewController : UITableViewController
 
 @end
