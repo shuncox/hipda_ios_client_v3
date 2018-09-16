@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HPApiSubFeed.h"
 
 @interface HPSubTableViewCell : UITableViewCell
+
+- (void)setFeed:(HPApiSubFeed *)feed;
 
 @end

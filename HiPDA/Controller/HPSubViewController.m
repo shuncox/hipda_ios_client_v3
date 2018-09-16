@@ -146,17 +146,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HPSubTableViewCell.class)
+    HPSubTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HPSubTableViewCell.class)
                                                             forIndexPath:indexPath];
     
     HPApiSubFeed *feed = [self.list objectAtIndex:indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, uid:%@, key:%@",
-                           feed.threadInfo.title,
-                           feed.threadInfo.userName,
-                           @(feed.subByUser.userId), feed.subByKeyword.keyword];
+    [cell setFeed:feed];
     return cell;
 }
 
+- (double)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 90.f;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
