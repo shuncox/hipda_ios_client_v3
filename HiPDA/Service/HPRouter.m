@@ -119,7 +119,7 @@
             }
         } else if ([path objectForKey:@"uid"]) { //用户
             HPUserViewController *uvc = [HPUserViewController new];
-            uvc.uid = [path[@"uid"] integerValue]
+            uvc.uid = [path[@"uid"] integerValue];
             [frontNavigationController pushViewController:uvc animated:YES];
         } else {
             ;
