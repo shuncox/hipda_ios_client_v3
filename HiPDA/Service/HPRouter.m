@@ -16,6 +16,7 @@
 #import "HPReadViewController.h"
 #import "HPRearViewController.h"
 #import "HPSubViewController.h"
+#import "HPUserViewController.h"
 
 @implementation HPRouter
 
@@ -116,6 +117,10 @@
             if ([target isEqualToString:@"sub"]) {
                 [rearViewController switchTo:HPSubViewController.class];
             }
+        } else if ([path objectForKey:@"uid"]) { //用户
+            HPUserViewController *uvc = [HPUserViewController new];
+            uvc.uid = [path[@"uid"] integerValue]
+            [frontNavigationController pushViewController:uvc animated:YES];
         } else {
             ;
         }

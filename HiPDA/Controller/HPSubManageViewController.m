@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import <BlocksKit/NSArray+BlocksKit.h>
 #import "UIAlertView+Blocks.h"
+#import "HPRouter.h"
 
 @interface HPSubManageViewController ()
 
@@ -202,6 +203,16 @@
         .catch(^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         });
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (self.segmentedControl.selectedSegmentIndex == 1) {
+        HPApiSubByUser *user = self.subByUserList[indexPath.row];
+        [[HPRouter instance] routeTo:@{@"uid": @(user.userId)}];
     }
 }
 
