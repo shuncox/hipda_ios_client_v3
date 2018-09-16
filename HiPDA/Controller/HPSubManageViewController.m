@@ -12,6 +12,7 @@
 #import "HPApi.h"
 #import "SVProgressHUD.h"
 #import <BlocksKit/NSArray+BlocksKit.h>
+#import "UIAlertView+Blocks.h"
 
 @interface HPSubManageViewController ()
 
@@ -83,7 +84,55 @@
 
 - (void)didTapAddSubButton:(id)sender
 {
-    
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        [self addSubByKeyword];
+    } else {
+        [self addSubByUser];
+    }
+}
+
+- (void)addSubByKeyword
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键词"
+                                                    message:nil
+                                                   delegate:nil
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"确定", nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    @weakify(self);
+    [alert showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        @strongify(self);
+        if (buttonIndex == [alertView cancelButtonIndex]) {
+            return;
+        }
+        UITextField *content = [alertView textFieldAtIndex:0];
+        NSString *keyword = content.text;
+        if (!keyword.length) {
+            return;
+        }
+        
+        [SVProgressHUD show];
+        [[HPApi instance] request:@"/sub/add"
+                           params:@{@"type": @0, @"keyword": keyword}]
+        .then(^id(id data) {
+            @strongify(self);
+            [self loadData];
+            return nil;
+        })
+        .catch(^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        });
+    }];
+}
+
+- (void)addSubByUser
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"在用户个人主页可以订阅用户. 另外在搜索页面里可以搜索用户, 然后订阅他"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"好的"
+                                              otherButtonTitles:nil];
+    [alertView show];
 }
 
 #pragma mark - Table view data source
