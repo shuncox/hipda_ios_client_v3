@@ -41,7 +41,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"订阅";
+    self.title = @"订阅列表";
     
     [self.tableView registerClass:HPSubTableViewCell.class forCellReuseIdentifier:NSStringFromClass(HPSubTableViewCell.class)];
     
@@ -90,6 +90,9 @@
 
 - (void)refresh:(id)sender
 {
+    if (!sender) {
+        [SVProgressHUD show];
+    }
     @weakify(self);
     [self getPage:0]
     .then(^id(HPApiPage *page) {
@@ -99,6 +102,9 @@
         [self.list addObjectsFromArray:page.list];
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
+        if (!sender) {
+            [SVProgressHUD dismiss];
+        }
         if (!page.list.count) {
             [self showTip];
         }
