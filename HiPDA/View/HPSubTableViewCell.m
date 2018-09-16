@@ -98,8 +98,7 @@
     self.nameLabel.text = feed.threadInfo.userName;
     [self.avatarView sd_setImageWithURL:[NSURL URLWithString:feed.threadInfo.avatar] placeholderImage:nil options:SDWebImageLowPriority];
     self.titleLabel.text = feed.threadInfo.title;
-    self.dateLabel.text = [@(feed.threadInfo.created) stringValue];
-    
+
     if (feed.subByUser) {
         self.tagLabel.text = [NSString stringWithFormat:@"用户: %@", feed.threadInfo.userName];
         self.tagView.backgroundColor = [@"#d35400" colorFromHexString];
@@ -110,6 +109,14 @@
         self.tagLabel.text = nil;
         self.tagView.backgroundColor = [UIColor clearColor];
     }
+    
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MM-dd HH:mm:ss"];
+    });
+    self.dateLabel.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:feed.threadInfo.created]];
 }
 
 @end
