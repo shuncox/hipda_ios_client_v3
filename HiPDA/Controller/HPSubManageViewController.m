@@ -44,7 +44,7 @@
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(didTapAddSubButton:)];
-    self.navigationItem.rightBarButtonItem = addButtonItem;
+    self.navigationItem.rightBarButtonItems = @[addButtonItem, self.editButtonItem];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HPSubManageListCell"];
     
