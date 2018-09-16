@@ -15,6 +15,8 @@
 #import "HPApiSubFeed.h"
 #import "SVProgressHUD.h"
 #import "HPRouter.h"
+#import "UIAlertView+Blocks.h"
+#import "HPSubManageViewController.h"
 
 @interface HPSubViewController ()
 
@@ -49,7 +51,7 @@
     UIBarButtonItem *manageButton = [[UIBarButtonItem alloc] initWithTitle:@"管理订阅"
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
-                                                                    action:@selector(goToManagePage:)];
+                                                                    action:@selector(goToManagePage)];
     self.navigationItem.rightBarButtonItem = manageButton;
     
 
@@ -97,6 +99,9 @@
         [self.list addObjectsFromArray:page.list];
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
+        if (!page.list.count) {
+            [self showTip];
+        }
         return page;
     }).catch(^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -126,11 +131,25 @@
     });
 }
 
-- (void)goToManagePage:(id)sender
+- (void)showTip
 {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"目前还没有命中订阅关键词或用户的帖子"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"管理订阅", nil];
+    [alertView showWithHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self goToManagePage];
+        }
+    }];
 }
 
+- (void)goToManagePage
+{
+    HPSubManageViewController *vc = [HPSubManageViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - Table view data source
 
