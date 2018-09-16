@@ -180,6 +180,14 @@
             complete(nil, error);
             return;
         }
+        if ([response isKindOfClass:NSHTTPURLResponse.class]) {
+            NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+            if (r.statusCode != 200) {
+                NSError *e = [NSError errorWithErrorCode:r.statusCode errorMsg:[NSHTTPURLResponse localizedStringForStatusCode:r.statusCode]];
+                complete(nil, e);
+                return;
+            }
+        }
         NSError *json_error;
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&json_error];
         NSAssert(!error, @"反序列化失败");
