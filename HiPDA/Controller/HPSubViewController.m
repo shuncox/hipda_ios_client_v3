@@ -82,12 +82,12 @@
 - (FBLPromise<HPApiPage *> *)getPage:(int)pageIndex
 {
     return [[HPApi instance] request:@"/sub/feed"
-                              params:@{@"pageIndex": @(pageIndex)}
+                              params:@{@"pageIndex": @(pageIndex), @"pageSize":@10}
                          returnClass:HPApiPage.class
                            needLogin:NO]
     .then(^id(HPApiPage *page) {
         NSArray *list = [page modelsOfClass:HPApiSubFeed.class];
-        page.content = list;
+        page.list = list;
         return page;
     });
 }
@@ -100,7 +100,7 @@
         @strongify(self);
         self.page = page;
         [self.list removeAllObjects];
-        [self.list addObjectsFromArray:page.content];
+        [self.list addObjectsFromArray:page.list];
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
         return page;
@@ -112,17 +112,17 @@
 
 - (void)loadMore
 {
-    if (!self.page || self.page.last || self.refreshControl.refreshing) {
+    if (!self.page || self.page.isEnd || self.refreshControl.refreshing) {
         [self.tableView.infiniteScrollingView stopAnimating];
         return;
     }
     
     @weakify(self);
-    [self getPage:self.page.number + 1]
+    [self getPage:self.page.pageIndex + 1]
     .then(^id(HPApiPage *page) {
         @strongify(self);
         self.page = page;
-        [self.list addObjectsFromArray:page.content];
+        [self.list addObjectsFromArray:page.list];
         [self.tableView reloadData];
         [self.tableView.infiniteScrollingView stopAnimating];
         return page;

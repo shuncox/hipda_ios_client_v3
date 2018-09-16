@@ -14,13 +14,18 @@
     return @{};
 }
 
+- (BOOL)isEnd
+{
+    return self.pageIndex + 1 >= self.totalPages;
+}
+
 - (NSArray *)modelsOfClass:(Class)clazz
 {
-    if (!self.content) {
+    if (!self.list) {
         return nil;
     }
     NSError *error = nil;
-    NSArray *list = [MTLJSONAdapter modelsOfClass:clazz fromJSONArray:self.content error:&error];
+    NSArray *list = [MTLJSONAdapter modelsOfClass:clazz fromJSONArray:self.list error:&error];
     NSParameterAssert(!error);
     return list;
 }

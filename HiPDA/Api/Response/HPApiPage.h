@@ -11,11 +11,12 @@
 
 @interface HPApiPage : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic, strong) NSArray *content; //NSDictionary
-@property (nonatomic, assign) BOOL last; //isEnd
+@property (nonatomic, strong) NSArray *list;
+@property (nonatomic, assign) int totalElements;
 @property (nonatomic, assign) int totalPages;
-@property (nonatomic, assign) int size; //pageSize
-@property (nonatomic, assign) int number; //pageIndex
+@property (nonatomic, assign) int pageSize;
+@property (nonatomic, assign) int pageIndex;
+@property (nonatomic, readonly, assign) BOOL isEnd;
 
 - (NSArray *)modelsOfClass:(Class)clazz;
 
