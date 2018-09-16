@@ -17,6 +17,7 @@
 #import "HPBlockService.h"
 #import "HPSetting.h"
 #import "HPMessageDetailViewController.h"
+#import "HPApi.h"
 
 @interface HPUserViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) UITableViewCell *cell1;
 @property (nonatomic, strong) UITableViewCell *cell2;
 @property (nonatomic, strong) UITableViewCell *cell3;
+@property (nonatomic, strong) UITableViewCell *cell4;
 
 @end
 
@@ -101,7 +103,7 @@
 {
     switch (section) {
         case 0:
-            return 2;
+            return 3;
             break;
         case 1:
             return 2;
@@ -140,6 +142,17 @@
             ([[HPBlockService shared] isUserInBlockList:self.user.username] ? @"取消屏蔽":@"屏蔽此人");
         
         return _cell3;
+        
+    } if (indexPath.section == 0 && indexPath.row == 2) {
+        
+        if (!_cell4) {
+            _cell4 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"user_cell4"];
+        }
+        
+        // 暂时不去实时查询订阅状态.
+        _cell4.textLabel.text = @"订阅此人";
+
+        return _cell4;
         
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         
@@ -219,6 +232,22 @@
         
         [Flurry logEvent:@"Read ViewUser Action" withParameters:@{@"action":@"block"}];
         
+    } else if (indexPath.section == 0 && indexPath.row == 2) {
+        if (!self.user.uid || !self.user.username.length) {
+            return;
+        }
+        [SVProgressHUD show];
+        [[HPApi instance] request:@"/sub/add"
+                           params:@{@"type": @1,
+                                    @"userId": @(self.user.uid),
+                                    @"userName": self.user.username}]
+        .then(^id(id data) {
+            [SVProgressHUD showSuccessWithStatus:@"订阅成功"];
+            return nil;
+        })
+        .catch(^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        });
     } else {
         ;
     }
