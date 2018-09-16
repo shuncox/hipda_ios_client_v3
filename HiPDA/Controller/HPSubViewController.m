@@ -82,14 +82,8 @@
 - (FBLPromise<HPApiPage *> *)getPage:(int)pageIndex
 {
     return [[HPApi instance] request:@"/sub/feed"
-                              params:@{@"pageIndex": @(pageIndex), @"pageSize":@10}
-                         returnClass:HPApiPage.class
-                           needLogin:NO]
-    .then(^id(HPApiPage *page) {
-        NSArray *list = [page modelsOfClass:HPApiSubFeed.class];
-        page.list = list;
-        return page;
-    });
+                              params:@{@"pageIndex": @(pageIndex)}
+                       modelsOfClass:HPApiSubFeed.class];
 }
 
 - (void)refresh:(id)sender

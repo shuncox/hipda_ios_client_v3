@@ -57,6 +57,27 @@
      return [self request:api params:params returnClass:returnClass needLogin:YES];
 }
 
+- (FBLPromise<HPApiPage *> *)request:(NSString *)api
+                              params:(NSDictionary *)params
+                       modelsOfClass:(Class)modelsOfClass
+{
+    return [self request:api
+                  params:params
+             returnClass:HPApiPage.class]
+    .then(^id(HPApiPage *page) {
+        if (!page.list) {
+            return page;
+        }
+        NSError *error = nil;
+        NSArray *list = [MTLJSONAdapter modelsOfClass:modelsOfClass fromJSONArray:page.list error:&error];
+        if (error) {
+            return error;
+        }
+        page.list = list;
+        return page;
+    });
+}
+
 - (FBLPromise *)request:(NSString *)api
                  params:(NSDictionary *)params
             returnClass:(Class)returnClass

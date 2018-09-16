@@ -18,6 +18,4 @@
 @property (nonatomic, assign) int pageIndex;
 @property (nonatomic, readonly, assign) BOOL isEnd;
 
-- (NSArray *)modelsOfClass:(Class)clazz;
-
 @end
