@@ -10,6 +10,7 @@
 #import "IDMPhotoBrowser.h"
 #import "SDImageCache+URLCache.h"
 #import "NSString+CDN.h"
+#import "SVProgressHUD.h"
 
 // Private
 @interface IDMPhoto () {
@@ -211,8 +212,13 @@ caption = _caption;
                                    // todo reload
                                    self.underlyingImage = nil;
                                    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
-                                   
                                    NSLog(@"SDWebImage failed to download image: %@, url%@", error, _photoURL);
+                                   NSString *errMsg = error.localizedDescription;
+                                   if (error.domain == NSURLErrorDomain) {
+                                       errMsg = [NSString stringWithFormat:@"图片载入失败\n%@(%@)", [NSHTTPURLResponse localizedStringForStatusCode:error.code], @(error.code)];
+                                   }
+                                   [SVProgressHUD showErrorWithStatus:errMsg];
+                                   return;
                                }
                                self.underlyingImage = image;
                                [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
