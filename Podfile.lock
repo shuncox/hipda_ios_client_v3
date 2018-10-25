@@ -63,9 +63,9 @@ PODS:
   - REValidation (0.1.4)
   - Reveal-SDK (11)
   - SAMKeychain (1.5.2)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
+  - SDWebImage (3.7.4):
+    - SDWebImage/Core (= 3.7.4)
+  - SDWebImage/Core (3.7.4)
   - SKBounceAnimation (1.0.04)
   - SSZipArchive (1.8.1)
   - SVPullToRefresh (0.4.1)
@@ -97,7 +97,7 @@ DEPENDENCIES:
   - RETableViewManager (= 1.6)
   - Reveal-SDK
   - SAMKeychain (~> 1.5.2)
-  - SDWebImage (from `https://github.com/wujichao/SDWebImage.git`, commit `8a468e2`)
+  - SDWebImage (= 3.7.4)
   - SSZipArchive
   - SVPullToRefresh
   - ZAActivityBar
@@ -110,9 +110,6 @@ EXTERNAL SOURCES:
   Qiniu:
     :branch: AFNetworking-1.x
     :git: https://github.com/qiniu/objc-sdk.git
-  SDWebImage:
-    :commit: 8a468e2
-    :git: https://github.com/wujichao/SDWebImage.git
 
 CHECKOUT OPTIONS:
   CTAssetsPickerController:
@@ -121,9 +118,6 @@ CHECKOUT OPTIONS:
   Qiniu:
     :commit: 637cdc555b4f0c6227ae785964c717f950359af4
     :git: https://github.com/qiniu/objc-sdk.git
-  SDWebImage:
-    :commit: 8a468e2
-    :git: https://github.com/wujichao/SDWebImage.git
 
 SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
@@ -154,12 +148,12 @@ SPEC CHECKSUMS:
   REValidation: 38c4de1be58455f8b00aab208ac80db316a66b7f
   Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
-  SDWebImage: 119e50946eee9ddf15589227ec2b6b37966ecd04
+  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
   SKBounceAnimation: c1be441b78e1a38c44609d6e38ae20ad79ecc180
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 6bc560600584b9cd0651eb4d6ba28fa976fadd66
+PODFILE CHECKSUM: 4a45f00f7f6559bfe9b53dc25b549c67894bd35b
 
 COCOAPODS: 1.1.1

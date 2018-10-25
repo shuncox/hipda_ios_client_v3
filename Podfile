@@ -12,7 +12,7 @@ end
 target 'HiPDA' do
 
 pod 'AFNetworking', '1.3.3'
-pod 'SDWebImage', :git => "https://github.com/wujichao/SDWebImage.git", :commit => "8a468e2"
+pod 'SDWebImage', '3.7.4'
 pod 'MTLog'
 pod 'RegexKitLite'
 #pod 'SVProgressHUD', '1.0'

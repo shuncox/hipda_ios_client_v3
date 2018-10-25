@@ -178,20 +178,9 @@ caption = _caption;
             }
             
             // 加载大图
-            BOOL enableProgressiveDownload = [UMOnlineConfig getBoolConfigWithKey:@"EnableProgressiveDownload" defaultYES:YES];
-            // gif时 不开启渐进加载, 也许应该在sd内部直接判断gif格式, 不过通过suffix简单一些
-            enableProgressiveDownload = enableProgressiveDownload
-                                        && ![_photoURL.absoluteString hasSuffix:@".gif"] /*gif 不开启渐进模式*/
-                                        && !self.loadingOriginalImage; /*先小图后大图 不开启渐进模式*/
-            
-            SDWebImageOptions options = SDWebImageRetryFailed;
-            if (enableProgressiveDownload) {
-                options = SDWebImageProgressiveDownload|SDWebImageProgressiveDownloadClearGreyColor|SDWebImageRetryFailed;
-            }
-            
             SDWebImageManager *manager = [SDWebImageManager sharedManager];
             [manager downloadWithURL:_photoURL
-                             options:options
+                             options:SDWebImageRetryFailed
                             progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                 
                                 //NSLog(@"progress %d, %lld", receivedSize, expectedSize);
