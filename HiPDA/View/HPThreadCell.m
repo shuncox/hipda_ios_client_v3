@@ -181,6 +181,9 @@
     if ([Setting boolForKey:HPSettingNightMode]) {
         UIView *bgColorView = [[UIView alloc] init];
         bgColorView.backgroundColor = rgb(20.f, 20.f, 20.f);;
+        if ([UIDevice hp_isiPhoneX]) {
+            bgColorView.backgroundColor = [UIColor blackColor];
+        }
         [self setSelectedBackgroundView:bgColorView];
         
         

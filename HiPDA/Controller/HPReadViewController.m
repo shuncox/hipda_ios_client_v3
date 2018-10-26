@@ -482,7 +482,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
         @"**[screen_width]**": @(HP_SCREEN_WIDTH).stringValue,
         @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
         @"**[min-height]**" : @((int)(HP_SCREEN_WIDTH * 0.618)).stringValue,
-        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light",
+        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ?
+                                ([UIDevice hp_isiPhoneX] ? @"dark oled" : @"dark") :
+                                @"light",
         @"**[fontsize]**": (IS_IPAD && IOS10_OR_LATER) ?
                                 [NSString stringWithFormat:@"%dpx", (int)(self.currentFontSize/100.f*16)] :
                                 @"16px !Important",

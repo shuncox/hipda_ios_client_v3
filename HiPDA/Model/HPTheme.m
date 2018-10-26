@@ -30,7 +30,13 @@
     } else {
         
         static UIColor *darkBackgroundColor = nil;
-        if (!darkBackgroundColor) darkBackgroundColor = rgb(10.f, 11.f, 14.f);
+        if (!darkBackgroundColor) {
+            if ([UIDevice hp_isiPhoneX]) {
+                darkBackgroundColor = [UIColor blackColor];
+            } else {
+                darkBackgroundColor = rgb(10.f, 11.f, 14.f);
+            }
+        }
         return darkBackgroundColor;
     }
 }
@@ -92,7 +98,11 @@
     } else {
         
         static UIColor *darkOddCellColor = nil;
-        if (!darkOddCellColor) darkOddCellColor = rgb(10.f, 11.f, 14.f);
+        if ([UIDevice hp_isiPhoneX]) {
+            darkOddCellColor = [UIColor blackColor];
+        } else {
+            darkOddCellColor = rgb(10.f, 11.f, 14.f);
+        }
         return darkOddCellColor;
     }
 }
@@ -107,7 +117,11 @@
     } else {
         
         static UIColor *darkEvenCellColor = nil;
-        if (!darkEvenCellColor) darkEvenCellColor = rgb(10.f, 11.f, 14.f);
+        if ([UIDevice hp_isiPhoneX]) {
+            darkEvenCellColor = [UIColor blackColor];
+        } else {
+            darkEvenCellColor = rgb(10.f, 11.f, 14.f);
+        }
         return darkEvenCellColor;
     }
 }
