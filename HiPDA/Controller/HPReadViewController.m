@@ -16,7 +16,7 @@
 #import "HPSFSafariViewController.h"
 #import "HPViewHTMLController.h"
 #import "HPViewSignatureViewController.h"
-
+#import "HPAttachmentService.h"
 #import "HPNewPost.h"
 #import "HPDatabase.h"
 #import "HPUser.h"
@@ -135,6 +135,8 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
 @property (nonatomic, assign) NSInteger current_floor;
 
 @property (nonatomic, weak) IBActionSheet *currentActionSheet;
+
+@property (nonatomic, strong) HPAttachmentService *temp_attachmentService;
 
 @end
 
@@ -787,6 +789,9 @@ typedef NS_ENUM(NSInteger, StoryTransitionType)
             NSLog(@"[self.navigationController pushViewController:readVC animated:YES];");
             [self.navigationController pushViewController:readVC animated:YES];
             
+        } else if ([urlString indexOf:@"attachment.php?"] != -1) {
+            self.temp_attachmentService = [[HPAttachmentService alloc] initWithUrl:urlString parentVC:self];
+            [self.temp_attachmentService start];
         } else {
             NSLog(@"here w");
             [self openUrl:request.URL];

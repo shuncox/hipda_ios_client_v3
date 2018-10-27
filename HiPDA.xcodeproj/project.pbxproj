@@ -121,6 +121,7 @@
 		EA3F4C13184AD81700B86C92 /* HPMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C12184AD81700B86C92 /* HPMessageViewController.m */; };
 		EA3F4C16184B5C7500B86C92 /* HPMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3F4C15184B5C7500B86C92 /* HPMessageDetailViewController.m */; };
 		EA3FF77C1EED86FC00FFE648 /* HPImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */; };
+		EA403A202184657F00C431E0 /* HPAttachmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA403A1F2184657F00C431E0 /* HPAttachmentService.m */; };
 		EA4138C9188D5530001F9542 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4138C8188D5530001F9542 /* SWRevealViewController.m */; };
 		EA4266D71842F5D100ADA47D /* HPNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D61842F5D100ADA47D /* HPNotice.m */; };
 		EA4266DA18430A8D00ADA47D /* HPMyNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4266D918430A8D00ADA47D /* HPMyNoticeViewController.m */; };
@@ -635,6 +636,8 @@
 		EA3F4C15184B5C7500B86C92 /* HPMessageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPMessageDetailViewController.m; path = Controller/HPMessageDetailViewController.m; sourceTree = "<group>"; };
 		EA3FF77A1EED86FC00FFE648 /* HPImageNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImageNode.h; path = Model/HPImageNode.h; sourceTree = "<group>"; };
 		EA3FF77B1EED86FC00FFE648 /* HPImageNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImageNode.m; path = Model/HPImageNode.m; sourceTree = "<group>"; };
+		EA403A1E2184657F00C431E0 /* HPAttachmentService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPAttachmentService.h; path = Service/HPAttachmentService.h; sourceTree = "<group>"; };
+		EA403A1F2184657F00C431E0 /* HPAttachmentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPAttachmentService.m; path = Service/HPAttachmentService.m; sourceTree = "<group>"; };
 		EA4138C7188D5530001F9542 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = Vender/SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
 		EA4138C8188D5530001F9542 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = Vender/SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
 		EA4266D51842F5D100ADA47D /* HPNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPNotice.h; path = Model/HPNotice.h; sourceTree = "<group>"; };
@@ -2036,6 +2039,8 @@
 				EA91959D21297CA000D7D3C6 /* HPBackgroundFetchService.m */,
 				EA91959F21297FEE00D7D3C6 /* HPRouter.h */,
 				EA9195A021297FEE00D7D3C6 /* HPRouter.m */,
+				EA403A1E2184657F00C431E0 /* HPAttachmentService.h */,
+				EA403A1F2184657F00C431E0 /* HPAttachmentService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2792,6 +2797,7 @@
 				EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */,
 				EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
+				EA403A202184657F00C431E0 /* HPAttachmentService.m in Sources */,
 				EA368A7018C6003E00C5C5BD /* EGORefreshTableHeaderView.m in Sources */,
 				EA42B9B01EA4FDCB008FC2AA /* WKWebView+Synchronize.m in Sources */,
 				EA3C706A211F1D17003DD443 /* HPLabGuideViewController.m in Sources */,
