@@ -121,7 +121,8 @@
 - (void)displayImage {
 	if (_photo /*&& _photoImageView.image == nil*/) {
         
-        BOOL needReset = _photoImageView.image == nil;
+//        BOOL needReset = _photoImageView.image == nil;
+        BOOL needReset = YES; //不支持渐进式加载了, 每次都reset, 和idmphoto原有逻辑一致
         if (needReset) {
             // Reset
             self.maximumZoomScale = 1;

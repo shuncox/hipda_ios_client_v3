@@ -76,8 +76,7 @@
 
 - (NSString *)hp_URL
 {
-    // 这里不用 HP_IMG_BASE_URL, 是因为webview里, 已经加载好的, 都是www域名下的 (webview的BASE_URL)
-    NSString *s = [NSString stringWithFormat:@"%@/forum/attachments/%@.%@", HP_BASE_URL, self.id, self.extension];
+    NSString *s = [NSString stringWithFormat:@"%@/forum/attachments/%@.%@", HP_IMG_BASE_URL, self.id, self.extension];
     return s;
 }
 
