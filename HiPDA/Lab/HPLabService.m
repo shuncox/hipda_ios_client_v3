@@ -90,7 +90,8 @@
 
 - (BOOL)enableMessagePush
 {
-    return [[HPSetting sharedSetting] boolForKey:HPSettingLabEnablePush];
+    return NO; //实验室功能下线, 只能返回NO, 后台刷新才能工作
+    //return [[HPSetting sharedSetting] boolForKey:HPSettingLabEnablePush];
 }
 
 - (void)setEnableMessagePush:(BOOL)enable
