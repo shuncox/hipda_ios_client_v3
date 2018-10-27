@@ -23,7 +23,7 @@
 #import "UIImage+Resize.h"
 #import "UIImage+fixOrientation.h"
 
-#import "HPQiniuUploader.h"
+#import "HPQCloudUploader.h"
 
 @implementation ALAsset (gif)
 
@@ -449,9 +449,9 @@
                   progressBlock:progressBlock
                           block:block];
     } else {
-        [HPQiniuUploader updateImage:imageData
-                       progressBlock:progressBlock
-                     completionBlock:block];
+        [HPQCloudUploader updateImage:imageData
+                        progressBlock:progressBlock
+                      completionBlock:block];
     }
 }
 

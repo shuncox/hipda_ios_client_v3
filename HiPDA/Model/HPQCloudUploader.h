@@ -1,14 +1,14 @@
 //
-//  HPQiniuUploader.h
+//  HPQCloudUploader.h
 //  HiPDA
 //
-//  Created by Jichao Wu on 15/5/4.
-//  Copyright (c) 2015年 wujichao. All rights reserved.
+//  Created by Jiangfan on 2018/10/27.
+//  Copyright © 2018年 wujichao. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface HPQiniuUploader : NSObject
+@interface HPQCloudUploader : NSObject
 
 + (void)updateImage:(NSData *)imageData
       progressBlock:(void (^)(CGFloat progress))progressBlock

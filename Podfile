@@ -27,7 +27,6 @@ pod 'SAMKeychain', '~> 1.5.2'
 pod 'RETableViewManager', '1.6'
 pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
 #pod 'CTAssetsPickerController', :path => '../CTAssetsPickerController'
-pod 'Qiniu', :git => 'https://github.com/qiniu/objc-sdk.git', :branch => 'AFNetworking-1.x'
 pod 'Mantle', '1.5.4'
 pod 'Objective-LevelDB'
 pod 'Masonry'
@@ -42,6 +41,7 @@ pod 'SSZipArchive'
 pod 'KVOController'
 pod '1PasswordExtension', '~> 1.8.4'
 pod 'PromisesObjC', '1.2.3'
+pod 'QCloudCOSXML'
 
 # JSPatch
 #smart_pod 'JSPatch', '~> 1.1.3'

@@ -46,8 +46,12 @@ PODS:
   - Objective-LevelDB (2.1.4):
     - leveldb-library (~> 1.18)
   - PromisesObjC (1.2.3)
-  - Qiniu (7.0.7):
-    - AFNetworking (~> 1.0)
+  - QCloudCore (5.5.1)
+  - QCloudCOSXML (5.5.1):
+    - QCloudCore (= 5.5.1)
+    - QCloudCOSXML/Transfer (= 5.5.1)
+  - QCloudCOSXML/Transfer (5.5.1):
+    - QCloudCore (= 5.5.1)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -91,7 +95,7 @@ DEPENDENCIES:
   - NSString+Emoji
   - Objective-LevelDB
   - PromisesObjC (= 1.2.3)
-  - Qiniu (from `https://github.com/qiniu/objc-sdk.git`, branch `AFNetworking-1.x`)
+  - QCloudCOSXML
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6)
@@ -107,17 +111,11 @@ EXTERNAL SOURCES:
     :git: https://github.com/wujichao/CTAssetsPickerController.git
   MLeaksFinder:
     :path: "../MLeaksFinder"
-  Qiniu:
-    :branch: AFNetworking-1.x
-    :git: https://github.com/qiniu/objc-sdk.git
 
 CHECKOUT OPTIONS:
   CTAssetsPickerController:
     :commit: d0475c22de7b1fa9a92c271e155e58b53828eca7
     :git: https://github.com/wujichao/CTAssetsPickerController.git
-  Qiniu:
-    :commit: 637cdc555b4f0c6227ae785964c717f950359af4
-    :git: https://github.com/qiniu/objc-sdk.git
 
 SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
@@ -140,7 +138,8 @@ SPEC CHECKSUMS:
   NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
   PromisesObjC: a3a4263d8a9260214267e0b3788d0f83466ad449
-  Qiniu: 1cf45054ac5395e047f3644bdc72da7040f5b35d
+  QCloudCore: ffc28d5a17dc551c089ef191fbb3af92ea44c9e9
+  QCloudCOSXML: ab8b532e63935c3395d085b47324f2cdb9729717
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
@@ -154,6 +153,6 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 4a45f00f7f6559bfe9b53dc25b549c67894bd35b
+PODFILE CHECKSUM: 85fac0bd2b152715ccdbb7d228fe89d5a8f817bf
 
 COCOAPODS: 1.1.1

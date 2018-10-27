@@ -279,7 +279,6 @@
 - (void)didTapImage:(NSNotification *)n {
     NSLog(@"%@", n);
     NSString *src = n.object;
-    src = [src stringByReplacingOccurrencesOfString:HP_QINIU_PREFIX withString:HP_QINIU_PREFIX_V2];
     if (!src) {
         return;
     }

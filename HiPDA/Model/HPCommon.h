@@ -125,9 +125,7 @@
  
 #define TAG_NightModeView 149410
 
-#define HP_QINIU_SUFFIX @"v.html?c="
-#define HP_QINIU_PREFIX ([NSString stringWithFormat:@"http://hpclient.qiniudn.com/%@", HP_QINIU_SUFFIX])
-#define HP_QINIU_PREFIX_V2 (@"http://apocalypse.jichaowu.com/img/")
+#define HP_QCLOUD_PREFIX (@"http://hpimg-1252000006.cos.ap-shanghai.myqcloud.com/")
 #define HP_MESSAGE_CELL_TAP_IMAGE @"HP_MESSAGE_CELL_TAP_IMAGE"
 
 #define HPSettingBaseURL @"HPSettingBaseURL"

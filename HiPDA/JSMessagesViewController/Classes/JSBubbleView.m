@@ -253,7 +253,7 @@
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     NSString *url = [textView.text substringWithRange:characterRange];
     //NSLog(@"%@ %@", URL, [textView.text substringWithRange:characterRange]);
-    if ([[URL absoluteString] hasPrefix:HP_QINIU_PREFIX] || [[URL absoluteString] hasPrefix:HP_QINIU_PREFIX_V2]) {
+    if ([[URL absoluteString] hasPrefix:HP_QCLOUD_PREFIX]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:HP_MESSAGE_CELL_TAP_IMAGE object:url];
         return NO;
     }
