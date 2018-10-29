@@ -136,6 +136,9 @@
 #pragma mark - guide
 - (void)showGuideIfNeeded
 {
+    // 下线实验室功能
+    return;
+    
     if ([HPAccount isAccountForReviewer]) {
         return;
     }
