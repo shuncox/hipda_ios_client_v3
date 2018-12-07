@@ -13,8 +13,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")) {
-            if (!UIEdgeInsetsEqualToEdgeInsets([UIApplication sharedApplication].keyWindow.safeAreaInsets,
-                                              UIEdgeInsetsZero)) {
+            // iOS11中返回的safeAreaInsets为（0，0，0，0）；iOS12中返回的safeAreaInsets为（20，0，0，0）
+            if ([UIApplication sharedApplication].keyWindow.safeAreaInsets.top > 20) {
                 isiPhoneX = YES;
             }
         }
