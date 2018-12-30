@@ -24,6 +24,7 @@
 
 #import "IDMPhotoBrowser.h"
 #import "HPSetting.h"
+#import "HPImagePickerViewController.h"
 
 @interface AvatarView : UIImageView
 
@@ -264,10 +265,7 @@
         return;
     }
 
-    HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
-    ivc.delegate = self;
-    ivc.useQiniu = YES;
-    [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
+    [HPImagePickerViewController authorizationPresentAlbumViewController:self delegate:self qcloud:YES];
 }
 
 - (void)completeWithAttachString:(NSString *)string error:(NSError *)error {

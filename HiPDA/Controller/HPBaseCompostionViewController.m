@@ -216,12 +216,6 @@
     [self.delegate compositionDoneWithType:_actionType error:error];
 }
 
-//- (void)addImage:(id)sender {
-//    HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
-//    ivc.delegate = self;
-//    [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
-//}
-
 - (void)addImage:(id)sender {
     [HPImagePickerViewController authorizationPresentAlbumViewController:self delegate:self qcloud:NO];
 }
