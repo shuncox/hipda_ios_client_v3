@@ -7,6 +7,7 @@
 
 @interface HPQMUIImagePickerViewController : QMUIImagePickerViewController
 
-
+// 目标压缩尺寸
+@property (nonatomic, assign) CGFloat targetSize;
 
 @end

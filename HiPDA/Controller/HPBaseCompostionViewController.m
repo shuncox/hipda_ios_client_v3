@@ -223,7 +223,7 @@
 //}
 
 - (void)addImage:(id)sender {
-    [HPImagePickerViewController authorizationPresentAlbumViewController:self];
+    [HPImagePickerViewController authorizationPresentAlbumViewController:self delegate:self qcloud:NO];
 }
 
 - (void)close {

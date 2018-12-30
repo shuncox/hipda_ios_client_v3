@@ -15,6 +15,8 @@
 
 @interface HPImagePickerViewController : QMUIAlbumViewController
 
-+ (void)authorizationPresentAlbumViewController:(UIViewController *)parent;
++ (void)authorizationPresentAlbumViewController:(UIViewController *)parent
+                                       delegate:(id<HPImagePickerUploadDelegate>)delegate
+                                         qcloud:(BOOL)qcloud;
 
 @end
