@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31BCD56F628657EBA35CEF2A /* HPQMUIImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BCD3DC1338E8A780914119 /* HPQMUIImagePickerViewController.m */; };
+		31BCD8EFE2CF3F88E79E7FB2 /* HPImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BCDBE98D005BD4E26F33D1 /* HPImagePickerViewController.m */; };
 		557E3B5762785198CF23CAC9 /* libPods-HiPDA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56690B022569B05CD81DF8E5 /* libPods-HiPDA.a */; };
 		D772D4C0192283D100994743 /* HPAttention.m in Sources */ = {isa = PBXBuildFile; fileRef = D772D4BF192283D100994743 /* HPAttention.m */; };
 		EA00C5141D04412B002E2301 /* HPViewSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00C5131D04412B002E2301 /* HPViewSignatureViewController.m */; };
@@ -458,6 +460,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		31BCD2996B0FC11E70770ECA /* HPQMUIImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPQMUIImagePickerViewController.h; path = Controller/HPQMUIImagePickerViewController.h; sourceTree = "<group>"; };
+		31BCD3DC1338E8A780914119 /* HPQMUIImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPQMUIImagePickerViewController.m; path = Controller/HPQMUIImagePickerViewController.m; sourceTree = "<group>"; };
+		31BCD8ACFC681C343D15184F /* HPImagePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPImagePickerViewController.h; path = Controller/HPImagePickerViewController.h; sourceTree = "<group>"; };
+		31BCDBE98D005BD4E26F33D1 /* HPImagePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPImagePickerViewController.m; path = Controller/HPImagePickerViewController.m; sourceTree = "<group>"; };
 		56690B022569B05CD81DF8E5 /* libPods-HiPDA.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HiPDA.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C502AE66C5EA43DA1B985F /* Pods-HiPDA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HiPDA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA.debug.xcconfig"; sourceTree = "<group>"; };
 		C427876486EDFFE9FA7B15B7 /* Pods-HiPDA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HiPDA.release.xcconfig"; path = "Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA.release.xcconfig"; sourceTree = "<group>"; };
@@ -1444,6 +1450,10 @@
 				EA87A6831A5AE25F00A36DD6 /* HPImageMultipleUploadViewController.m */,
 				EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */,
 				EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */,
+				31BCD8ACFC681C343D15184F /* HPImagePickerViewController.h */,
+				31BCDBE98D005BD4E26F33D1 /* HPImagePickerViewController.m */,
+				31BCD3DC1338E8A780914119 /* HPQMUIImagePickerViewController.m */,
+				31BCD2996B0FC11E70770ECA /* HPQMUIImagePickerViewController.h */,
 			);
 			name = Compostion;
 			sourceTree = "<group>";
@@ -2631,13 +2641,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HiPDA-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		90B5B4AC41C4A22AAB477951 /* [CP] Embed Pods Frameworks */ = {
@@ -2646,9 +2659,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA-frameworks.sh",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-11/iOS/RevealServer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2661,9 +2677,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HiPDA/Pods-HiPDA-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/1PasswordExtension/OnePasswordExtensionResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/CTAssetsPickerController/CTAssetsPickerController.bundle",
+				"${PODS_ROOT}/QMUIKit/QMUIKit/QMUIResources/QMUIResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RETableViewManager/RETableViewManager.bundle",
+				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
+				"${PODS_ROOT}/ZAActivityBar/ZAActivityBar/ZAActivityBar.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/OnePasswordExtensionResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CTAssetsPickerController.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QMUIResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RETableViewManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SAMKeychain.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ZAActivityBar.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2870,6 +2899,8 @@
 				EA084D9F211EC392003089E7 /* HPApiConfig.m in Sources */,
 				EAA727F41D3D266100566999 /* HPBlockService.m in Sources */,
 				EA075F5E18E447FD00A07C08 /* HPNewThreadViewController.m in Sources */,
+				31BCD8EFE2CF3F88E79E7FB2 /* HPImagePickerViewController.m in Sources */,
+				31BCD56F628657EBA35CEF2A /* HPQMUIImagePickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3037,7 +3068,7 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
@@ -3096,7 +3127,7 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/SVProgressHUD",
 				);
 				INFOPLIST_FILE = "HiPDA/HiPDA-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",

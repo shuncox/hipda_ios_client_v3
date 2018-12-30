@@ -42,7 +42,7 @@ PODS:
   - MLeaksFinder (0.2.1):
     - FBRetainCycleDetector
   - MTLog (0.6.1)
-  - NSString+Emoji (0.2.0)
+  - "NSString+Emoji (0.2.0)"
   - Objective-LevelDB (2.1.4):
     - leveldb-library (~> 1.18)
   - PromisesObjC (1.2.3)
@@ -52,6 +52,92 @@ PODS:
     - QCloudCOSXML/Transfer (= 5.5.1)
   - QCloudCOSXML/Transfer (5.5.1):
     - QCloudCore (= 5.5.1)
+  - QMUIKit/QMUIComponents/QMUIAlertController (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUIComponents/QMUIModalPresentationViewController
+    - QMUIKit/QMUIComponents/QMUITextField
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIAssetLibrary (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIButton (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUICollectionViewPagingLayout (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIEmptyView (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIImagePickerLibrary (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIAlertController
+    - QMUIKit/QMUIComponents/QMUIAssetLibrary
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUIComponents/QMUIEmptyView
+    - QMUIKit/QMUIComponents/QMUIImagePreviewView
+    - QMUIKit/QMUIComponents/QMUINavigationButton
+    - QMUIKit/QMUIComponents/QMUITableViewCell
+    - QMUIKit/QMUIComponents/QMUIZoomImageView
+    - QMUIKit/QMUICore
+    - QMUIKit/QMUIMainFrame
+    - QMUIKit/QMUIResources
+  - QMUIKit/QMUIComponents/QMUIImagePreviewView (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUIComponents/QMUICollectionViewPagingLayout
+    - QMUIKit/QMUIComponents/QMUIEmptyView
+    - QMUIKit/QMUIComponents/QMUIPieProgressView
+    - QMUIKit/QMUIComponents/QMUIZoomImageView
+    - QMUIKit/QMUICore
+    - QMUIKit/QMUIMainFrame
+  - QMUIKit/QMUIComponents/QMUIKeyboardManager (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIModalPresentationViewController (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIKeyboardManager
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIMultipleDelegates (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUINavigationButton (3.0.0):
+    - QMUIKit/QMUICore
+    - QMUIKit/QMUIMainFrame
+  - QMUIKit/QMUIComponents/QMUINavigationTitleView (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIPieProgressView (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUISlider (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUITableView (3.0.0):
+    - QMUIKit/QMUIComponents/QMUITableViewProtocols
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUITableViewCell (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUITableViewHeaderFooterView (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUITableViewProtocols (3.0.0):
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUITextField (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIMultipleDelegates
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUIComponents/QMUIZoomImageView (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIAssetLibrary
+    - QMUIKit/QMUIComponents/QMUIButton
+    - QMUIKit/QMUIComponents/QMUIEmptyView
+    - QMUIKit/QMUIComponents/QMUIPieProgressView
+    - QMUIKit/QMUIComponents/QMUISlider
+    - QMUIKit/QMUICore
+  - QMUIKit/QMUICore (3.0.0):
+    - QMUIKit/QMUILog
+    - QMUIKit/QMUIWeakObjectContainer
+  - QMUIKit/QMUILog (3.0.0)
+  - QMUIKit/QMUIMainFrame (3.0.0):
+    - QMUIKit/QMUIComponents/QMUIEmptyView
+    - QMUIKit/QMUIComponents/QMUIKeyboardManager
+    - QMUIKit/QMUIComponents/QMUIMultipleDelegates
+    - QMUIKit/QMUIComponents/QMUINavigationTitleView
+    - QMUIKit/QMUIComponents/QMUITableView
+    - QMUIKit/QMUIComponents/QMUITableViewHeaderFooterView
+    - QMUIKit/QMUICore
+    - QMUIKit/QMUILog
+  - QMUIKit/QMUIResources (3.0.0)
+  - QMUIKit/QMUIWeakObjectContainer (3.0.0)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -92,10 +178,11 @@ DEPENDENCIES:
   - MCSwipeTableViewCell
   - MLeaksFinder (from `../MLeaksFinder`)
   - MTLog
-  - NSString+Emoji
+  - "NSString+Emoji"
   - Objective-LevelDB
   - PromisesObjC (= 1.2.3)
   - QCloudCOSXML
+  - QMUIKit/QMUIComponents/QMUIImagePickerLibrary (~> 3.0.0)
   - ReactiveCocoa (~> 2.0)
   - RegexKitLite
   - RETableViewManager (= 1.6)
@@ -105,6 +192,42 @@ DEPENDENCIES:
   - SSZipArchive
   - SVPullToRefresh
   - ZAActivityBar
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - 1PasswordExtension
+    - AFNetworking
+    - ALActionBlocks
+    - AnimatedGIFImageSerialization
+    - BlocksKit
+    - CocoaLumberjack
+    - FBRetainCycleDetector
+    - FMDB
+    - JSQSystemSoundPlayer
+    - KVOController
+    - leveldb-library
+    - Mantle
+    - Masonry
+    - MCSwipeTableViewCell
+    - MTLog
+    - "NSString+Emoji"
+    - Objective-LevelDB
+    - PromisesObjC
+    - QCloudCore
+    - QCloudCOSXML
+    - QMUIKit
+    - ReactiveCocoa
+    - REFormattedNumberField
+    - RegexKitLite
+    - RETableViewManager
+    - REValidation
+    - Reveal-SDK
+    - SAMKeychain
+    - SDWebImage
+    - SKBounceAnimation
+    - SSZipArchive
+    - SVPullToRefresh
+    - ZAActivityBar
 
 EXTERNAL SOURCES:
   CTAssetsPickerController:
@@ -133,13 +256,14 @@ SPEC CHECKSUMS:
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
-  MLeaksFinder: 0850e2f2abc7227adc4d4e2d1992b431264eb4d5
+  MLeaksFinder: 6f61a164e9f97cedf3e7346b394e18205de8e280
   MTLog: 058f30e9cd35d7394c8050ef2e3361c35f9ca1d3
-  NSString+Emoji: 127da93993ac7c01eadb2edbb039cda89a1369f4
+  "NSString+Emoji": 127da93993ac7c01eadb2edbb039cda89a1369f4
   Objective-LevelDB: 016f27f24c9976527938a40f043b585e82c27cfc
   PromisesObjC: a3a4263d8a9260214267e0b3788d0f83466ad449
   QCloudCore: ffc28d5a17dc551c089ef191fbb3af92ea44c9e9
   QCloudCOSXML: ab8b532e63935c3395d085b47324f2cdb9729717
+  QMUIKit: fdd5b7ae57a4fdcb5daf1288ef34c308a8efbb9b
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   REFormattedNumberField: be3d55dd709f65541fb26b7e1709da07903147f8
   RegexKitLite: c0e4c12e6e7de0769f3a3ed679f0f61604170661
@@ -153,6 +277,6 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   ZAActivityBar: 82dea103fadb187ab6f07cf0a9ccdffe1ffb55a2
 
-PODFILE CHECKSUM: 85fac0bd2b152715ccdbb7d228fe89d5a8f817bf
+PODFILE CHECKSUM: 357e64e4ccd3fa419bcd7719187d98fa885c6e17
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.5.3

@@ -18,7 +18,7 @@
 #import "HPSetting.h"
 
 #import "UIAlertView+Blocks.h"
-
+#import "HPImagePickerViewController.h"
 
 #define TOOLBAR_HEIGHT 40.f
 
@@ -216,10 +216,14 @@
     [self.delegate compositionDoneWithType:_actionType error:error];
 }
 
+//- (void)addImage:(id)sender {
+//    HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
+//    ivc.delegate = self;
+//    [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
+//}
+
 - (void)addImage:(id)sender {
-    HPImageMultipleUploadViewController *ivc = [[HPImageMultipleUploadViewController alloc] init];
-    ivc.delegate = self;
-    [self presentViewController:[HPCommon swipeableNVCWithRootVC:ivc] animated:YES completion:nil];
+    [HPImagePickerViewController authorizationPresentAlbumViewController:self];
 }
 
 - (void)close {

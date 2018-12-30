@@ -1,4 +1,4 @@
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 def smart_pod(name, options = nil)
     dir = name.split('/', 2).first;
@@ -42,6 +42,8 @@ pod 'KVOController'
 pod '1PasswordExtension', '~> 1.8.4'
 pod 'PromisesObjC', '1.2.3'
 pod 'QCloudCOSXML'
+
+pod 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary', '~> 3.0.0'
 
 # JSPatch
 #smart_pod 'JSPatch', '~> 1.1.3'
