@@ -7,7 +7,6 @@
 //
 
 #import "HPBaseCompostionViewController.h"
-#import "HPImageMultipleUploadViewController.h"
 #import "SWRevealViewController.h"
 
 #import "WUDemoKeyboardBuilder.h"
@@ -22,7 +21,7 @@
 
 #define TOOLBAR_HEIGHT 40.f
 
-@interface HPBaseCompostionViewController () <UITextViewDelegate, HPImageUploadDelegate>
+@interface HPBaseCompostionViewController () <UITextViewDelegate, HPImagePickerUploadDelegate>
 
 
 

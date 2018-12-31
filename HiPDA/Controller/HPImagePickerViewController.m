@@ -214,7 +214,7 @@ QMUIImagePickerPreviewViewControllerDelegate
 
     progressBlock(@"压缩中...");
     NSLog(@"compress...");
-    
+
     [imageAsset requestImageData:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGif, BOOL isHEIC) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage *targetImage = nil;

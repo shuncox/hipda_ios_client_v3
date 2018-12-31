@@ -25,8 +25,6 @@ pod 'FMDB'
 pod 'MCSwipeTableViewCell'
 pod 'SAMKeychain', '~> 1.5.2'
 pod 'RETableViewManager', '1.6'
-pod 'CTAssetsPickerController', :git => "https://github.com/wujichao/CTAssetsPickerController.git"
-#pod 'CTAssetsPickerController', :path => '../CTAssetsPickerController'
 pod 'Mantle', '1.5.4'
 pod 'Objective-LevelDB'
 pod 'Masonry'

@@ -7,19 +7,16 @@
 //
 
 #import "HPMessageDetailViewController.h"
-#import <UIImageView+AFNetworking.h>
 
 #import "HPMessage.h"
 #import "HPUser.h"
 
 #import <UIImageView+WebCache.h>
 #import <SVProgressHUD.h>
-#import "NSUserDefaults+Convenience.h"
 #import "UIAlertView+Blocks.h"
 #import "UIBarButtonItem+ImageItem.h"
 #import "UIControl+ALActionBlocks.h"
 
-#import "HPImageMultipleUploadViewController.h"
 #import "HPUserViewController.h"
 
 #import "IDMPhotoBrowser.h"
@@ -68,7 +65,12 @@
 
 @end
 
-@interface HPMessageDetailViewController () <JSMessagesViewDataSource, JSMessagesViewDelegate, UIActionSheetDelegate, HPImageUploadDelegate>
+@interface HPMessageDetailViewController () <
+JSMessagesViewDataSource,
+JSMessagesViewDelegate,
+UIActionSheetDelegate,
+HPImagePickerUploadDelegate
+>
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (nonatomic, assign) HPMessageRange range;
