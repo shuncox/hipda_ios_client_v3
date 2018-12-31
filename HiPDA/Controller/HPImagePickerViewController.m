@@ -31,6 +31,16 @@ QMUIImagePickerPreviewViewControllerDelegate
 
 @implementation HPImagePickerViewController
 
++ (void)load
+{
+    UIColor *tintColor = UIColorMake(0, 110, 230);
+    QMUICMI.buttonTintColor = tintColor;
+    UIImage *checkboxImage = [QMUIHelper imageWithName:@"QMUI_pickerImage_checkbox"];
+    UIImage *checkboxCheckedImage = [QMUIHelper imageWithName:@"QMUI_pickerImage_checkbox_checked"];
+    [QMUIImagePickerCollectionViewCell appearance].checkboxImage = [checkboxImage qmui_imageWithTintColor:tintColor];
+    [QMUIImagePickerCollectionViewCell appearance].checkboxCheckedImage = [checkboxCheckedImage qmui_imageWithTintColor:tintColor];
+}
+
 + (void)authorizationPresentAlbumViewController:(UIViewController *)parent
                                        delegate:(id<HPImagePickerUploadDelegate>)delegate
                                          qcloud:(BOOL)qcloud;

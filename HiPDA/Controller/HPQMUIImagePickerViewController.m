@@ -10,6 +10,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.previewButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.sendButton setTitle:@"确认" forState:UIControlStateNormal];
+
     [self addCompressSizeSelector];
 }
 
