@@ -9,13 +9,24 @@
 #import "HPImagePickerViewController.h"
 #import "SVProgressHUD.h"
 #import <QMUIKit/QMUIKit.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "HPQMUIImagePickerViewController.h"
 #import "UIImage+Resize.h"
 #import "HPSendPost.h"
 #import "HPQCloudUploader.h"
 
-@class image;
+@interface HPMultiUploadContext : NSObject
+
+@property (nonatomic, assign) NSUInteger currentIndex;
+@property (nonatomic, strong) NSMutableArray<QMUIAsset *> *assets;
+@property (nonatomic, strong) NSMutableArray<QMUIAsset *> *uploadedAssets;
+@property (nonatomic, strong) NSMutableArray<NSString *> *attachList;
+@property (nonatomic, strong) NSError *error;
+@property (nonatomic, copy) void (^completion)(HPMultiUploadContext *context);
+
+@end
+
+@implementation HPMultiUploadContext
+@end
 
 @interface HPImagePickerViewController ()<
 QMUIAlbumViewControllerDelegate,
@@ -108,76 +119,102 @@ QMUIImagePickerPreviewViewControllerDelegate
 
 #pragma mark - 业务方法
 
+// 1. 从iCloud 下载图片
 - (void)sendImageWithImagesAssetArray:(NSMutableArray<QMUIAsset *> *)imagesAssetArray {
-    __weak __typeof(self)weakSelf = self;
     __block int count = imagesAssetArray.count;
+    if (count <= 0) {
+        [SVProgressHUD showErrorWithStatus:@"还没选呢"];
+        return;
+    }
+    self.imagePickerViewController.sendButton.enabled = NO;
+
+    @weakify(self);
     for (QMUIAsset *asset in imagesAssetArray) {
         [QMUIImagePickerHelper requestImageAssetIfNeeded:asset completion:^(QMUIAssetDownloadStatus downloadStatus, NSError *error) {
+            @strongify(self);
             if (downloadStatus == QMUIAssetDownloadStatusDownloading) {
                 [SVProgressHUD showWithStatus:@"从 iCloud 加载中..."];
             } else if (downloadStatus == QMUIAssetDownloadStatusSucceed) {
                 if (--count == 0) {
-                    [weakSelf sendImageWithImagesAssetArrayIfDownloadStatusSucceed:imagesAssetArray];
+                    // 所有图片都下载成功再走上传逻辑
+                    [self sendImageWithImagesAssetArrayIfDownloadStatusSucceed:imagesAssetArray];
                 }
             } else {
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"iCloud 下载错误 (%@)", error.localizedDescription]];
+                self.imagePickerViewController.sendButton.enabled = YES;
             }
         }];
     }
 }
 
+// 2. 上传图片
 - (void)sendImageWithImagesAssetArrayIfDownloadStatusSucceed:(NSMutableArray<QMUIAsset *> *)imagesAssetArray {
-    if (![QMUIImagePickerHelper imageAssetsDownloaded:imagesAssetArray]) {
-        return;
-    }
-
     [SVProgressHUD showWithStatus:@"" maskType:SVProgressHUDMaskTypeBlack];
 
-    if (self.imagePickerViewController.selectedImageAssetArray.count <= 0) {
-        [SVProgressHUD showErrorWithStatus:@"还没选呢"];
-        return;
-    }
+    HPMultiUploadContext *context = [HPMultiUploadContext new];
+    context.currentIndex = 0;
+    context.assets = self.imagePickerViewController.selectedImageAssetArray;
+    context.uploadedAssets = @[].mutableCopy;
+    context.attachList = @[].mutableCopy;
+    @weakify(self);
+    context.completion = ^(HPMultiUploadContext *context) {
+        @strongify(self);
 
-    [self uploadImage:0];
+        // 将上传成功附件的添加到编辑器中
+        for (NSString *attach in context.attachList) {
+            [self.uploadDelegate completeWithAttachString:attach error:nil];
+        }
+
+        // 允许失败后重试
+        self.imagePickerViewController.sendButton.enabled = YES;
+
+        if (!context.error) {
+            [SVProgressHUD dismiss];
+            [self dismissViewControllerAnimated:YES completion:NULL];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[context.error localizedDescription]];
+            [context.assets removeObjectsInArray:context.uploadedAssets];
+            [self.imagePickerViewController.collectionView reloadData];
+        }
+    };
+
+    [self uploadImage:context];
 }
 
-
-- (void)uploadDone {
-    [SVProgressHUD dismiss];
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)uploadImage:(NSUInteger)index {
-
-    NSMutableArray<QMUIAsset *> *assets = self.imagePickerViewController.selectedImageAssetArray;
-    int count = assets.count;
-
-    __weak typeof(self) weakSelf = self;
-    [self uploadAsset:assets[index] progressBlock:^(NSString *progress) {
-        NSString *current = [NSString stringWithFormat:@"(%@/%@)", @(index+1), @(assets.count)];
+// 依次上传图片
+- (void)uploadImage:(HPMultiUploadContext *)context
+{
+    @weakify(self);
+    QMUIAsset *asset = context.assets[context.currentIndex];
+    [self uploadAsset:asset progressBlock:^(NSString *progress) {
+        NSString *current = [NSString stringWithFormat:@"(%@/%@)", @(context.currentIndex+1), @(context.assets.count)];
         [SVProgressHUD showWithStatus:S(@"%@ %@", current, progress) maskType:SVProgressHUDMaskTypeBlack];
     } block:^(NSString *attach, NSError *error) {
+        @strongify(self);
         if (!error) {
-            [weakSelf.uploadDelegate completeWithAttachString:attach error:nil];
-            if (index+1 < count) {
-                [weakSelf uploadImage:index+1];
+            [context.uploadedAssets addObject:asset];
+            [context.attachList addObject:attach];
+            if (context.currentIndex + 1 < context.assets.count) {
+                context.currentIndex++;
+                [self uploadImage:context];
             } else {
-                [weakSelf uploadDone];
+                context.completion(context);
             }
         } else {
-            [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-            weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
+            context.error = error;
+            context.completion(context);
         }
     }];
 }
 
+// 压缩后上传单张图片
 - (void)uploadAsset:(QMUIAsset *)imageAsset
       progressBlock:(void (^)(NSString *progress))progressBlock
               block:(void (^)(NSString *attach, NSError *error))block {
 
     progressBlock(@"压缩中...");
     NSLog(@"compress...");
-
+    
     [imageAsset requestImageData:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGif, BOOL isHEIC) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage *targetImage = nil;
@@ -191,7 +228,6 @@ QMUIImagePickerPreviewViewControllerDelegate
                     targetImage = [UIImage imageWithData:UIImageJPEGRepresentation(targetImage, 1)];
                 }
             }
-
 
             // 压缩
             NSData *uploadData = imageData;
@@ -214,7 +250,6 @@ QMUIImagePickerPreviewViewControllerDelegate
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"upload....");
                 progressBlock([NSString stringWithFormat:@"上传中...(0/%@kb)", @(size)]);
-
                 [self uploadImage:uploadData
                         imageName:isGif?@"_.gif":nil
                          mimeType:isGif?@"image/gif":nil
