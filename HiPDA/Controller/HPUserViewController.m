@@ -103,7 +103,8 @@
 {
     switch (section) {
         case 0:
-            return 3;
+//            return 3;
+            return 2;
             break;
         case 1:
             return 2;
