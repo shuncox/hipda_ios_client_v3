@@ -64,8 +64,7 @@
         upload.body = imageData;
         upload.bucket = @"hpimg-1252000006";
         upload.object = [[NSUUID UUID].UUIDString stringByAppendingString:@".jpg"];
-        upload.accessControlList = @"public-read";
-        
+
         [upload setFinishBlock:^(QCloudUploadObjectResult *result, NSError * error) {
             NSLog(@"upload result:%@, error:%@", result, error);
             dispatch_async(dispatch_get_main_queue(), ^{
