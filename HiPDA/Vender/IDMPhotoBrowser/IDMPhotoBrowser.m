@@ -1351,17 +1351,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                     return;
                 }
                 
-                NSMutableArray *activityItems = [NSMutableArray array];
-                [activityItems addObject:data];
-                
-                if ([photo underlyingImageURL]) {
-                    HPActivityItem *item = [[HPActivityItem alloc] initWithItem:[photo underlyingImageURL]];
-                    [activityItems addObject:item];
-                }
-
-                if (photo.caption) {
-                    [activityItems addObject:photo.caption];
-                }
+                NSArray *activityItems = @[data];
                 
                 @weakify(self);
                 UIActivity *qrCodeActivity = [HPActivity activityWithType:@"HPQrCode"
