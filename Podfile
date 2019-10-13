@@ -41,7 +41,8 @@ pod '1PasswordExtension', '~> 1.8.4'
 pod 'PromisesObjC', '1.2.3'
 pod 'QCloudCOSXML'
 
-pod 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary', '~> 3.0.0'
+pod 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary', '~> 4.0.0'
+pod 'QMUIKit/QMUIComponents/QMUITheme', '~> 4.0.0'
 
 # JSPatch
 #smart_pod 'JSPatch', '~> 1.1.3'
