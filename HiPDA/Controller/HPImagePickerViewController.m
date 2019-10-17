@@ -42,7 +42,7 @@ QMUIImagePickerPreviewViewControllerDelegate
 
 @implementation HPImagePickerViewController
 
-+ (void)load
++ (void)setupAppearance
 {
     UIColor *tintColor = UIColorMake(0, 110, 230);
     QMUICMI.buttonTintColor = tintColor;
@@ -71,6 +71,8 @@ QMUIImagePickerPreviewViewControllerDelegate
                           delegate:(id<HPImagePickerUploadDelegate>)delegate
                             qcloud:(BOOL)qcloud
 {
+    [self.class setupAppearance];
+    
     HPImagePickerViewController *albumViewController = [[HPImagePickerViewController alloc] init];
     albumViewController.uploadDelegate = delegate;
     albumViewController.useQiniu = qcloud;
