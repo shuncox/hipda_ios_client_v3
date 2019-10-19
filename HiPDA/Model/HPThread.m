@@ -22,6 +22,7 @@
 #import "NSString+HTML.h"
 #import "NSRegularExpression+HP.h"
 #import <AFHTTPRequestOperation.h>
+#import "HPBlockThreadService.h"
 
 @implementation HPThread
 
@@ -171,6 +172,8 @@
             
             if ([[HPBlockService shared] isUserInBlockList:thread.user.username]) {
                 NSLog(@"block %@, remove it from thread list", thread.user.username);
+            } else if ([[HPBlockThreadService shared] isThreadInBlockList:thread.tid]) {
+                NSLog(@"block thread %@, remove it from thread list", @(thread.tid));
             } else {
                 [threads addObject:thread];
             }

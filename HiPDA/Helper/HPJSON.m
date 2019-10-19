@@ -45,6 +45,10 @@
 + (MTLModel<MTLJSONSerializing> *)mtl_fromJSON:(NSString *)jsonString
                                          class:(Class)clazz
 {
+    if (!jsonString.length) {
+        return nil;
+    }
+    
     NSDictionary *json = [HPJSON fromJSON:jsonString];
     if (!json) {
         return nil;

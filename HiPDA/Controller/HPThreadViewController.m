@@ -42,6 +42,8 @@
 #import <ReactiveCocoa.h>
 #import "UITableView+ScrollToTop.h"
 #import "HPPostViewController.h"
+#import "IBActionSheet.h"
+#import "HPBlockThreadService.h"
 
 typedef enum{
 	PullToRefresh = 0,
@@ -50,7 +52,13 @@ typedef enum{
 } LoadType;
 
 
-@interface HPThreadViewController () <MCSwipeTableViewCellDelegate, UIAlertViewDelegate, HPCompositionDoneDelegate, HPThreadCellDelegate>
+@interface HPThreadViewController () <
+MCSwipeTableViewCellDelegate,
+UIAlertViewDelegate,
+HPCompositionDoneDelegate,
+HPThreadCellDelegate,
+UIGestureRecognizerDelegate
+>
 
 @property (nonatomic, strong) NSMutableArray *threads;
 @property (nonatomic, assign) NSInteger current_fid;
@@ -72,6 +80,9 @@ typedef enum{
 @property (nonatomic, strong) HPThreadFilterMenu *filterMenu;
 
 @property (nonatomic, assign) BOOL launchingFromBackgroundFetch;
+
+@property (nonatomic, weak) IBActionSheet *currentActionSheet;
+@property (nonatomic, strong) HPThread *currentActionSheet_thread;
 
 @end
 
@@ -112,6 +123,12 @@ typedef enum{
     self.tableView.rowHeight = 70.0f;
     [self.tableView setBackgroundColor:[HPTheme backgroundColor]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+      initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = 1.0; //seconds
+    lpgr.delegate = self;
+    [self.tableView addGestureRecognizer:lpgr];
     
     //
     [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
@@ -166,7 +183,6 @@ typedef enum{
     }
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -207,6 +223,8 @@ typedef enum{
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
                                                   object:[UIApplication sharedApplication]];
+    
+     [self.currentActionSheet dismissWithClickedButtonIndex:110 animated:YES];
 }
 
 
@@ -676,6 +694,92 @@ typedef enum{
     uvc.username = user.username;
     
     [self.navigationController pushViewController:uvc animated:YES];
+}
+
+#pragma mark -
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGPoint p = [gestureRecognizer locationInView:self.tableView];
+
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+    
+    if (indexPath == nil) {
+        NSLog(@"long press on table view but not on a row");
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"long press on table view at row %ld", indexPath.row);
+        if (indexPath.row >= 0 && indexPath.row < self.threads.count) {
+            [self showThreadActions:self.threads[indexPath.row]];
+        }
+    } else {
+        NSLog(@"gestureRecognizer.state = %ld", gestureRecognizer.state);
+    }
+}
+
+- (void)showThreadActions:(HPThread *)thread
+{
+    IBActionSheet *actionSheet = [[IBActionSheet alloc]
+                                  initWithTitle:nil
+                                  delegate:self cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:
+                                  @"跳转到最新回复",
+                                  @"不感兴趣",
+                                  nil];
+    self.currentActionSheet = actionSheet;
+    self.currentActionSheet_thread = thread;
+
+    actionSheet.tag = 1;
+    [actionSheet setButtonBackgroundColor:rgb(25.f, 25.f, 25.f)];
+    [actionSheet setButtonTextColor:rgb(216.f, 216.f, 216.f)];
+    [actionSheet setFont:[UIFont fontWithName:@"STHeitiSC-Light" size:20.f]];
+    [actionSheet showInView:self.navigationController.view];
+}
+
+
+- (void)actionSheet:(IBActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"actionSheet buttonIndex = %ld", buttonIndex);
+    HPThread *thread = self.currentActionSheet_thread;
+    self.currentActionSheet_thread = nil;
+    if (!thread) {
+        return;
+    }
+    
+    switch (actionSheet.tag) {
+        case 1:
+        {
+            switch (buttonIndex) {
+                case 0://跳转
+                {
+                   UIViewController *rvc = [[PostViewControllerClass() alloc] initWithThread:thread
+                                                                                        page:NSIntegerMax
+                                                                               forceFullPage:YES];
+                   [self.navigationController pushViewController:rvc animated:YES];
+                    break;
+                }
+                case 1://不感兴趣
+                {
+                    [[HPBlockThreadService shared] addThread:thread];
+                    for (int i = 0; i < self.threads.count; i++) {
+                        HPThread *t = self.threads[i];
+                        if (t.tid == thread.tid) {
+                            [self.threads removeObjectAtIndex:i];
+                            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default:
+                    NSLog(@"error buttonIndex index, %ld", buttonIndex);
+                    break;
+            }
+            break;
+        }
+        default:
+            NSLog(@"error actionSheet.tag %ld", actionSheet.tag);
+            break;
+    }
 }
 
 @end

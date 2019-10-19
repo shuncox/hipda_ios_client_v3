@@ -218,6 +218,7 @@
 		EA78407E1BE203D400139141 /* NSError+HPError.m in Sources */ = {isa = PBXBuildFile; fileRef = EA78407D1BE203D400139141 /* NSError+HPError.m */; };
 		EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */; };
 		EA7B5A441AFB7337005657DC /* SDImageCache+URLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */; };
+		EA7DEC032354C2D800482C2B /* HPBlockThreadService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7DEC022354C2D800482C2B /* HPBlockThreadService.m */; };
 		EA8186A318E1D9E30092BDD7 /* home_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869D18E1D9E30092BDD7 /* home_refresh.png */; };
 		EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */; };
 		EA8186A518E1D9E30092BDD7 /* menu2.png in Resources */ = {isa = PBXBuildFile; fileRef = EA81869F18E1D9E30092BDD7 /* menu2.png */; };
@@ -432,6 +433,8 @@
 		EAF568A21BF32C1D00041A40 /* libUMOnlineConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF568A01BF32C1D00041A40 /* libUMOnlineConfig.a */; };
 		EAF568A51BF335AA00041A40 /* NSString+HPOnlineParamaters.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */; };
 		EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */; };
+		EAFBB733235ABF6C0001F696 /* HPBlockThreadListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFBB732235ABF6C0001F696 /* HPBlockThreadListViewController.m */; };
+		EAFBB736235AC0C20001F696 /* HPBlockThread.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFBB735235AC0C20001F696 /* HPBlockThread.m */; };
 		EAFD40B018BDDEB90077C1B5 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */; };
 		EAFDB8461829EFA900C1718B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8451829EFA900C1718B /* Foundation.framework */; };
 		EAFDB8481829EFA900C1718B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAFDB8471829EFA900C1718B /* CoreGraphics.framework */; };
@@ -791,6 +794,8 @@
 		EA7840801BE20D4C00139141 /* HPDebugCrawlerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPDebugCrawlerViewController.m; path = Controller/HPDebugCrawlerViewController.m; sourceTree = "<group>"; };
 		EA7B5A421AFB7337005657DC /* SDImageCache+URLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SDImageCache+URLCache.h"; path = "Helper/SDImageCache+URLCache.h"; sourceTree = "<group>"; };
 		EA7B5A431AFB7337005657DC /* SDImageCache+URLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SDImageCache+URLCache.m"; path = "Helper/SDImageCache+URLCache.m"; sourceTree = "<group>"; };
+		EA7DEC012354C2D800482C2B /* HPBlockThreadService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPBlockThreadService.h; path = Service/HPBlockThreadService.h; sourceTree = "<group>"; };
+		EA7DEC022354C2D800482C2B /* HPBlockThreadService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBlockThreadService.m; path = Service/HPBlockThreadService.m; sourceTree = "<group>"; };
 		EA81869D18E1D9E30092BDD7 /* home_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_refresh.png; path = Image/Home/home_refresh.png; sourceTree = "<group>"; };
 		EA81869E18E1D9E30092BDD7 /* home_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home_refresh@2x.png"; path = "Image/Home/home_refresh@2x.png"; sourceTree = "<group>"; };
 		EA81869F18E1D9E30092BDD7 /* menu2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu2.png; path = Image/Home/menu2.png; sourceTree = "<group>"; };
@@ -1085,9 +1090,13 @@
 		EAF568A41BF335AA00041A40 /* NSString+HPOnlineParamaters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HPOnlineParamaters.m"; path = "Helper/NSString+HPOnlineParamaters.m"; sourceTree = "<group>"; };
 		EAFAAC76194D94A50089C3CA /* HPEditPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPEditPostViewController.h; path = Controller/HPEditPostViewController.h; sourceTree = "<group>"; };
 		EAFAAC77194D94A50089C3CA /* HPEditPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPEditPostViewController.m; path = Controller/HPEditPostViewController.m; sourceTree = "<group>"; };
+		EAFBB731235ABF6C0001F696 /* HPBlockThreadListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPBlockThreadListViewController.h; path = Controller/HPBlockThreadListViewController.h; sourceTree = "<group>"; };
+		EAFBB732235ABF6C0001F696 /* HPBlockThreadListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBlockThreadListViewController.m; path = Controller/HPBlockThreadListViewController.m; sourceTree = "<group>"; };
+		EAFBB734235AC0C20001F696 /* HPBlockThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HPBlockThread.h; path = Model/HPBlockThread.h; sourceTree = "<group>"; };
+		EAFBB735235AC0C20001F696 /* HPBlockThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBlockThread.m; path = Model/HPBlockThread.m; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
 		EAFD40AF18BDDEB90077C1B5 /* RegExCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegExCategories.h; path = Helper/RegExCategories.h; sourceTree = "<group>"; };
-		EAFDB8421829EFA900C1718B /* HiPDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAFDB8421829EFA900C1718B /* HiPDA2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPDA2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAFDB8451829EFA900C1718B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EAFDB8471829EFA900C1718B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		EAFDB8491829EFA900C1718B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1396,6 +1405,8 @@
 				EAAFD2381BE09D34001E24EC /* HPSwipeRootViewController.m */,
 				EA6249D31CA94844001946B1 /* HPSetImageSizeFilterViewController.h */,
 				EA6249D41CA94844001946B1 /* HPSetImageSizeFilterViewController.m */,
+				EAFBB731235ABF6C0001F696 /* HPBlockThreadListViewController.h */,
+				EAFBB732235ABF6C0001F696 /* HPBlockThreadListViewController.m */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -1566,6 +1577,8 @@
 				EA3C7054211F1170003DD443 /* HPPushData.m */,
 				EA403A2121849EC300C431E0 /* HPQCloudUploader.h */,
 				EA403A2221849EC300C431E0 /* HPQCloudUploader.m */,
+				EAFBB734235AC0C20001F696 /* HPBlockThread.h */,
+				EAFBB735235AC0C20001F696 /* HPBlockThread.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2046,6 +2059,8 @@
 				EA9195A021297FEE00D7D3C6 /* HPRouter.m */,
 				EA403A1E2184657F00C431E0 /* HPAttachmentService.h */,
 				EA403A1F2184657F00C431E0 /* HPAttachmentService.m */,
+				EA7DEC012354C2D800482C2B /* HPBlockThreadService.h */,
+				EA7DEC022354C2D800482C2B /* HPBlockThreadService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2214,7 +2229,7 @@
 		EAFDB8431829EFA900C1718B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EAFDB8421829EFA900C1718B /* HiPDA.app */,
+				EAFDB8421829EFA900C1718B /* HiPDA2.app */,
 				EAFDB85D1829EFA900C1718B /* HiPDATests.xctest */,
 			);
 			name = Products;
@@ -2323,7 +2338,7 @@
 			);
 			name = HiPDA;
 			productName = HiPDA;
-			productReference = EAFDB8421829EFA900C1718B /* HiPDA.app */;
+			productReference = EAFDB8421829EFA900C1718B /* HiPDA2.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EAFDB85C1829EFA900C1718B /* HiPDATests */ = {
@@ -2378,6 +2393,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				"zh-Hans",
 			);
@@ -2709,6 +2725,7 @@
 				EA2E7509214D06C50032B417 /* HPApiSubFeed.m in Sources */,
 				EA480F2C18BA19F300C1E522 /* HPDatabase.m in Sources */,
 				EA5F164E18D71FC000F6AAB3 /* HPThreadCell.m in Sources */,
+				EA7DEC032354C2D800482C2B /* HPBlockThreadService.m in Sources */,
 				EAB04C0A19EC1F82006F5C92 /* Flurry.m in Sources */,
 				EA743C32183F9EE70067F62B /* HPMyReplyViewController.m in Sources */,
 				EA43E70418328B1800968B94 /* GTMNSString+HTML.m in Sources */,
@@ -2816,6 +2833,7 @@
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
 				EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */,
+				EAFBB736235AC0C20001F696 /* HPBlockThread.m in Sources */,
 				EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
 				EA403A202184657F00C431E0 /* HPAttachmentService.m in Sources */,
@@ -2860,6 +2878,7 @@
 				EA4C5A0B18E5658700B12442 /* UIImage+Resize.m in Sources */,
 				EA4138C9188D5530001F9542 /* SWRevealViewController.m in Sources */,
 				EA083D6F18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
+				EAFBB733235ABF6C0001F696 /* HPBlockThreadListViewController.m in Sources */,
 				EAA1E68818D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m in Sources */,
 				EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */,
 				EA4CDC6E1ECAB67B00FAED6B /* HPMessageSearchUserViewController.m in Sources */,
@@ -3027,6 +3046,7 @@
 				CODE_SIGN_ENTITLEMENTS = HiPDA/HiPDA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 20191015.1;
 				DEVELOPMENT_TEAM = 74Z7WT84EE;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3066,9 +3086,10 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
 					"$(PROJECT_DIR)/HiPDA",
 				);
+				MARKETING_VERSION = 3.11.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA.2;
+				PRODUCT_NAME = HiPDA2;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -3086,6 +3107,7 @@
 				CODE_SIGN_ENTITLEMENTS = HiPDA/HiPDA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 20191015.1;
 				DEVELOPMENT_TEAM = 74Z7WT84EE;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3125,8 +3147,9 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
 					"$(PROJECT_DIR)/HiPDA",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 3.11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA.2;
+				PRODUCT_NAME = HiPDA2;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s";

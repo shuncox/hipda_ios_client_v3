@@ -38,6 +38,7 @@
 #import "HPLogger.h"
 #import "HPHttpClient.h"
 #import "HPLabService.h"
+#import "HPBlockThreadListViewController.h"
 
 // mail
 #import <MessageUI/MFMailComposeViewController.h>
@@ -251,6 +252,15 @@
         [Flurry logEvent:@"Setting EnterBlockList"];
     }];
     
+    
+    RETableViewItem *blockThreadListItem = [RETableViewItem itemWithTitle:@"不感兴趣的的帖子" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
+        @strongify(self);
+        [self.navigationController pushViewController:[[HPBlockThreadListViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+        [item deselectRowAnimated:YES];
+        
+        [Flurry logEvent:@"Setting EnterBlockThreadList"];
+    }];
+    
     // preferFav
     //
     BOOL isPreferNotice = [Setting boolForKey:HPSettingPreferNotice];
@@ -458,6 +468,7 @@
     [section addItem:postTailText];
     [section addItem:setForumItem];
     [section addItem:blockListItem];
+    [section addItem:blockThreadListItem];
     [section addItem:isPreferNoticeItem];
     [section addItem:afterSendConfirmItem];
     [section addItem:isPullReplyItem];
