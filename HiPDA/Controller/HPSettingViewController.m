@@ -806,7 +806,9 @@
         [d.viewController revealToggle:d];
         // 弹出登录, 登录好了会刷新帖子列表
         HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:[HPCommon NVCWithRootVC:loginvc] animated:YES completion:^{}];
+        UINavigationController *nvc = [HPCommon NVCWithRootVC:loginvc];
+        nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nvc animated:YES completion:nil];
     }];
 }
 

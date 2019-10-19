@@ -86,10 +86,9 @@
     // acquire account info
     if (![HPAccount isSetAccount]) {
         HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
-        
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:[HPCommon NVCWithRootVC:loginvc] animated:YES completion:^{
-            ;
-        }];
+        UINavigationController *nvc = [HPCommon NVCWithRootVC:loginvc];
+        nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nvc animated:YES completion:nil];
         block(NO, [NSError errorWithDomain:@".hi-pda.com" code:kHPNoAccountCode userInfo:nil]);
         return;
     }

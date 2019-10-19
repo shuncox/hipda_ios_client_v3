@@ -315,11 +315,10 @@
         [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *err) {
             NSLog(@"relogin %@", isLogin?@"success":@"fail");
             if ([err.localizedDescription hasPrefix:@"登录失败，您还可以尝试"]) {
-                HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
-                
-                [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:[HPCommon NVCWithRootVC:loginvc] animated:YES completion:^{
-                    ;
-                }];
+                  HPLoginViewController *loginvc = [[HPLoginViewController alloc] init];
+                  UINavigationController *nvc = [HPCommon NVCWithRootVC:loginvc];
+                  nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+                  [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nvc animated:YES completion:nil];
             }
         }];
         
