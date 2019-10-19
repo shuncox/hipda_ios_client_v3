@@ -376,6 +376,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         return;
     }
     
+    self.view.backgroundColor = [UIColor clearColor];
     _pagingScrollView.alpha = 0.f;
     
     CGRect screenBound = [[UIScreen mainScreen] bounds];
@@ -399,7 +400,8 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         [_applicationRootViewController.view setTransform:zoom];*/
         
         fadeView.backgroundColor = self.useWhiteBackgroundColor ? [UIColor whiteColor] : [UIColor blackColor];
-
+        self.view.backgroundColor = fadeView.backgroundColor;
+        
         float scaleFactor = (imageFromView ? imageFromView.size.width : screenWidth) / screenWidth;
         
         resizableImageView.frame = CGRectMake(0, (screenHeight/2)-((imageFromView.size.height / scaleFactor)/2), screenWidth, imageFromView.size.height / scaleFactor);
@@ -409,6 +411,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
         [fadeView removeFromSuperview];
         [resizableImageView removeFromSuperview];
+        [_toolbar setAlpha:1];
     }];
 }
 
@@ -535,8 +538,6 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     }*/
     
     // View
-	self.view.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor ? 1 : 0) alpha:1];
-    
     self.view.clipsToBounds = YES;
     
 	// Setup paging scrolling view
@@ -567,6 +568,10 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
                                                                 target:self
                                                                 action:@selector(doneButtonPressed:)];;
+    
+    // 过度动画
+    self.view.backgroundColor = [UIColor clearColor];
+    [_toolbar setAlpha:0];
     
     UIImage *leftButtonImage = (_leftArrowImage == nil) ?
     [UIImage imageNamed:@"IDMPhotoBrowser.bundle/images/IDMPhotoBrowser_arrowLeft.png"]          : _leftArrowImage;
