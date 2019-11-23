@@ -89,6 +89,13 @@
     if ([Setting boolForKey:HPSettingNightMode]) {
         [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    } else {
+        // TODO: 兼容 dark mode, 这里要改
+        if (@available(iOS 13.0, *)) {
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDarkContent];
+        } else {
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        }
     }
     
     //

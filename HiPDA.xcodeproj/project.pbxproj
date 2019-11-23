@@ -1096,7 +1096,7 @@
 		EAFBB735235AC0C20001F696 /* HPBlockThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HPBlockThread.m; path = Model/HPBlockThread.m; sourceTree = "<group>"; };
 		EAFD40AE18BDDEB90077C1B5 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegExCategories.m; path = Helper/RegExCategories.m; sourceTree = "<group>"; };
 		EAFD40AF18BDDEB90077C1B5 /* RegExCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegExCategories.h; path = Helper/RegExCategories.h; sourceTree = "<group>"; };
-		EAFDB8421829EFA900C1718B /* HiPDA2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPDA2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAFDB8421829EFA900C1718B /* HiPDA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPDA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAFDB8451829EFA900C1718B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EAFDB8471829EFA900C1718B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		EAFDB8491829EFA900C1718B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -2229,7 +2229,7 @@
 		EAFDB8431829EFA900C1718B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EAFDB8421829EFA900C1718B /* HiPDA2.app */,
+				EAFDB8421829EFA900C1718B /* HiPDA.app */,
 				EAFDB85D1829EFA900C1718B /* HiPDATests.xctest */,
 			);
 			name = Products;
@@ -2338,7 +2338,7 @@
 			);
 			name = HiPDA;
 			productName = HiPDA;
-			productReference = EAFDB8421829EFA900C1718B /* HiPDA2.app */;
+			productReference = EAFDB8421829EFA900C1718B /* HiPDA.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EAFDB85C1829EFA900C1718B /* HiPDATests */ = {
@@ -3046,7 +3046,7 @@
 				CODE_SIGN_ENTITLEMENTS = HiPDA/HiPDA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20191015.1;
+				CURRENT_PROJECT_VERSION = 20191117.1;
 				DEVELOPMENT_TEAM = 74Z7WT84EE;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3086,10 +3086,10 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
 					"$(PROJECT_DIR)/HiPDA",
 				);
-				MARKETING_VERSION = 3.11.1;
+				MARKETING_VERSION = 3.10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA.2;
-				PRODUCT_NAME = HiPDA2;
+				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA;
+				PRODUCT_NAME = HiPDA;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -3107,7 +3107,7 @@
 				CODE_SIGN_ENTITLEMENTS = HiPDA/HiPDA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 20191015.1;
+				CURRENT_PROJECT_VERSION = 20191117.1;
 				DEVELOPMENT_TEAM = 74Z7WT84EE;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3147,9 +3147,9 @@
 					"$(PROJECT_DIR)/HiPDA/Vender/UMeng",
 					"$(PROJECT_DIR)/HiPDA",
 				);
-				MARKETING_VERSION = 3.11.1;
-				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA.2;
-				PRODUCT_NAME = HiPDA2;
+				MARKETING_VERSION = 3.10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = wujichao.HiPDA;
+				PRODUCT_NAME = HiPDA;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7 armv7s";
