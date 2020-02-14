@@ -86,7 +86,7 @@
     if (i >= 0) [self.history removeObjectAtIndex:i];
     
     //
-    if (self.history.count > 50) {
+    if (self.history.count > 500) {
         [self.history removeLastObject];
     }
     
