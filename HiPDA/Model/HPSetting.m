@@ -8,7 +8,7 @@
 
 #import "HPSetting.h"
 #import "HPForum.h"
-
+#import <BlocksKit/NSArray+BlocksKit.h>
 #import "NSString+Additions.h"
 #import "NSUserDefaults+Convenience.h"
 #import "HPOnceRunService.h"
@@ -86,6 +86,23 @@
         [self saveBool:NO forKey:HPSettingForceDNS];
     } skipBlock:nil];
     
+    [HPOnceRunService onceName:@"deleteEink" runBlcok:^{
+        NSArray *fids = [Setting objectForKey:HPSettingFavForums];
+        NSArray *fids_title = [Setting objectForKey:HPSettingFavForumsTitle];
+
+        NSSet *black_fid_set = [NSSet setWithArray:@[@59, @57]];
+        NSSet *black_title_set = [NSSet setWithArray:@[@"E-INK", @"疑似机器人"]];
+        
+        fids = [fids bk_select:^BOOL(id obj) {
+            return ![black_fid_set containsObject:obj];
+        }];
+        fids_title = [fids_title bk_select:^BOOL(id obj) {
+            return ![black_title_set containsObject:obj];
+        }];
+      
+        [Setting saveObject:fids forKey:HPSettingFavForums];
+        [Setting saveObject:fids_title forKey:HPSettingFavForumsTitle];
+    } skipBlock:nil];
     if (DEBUG_SETTING) NSLog(@"load  _globalSettings %@", _globalSettings);
 }
 
@@ -104,8 +121,8 @@
     NSDictionary *defaults = @{HPSettingTail:@"iOS fly ~",
                                HPSettingBaseURL:HP_WWW_BASE_HOST,
                                HPSettingForceDNS:@NO,
-                               HPSettingFavForums:@[@2, @6, @59],
-                               HPSettingFavForumsTitle:@[@"Discovery", @"Buy & Sell", @"E-INK"],
+                               HPSettingFavForums:@[@2, @6],
+                               HPSettingFavForumsTitle:@[@"Discovery", @"Buy & Sell"],
                                HPSettingShowAvatar:@YES,
                                HPSettingNightMode:@NO,
                                HPSettingFontSize:@16.f,
