@@ -16,7 +16,6 @@
 #import "HPLoginViewController.h"//¬_¬
 #import "UIAlertView+Blocks.h"
 #import "HPThread.h"
-#import "NSString+HPOnlineParamaters.h"
 
 @interface HPHttpClient()<UIAlertViewDelegate>
 @property (nonatomic, assign)NSInteger dnsErrorCount;
@@ -85,12 +84,6 @@
         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    // append common parameters
-    NSString *s = [UMOnlineConfig getConfigParams:@"extra_parameters"] ?: @"";
-    NSMutableDictionary *d = [parameters?:@{} mutableCopy];
-    [d addEntriesFromDictionary:[s onlineParamaters]];
-    parameters = [d copy];
-    
     NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     path = [path stringByAddingPercentEscapesUsingEncoding:gbkEncoding];
     

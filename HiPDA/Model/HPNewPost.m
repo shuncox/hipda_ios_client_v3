@@ -16,7 +16,6 @@
 #import "NSString+HTML.h"
 #import "NSRegularExpression+HP.h"
 #import "NSString+HPImageSize.h"
-#import "UMOnlineConfig+BOOL.h"
 
 #import "HPHttpClient.h"
 #import <AFHTTPRequestOperation.h>

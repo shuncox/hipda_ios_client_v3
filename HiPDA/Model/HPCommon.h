@@ -136,7 +136,7 @@
 #define HP_WWW_BASE_HOST @"www.hi-pda.com"
 #define HP_CNC_BASE_HOST @"cnc.hi-pda.com"
 #define HP_DEV_BASE_HOST @"dev.hi-pda.com"
-#define HP_IMG_BASE_HOST ([UMOnlineConfig getConfigParams:@"image_domain"] ?: @"img02.hi-pda.com")
+#define HP_IMG_BASE_HOST @"img02.hi-pda.com"
 #define HP_IMG_BASE_URL ([NSString stringWithFormat:HP_URL_FORMAT, HP_IMG_BASE_HOST])
 #define HP_CDN_BASE_HOST @"7xq2vp.com1.z0.glb.clouddn.com"
 #define HP_CDN_URL_SUFFIX (@"-w600")

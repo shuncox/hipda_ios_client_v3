@@ -11,45 +11,10 @@
 #import <SDWebImageManager.h>
 #import <UIImage+MultiFormat.h>
 #import "SDImageCache+URLCache.h"
-#import "UMOnlineConfig.h"
-
-NSString *HP_WWW_BASE_IP;
-NSString *HP_CNC_BASE_IP;
 
 //#define NSLog(...) do { } while (0)
 
 static NSString *const HPHTTPURLProtocolHandledKey = @"HPHTTPURLProtocolHandledKey";
-
-@interface HPURLMappingProvider : NSObject <HPURLMapping>
-
-@end
-
-@implementation HPURLMappingProvider
-
-+ (void)load
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        HP_WWW_BASE_IP = [UMOnlineConfig getConfigParams:@"www_ip"] ?: @"58.215.45.20";
-        HP_CNC_BASE_IP = [UMOnlineConfig getConfigParams:@"cnc_ip"] ?: @"117.121.135.129";
-    });
-}
-
-- (NSString *)apiToolsHostForOriginalURLHost:(NSString *)originalURLHost {
-    static NSDictionary *URLMappingDitionary = nil;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        URLMappingDitionary = @{
-                                HP_WWW_BASE_HOST : HP_WWW_BASE_IP,
-                                HP_CNC_BASE_HOST : HP_CNC_BASE_IP
-                                };
-    });
-    
-    return URLMappingDitionary[originalURLHost];
-}
-@end
-
 
 @interface NSString (hasSuffixes)
 - (BOOL)hasSuffixes:(NSArray *)suffixes;
@@ -80,10 +45,6 @@ static id<HPURLMapping> s_URLMapping;
 @implementation HPURLProtocol
 
 #pragma mark - 替换url相关
-+ (BOOL)enableForceDNS
-{
-    return [Setting boolForKey:HPSettingForceDNS];
-}
 
 + (void)registerURLProtocolIfNeed {
     [NSURLProtocol unregisterClass:self];
@@ -91,14 +52,6 @@ static id<HPURLMapping> s_URLMapping;
 }
 
 + (void)registerURLProtocol {
-    return [self.class registerURLProtocolWithURLMapping:[HPURLMappingProvider new]];
-}
-
-+ (void)registerURLProtocolWithURLMapping:(id<HPURLMapping>)URLMapping {
-    //NSAssert(!s_URLMapping, @"You can only invoke -%@ once.", NSStringFromSelector(_cmd));
-    
-    s_URLMapping = URLMapping;
-    
     [NSURLProtocol registerClass:self];
 }
 
@@ -116,19 +69,6 @@ static id<HPURLMapping> s_URLMapping;
 - (NSURLRequest *)modifiedRequestWithOriginalRequest:(NSURLRequest *)request {
     NSURL *requestURL = request.URL;
     NSMutableURLRequest *modifiedRequest = request.mutableCopy;
-    
-    // 替换url
-    if ([self.class enableForceDNS]) {
-        NSString *newHost = [s_URLMapping apiToolsHostForOriginalURLHost:requestURL.host];
-        if (newHost) {
-            modifiedRequest.URL = [NSURL URLWithString:[requestURL.absoluteString stringByReplacingOccurrencesOfString:requestURL.host withString:newHost]];
-            if (![request.allHTTPHeaderFields objectForKey:@"host"]) {
-                NSMutableDictionary *d = [request.allHTTPHeaderFields mutableCopy];
-                [d setObject:requestURL.host forKey:@"host"];
-                modifiedRequest.allHTTPHeaderFields = d;
-            }
-        }
-    }
     
     // 防止递归
     [NSURLProtocol setProperty:@YES forKey:HPHTTPURLProtocolHandledKey inRequest:modifiedRequest];
@@ -158,12 +98,7 @@ static id<HPURLMapping> s_URLMapping;
         return YES;
     }
     
-    if ([self.class enableForceDNS] && [s_URLMapping apiToolsHostForOriginalURLHost:request.URL.host] != nil) {
-        NSLog(@"dns -> YES");
-        return YES;
-    }
-    
-    NSLog(@"NO");
+    NSLog(@"canInit NO");
     return NO;
 }
 

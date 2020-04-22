@@ -338,13 +338,6 @@
         [Flurry logEvent:@"Setting Print" withParameters:@{@"flag":@(item.value)}];
     }];
     
-    // WKWebview
-    //
-    BOOL enableWKWebview = [Setting boolForKey:HPSettingEnableWKWebview];
-    REBoolItem *enableWKWebviewItem = [REBoolItem itemWithTitle:@"Enable WKWebview" value:enableWKWebview switchValueChangeHandler:^(REBoolItem *item) {
-        [Setting saveBool:item.value forKey:HPSettingEnableWKWebview];
-    }];
-    
     //
     //
     RETableViewItem *setStupidBarItem = [RETableViewItem itemWithTitle:@"StupidBar" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
@@ -354,108 +347,6 @@
         [item deselectRowAnimated:YES];
         
         [Flurry logEvent:@"Setting EnterStupidBar"];
-    }];
-//    
-//    NSString *(^nodeName)(NSString *host, NSString *ip, NSString *tip, BOOL forceDNS, BOOL https) =
-//    ^NSString *(NSString *host, NSString *ip, NSString *tip, BOOL forceDNS, BOOL https) {
-//        return [
-//            NSString stringWithFormat:@"%@://%@ (%@)",
-//                https ? @"http" : @"https",
-//                forceDNS ? ip : host,
-//                tip
-//        ];
-//    };
-    
-    RERadioItem *nodeItem = [RERadioItem itemWithTitle:@"节点" value:HP_BASE_HOST selectionHandler:^(RERadioItem *item) {
-        
-        [item deselectRowAnimated:YES];
-        
-        NSArray *nodeNames = @[
-            [NSString stringWithFormat:@"%@ (电信)", HP_WWW_BASE_HOST],
-            [NSString stringWithFormat:@"%@ (联通)", HP_CNC_BASE_HOST],
-            [NSString stringWithFormat:@"%@ (电信, 强制指向)", HP_WWW_BASE_IP],
-            [NSString stringWithFormat:@"%@ (联通, 强制指向)", HP_CNC_BASE_IP],
-#ifdef DEBUG
-            @"Dev",
-#endif
-        ];
-        
-        NSArray *actions = @[
-            ^{
-                [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
-                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_WWW_BASE_HOST];
-                [Setting saveBool:NO forKey:HPSettingForceDNS];
-                [Setting saveBool:YES forKey:HPSettingEnableHTTPS];
-            },
-            ^{
-                [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
-                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_CNC_BASE_HOST];
-                [Setting saveBool:NO forKey:HPSettingForceDNS];
-                [Setting saveBool:YES forKey:HPSettingEnableHTTPS];
-            },
-            ^{
-                [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
-                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_WWW_BASE_HOST];
-                [Setting saveBool:YES forKey:HPSettingForceDNS];
-                [Setting saveBool:NO forKey:HPSettingEnableHTTPS];
-            },
-            ^{
-                [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
-                [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_CNC_BASE_HOST];
-                [Setting saveBool:YES forKey:HPSettingForceDNS];
-                [Setting saveBool:NO forKey:HPSettingEnableHTTPS];
-            },
-#ifdef DEBUG
-            ^{
-                [Setting saveObject:HP_DEV_BASE_HOST forKey:HPSettingBaseURL];
-                [Setting saveBool:NO forKey:HPSettingForceDNS];
-            },
-#endif
-        ];
-        
-        // Present options controller
-        //
-        RETableViewOptionsController *optionsController = [[RETableViewOptionsController alloc] initWithItem:item options:nodeNames multipleChoice:NO completionHandler:^(RETableViewItem *vi) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            
-            [item reloadRowWithAnimation:UITableViewRowAnimationNone];
-            
-            NSUInteger index = [nodeNames indexOfObject:item.value];
-            void (^action)() = actions[index];
-            action();
-            
-            [Flurry logEvent:@"Setting Node" withParameters:@{@"option":item.value}];
-        }];
-        
-        optionsController.delegate = weakSelf;
-        optionsController.style = section.style;
-        if (weakSelf.tableView.backgroundView == nil) {
-            optionsController.tableView.backgroundColor = weakSelf.tableView.backgroundColor;
-            optionsController.tableView.backgroundView = nil;
-        }
-        
-        [weakSelf.navigationController pushViewController:optionsController animated:YES];
-    }];
-    
-    
-    // https
-    //
-    BOOL enableHttps = [Setting boolForKey:HPSettingEnableHTTPS];
-    REBoolItem *enableHttpsItem = [REBoolItem itemWithTitle:@"HTTPS(建议打开)" value:enableHttps switchValueChangeHandler:^(REBoolItem *item) {
-        
-        NSLog(@"enableHttps Value: %@", item.value ? @"YES" : @"NO");
-        if (item.value) {
-            [Setting saveObject:HP_WWW_BASE_HOST forKey:HPSettingBaseURL];
-            [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_WWW_BASE_HOST];
-            [Setting saveBool:NO forKey:HPSettingForceDNS];
-            [Setting saveBool:YES forKey:HPSettingEnableHTTPS];
-        } else {
-            [Setting saveObject:HP_CNC_BASE_HOST forKey:HPSettingBaseURL];
-            [[HPHttpClient sharedClient] setDefaultHeader:@"Host" value:HP_CNC_BASE_HOST];
-            [Setting saveBool:YES forKey:HPSettingForceDNS];
-            [Setting saveBool:NO forKey:HPSettingEnableHTTPS];
-        }
-        [Flurry logEvent:@"Setting Https" withParameters:@{@"flag":@(item.value)}];
     }];
     
     if ([HPAccount isMasterAccount]) {
@@ -473,17 +364,6 @@
     [section addItem:isPullReplyItem];
     [section addItem:setStupidBarItem];
     [section addItem:isPrintItem];
-#if DEBUG_MODE // 由于上了https, 所以不再允许设置httpdns
-    [section addItem:nodeItem];
-#endif
-    
-#if DEBUG_MODE
-    [section addItem:enableHttpsItem];
-#endif
-    
-    if ([UMOnlineConfig getBoolConfigWithKey:HPOnlineWKWebviewEnable defaultYES:NO]) {
-        [section addItem:enableWKWebviewItem];
-    }
     
     [_manager addSection:section];
     return section;

@@ -27,7 +27,7 @@ static NSString * const CrashReportEnableSettingKey = @"CrashReportEnableSetting
 
 + (void)setUp
 {
-    [MobClick setCrashReportEnabled:NO];
+//    [MobClick setCrashReportEnabled:NO];
     
     BOOL bugTrackingEnable = [self.class isCrashReportEnable];
     if (bugTrackingEnable) {

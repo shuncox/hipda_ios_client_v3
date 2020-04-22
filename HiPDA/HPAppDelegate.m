@@ -204,27 +204,10 @@
 
 - (void)setupAnalytics
 {
-    // 友盟
     BOOL dataTrackingEnable = [Setting boolForKey:HPSettingDataTrackEnable];
     if (dataTrackingEnable) {
-        [MobClick setLogEnabled:NO];
-        [MobClick setBackgroundTaskEnabled:NO];
-        [MobClick setLatency:30];
-#if DEBUG
-        [MobClick startWithAppkey:UM_APP_KEY_DEV reportPolicy:BATCH channelId:@"debug"];
-        //[MobClick setLogEnabled:YES];
-#else
-        [MobClick startWithAppkey:UM_APP_KEY reportPolicy:BATCH channelId:nil];
-#endif
+       
     }
-    
-    // 友盟在线参数, 配置后十分钟生效
-#if DEBUG
-    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY_DEV];
-//    [UMOnlineConfig setLogEnabled:YES];
-#else
-    [UMOnlineConfig updateOnlineConfigWithAppkey:UM_APP_KEY];
-#endif
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
