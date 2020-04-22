@@ -16,7 +16,7 @@
 #import "HPSFSafariViewController.h"
 #import "HPViewHTMLController.h"
 #import "HPViewSignatureViewController.h"
-
+#import "HPAttachmentService.h"
 #import "HPNewPost.h"
 #import "HPDatabase.h"
 #import "HPUser.h"
@@ -62,6 +62,8 @@
 #import "HPJSMessage.h"
 #import "FLWeakProxy.h"
 #import "SDImageCache+URLCache.h"
+#import "HPPDFPrintPageRenderer.h"
+#import "HPPDFPreviewViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -180,6 +182,8 @@ HPStupidBarDelegate
 
 @property (nonatomic, weak) IBActionSheet *currentActionSheet;
 
+@property (nonatomic, strong) HPAttachmentService *temp_attachmentService;
+
 @end
 
 @implementation HPPostViewController {
@@ -292,7 +296,7 @@ HPStupidBarDelegate
     
     // add stupid bar
     if (![Setting boolForKey:HPSettingStupidBarDisable]) {
-        HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-20.f, self.view.frame.size.width, 20.f)];
+        HPStupidBar *stupidBar = [[HPStupidBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-20.f-[UIDevice hp_safeAreaInsets].bottom, self.view.frame.size.width, 20.f)];
         stupidBar.tag = 2020202;
         stupidBar.delegate = self;
         [self.view addSubview:stupidBar];
@@ -536,7 +540,9 @@ HPStupidBarDelegate
         @"**[screen_width]**": @(HP_SCREEN_WIDTH).stringValue,
         @"**[screen_height]**": @(HP_SCREEN_HEIGHT).stringValue,
         @"**[min-height]**" : @((int)(HP_SCREEN_WIDTH * 0.618)).stringValue,
-        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ? @"dark": @"light",
+        @"**[style]**": [Setting boolForKey:HPSettingNightMode] ?
+                                ([UIDevice hp_isiPhoneX] ? @"dark oled" : @"dark") :
+                                @"light",
         @"**[fontsize]**": (IS_IPAD && IOS10_OR_LATER) ?
                                 [NSString stringWithFormat:@"%dpx", (int)(self.currentFontSize/100.f*16)] :
                                 @"16px !Important",
@@ -861,6 +867,9 @@ HPStupidBarDelegate
             HPPostViewController *readVC = [[HPPostViewController alloc] initWithThread:t];
             NSLog(@"[self.navigationController pushViewController:readVC animated:YES];");
             [self.navigationController pushViewController:readVC animated:YES];
+        } else if ([urlString indexOf:@"attachment.php?"] != -1) {
+            self.temp_attachmentService = [[HPAttachmentService alloc] initWithUrl:urlString parentVC:self];
+            [self.temp_attachmentService start];
         } else {
             [self openUrl:url];
         }
@@ -1252,7 +1261,7 @@ HPStupidBarDelegate
         
         browser.delegate = self;
         
-        [self presentViewController:browser animated:YES completion:nil];
+        [self presentViewController:browser animated:NO completion:nil];
     };
     
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:src]];
@@ -1486,12 +1495,14 @@ HPStupidBarDelegate
     
     if (!floor) floor = _gotoFloor;
    
-   
-    
-    NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",floor];
-    [self.webView evaluateJavaScript:js completionHandler:nil];
+    [self callWebviewJumpToFloor:floor];
     
     _gotoFloor = 0;
+}
+
+- (void)callWebviewJumpToFloor:(NSInteger)floor {
+    NSString *js = [NSString stringWithFormat:@"jumpToFloor(%ld, %@);", floor, @(IOS11_OR_LATER)];
+    [self.webView stringByEvaluatingJavaScriptFromString:js];
 }
 
 - (void)gotoFloorWithUrl:(NSString *)url {
@@ -1518,7 +1529,7 @@ HPStupidBarDelegate
         [SVProgressHUD showSuccessWithStatus:S(@"跳转到%ld楼", floor)];
         [self jumpToFloor:floor];
     } else {
-        HPPostViewController *rvc = [[HPPostViewController alloc]   initWithThread:_thread
+        UIViewController *rvc = [[PostViewControllerClass() alloc]   initWithThread:_thread
             find_pid:pid];
         
         [self.navigationController pushViewController:rvc animated:YES];
@@ -1677,7 +1688,7 @@ HPStupidBarDelegate
     
     if (!_pageView) {
         
-        _pageView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.bounds.size.width, 82.0f)];
+        _pageView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, self.view.bounds.size.width, 82.0f + [UIDevice hp_safeAreaInsets].bottom)];
         
         if (![Setting boolForKey:HPSettingNightMode]) {
             _pageView.backgroundColor = [UIColor whiteColor];
@@ -1784,7 +1795,7 @@ HPStupidBarDelegate
     
     if (!_adjustView) {
         
-        CGFloat height = 150.f;
+        CGFloat height = 150.f + [UIDevice hp_safeAreaInsets].bottom;
         
         _adjustView = [[UIView alloc] initWithFrame:CGRectMake(0.f, self.view.bounds.size.height - height, self.view.bounds.size.width, height)];
     
@@ -2149,9 +2160,8 @@ HPStupidBarDelegate
 }
 
 - (CGFloat)contentSize {
-	
     // return height of table view
-    return [self.webView.scrollView contentSize].height;
+    return [self.webView.scrollView contentSize].height + [UIDevice hp_safeAreaInsets].bottom;
 }
 
 - (float)endOfTableView:(UIScrollView *)scrollView {
@@ -2346,9 +2356,8 @@ HPStupidBarDelegate
     if (_current_floor < start) {
         _current_floor = start;
     }
-        
-    NSString *js = [NSString stringWithFormat:@"location.href='#floor_%ld'",_current_floor];
-    [self.webView evaluateJavaScript:js completionHandler:nil];
+    
+    [self callWebviewJumpToFloor:_current_floor];
 }
 
 #pragma mark -
@@ -2358,6 +2367,23 @@ HPStupidBarDelegate
 }
 
 #pragma mark -
+- (void)exportPDF
+{
+    [SVProgressHUD show];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"clearBackgroudColor();"];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewPrintFormatter *fmt = [self.webView viewPrintFormatter];
+        HPPDFPrintPageRenderer *render = [[HPPDFPrintPageRenderer alloc] init];
+        [render addPrintFormatter:fmt startingAtPageAtIndex:0];
+        NSData *pdfData = [render printToPDF];
+        
+        [SVProgressHUD dismiss];
+        [HPPDFPreviewViewController presentInViewController:self pdfData:pdfData];
+        
+        [self.webView stringByEvaluatingJavaScriptFromString:@"restoreBackgroudColor();"];
+    });
+}
 
 - (void)share:(id)sender {
     NSMutableArray *activityItems = [@[] mutableCopy];
@@ -2380,6 +2406,12 @@ HPStupidBarDelegate
                                               [weakSelf copyContent];
                                           }];
     
+    UIActivity *exportPDF = [HPActivity activityWithType:@"HPExportPDF"
+                                                   title:@"导出PDF"
+                                                   image:[UIImage imageNamed:@"activity_export_pdf"]
+                                             actionBlock:^{
+                                                 [weakSelf exportPDF];
+                                             }];
     UIActivity *viewHTML = [HPActivity activityWithType:@"HPViewHTML"
                                                   title:@"查看源代码"
                                                   image:[UIImage imageNamed:@"activity_copy_content"]
@@ -2389,7 +2421,7 @@ HPStupidBarDelegate
                                                 [weakSelf.navigationController pushViewController:vc animated:YES];
                                             }];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, viewHTML]];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[copyLink, copyContent, exportPDF, viewHTML]];
     
     activityViewController.excludedActivityTypes = @[UIActivityTypeCopyToPasteboard];
     
