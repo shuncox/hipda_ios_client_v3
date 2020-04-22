@@ -10,7 +10,7 @@
 #import "HPThread.h"
 #import "HPUser.h"
 #import "HPNotice.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 #import "HPIndecator.h"
 #import "HPSetting.h"
 #import "HPCache.h"

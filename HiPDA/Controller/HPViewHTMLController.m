@@ -8,6 +8,7 @@
 
 #import "HPViewHTMLController.h"
 #import "NSString+HTML.h"
+#import <WebKit/WebKit.h> 
 
 @implementation HPViewHTMLController
 
@@ -15,7 +16,7 @@
 {
     [super viewDidLoad];
     
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:webView];
     
     NSString *html = [NSString stringWithFormat:@"<!DOCTYPE html> <html> <head><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,maximum-scale=1\" /> <link rel=\"stylesheet\" href=\"http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css\"> <script src=\"http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js\"></script> <script>hljs.initHighlightingOnLoad();</script> </head> <body> <pre><code class=\"html\"> %@ </code></pre> </body> </html>", [self.html stringByEncodingHTMLEntities:YES]];

@@ -17,7 +17,6 @@
 #import <SVProgressHUD.h>
 #import "SWRevealViewController.h"
 #import "UIAlertView+Blocks.h"
-#import "DZWebBrowser.h"
 
 @interface HPRegisterViewController ()
 

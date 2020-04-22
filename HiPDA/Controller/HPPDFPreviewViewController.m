@@ -7,11 +7,12 @@
 //
 
 #import "HPPDFPreviewViewController.h"
+#import <WebKit/WebKit.h>
 
 @interface HPPDFPreviewViewController ()
 
 @property (nonatomic, strong) NSData *pdfData;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 @end
 
@@ -31,8 +32,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.webView = [UIWebView new];
-    self.webView.scalesPageToFit = YES;
+    self.webView = [WKWebView new];
     [self.view addSubview:self.webView];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -40,11 +40,12 @@
         make.edges.equalTo(self.view);
     }];
     
+    
     [self.webView loadData:self.pdfData
                   MIMEType:@"application/pdf"
-          textEncodingName:@"UTF-8"
+     characterEncodingName:@"UTF-8"
                    baseURL:nil];
-   
+    
     self.title = @"导出PDF";
     
     UIBarButtonItem *closeButtonItem = [

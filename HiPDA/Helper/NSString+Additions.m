@@ -428,10 +428,6 @@ NSString *substr(NSString *str, int start, int length)
 
 - (NSString *)js_encodeURI
 {
-//    UIWebView *v = [UIWebView new];
-//    NSString *s  =[NSString stringWithFormat:@"encodeURI('%@');", self];
-//    return [v stringByEvaluatingJavaScriptFromString:s];
-    
     JSContext *context = [[JSContext alloc] init];
     JSValue *value = [context evaluateScript:[NSString stringWithFormat:@"encodeURI('%@');", self]];
     return [value toString];

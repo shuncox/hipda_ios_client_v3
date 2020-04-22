@@ -13,10 +13,11 @@
 #import "HPHttpClient.h"
 #import "HPThread.h"
 #import "NSString+Additions.h"
+#import <WebKit/WebKit.h> 
 
 @interface HPDebugCrawlerViewController ()<MFMailComposeViewControllerDelegate>
 
-@property (nonatomic, strong) UIWebView *webview;
+@property (nonatomic, strong) WKWebView *webview;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, assign) BOOL isViewSourceCode;
 @property (nonatomic, strong) UIView *actionsView;
@@ -72,7 +73,7 @@
         make.centerX.equalTo(button.superview);
     }];
     
-    self.webview = [[UIWebView alloc] init];
+    self.webview = [[WKWebView alloc] init];
     [self.view addSubview:self.webview];
     [self.webview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_topLayoutGuideBottom);

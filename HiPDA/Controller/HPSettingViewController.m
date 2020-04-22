@@ -5,9 +5,9 @@
 //  Created by wujichao on 13-11-20.
 //  Copyright (c) 2013年 wujichao. All rights reserved.
 //
-
+#import "HPThread.h"
+#import "HPPostViewController.h"
 #import "HPSettingViewController.h"
-#import "HPReadViewController.h"
 #import "HPSetForumsViewController.h"
 #import "HPRearViewController.h"
 #import "HPBgFetchViewController.h"
@@ -31,7 +31,6 @@
 #import <SVProgressHUD.h>
 #import "SWRevealViewController.h"
 #import "UIAlertView+Blocks.h"
-#import "DZWebBrowser.h"
 #import <SDWebImage/SDImageCache.h>
 #import "HPCrashReport.h"
 #import "HPURLProtocol.h"
@@ -53,7 +52,7 @@
     #define DEBUG_MODE 0
 #endif
 
-@interface HPSettingViewController () <UIWebViewDelegate>
+@interface HPSettingViewController ()
 
 @property (strong, nonatomic) RETableViewManager *manager;
 @property (strong, nonatomic) RETableViewSection *preferenceSection;
@@ -677,8 +676,7 @@
     RETableViewItem *aboutItem = [RETableViewItem itemWithTitle:@"致谢" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
         [item deselectRowAnimated:YES];
         @strongify(self);
-        UIWebView *webView=[[UIWebView alloc]initWithFrame:self.view.frame];
-        webView.delegate = self;
+        WKWebView *webView=[[WKWebView alloc]initWithFrame:self.view.frame];
         NSURL *url = [[NSBundle mainBundle] URLForResource:@"acknowledgement" withExtension:@"html"];
         
         [webView loadRequest:[NSURLRequest requestWithURL:url]];
@@ -692,7 +690,6 @@
         [Flurry logEvent:@"Setting EnterAcknowledgement"];
     }];
 
-    
     // Bug & 建议
     //
     RETableViewItem *reportItem = [RETableViewItem itemWithTitle:@"反馈问题" accessoryType:UITableViewCellAccessoryDisclosureIndicator selectionHandler:^(RETableViewItem *item) {
@@ -844,20 +841,6 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     [Flurry logEvent:@"Setting ContactAuthor" withParameters:@{@"result":@(result)}];
-}
-
-#pragma mark webView delegate
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    if (navigationType == UIWebViewNavigationTypeLinkClicked &&
-        [request.URL.scheme hasPrefix:@"http"]) {
-        
-        [[UIApplication sharedApplication] openURL:request.URL];
-        return NO;
-    }
-    NSLog(@"%@, %ld", request, navigationType);
-    
-    return YES;
 }
 
 @end

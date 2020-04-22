@@ -21,7 +21,6 @@
 #import <SVProgressHUD.h>
 #import "SWRevealViewController.h"
 #import "UIAlertView+Blocks.h"
-#import "DZWebBrowser.h"
 #import "HPAppDelegate.h"
 #import <1PasswordExtension/OnePasswordExtension.h>
 #import "HPBackgroundFetchService.h"
@@ -239,77 +238,6 @@
 
     NSURL *url = [NSURL URLWithString:S(@"%@/forum/tobenew.php", HP_BASE_URL)];
     [[UIApplication sharedApplication] openURL:url];
-    
-    /*
-     NSURL *url = [NSURL URLWithString:@"http://www.hi-pda.com/forum/register.php"];
-     DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
-     webBrowser.showProgress = YES;
-     webBrowser.allowSharing = YES;
-     //    webBrowser.resourceBundleName = @"custom-controls";
-     
-     UINavigationController *webBrowserNC = [[UINavigationController alloc] initWithRootViewController:webBrowser];
-     
-     [self presentViewController:webBrowserNC animated:YES completion:NULL];
-     */
-    
-    /*
-    HPRegisterViewController *rvc = [[HPRegisterViewController alloc]init];
-    [self.navigationController pushViewController:rvc animated:YES];
-     */
 }
-
-/*
-- (void)guest:(id)sender {
-   
-    NSString *username = @"hpclient";
-    NSString *password = @"xxxxxxx";
-    NSString *answer = @"";
-    NSString *questionid = @"";
-    
-    
-    NSDictionary *profileDict = @{kHPAccountUserName:username,
-                                  kHPAccountPassword:password,
-                                  kHPAccountQuestionid:questionid,
-                                  kHPAccountAnswer:answer};
-    
-    [NSStandardUserDefaults addObjectsAndKeysFromDictionary:profileDict];
-    
-    if ([NSStandardUserDefaults hasValueForKey:kHPAccountUserName]) {
-        [SVProgressHUD showWithStatus:@"加载中..."];
-        [[HPAccount sharedHPAccount] loginWithBlock:^(BOOL isLogin, NSError *error)
-         {
-             if (isLogin) {
-                 
-                 [SVProgressHUD showSuccessWithStatus:@"请稍后..."];
-                 
-                 if (_tvc) {
-                     //_tvc.isGuest = YES;
-                     _tvc.current_fid = 50;
-                     [_tvc reload:@"Loading..." forceRefresh:YES];
-                     
-                 } else {
-                     
-                     SWRevealViewController *revealController = self.revealViewController;
-                     HPThreadViewController *frontViewController = [[HPThreadViewController alloc] init];
-                     //frontViewController.isGuest = YES;
-                     frontViewController.current_fid = 50;
-                     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
-                     [revealController setFrontViewController:navigationController animated:YES];
-                 }
-                 
-                 [self.navigationController popViewControllerAnimated:YES];
-                 
-             } else {
-                 
-                 [SVProgressHUD dismiss];
-                 NSLog(@"%@", [error localizedDescription]);
-                 [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-                 
-                 [[HPAccount sharedHPAccount] logout];
-             }
-         }];
-    }
-}
-*/
 
 @end

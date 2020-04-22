@@ -37,7 +37,7 @@ pod 'Reveal-SDK', :configurations => ['Debug']
 pod 'CocoaLumberjack'
 pod 'SSZipArchive'
 pod 'KVOController'
-pod '1PasswordExtension', '~> 1.8.4'
+pod '1PasswordExtension', '~> 1.8.6'
 pod 'PromisesObjC', '1.2.3'
 pod 'QCloudCOSXML'
 
@@ -57,6 +57,10 @@ end
 # https://fabric.io/solo2/ios/apps/wujichao.hipda/issues/57e1d31d0aeb16625b87148a/sessions/20df982d4d524f58a810ddc9a3b15958
 pre_install do
     system("sed -i '' '/UITextField/d' Pods/BlocksKit/BlocksKit/BlocksKit+UIKit.h")
+    system("sed -i '' '/UIWebView/d' Pods/BlocksKit/BlocksKit/BlocksKit+UIKit.h")
+    system("sed -i '' '/UIWebView/d' Pods/QMUIKit/QMUIKit/UIKitExtensions/UIView+QMUI.m")
     system('rm Pods/BlocksKit/BlocksKit/UIKit/UITextField+BlocksKit.h')
     system('rm Pods/BlocksKit/BlocksKit/UIKit/UITextField+BlocksKit.m')
+    system('rm Pods/BlocksKit/BlocksKit/UIKit/UIWebView+BlocksKit.h')
+    system('rm Pods/BlocksKit/BlocksKit/UIKit/UIWebView+BlocksKit.m')
 end

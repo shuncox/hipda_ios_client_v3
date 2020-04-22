@@ -19,7 +19,7 @@
 
 #import "HPThreadViewController.h"
 #import "HPThreadCell.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 #import "SWRevealViewController.h"
 #import "EGORefreshTableFooterView.h"
 #import "HPLoginViewController.h"

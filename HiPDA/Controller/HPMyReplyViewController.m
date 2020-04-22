@@ -10,7 +10,7 @@
 #import "HPThread.h"
 #import "HPUser.h"
 #import "HPMyReply.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 #import "HPIndecator.h"
 
 #import "UIAlertView+Blocks.h"

@@ -13,7 +13,7 @@
 #import "HPCache.h"
 #import "HPTheme.h"
 #import "HPSetting.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 
 #import <SVProgressHUD.h>
 #import "UIAlertView+Blocks.h"

@@ -7,7 +7,7 @@
 //
 
 #import "HPSearchViewController.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 #import "HPUserViewController.h"
 #import "HPSearchUserCell.h"
 

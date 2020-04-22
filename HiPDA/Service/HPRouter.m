@@ -13,7 +13,7 @@
 #import "NSRegularExpression+HP.h"
 #import "HPAppDelegate.h"
 #import "HPThread.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 #import "HPRearViewController.h"
 #import "HPSubViewController.h"
 #import "HPUserViewController.h"

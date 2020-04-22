@@ -80,19 +80,11 @@
 		EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CE6B418D832030033EC36 /* HPRearViewController.m */; };
 		EA0CE6B818D86A180033EC36 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B618D86A180033EC36 /* menu.png */; };
 		EA0CE6B918D86A180033EC36 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B718D86A180033EC36 /* menu@2x.png */; };
-		EA0FF7BA1837B06400B0EBA6 /* default-controls.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EA0FF7B51837B06400B0EBA6 /* default-controls.bundle */; };
-		EA0FF7BB1837B06400B0EBA6 /* default-controls.psd in Resources */ = {isa = PBXBuildFile; fileRef = EA0FF7B61837B06400B0EBA6 /* default-controls.psd */; };
-		EA0FF7BC1837B06400B0EBA6 /* script.js in Sources */ = {isa = PBXBuildFile; fileRef = EA0FF7B81837B06400B0EBA6 /* script.js */; };
-		EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FF7B91837B06400B0EBA6 /* DZWebBrowser.m */; };
-		EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FF7C31837B09300B0EBA6 /* Reachability.m */; };
-		EA0FF7C71837B09B00B0EBA6 /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FF7C61837B09B00B0EBA6 /* NJKWebViewProgress.m */; };
 		EA0FF7D01837CE6300B0EBA6 /* HPFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0FF7CF1837CE6300B0EBA6 /* HPFavorite.m */; };
 		EA12737A1830F40700DE9851 /* HPThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1273791830F40700DE9851 /* HPThreadViewController.m */; };
 		EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13B90E1949F8C300E01AF5 /* HPUserViewController.m */; };
 		EA13B912194B53D900E01AF5 /* HPStupidBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13B911194B53D900E01AF5 /* HPStupidBar.m */; };
 		EA13CD991C11B8AD0023041F /* HPActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA13CD981C11B8AD0023041F /* HPActivity.m */; };
-		EA1427DB18BF05AA00A7E9B1 /* post_view.html in Resources */ = {isa = PBXBuildFile; fileRef = EA1427DA18BF05AA00A7E9B1 /* post_view.html */; };
-		EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */; };
 		EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */; };
 		EA181ED918BB725200EE57F1 /* uid.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EA181ED818BB725200EE57F1 /* uid.sqlite */; };
 		EA223C562111FF770028B78A /* HPPushService.m in Sources */ = {isa = PBXBuildFile; fileRef = EA223C542111FF760028B78A /* HPPushService.m */; };
@@ -416,14 +408,12 @@
 		EAD7F618183CC84600A750D9 /* hp_smile_grapeman_24.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAD7F5DB183CC84600A750D9 /* hp_smile_grapeman_24.gif */; };
 		EADF46721CA76CDC00D71C25 /* NSString+HPImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */; };
 		EAE0FE441D09527F00F0D76E /* NSString+CDN.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE431D09527F00F0D76E /* NSString+CDN.m */; };
-		EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */; };
 		EAE0FE4A1D09BC2D00F0D76E /* HPThreadFilterMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */; };
 		EAE0FE5B1D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */; };
 		EAE0FE5C1D09BFF700F0D76E /* HPNavigationDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE0FE5A1D09BFF700F0D76E /* HPNavigationDropdownMenu.m */; };
 		EAE3931D1FAEB74700E2E6A8 /* UIDevice+iPhoneX.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE3931B1FAEB74600E2E6A8 /* UIDevice+iPhoneX.m */; };
 		EAE6D7D41BDFAADA00195839 /* HPSearchUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */; };
 		EAE8C0311D43B89500C315AA /* NSError+BlockService.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE8C0301D43B89500C315AA /* NSError+BlockService.m */; };
-		EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */; };
 		EAEC58CC1948465000F5931A /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CB1948465000F5931A /* UIImage+Save.m */; };
 		EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEC58CE19484F5400F5931A /* UIView+ScreenShot.m */; };
 		EAF18F261B01037300B50E19 /* HPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF18F251B01037300B50E19 /* HPURLProtocol.m */; };
@@ -564,15 +554,6 @@
 		EA0CE6B418D832030033EC36 /* HPRearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPRearViewController.m; path = Controller/HPRearViewController.m; sourceTree = "<group>"; };
 		EA0CE6B618D86A180033EC36 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Image/menu.png; sourceTree = "<group>"; };
 		EA0CE6B718D86A180033EC36 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "Image/menu@2x.png"; sourceTree = "<group>"; };
-		EA0FF7B51837B06400B0EBA6 /* default-controls.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "default-controls.bundle"; path = "Vender/DZWebBrowser/default-controls.bundle"; sourceTree = "<group>"; };
-		EA0FF7B61837B06400B0EBA6 /* default-controls.psd */ = {isa = PBXFileReference; lastKnownFileType = file; name = "default-controls.psd"; path = "Vender/DZWebBrowser/default-controls.psd"; sourceTree = "<group>"; };
-		EA0FF7B71837B06400B0EBA6 /* DZWebBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DZWebBrowser.h; path = Vender/DZWebBrowser/DZWebBrowser.h; sourceTree = "<group>"; };
-		EA0FF7B81837B06400B0EBA6 /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = script.js; path = Vender/DZWebBrowser/script.js; sourceTree = "<group>"; };
-		EA0FF7B91837B06400B0EBA6 /* DZWebBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DZWebBrowser.m; path = Vender/DZWebBrowser/DZWebBrowser.m; sourceTree = "<group>"; };
-		EA0FF7C21837B09300B0EBA6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Vender/DZWebBrowser/External/Reachability/Reachability.h; sourceTree = "<group>"; };
-		EA0FF7C31837B09300B0EBA6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Vender/DZWebBrowser/External/Reachability/Reachability.m; sourceTree = "<group>"; };
-		EA0FF7C51837B09B00B0EBA6 /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NJKWebViewProgress.h; path = Vender/DZWebBrowser/External/NJKWebViewProgress/NJKWebViewProgress.h; sourceTree = "<group>"; };
-		EA0FF7C61837B09B00B0EBA6 /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NJKWebViewProgress.m; path = Vender/DZWebBrowser/External/NJKWebViewProgress/NJKWebViewProgress.m; sourceTree = "<group>"; };
 		EA0FF7CE1837CE6300B0EBA6 /* HPFavorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPFavorite.h; path = Model/HPFavorite.h; sourceTree = "<group>"; };
 		EA0FF7CF1837CE6300B0EBA6 /* HPFavorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPFavorite.m; path = Model/HPFavorite.m; sourceTree = "<group>"; };
 		EA1273781830F40700DE9851 /* HPThreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPThreadViewController.h; path = Controller/HPThreadViewController.h; sourceTree = "<group>"; };
@@ -583,9 +564,6 @@
 		EA13B911194B53D900E01AF5 /* HPStupidBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPStupidBar.m; path = View/HPStupidBar.m; sourceTree = "<group>"; };
 		EA13CD971C11B8AD0023041F /* HPActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPActivity.h; path = Helper/HPActivity.h; sourceTree = "<group>"; };
 		EA13CD981C11B8AD0023041F /* HPActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPActivity.m; path = Helper/HPActivity.m; sourceTree = "<group>"; };
-		EA1427DA18BF05AA00A7E9B1 /* post_view.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = post_view.html; path = View/post_view.html; sourceTree = "<group>"; };
-		EA1427DC18BF78E200A7E9B1 /* HPReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPReadViewController.h; path = Controller/HPReadViewController.h; sourceTree = "<group>"; };
-		EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPReadViewController.m; path = Controller/HPReadViewController.m; sourceTree = "<group>"; };
 		EA17909B1BE0B9D300E8152F /* HPSFSafariViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSFSafariViewController.h; path = Controller/HPSFSafariViewController.h; sourceTree = "<group>"; };
 		EA17909C1BE0B9D300E8152F /* HPSFSafariViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSFSafariViewController.m; path = Controller/HPSFSafariViewController.m; sourceTree = "<group>"; };
 		EA181ED818BB725200EE57F1 /* uid.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = uid.sqlite; sourceTree = "<group>"; };
@@ -1058,8 +1036,6 @@
 		EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HPImageSize.m"; path = "Helper/NSString+HPImageSize.m"; sourceTree = "<group>"; };
 		EAE0FE421D09527F00F0D76E /* NSString+CDN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+CDN.h"; path = "Helper/NSString+CDN.h"; sourceTree = "<group>"; };
 		EAE0FE431D09527F00F0D76E /* NSString+CDN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CDN.m"; path = "Helper/NSString+CDN.m"; sourceTree = "<group>"; };
-		EAE0FE451D095EC900F0D76E /* UIWebView+HPSafeLoadString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+HPSafeLoadString.h"; path = "Helper/UIWebView+HPSafeLoadString.h"; sourceTree = "<group>"; };
-		EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+HPSafeLoadString.m"; path = "Helper/UIWebView+HPSafeLoadString.m"; sourceTree = "<group>"; };
 		EAE0FE481D09BC2D00F0D76E /* HPThreadFilterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPThreadFilterMenu.h; path = View/HPThreadFilterMenu.h; sourceTree = "<group>"; };
 		EAE0FE491D09BC2D00F0D76E /* HPThreadFilterMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPThreadFilterMenu.m; path = View/HPThreadFilterMenu.m; sourceTree = "<group>"; };
 		EAE0FE581D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = HPNavigationDropdownMenu.bundle; path = View/HPNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
@@ -1071,8 +1047,6 @@
 		EAE6D7D31BDFAADA00195839 /* HPSearchUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSearchUserCell.m; path = View/HPSearchUserCell.m; sourceTree = "<group>"; };
 		EAE8C02F1D43B89500C315AA /* NSError+BlockService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+BlockService.h"; path = "Helper/NSError+BlockService.h"; sourceTree = "<group>"; };
 		EAE8C0301D43B89500C315AA /* NSError+BlockService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+BlockService.m"; path = "Helper/NSError+BlockService.m"; sourceTree = "<group>"; };
-		EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+Capture.h"; path = "Helper/UIWebView+Capture.h"; sourceTree = "<group>"; };
-		EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+Capture.m"; path = "Helper/UIWebView+Capture.m"; sourceTree = "<group>"; };
 		EAEC58CA1948465000F5931A /* UIImage+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Save.h"; path = "Helper/UIImage+Save.h"; sourceTree = "<group>"; };
 		EAEC58CB1948465000F5931A /* UIImage+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Save.m"; path = "Helper/UIImage+Save.m"; sourceTree = "<group>"; };
 		EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+ScreenShot.h"; path = "Helper/UIView+ScreenShot.h"; sourceTree = "<group>"; };
@@ -1313,52 +1287,11 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
-		EA0FF7B41837B05300B0EBA6 /* DZWebBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				EA0FF7BE1837B06700B0EBA6 /* External */,
-				EA0FF7B51837B06400B0EBA6 /* default-controls.bundle */,
-				EA0FF7B61837B06400B0EBA6 /* default-controls.psd */,
-				EA0FF7B71837B06400B0EBA6 /* DZWebBrowser.h */,
-				EA0FF7B91837B06400B0EBA6 /* DZWebBrowser.m */,
-				EA0FF7B81837B06400B0EBA6 /* script.js */,
-			);
-			name = DZWebBrowser;
-			sourceTree = "<group>";
-		};
-		EA0FF7BE1837B06700B0EBA6 /* External */ = {
-			isa = PBXGroup;
-			children = (
-				EA0FF7C11837B08100B0EBA6 /* Reachability */,
-				EA0FF7C01837B07900B0EBA6 /* NJKWebViewProgress */,
-			);
-			name = External;
-			sourceTree = "<group>";
-		};
-		EA0FF7C01837B07900B0EBA6 /* NJKWebViewProgress */ = {
-			isa = PBXGroup;
-			children = (
-				EA0FF7C51837B09B00B0EBA6 /* NJKWebViewProgress.h */,
-				EA0FF7C61837B09B00B0EBA6 /* NJKWebViewProgress.m */,
-			);
-			name = NJKWebViewProgress;
-			sourceTree = "<group>";
-		};
-		EA0FF7C11837B08100B0EBA6 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				EA0FF7C21837B09300B0EBA6 /* Reachability.h */,
-				EA0FF7C31837B09300B0EBA6 /* Reachability.m */,
-			);
-			name = Reachability;
-			sourceTree = "<group>";
-		};
 		EA127381183101DF00DE9851 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				EA5F164C18D71FC000F6AAB3 /* HPThreadCell.h */,
 				EA5F164D18D71FC000F6AAB3 /* HPThreadCell.m */,
-				EA1427DA18BF05AA00A7E9B1 /* post_view.html */,
 				EA42B9B11EA50805008FC2AA /* post_view_wk.html */,
 				EAAE256B18E135870059EEB7 /* HPRearCell.h */,
 				EAAE256C18E135870059EEB7 /* HPRearCell.m */,
@@ -1519,8 +1452,6 @@
 				EA0CE6B418D832030033EC36 /* HPRearViewController.m */,
 				EA1273781830F40700DE9851 /* HPThreadViewController.h */,
 				EA1273791830F40700DE9851 /* HPThreadViewController.m */,
-				EA1427DC18BF78E200A7E9B1 /* HPReadViewController.h */,
-				EA1427DD18BF78E200A7E9B1 /* HPReadViewController.m */,
 				EAC5C33B1E93D36E0054A66E /* HPPostViewController.h */,
 				EAC5C33C1E93D36E0054A66E /* HPPostViewController.m */,
 				EA39A0EC183CEC740068233F /* HPSettingViewController.h */,
@@ -1598,7 +1529,6 @@
 				EAAD5BA0188CEFD00084EC2D /* DACircularProgress */,
 				EAAD5B87188CEFB70084EC2D /* IDMPhotoBrowser */,
 				EAB36A80183AFC2800EB0B88 /* KNSemiModalViewController */,
-				EA0FF7B41837B05300B0EBA6 /* DZWebBrowser */,
 				EAD2AECA18365F4E00E0A6C3 /* EGOCache */,
 				EA499F3F1830C2A800172989 /* Hpple */,
 			);
@@ -1650,8 +1580,6 @@
 				EAA1E68118D03A4100E1CFE1 /* UIViewController+BackButtonHandler.m */,
 				EA5F164618D7062900F6AAB3 /* NSHTTPCookieStorage+info.h */,
 				EA5F164718D7062900F6AAB3 /* NSHTTPCookieStorage+info.m */,
-				EAEC58C7194844FE00F5931A /* UIWebView+Capture.h */,
-				EAEC58C8194844FE00F5931A /* UIWebView+Capture.m */,
 				EAEC58CA1948465000F5931A /* UIImage+Save.h */,
 				EAEC58CB1948465000F5931A /* UIImage+Save.m */,
 				EAEC58CD19484F5400F5931A /* UIView+ScreenShot.h */,
@@ -1668,8 +1596,6 @@
 				EA3A7C7B1C95637A00FD4B44 /* NSRegularExpression+HP.m */,
 				EADF46701CA76CDC00D71C25 /* NSString+HPImageSize.h */,
 				EADF46711CA76CDC00D71C25 /* NSString+HPImageSize.m */,
-				EAE0FE451D095EC900F0D76E /* UIWebView+HPSafeLoadString.h */,
-				EAE0FE461D095EC900F0D76E /* UIWebView+HPSafeLoadString.m */,
 				EAC5C33E1E93DD300054A66E /* WKWebView+HPSafeLoadString.h */,
 				EAC5C33F1E93DD300054A66E /* WKWebView+HPSafeLoadString.m */,
 				EAACE5421D0DA42300EDD096 /* UITableView+ScrollToTop.h */,
@@ -2440,7 +2366,6 @@
 				EA9A39BD1A5BE92E0028BE7D /* bubble-classic-gray.png in Resources */,
 				EAE0FE5B1D09BFF700F0D76E /* HPNavigationDropdownMenu.bundle in Resources */,
 				EAD7F5E5183CC84600A750D9 /* hp_smile_coolmonkey_09.gif in Resources */,
-				EA0FF7BB1837B06400B0EBA6 /* default-controls.psd in Resources */,
 				EAD7F5FE183CC84600A750D9 /* hp_smile_default_titter.gif in Resources */,
 				EA74459018CA1E62002467EE /* compose_at.png in Resources */,
 				EA8186B218E1DA0D0092BDD7 /* search@2x.png in Resources */,
@@ -2480,7 +2405,6 @@
 				EAD7F5E6183CC84600A750D9 /* hp_smile_coolmonkey_10.gif in Resources */,
 				EA9A39C81A5BE92E0028BE7D /* bubble-classic-square-gray@2x.png in Resources */,
 				EAA1E67318D039FE00E1CFE1 /* navigation-classify_right_unfold-arrow@2x.png in Resources */,
-				EA0FF7BA1837B06400B0EBA6 /* default-controls.bundle in Resources */,
 				EA083D7718C8D14000BD8F07 /* EmotionIconKeys.plist in Resources */,
 				EAB7CEC519F00E90003830AC /* up@2x.png in Resources */,
 				EA74459518CA1E62002467EE /* compose_camera@2x.png in Resources */,
@@ -2497,7 +2421,6 @@
 				EA9A39C11A5BE92E0028BE7D /* bubble-classic-selected.png in Resources */,
 				EA083DB318C8D14F00BD8F07 /* keyboard_text_selected.png in Resources */,
 				EA9A39E21A5BE92E0028BE7D /* input-bar-flat@2x.png in Resources */,
-				EA1427DB18BF05AA00A7E9B1 /* post_view.html in Resources */,
 				EA5DF0E318311F05008E4248 /* cross@2x.png in Resources */,
 				EA9A39D91A5BE92E0028BE7D /* input-field-cover.png in Resources */,
 				EA8186A418E1D9E30092BDD7 /* home_refresh@2x.png in Resources */,
@@ -2762,7 +2685,6 @@
 				EA6409021EB0E5B0004AD7CD /* HPLoggerViewerController.m in Sources */,
 				EA17909D1BE0B9D300E8152F /* HPSFSafariViewController.m in Sources */,
 				EAE0FE4A1D09BC2D00F0D76E /* HPThreadFilterMenu.m in Sources */,
-				EA0FF7BD1837B06400B0EBA6 /* DZWebBrowser.m in Sources */,
 				EA42B9B91EA516E4008FC2AA /* FLWeakProxy.m in Sources */,
 				EAA168BC19C58B1D00C0F5EE /* HPBlockListViewController.m in Sources */,
 				EA13B90F1949F8C300E01AF5 /* HPUserViewController.m in Sources */,
@@ -2781,7 +2703,6 @@
 				EAEC58CF19484F5400F5931A /* UIView+ScreenShot.m in Sources */,
 				EA7840811BE20D4C00139141 /* HPDebugCrawlerViewController.m in Sources */,
 				EAA1BEC41DB3217400F61E1B /* HPAccountPassword.m in Sources */,
-				EA1427DE18BF78E200A7E9B1 /* HPReadViewController.m in Sources */,
 				EAE8C0311D43B89500C315AA /* NSError+BlockService.m in Sources */,
 				EA5F164218D1DA3500F6AAB3 /* HPTheme.m in Sources */,
 				EA083DBF18C8D18900BD8F07 /* WUDemoKeyboardBuilder.m in Sources */,
@@ -2805,8 +2726,6 @@
 				EA368A8018C75E9900C5C5BD /* HPBaseCompostionViewController.m in Sources */,
 				EA083D6D18C8D11A00BD8F07 /* WUEmoticonsKeyboardKeyItemGroup.m in Sources */,
 				EAA1E68518D03A4100E1CFE1 /* UIImage+fixOrientation.m in Sources */,
-				EA0FF7BC1837B06400B0EBA6 /* script.js in Sources */,
-				EA0FF7C71837B09B00B0EBA6 /* NJKWebViewProgress.m in Sources */,
 				EAB38C481AF9FE6B00CF1ADC /* HPNavigationController.m in Sources */,
 				EA368A6F18C6003E00C5C5BD /* EGORefreshTableFooterView.m in Sources */,
 				EA9A061018DB11F000D5D7D9 /* HPViewController.m in Sources */,
@@ -2832,7 +2751,6 @@
 				EA084DA3211EC95F003089E7 /* HPApiUser.m in Sources */,
 				EA9A39B81A5BE92E0028BE7D /* JSMessageTextView.m in Sources */,
 				EA43E70118328AED00968B94 /* NSString+HTML.m in Sources */,
-				EAE0FE471D095EC900F0D76E /* UIWebView+HPSafeLoadString.m in Sources */,
 				EAFBB736235AC0C20001F696 /* HPBlockThread.m in Sources */,
 				EA689B671BF04102005C402C /* SSWDirectionalPanGestureRecognizer.m in Sources */,
 				EA368A8318C7751500C5C5BD /* HPReplyViewController.m in Sources */,
@@ -2850,11 +2768,9 @@
 				EAB36A89183B248B00EB0B88 /* UIViewController+KNSemiModal.m in Sources */,
 				EAAD5B9C188CEFCC0084EC2D /* IDMTapDetectingView.m in Sources */,
 				EA91959E21297CA000D7D3C6 /* HPBackgroundFetchService.m in Sources */,
-				EAEC58C9194844FE00F5931A /* UIWebView+Capture.m in Sources */,
 				EA2E74FD214CFC250032B417 /* HPSubManageViewController.m in Sources */,
 				EAAD5B98188CEFCC0084EC2D /* IDMCaptionView.m in Sources */,
 				EAC5C3401E93DD300054A66E /* WKWebView+HPSafeLoadString.m in Sources */,
-				EA0FF7C41837B09300B0EBA6 /* Reachability.m in Sources */,
 				EA2E750C214D074F0032B417 /* HPApiThread.m in Sources */,
 				EAFAAC78194D94A50089C3CA /* HPEditPostViewController.m in Sources */,
 				EA9A39B61A5BE92E0028BE7D /* JSMessagesViewController.m in Sources */,

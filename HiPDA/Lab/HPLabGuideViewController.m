@@ -20,6 +20,7 @@
 #import "NSString+Additions.h"
 #import <BlocksKit/UIView+BlocksKit.h>
 #import "HPRouter.h"
+#import <WebKit/WebKit.h> 
 
 @interface HPLabGuideViewController()
 
@@ -31,7 +32,7 @@
 @property (nonatomic, strong) UILabel *enableSubDesc;
 @property (nonatomic, strong) UILabel *enableSubButtonLabel;
 
-@property (nonatomic, strong) UIWebView *noticeWebView;
+@property (nonatomic, strong) WKWebView *noticeWebView;
 
 // debug view
 @property (nonatomic, strong) UILabel *enableLabLabel;
@@ -186,7 +187,7 @@
         make.bottom.equalTo(subContainer).offset(-12.f);
     }];
     
-    _noticeWebView = [UIWebView new];
+    _noticeWebView = [WKWebView new];
     _noticeWebView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_noticeWebView];
     [_noticeWebView mas_makeConstraints:^(MASConstraintMaker *make) {

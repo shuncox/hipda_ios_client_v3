@@ -35,7 +35,7 @@
 #import <SVProgressHUD.h>
 #import "NSUserDefaults+Convenience.h"
 #import "IDMPhotoBrowser.h"
-#import "DZWebBrowser.h"
+
 #import "NSString+Additions.h"
 #import "NSString+HTML.h"
 #import "NSString+CDN.h"
@@ -50,7 +50,6 @@
 #import "EGORefreshTableFooterView.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "UIWebView+Capture.h"
 #import <UIImageView+WebCache.h>
 
 #import "HPActivity.h"
@@ -378,7 +377,7 @@ HPStupidBarDelegate
 - (void)dealloc
 {
     // deal with web view special needs
-    NSLog(@"UIWebViewVC dealloc");
+    NSLog(@"HPPostViewController dealloc");
     [self.webView stopLoading];
     [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"observe"];
     
@@ -1195,19 +1194,10 @@ HPStupidBarDelegate
         SFSafariViewController *sfvc = [[SFSafariViewController alloc] initWithURL:url];
         [self presentViewController:sfvc animated:YES completion:NULL];
         
-    } else if (IOS9_OR_LATER) {
-        
-        HPSFSafariViewController *sfvc = [[HPSFSafariViewController alloc] initWithURL:url];
-        [self presentViewController:[HPCommon swipeableNVCWithRootVC:sfvc] animated:YES completion:NULL];
-        
-    } else {
-        DZWebBrowser *webBrowser = [[DZWebBrowser alloc] initWebBrowserWithURL:url];
-        webBrowser.showProgress = YES;
-        webBrowser.allowSharing = YES;
-        
-        NSLog(@"open browser");
-        [self presentViewController:[HPCommon swipeableNVCWithRootVC:webBrowser] animated:YES completion:NULL];
     }
+        
+    HPSFSafariViewController *sfvc = [[HPSFSafariViewController alloc] initWithURL:url];
+    [self presentViewController:[HPCommon swipeableNVCWithRootVC:sfvc] animated:YES completion:NULL];
    
     [Flurry logEvent:@"Read OpenUrl" withParameters:@{@"url":url.absoluteString}];
 }

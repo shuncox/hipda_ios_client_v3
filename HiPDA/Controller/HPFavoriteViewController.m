@@ -10,7 +10,7 @@
 #import "HPUser.h"
 #import "HPFavorite.h"
 #import "HPFavoriteViewController.h"
-#import "HPReadViewController.h"
+#import "HPPostViewController.h"
 
 #import "UIAlertView+Blocks.h"
 #import <SVProgressHUD.h>
