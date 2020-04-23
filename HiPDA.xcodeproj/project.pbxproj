@@ -73,8 +73,6 @@
 		EA084D9F211EC392003089E7 /* HPApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084D9E211EC392003089E7 /* HPApiConfig.m */; };
 		EA084DA3211EC95F003089E7 /* HPApiUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EA084DA2211EC95F003089E7 /* HPApiUser.m */; };
 		EA0901AA185316DD0067961E /* HPSetForumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0901A9185316DD0067961E /* HPSetForumsViewController.m */; };
-		EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */; };
-		EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA0AF84A1BDF197000DDBB78 /* Fabric.framework */; };
 		EA0AF84E1BDF258F00DDBB78 /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */; };
 		EA0CE6B518D832030033EC36 /* HPRearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CE6B418D832030033EC36 /* HPRearViewController.m */; };
 		EA0CE6B818D86A180033EC36 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = EA0CE6B618D86A180033EC36 /* menu.png */; };
@@ -540,8 +538,6 @@
 		EA084DA2211EC95F003089E7 /* HPApiUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPApiUser.m; sourceTree = "<group>"; };
 		EA0901A8185316DD0067961E /* HPSetForumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSetForumsViewController.h; path = Controller/HPSetForumsViewController.h; sourceTree = "<group>"; };
 		EA0901A9185316DD0067961E /* HPSetForumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HPSetForumsViewController.m; path = Controller/HPSetForumsViewController.m; sourceTree = "<group>"; };
-		EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
-		EA0AF84A1BDF197000DDBB78 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		EA0AF84C1BDF258F00DDBB78 /* UIViewController+Tracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Tracking.h"; path = "Helper/UIViewController+Tracking.h"; sourceTree = "<group>"; };
 		EA0AF84D1BDF258F00DDBB78 /* UIViewController+Tracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Tracking.m"; path = "Helper/UIViewController+Tracking.m"; sourceTree = "<group>"; };
 		EA0CE6B318D832030033EC36 /* HPRearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPRearViewController.h; path = Controller/HPRearViewController.h; sourceTree = "<group>"; };
@@ -1090,11 +1086,9 @@
 				EA499F5F1830C3D800172989 /* SystemConfiguration.framework in Frameworks */,
 				EA8947291D3BB62A009261DD /* CloudKit.framework in Frameworks */,
 				EA499F5D1830C3CA00172989 /* MobileCoreServices.framework in Frameworks */,
-				EA0AF84B1BDF197000DDBB78 /* Fabric.framework in Frameworks */,
 				EA499F5B1830C3BD00172989 /* ImageIO.framework in Frameworks */,
 				EA499F591830C3B600172989 /* QuartzCore.framework in Frameworks */,
 				EA499F571830C3AE00172989 /* MessageUI.framework in Frameworks */,
-				EA0AF8491BDF193800DDBB78 /* Crashlytics.framework in Frameworks */,
 				EA499F551830C39A00172989 /* CoreText.framework in Frameworks */,
 				EA499F531830C37E00172989 /* libxml2.2.dylib in Frameworks */,
 				EA499F0C1830B79400172989 /* MapKit.framework in Frameworks */,
@@ -1504,8 +1498,6 @@
 			isa = PBXGroup;
 			children = (
 				EA7840741BE1F06F00139141 /* SVProgressHUD */,
-				EA0AF8481BDF193800DDBB78 /* Crashlytics.framework */,
-				EA0AF84A1BDF197000DDBB78 /* Fabric.framework */,
 				EA9A39551A5BE92E0028BE7D /* JSMessagesViewController */,
 				EAB04C0119EC1EAA006F5C92 /* UMeng */,
 				EA075F5818E4078D00A07C08 /* BBBadgeBarButtonItem */,

@@ -40,6 +40,8 @@ pod 'KVOController'
 pod '1PasswordExtension', '~> 1.8.6'
 pod 'PromisesObjC', '1.2.3'
 pod 'QCloudCOSXML'
+pod 'AppCenter/Analytics'
+pod 'AppCenter/Crashes'
 
 pod 'QMUIKit/QMUIComponents/QMUIImagePickerLibrary', '~> 4.0.0'
 pod 'QMUIKit/QMUIComponents/QMUITheme', '~> 4.0.0'
