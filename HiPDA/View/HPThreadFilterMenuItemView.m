@@ -8,6 +8,17 @@
 
 #import "HPThreadFilterMenuItemView.h"
 
+@interface NoSwipeSegmentedControl: UISegmentedControl
+@end
+
+@implementation NoSwipeSegmentedControl
+// https://stackoverflow.com/questions/58177165/ios-13-segmented-control-remove-swipe-gesture-to-select-segment
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return YES;
+}
+
+@end
+
 @interface HPThreadFilterMenuItemView()
 
 @property (nonatomic, strong) UILabel *textLabel;
@@ -26,7 +37,11 @@
         _textLabel = [UILabel new];
         _placeholderView = [UIView new];
         _segmentedControlContainer = [UIScrollView new];
-        _segmentedControl = [UISegmentedControl new];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0")) {
+             _segmentedControl = [NoSwipeSegmentedControl new];
+        } else {
+            _segmentedControl = [UISegmentedControl new];
+        }
         [_segmentedControl addTarget:self
                               action:@selector(segmentedControlValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
