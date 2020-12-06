@@ -25,6 +25,13 @@
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
 
+typedef NS_ENUM(NSUInteger, HPSearchButtonIndex) {
+    HPSearchButtonIndexTitle = 0,
+    HPSearchButtonIndexTitle_backdoor = 1,
+    HPSearchButtonIndexFullText = 2,
+    HPSearchButtonIndexUser = 3,
+};
+
 @interface HPSearchViewController ()
 
 @property (nonatomic, strong) NSArray *results;
@@ -87,7 +94,7 @@
     });
     
     _searchBar.showsScopeBar = YES;
-    _searchBar.scopeButtonTitles = @[@"标题", @"全文", @"用户"];
+    _searchBar.scopeButtonTitles = @[@"标题", @"标题2", @"全文", @"用户"];
     [_searchBar sizeToFit];
 
     if (!_user) self.tableView.tableHeaderView = _searchBar;
@@ -111,7 +118,7 @@
     [[[[[[textSignal merge:scopeSignal]
         filter:^BOOL(NSString *text) {
         @strongify(self);
-        return text.length > 0 && self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser;
+        return text.length > 0 && self.searchBar.selectedScopeButtonIndex == HPSearchButtonIndexUser;
     }] throttle:0.3]
        flattenMap:^RACStream *(NSString *key) {
            return [HPUserSearch signalForSearchUserWithKey:key];
@@ -168,7 +175,7 @@
         return;
     }
     
-    if (self.searchBar.selectedScopeButtonIndex == HPSearchTypeUser) {
+    if (self.searchBar.selectedScopeButtonIndex == HPSearchButtonIndexUser) {
         return;
     }
     
@@ -185,29 +192,24 @@
     
     // key
     NSString *key = _searchBar.text;
-    HPSearchType type = _searchBar.selectedScopeButtonIndex;
-    
     if (!key || [key isEqualToString:@""]) {
-        
         [SVProgressHUD showErrorWithStatus:@"请输入关键词"];
         [_searchBar becomeFirstResponder];
         return;
     }
     
-    NSLog(@"key %@, type : %d", key, type);
-    
-    
     // update ui
     self.title = [NSString stringWithFormat:@"搜索: %@", key];
-    
-    
-    
     [SVProgressHUD showWithStatus:tip];
-    
-    //_results = nil;
-    //[self.tableView reloadData];
-    
+
+    // search
     NSDictionary *parameters = @{@"key": key};
+    if (self.searchBar.selectedScopeButtonIndex == HPSearchButtonIndexTitle_backdoor) {
+        parameters = @{@"key": key, @"random": @((int)[NSDate date].timeIntervalSince1970).stringValue};
+    }
+    HPSearchType type = [self convertButtonIndexToSearchType:self.searchBar.selectedScopeButtonIndex];
+    
+    NSLog(@"key %@, type : %@", key, @(type));
     __weak typeof(self) weakSelf = self;
     [HPSearch searchWithParameters:parameters
                               type:type
@@ -249,6 +251,24 @@
                                      weakSelf.navigationItem.rightBarButtonItem = _searchButtonItem;
                                  }
                              }];
+}
+
+- (HPSearchType)convertButtonIndexToSearchType:(HPSearchButtonIndex)buttonIndex
+{
+    HPSearchType type = HPSearchTypeTitle;
+    switch (buttonIndex) {
+        case HPSearchButtonIndexTitle:
+        case HPSearchButtonIndexTitle_backdoor:
+            type = HPSearchTypeTitle;
+            break;
+        case HPSearchButtonIndexFullText:
+            type = HPSearchTypeFullText;
+            break;
+        default:
+            NSLog(@"error buttonIndex %@", @(buttonIndex));
+            break;
+    }
+    return type;
 }
 
 - (void)searchForUser:(id)sender {

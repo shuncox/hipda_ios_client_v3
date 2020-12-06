@@ -30,7 +30,8 @@
         case HPSearchTypeTitle:
         {
             NSString *key = [parameters objectForKey:@"key"];
-            path = [NSString stringWithFormat:@"forum/search.php?srchtxt=%@&srchtype=title&searchsubmit=true&st=on&srchuname=&srchfilter=all&srchfrom=0&before=&orderby=lastpost&ascdesc=desc&srchfid[0]=all&page=%ld", key, page];
+            NSString *random = [parameters objectForKey:@"random"];
+            path = [NSString stringWithFormat:@"forum/search.php?srchtxt=%@&srchtype=%@&searchsubmit=true&st=on&srchuname=&srchfilter=all&srchfrom=0&before=&orderby=lastpost&ascdesc=desc&srchfid[0]=all&page=%ld", key, random ?: @"title", page];
             break;
         }
         case HPSearchTypeFullText:
