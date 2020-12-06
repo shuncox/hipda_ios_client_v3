@@ -140,7 +140,7 @@ UIGestureRecognizerDelegate
                   forControlEvents:UIControlEventValueChanged];
     self.refreshControl.backgroundColor = [UIColor clearColor];
     
-    HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 230)];//暂时写死高度, 折腾了一下autolayout自动算, 但是要求filterMenu的superview使用autolayout布局filterview
+    HPThreadFilterMenu *filterMenu = [[HPThreadFilterMenu alloc] initWithFrame:CGRectMake(0, 0, HP_SCREEN_WIDTH, 230)];//暂时写死高度, 折腾了一下autolayout自动算, 但是要求filterMenu的superview使用autolayout布局filterview
     HPNavigationDropdownMenu *menuView = [[HPNavigationDropdownMenu alloc] initWithTitle:self.title
                                                                               customView:filterMenu
                                                                            containerView:self.view];
