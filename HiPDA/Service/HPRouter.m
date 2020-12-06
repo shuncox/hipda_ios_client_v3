@@ -30,8 +30,23 @@
 
 - (void)checkPasteboard
 {
-    //[self routeTo:@{@"tid": @"1831924"}];
+    if (@available(iOS 14.0, *)) {
+        NSSet *patterns = [[NSSet alloc] initWithObjects:UIPasteboardDetectionPatternProbableWebURL, nil];
+        [[UIPasteboard generalPasteboard] detectPatternsForPatterns:patterns completionHandler:^(NSSet<UIPasteboardDetectionPattern> *result, NSError *error) {
+            if ([result containsObject:UIPasteboardDetectionPatternProbableWebURL]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self checkPasteboard0];
+                });
+            }
+        }];
+        return;
+    }
     
+    //[self routeTo:@{@"tid": @"1831924"}];
+    [self checkPasteboard0];
+}
+
+- (void)checkPasteboard0 {
     UIPasteboard *appPasteBoard = [UIPasteboard generalPasteboard];
     NSString *content = appPasteBoard.string;
     if (!content.length) {
