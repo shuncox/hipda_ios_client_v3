@@ -162,7 +162,7 @@ function removeBlockedPost() {
             }
         }
     }
-    if (location.href.indexOf('forumdisplay.php') !== -1) {
+    if (location.href.indexOf('forumdisplay.php') !== -1 || location.href.indexOf('search.php') !== -1) {
         var s = xpath("//td[@class='author']");
         console.log(s.snapshotLength);
         for (var i = s.snapshotLength - 1; i >= 0; i--) { // 屏蔽BLACK_LIST的发帖
