@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name HiPDA BlackList
 // @description hi-pda.com论坛的黑名单插件, 支持使用iCloud账号同步, 支持与iOS客户端同步
-// @version 0.4
+// @version 0.41
 // @author Jichao Wu
 // @license MIT
 // @namespace com.jichaowu.hipda
-// @updateURL   https://github.com/wujichao/hipda_ios_client_v3/raw/developer-jichao/userscript/hp-black-list.user.js
-// @downloadURL	https://github.com/wujichao/hipda_ios_client_v3/raw/developer-jichao/userscript/hp-black-list.user.js
+// @updateURL   https://github.com/shuncox/hipda_ios_client_v3/raw/developer-jichao/userscript/hp-black-list.user.js
+// @downloadURL	https://github.com/shuncox/hipda_ios_client_v3/raw/developer-jichao/userscript/hp-black-list.user.js
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_addStyle
