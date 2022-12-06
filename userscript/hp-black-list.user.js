@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name HiPDA BlackList
-// @description hi-pda.com论坛的黑名单插件, 支持使用iCloud账号同步, 支持与iOS客户端同步
+// @description 4d4y.com(原hi-pda.com)论坛的黑名单插件, 支持使用iCloud账号同步, 支持与iOS客户端同步
 // @version 0.41
 // @author Jichao Wu
 // @license MIT
@@ -10,8 +10,8 @@
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_addStyle
-// @match http://www.hi-pda.com/forum/*
-// @match https://www.hi-pda.com/forum/*
+// @match http://www.4d4y.com/forum/*
+// @match https://www.4d4y.com/forum/*
 // @require https://cdn.apple-cloudkit.com/ck/2/cloudkit.js
 // ==/UserScript==
 
